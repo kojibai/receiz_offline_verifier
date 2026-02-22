@@ -1,0 +1,3 @@
+Contact: mailto:security@receiz.com
+Preferred-Languages: en
+Policy: https://receiz.com/security

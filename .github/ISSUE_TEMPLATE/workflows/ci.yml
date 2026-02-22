@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  offline-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure site/index.html exists
+        run: test -f site/index.html
+
+      - name: Guard against network primitives
+        shell: bash
+        run: |
+          set -euo pipefail
+          FILE="site/index.html"
+
+          # Hard fail if any network primitives appear.
+          if grep -RInE "\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource" "$FILE"; then
+            echo "Network primitive detected. Offline verifier must not make network calls."
+            exit 1
+          fi
+
+          # Hard fail if any remote scripts are introduced.
+          if grep -RInE "<script[^>]+src=['\"]https?://" "$FILE"; then
+            echo "Remote script detected. Verifier must be self-contained for offline integrity."
+            exit 1
+          fi
+
+          # Hard fail if the proof key string disappears (primitive contract).
+          if ! grep -q "receiz.proof_bundle" "$FILE"; then
+            echo "Missing receiz.proof_bundle string. This likely broke the verifier contract."
+            exit 1
+          fi
+
+          echo "Offline guard passed."

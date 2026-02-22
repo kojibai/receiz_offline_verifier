@@ -1,0 +1,20 @@
+name: Feature request
+description: Improvements that preserve offline verification scope
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: request
+    attributes:
+      label: Request
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope check
+      options:
+        - label: This does not add accounts, storage, or issuing features.
+          required: true
+        - label: This does not introduce any network calls.
+          required: true
