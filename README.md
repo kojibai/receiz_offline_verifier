@@ -144,4 +144,3 @@ If you discover a vulnerability (including false-positive verification), do **no
 Use the process in `SECURITY.md`.
 
 **Tag:** `v10.0.0`
-````
