@@ -3,9 +3,10 @@
 
 # Receiz Offline Verifier
 
-[![CI](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml/badge.svg)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml/badge.svg)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml)
-[![Pages](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml/badge.svg)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml)
+[![CI](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml)
+[![Pages](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml)
+
 [![Release](https://img.shields.io/github/v/release/kojibai/receiz_offiline_verifier?display_name=tag)](https://github.com/kojibai/receiz_offiline_verifier/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-111111.svg)](LICENSE)
 [![Security Policy](https://img.shields.io/badge/security-policy-111111.svg)](SECURITY.md)
