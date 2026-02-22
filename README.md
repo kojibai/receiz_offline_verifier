@@ -81,8 +81,6 @@ See `SECURITY.md`.
 
 MIT — see `LICENSE`.
 
-````
-
 ---
 
 <!-- GitHub Release Body -->
