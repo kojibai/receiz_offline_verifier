@@ -3,18 +3,6 @@
 
 # Receiz Offline Verifier
 
-[![CI](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/codeql.yml)
-[![Pages](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/kojibai/receiz_offiline_verifier/actions/workflows/pages.yml)
-
-[![Release](https://img.shields.io/github/v/release/kojibai/receiz_offiline_verifier?display_name=tag)](https://github.com/kojibai/receiz_offiline_verifier/releases)
-[![License: MIT](https://img.shields.io/badge/license-MIT-111111.svg)](LICENSE)
-[![Security Policy](https://img.shields.io/badge/security-policy-111111.svg)](SECURITY.md)
-[![Last Commit](https://img.shields.io/github/last-commit/kojibai/receiz_offiline_verifier)](https://github.com/kojibai/receiz_offiline_verifier/commits/main)
-[![Stars](https://img.shields.io/github/stars/kojibai/receiz_offiline_verifier?style=flat)](https://github.com/kojibai/receiz_offiline_verifier/stargazers)
-[![Forks](https://img.shields.io/github/forks/kojibai/receiz_offiline_verifier?style=flat)](https://github.com/kojibai/receiz_offiline_verifier/network/members)
-[![Issues](https://img.shields.io/github/issues/kojibai/receiz_offiline_verifier)](https://github.com/kojibai/receiz_offiline_verifier/issues)
-[![PRs](https://img.shields.io/github/issues-pr/kojibai/receiz_offiline_verifier)](https://github.com/kojibai/receiz_offiline_verifier/pulls)
 
 **Verify a Receiz artifact offline. Proof lives in the file.**
 
