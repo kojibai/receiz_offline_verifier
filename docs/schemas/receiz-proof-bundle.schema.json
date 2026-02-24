@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://receiz.com/schemas/receiz-proof-bundle.schema.json",
+  "title": "Receiz Proof Bundle",
+  "type": "object",
+  "required": [
+    "kind",
+    "payloadVersion",
+    "ts",
+    "slug",
+    "code",
+    "kaiPulseEternal",
+    "verifyPath",
+    "artifactSha256Basis"
+  ],
+  "properties": {
+    "kind": {
+      "const": "receiz.proof_bundle"
+    },
+    "payloadVersion": {
+      "enum": [
+        "v1",
+        "v2"
+      ]
+    },
+    "ts": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{8}$"
+    },
+    "kaiPulseEternal": {
+      "type": "string",
+      "pattern": "^\\d+$"
+    },
+    "verifyPath": {
+      "type": "string",
+      "pattern": "^/v/[^/]+/[A-Z0-9]{8}/[0-9]+$"
+    },
+    "verifyUrl": {
+      "type": "string"
+    },
+    "artifactSha256Basis": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "receizClaimId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{32}$"
+    },
+    "sigilClaimSeed": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "wireproof": {
+      "type": "object",
+      "properties": {
+        "verifierPath": {
+          "type": "string",
+          "pattern": "^/"
+        }
+      },
+      "additionalProperties": true
+    },
+    "zkPoseidonHash": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "groth16Proof": {
+      "type": "string",
+      "oneOf": [
+        {
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        {
+          "pattern": "^g16:[A-Za-z0-9_\\-+/]+={0,2}$"
+        }
+      ]
+    },
+    "groth16ProofDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    }
+  },
+  "additionalProperties": true
+}

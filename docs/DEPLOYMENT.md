@@ -1,11 +1,22 @@
 # Deployment
 
-This repo deploys `site/` as a static site.
+Deploy `site/` to any static host.
+
+## Required for baseline verification
+- `/index.html`
+
+## Required for full v11 feature coverage
+- `/receiz-offline-verifier.html` (if used as alternate path)
+- `/snarkjs.min.js` (real Groth16 verification)
+- `/zk/document_seal_verification_key.json` (real Groth16 verification)
+- `/sw.js` (optional; enables service worker warm behavior)
 
 ## GitHub Pages
-The included workflow publishes `site/` to Pages on pushes to `main`.
+Serve repository `site/` output over HTTPS.
 
-## Other hosts
-Any static host works (Cloudflare Pages / Netlify / Vercel static):
-- upload the `site/` directory
-- ensure it is served over HTTPS
+## Local smoke test
+```bash
+cd site
+python3 -m http.server 8080
+# open http://localhost:8080
+```

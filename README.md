@@ -1,135 +1,95 @@
-
-<!-- README.md -->
-
 # Receiz Offline Verifier
 
+Verify a Receiz artifact offline. Proof lives in the file.
 
-**Verify a Receiz artifact offline. Proof lives in the file.**
+Current release: `v11.0.0`
 
-This repository ships the **public, offline-capable verifier** for Receiz PNG artifacts.  
-No accounts. No network calls. Deterministic results from the bytes in front of you.
+## What stayed the same from v10
+- Fail-closed verification: if integrity cannot be proven from artifact bytes, result is not verified.
+- Canonical identity checks: `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`.
+- Artifact binding checks: SHA-256 basis hash must match embedded binding.
+- Optional `/v/...` link cross-check against embedded canonical paths.
+- No third-party network dependencies.
 
-## What it verifies (current)
-- **PNG** artifacts with an embedded `receiz.proof_bundle` text chunk.
+## What changed in v11
+- Multi-format verification instead of PNG-only:
+  - PNG with embedded text chunks.
+  - PDF with embedded Receiz proof object metadata.
+  - Trailer-sealed artifacts with end-of-file Receiz trailer markers.
+  - `.receizbundle` JSON envelope containers.
+- Expanded file chooser support for `.png`, `.pdf`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.receizbundle`.
+- PDF parser support for `/Type /ReceizProof` objects and `/ProofBundle` literal or hex payloads.
+- Trailer parser support for:
+  - prefix: `--RECEIZ-TRAILER-v1--`
+  - suffix: `--END-RECEIZ-TRAILER--`
+- Container support for `kind: "receiz.bundle.v1"` envelopes with manifest + original bytes + proof bundle.
+- Deterministic and real Groth16 artifact verification paths:
+  - deterministic artifact validation for canonical proof bundles.
+  - optional real Groth16 verify path using `snarkjs` and `/zk/document_seal_verification_key.json`.
+- More detailed result diagnostics (chunk summary, anchor info, format-specific checks).
 
-## What it does not do
-- It does not issue Receiz artifacts.
-- It does not upload files or store data.
-- It does not require a server to verify.
+## Supported artifact inputs (v11)
+1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
+2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
+3. Trailer-sealed artifact ending with one Receiz trailer payload.
+4. `.receizbundle` container (`kind: receiz.bundle.v1`).
 
-## Where it runs
-- Browsers (desktop + mobile)
-- Embedded WebViews (including mobile PDF viewers that host HTML/JS)
+## Primitive contract (what "Verified" means)
+A file is verified only if the verifier can prove integrity from bytes plus optional user link input:
+- proof bundle payload is found exactly once for the selected format
+- proof bundle decoding succeeds
+- canonical field invariants pass
+- artifact binding hash matches normalized basis bytes
+- optional provided link path matches an accepted embedded canonical path
+- when Groth16 fields are present, deterministic or real Groth16 checks pass
 
-## Primitive contract (what “Verified” means)
+## Runtime notes
+- The verifier is still a static HTML app.
+- Verification logic runs client-side in browser JavaScript.
+- Real Groth16 mode requires:
+  - `snarkjs` runtime (`/snarkjs.min.js`)
+  - verification key JSON (`/zk/document_seal_verification_key.json`)
+- If those assets are unavailable, deterministic verification still works and real-Groth16 checks fail with explicit messaging.
 
-A file is **Verified** only if the verifier can prove integrity from the artifact bytes:
-- Exactly one embedded `receiz.proof_bundle`
-- Proof bundle decodes successfully
-- Canonical fields validate (ts / slug / code / pulse / verifyPath)
-- Artifact binding matches (anti-tamper / anti-swap)
-- Optional `/v/...` cross-check (if provided) matches an embedded canonical path
-
-Fail closed: if it cannot be proven from the file, it does not verify.
-
-## Quick start (local, offline)
+## Quick start (local)
 
 ### Option A: Open directly
-Open `site/index.html` in a modern browser.
-
-> If your browser restricts WebCrypto on `file://`, use Option B.
+Open [site/index.html](site/index.html).
 
 ### Option B: Serve locally (recommended)
 ```bash
 cd site
 python3 -m http.server 8080
 # then open http://localhost:8080
-````
+```
 
-## Deploy (GitHub Pages)
+## Deploy
+Deploy the `site/` directory to any static host.
 
-This repo includes a Pages workflow that publishes the `site/` directory on pushes to `main`.
+Required runtime assets for full v11 feature coverage:
+- `index.html`
+- `receiz-offline-verifier.html` (if served as an alternate entry path)
+- `snarkjs.min.js` (for real Groth16 mode)
+- `zk/document_seal_verification_key.json` (for real Groth16 mode)
+- `sw.js` (optional, for service worker warm behavior)
 
-1. GitHub repo → Settings → Pages
-2. Source: **GitHub Actions**
-3. Push to `main`
+## Schemas
+Machine-readable schemas are provided in [docs/schemas](docs/schemas):
+- [receiz-proof-bundle.schema.json](docs/schemas/receiz-proof-bundle.schema.json)
+- [receiz-anchor-bundle.schema.json](docs/schemas/receiz-anchor-bundle.schema.json)
+- [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-
-* `site/index.html` — the offline verifier (self-contained)
-* `docs/` — architecture, threat model, format, hardening, deployment
-* `.github/` — CI, Pages deploy, issue/PR templates
+- [site/index.html](site/index.html): published verifier entrypoint.
+- [apps/receiz-offline-verifier.html](apps/receiz-offline-verifier.html): mirrored app entrypoint.
+- [docs/FORMAT.md](docs/FORMAT.md): artifact and payload format contract.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): runtime and verification flow.
+- [docs/HARDENING.md](docs/HARDENING.md): non-regression security rules.
+- [CHANGELOG.md](CHANGELOG.md): release history.
 
 ## Security
-
-If you find a vulnerability (including false-positive verification), do **not** open a public issue.
-See `SECURITY.md`.
+If you discover a vulnerability (including false-positive verification), do not open a public issue.
+Use [SECURITY.md](SECURITY.md).
 
 ## License
-
-MIT — see `LICENSE`.
-
----
-
-<!-- GitHub Release Body -->
-<!-- Title: Receiz Offline Verifier v10.0.0 -->
-
-# Receiz Offline Verifier v10.0.0
-
-This release publishes the **Receiz Offline Verifier** as a real primitive:
-**a single-file verifier where proof lives in the file and verification is computed offline from bytes.**
-
-## Highlights
-- **Offline by construction**: no `fetch`, no XHR, no WebSocket, no EventSource, no sendBeacon.
-- **Self-contained**: shipped as `site/index.html` (UI + verifier logic + decompression).
-- **Fail-closed verification**: “Verified” only when required checks can be proven from the artifact itself.
-- **Anti-tamper / anti-swap**: byte-bound artifact binding verification via SHA-256 basis hashing.
-- **Deterministic results**: same bytes → same outcome, across compatible hosts.
-- **Mobile-ready**: verified in mobile browsers and environments that host WebViews (including some PDF viewers).
-
-## What’s included
-
-### 1) The verifier primitive
-- `site/index.html`
-  - Parses PNG chunks (iTXt / tEXt / zTXt)
-  - Requires exactly one `receiz.proof_bundle` chunk
-  - Decodes proof bundles (compressed + legacy)
-  - Validates canonical fields (ts / slug / code / pulse / verifyPath)
-  - Verifies artifact binding (tamper + swap detection)
-  - Optional `/v/...` path cross-check against embedded canonical paths
-  - Displays decoded bundle + chunk summary for inspection
-
-### 2) Threat model + format docs
-- `docs/ARCHITECTURE.md` — offline-first architecture contract
-- `docs/THREAT_MODEL.md` — attacker model + required defenses
-- `docs/FORMAT.md` — embedded keys + bundle encoding conventions
-- `docs/HARDENING.md` — rules that must never regress
-- `docs/DEPLOYMENT.md` — static hosting instructions
-
-### 3) Guardrails (primitive protection)
-- CI hard-fails if:
-  - any network primitives are introduced into `site/index.html`
-  - any remote script tags are introduced
-  - the primitive contract marker (`receiz.proof_bundle`) disappears
-- GitHub Pages workflow publishes `site/` as a static site
-
-### 4) Security + contribution posture
-- `SECURITY.md` — private vulnerability reporting
-- `CONTRIBUTING.md` — correctness-first change rules
-- Issue templates + PR template for clean, auditable changes
-
-## Compatibility requirements
-The verifier runs anywhere a host provides:
-- JavaScript runtime
-- local file import (`<input type="file">` / equivalent)
-- WebCrypto SHA-256 (`crypto.subtle.digest`)
-
-## Known constraint (current)
-- **PNG input only** (this release verifies PNG artifacts that embed `receiz.proof_bundle`).
-
-## Security
-If you discover a vulnerability (including false-positive verification), do **not** open a public issue.  
-Use the process in `SECURITY.md`.
-
-**Tag:** `v10.0.0`
-
+MIT. See [LICENSE](LICENSE).

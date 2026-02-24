@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://receiz.com/schemas/receiz-bundle-envelope.schema.json",
+  "title": "Receiz Bundle Envelope v1",
+  "type": "object",
+  "required": [
+    "kind",
+    "manifest",
+    "originalBase64",
+    "proofbundle"
+  ],
+  "properties": {
+    "kind": {
+      "const": "receiz.bundle.v1"
+    },
+    "manifest": {
+      "type": "object",
+      "required": [
+        "filename",
+        "mime",
+        "basisSha256",
+        "createdAt",
+        "version"
+      ],
+      "properties": {
+        "filename": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mime": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basisSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "version": {
+          "const": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "originalBase64": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_\\-+/]+={0,2}$"
+    },
+    "proofbundle": {
+      "$ref": "./receiz-proof-bundle.schema.json"
+    }
+  },
+  "additionalProperties": true
+}

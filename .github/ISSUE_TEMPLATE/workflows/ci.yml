@@ -15,15 +15,23 @@ jobs:
       - name: Ensure site/index.html exists
         run: test -f site/index.html
 
-      - name: Guard against network primitives
+      - name: Guard against unsupported network primitives
         shell: bash
         run: |
           set -euo pipefail
           FILE="site/index.html"
 
-          # Hard fail if any network primitives appear.
-          if grep -RInE "\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource" "$FILE"; then
-            echo "Network primitive detected. Offline verifier must not make network calls."
+          # Disallow non-fetch network primitives.
+          if grep -RInE "XMLHttpRequest|sendBeacon|WebSocket|EventSource" "$FILE"; then
+            echo "Unsupported network primitive detected."
+            exit 1
+          fi
+
+          # Allow only one same-origin fetch call for real Groth16 verification key loading.
+          total_fetches=$(grep -RInE "\bfetch\s*\(" "$FILE" | wc -l | tr -d ' ')
+          allowed_fetches=$(grep -RInE "\bfetch\s*\(\s*['\"]/zk/document_seal_verification_key\.json['\"]" "$FILE" | wc -l | tr -d ' ')
+          if [ "${total_fetches}" != "${allowed_fetches}" ]; then
+            echo "Unexpected fetch() usage detected. Only /zk/document_seal_verification_key.json is allowed."
             exit 1
           fi
 
@@ -33,9 +41,19 @@ jobs:
             exit 1
           fi
 
-          # Hard fail if the proof key string disappears (primitive contract).
+          # Hard fail if the proof key string disappears.
           if ! grep -q "receiz.proof_bundle" "$FILE"; then
             echo "Missing receiz.proof_bundle string. This likely broke the verifier contract."
+            exit 1
+          fi
+
+          # Hard fail if v11 carrier markers disappear.
+          if ! grep -q "receiz.bundle.v1" "$FILE"; then
+            echo "Missing receiz.bundle.v1 marker."
+            exit 1
+          fi
+          if ! grep -q "RECEIZ-TRAILER-v1" "$FILE"; then
+            echo "Missing RECEIZ-TRAILER-v1 marker."
             exit 1
           fi
 

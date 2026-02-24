@@ -1,20 +1,24 @@
 # Threat model
 
 ## Primary threats
-1) Tampered artifact: attacker edits the file and tries to keep “verified”.
-2) Bundle swap: attacker copies a proof bundle from one artifact to another.
-3) Parser ambiguity: attacker crafts confusing chunks/compression to cause inconsistent decoding.
-4) UI deception: UI displays verified without required checks.
+1. Tampered artifact: bytes changed while attempting to preserve a verified result.
+2. Bundle swap: proof data copied from one artifact to another.
+3. Carrier confusion: malformed PNG/PDF/trailer/container payloads to bypass checks.
+4. Metadata grafting: duplicate or conflicting proof payloads injected.
+5. Groth16 spoofing: fake deterministic/real proof artifacts.
+6. UI deception: presenting verified state without required integrity proofs.
 
 ## Required defenses
-- Proof bundle uniqueness (exactly 1 embedded `receiz.proof_bundle`)
-- Byte-bound artifact binding:
-  - compute a stable hash of the artifact with proof bundle chunks removed
-  - compare to the embedded binding field
-- Strict canonical field checks (ts/slug/code/pulse/path)
-- Fail closed with explicit reasons
-- Offline-only execution (no network primitives)
+- Strict per-carrier proof bundle uniqueness checks.
+- Basis-byte normalization and SHA-256 artifact binding verification.
+- Canonical identity field validation and path derivation checks.
+- Proof decoding limits and malformed payload hard-fail behavior.
+- Deterministic or real Groth16 verification when Groth16 fields are present.
+- Optional link canonical-path matching when link input is provided.
+- Explicit fail-closed status and reason reporting.
 
 ## Non-goals
-- Preventing edits to a file (any file can be edited)
-- Goal is: **edits are detectable** and cause verification failure
+- Preventing arbitrary edits to files.
+- Preventing users from uploading unsupported artifacts.
+
+The security goal is tamper detectability and deterministic non-verification on integrity failure.

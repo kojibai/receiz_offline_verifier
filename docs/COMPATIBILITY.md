@@ -1,22 +1,30 @@
 # Compatibility
 
-The Receiz Offline Verifier is a single-file static app designed to run in:
-- modern browsers
-- embedded WebViews (mobile)
-- environments that surface HTML/JS inside “document viewers” (including some PDF viewers)
+The Receiz Offline Verifier is a static browser app designed to run in:
+- modern desktop browsers
+- modern mobile browsers
+- embedded WebViews that allow local HTML/JS execution
 
-## Why it works in WebViews / PDF viewers
-The verifier:
-- makes no network calls
-- ships decompression inline (fflate)
-- verifies from file bytes using SHA-256 via WebCrypto
+## Supported artifact types (v11)
+- `.png`
+- `.pdf`
+- trailer-sealed files (including image/document binaries)
+- `.receizbundle`
+- File chooser accepts `.png`, `.pdf`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.receizbundle`.
+- Non-PNG/PDF files verify only when they contain a valid Receiz trailer payload or valid `.receizbundle` envelope JSON.
 
-## Requirements
-A host environment must provide:
-- a JavaScript runtime
-- file access via `<input type="file">` or drag/drop equivalents
-- `crypto.subtle.digest` (WebCrypto SHA-256)
+## Required host capabilities
+- JavaScript runtime
+- file access via `<input type="file">` or equivalent
+- WebCrypto SHA-256 (`crypto.subtle.digest`)
+- Text decoding APIs (`TextDecoder`)
+
+## Optional capabilities for full feature set
+- `snarkjs` runtime for real Groth16 proof verification
+- hosted verification key file at `/zk/document_seal_verification_key.json`
+- service worker support for cache warm behavior
 
 ## Notes
-- “PDF viewer support” depends on whether that viewer is actually hosting a WebView and permits local HTML/JS execution.
-- Verification remains offline and deterministic in any compatible host.
+- Deterministic verification path works without real-Groth16 assets.
+- Real-Groth16 checks fail explicitly when runtime assets are missing.
+- Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.

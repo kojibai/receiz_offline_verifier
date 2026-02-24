@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://receiz.com/schemas/receiz-anchor-bundle.schema.json",
+  "title": "Receiz Anchor Bundle",
+  "type": "object",
+  "required": [
+    "version",
+    "parent",
+    "anchorId"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "parent": {
+      "type": "object",
+      "required": [
+        "code",
+        "pulse",
+        "viewUrl"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "pulse": {
+          "type": "string"
+        },
+        "viewUrl": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "anchorId": {
+      "type": "string"
+    },
+    "contextPreset": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
