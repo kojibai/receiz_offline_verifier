@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v12.0.0] - 2026-02-24
+
+### Changed
+- Verifier UI version marker from `v11.0.0` to `v12.0.0`.
+- Repository release/docs references updated from `v11` to `v12`.
+- Release notes reframed for migration from `v11` to `v12`.
+
+### Kept
+- Multi-format carrier verification support (PNG, PDF, trailer, `.receizbundle`).
+- Real and deterministic Groth16 verification paths.
+- Fail-closed verification semantics and canonical binding checks.
+
 ## [v11.0.0] - 2026-02-24
 
 ### Added

@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v11)
+## Supported artifact types (v12)
 - `.png`
 - `.pdf`
 - trailer-sealed files (including image/document binaries)

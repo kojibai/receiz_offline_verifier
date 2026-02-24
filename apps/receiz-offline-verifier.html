@@ -435,15 +435,20 @@
 
       <label class="drop" id="dropZone" for="fileInput">
         <div>
-          <strong>Drop a receiz here</strong>
-          <div>or tap to choose a file</div>
+          <strong>Drop a receiz or package folder</strong>
+          <div>or tap to choose files</div>
         </div>
       </label>
 
       <div class="actions">
         <label class="btn-file">
-          <span>Choose a receiz</span>
-          <input id="fileInput" type="file" accept=".png,.pdf,.jpg,.jpeg,.gif,.webp,.receizbundle,application/pdf,image/png,image/jpeg,image/gif,image/webp,application/octet-stream" />
+          <span>Choose files</span>
+          <input id="fileInput" type="file" multiple accept="*/*" />
+        </label>
+
+        <label class="btn-file">
+          <span>Choose folder</span>
+          <input id="folderInput" type="file" multiple webkitdirectory directory />
         </label>
 
         <input id="linkInput" class="field mono grow" type="text" placeholder="Optional: paste receiz.com/v/... link to cross-check" />
@@ -490,7 +495,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v11.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v12.0.0</a>
     </p>
   </main>
 
@@ -512,6 +517,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const PDF_RECEIZ_UPDATE_MARKER = "%RECEIZ_SEAL_UPDATE_v1%";
     const RECEIZ_TRAILER_PREFIX = "\n\n--RECEIZ-TRAILER-v1--\n";
     const RECEIZ_TRAILER_SUFFIX = "\n--END-RECEIZ-TRAILER--\n";
+    const RECEIZ_SVG_ATTR = "data-receiz-proof-bundle";
+    const JSON_WS_PREFIX = "\r\n\t \t\t \r\n";
+    const JSON_WS_SUFFIX = "\r\n \t\t \t\r\n";
+    const JSON_WS_PREFIX_LF = JSON_WS_PREFIX.replace(/\r\n/g, "\n");
+    const JSON_WS_SUFFIX_LF = JSON_WS_SUFFIX.replace(/\r\n/g, "\n");
+    const JSON_WS_CHANNELS = [{ prefix: JSON_WS_PREFIX, suffix: JSON_WS_SUFFIX }];
+    if (JSON_WS_PREFIX_LF !== JSON_WS_PREFIX || JSON_WS_SUFFIX_LF !== JSON_WS_SUFFIX) {
+      JSON_WS_CHANNELS.push({ prefix: JSON_WS_PREFIX_LF, suffix: JSON_WS_SUFFIX_LF });
+    }
 
     const MAX_BUNDLE_DECODE_BYTES = 64 * 1024;
     const PNG_SIGNATURE = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]);
@@ -561,6 +575,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     const ui = {
       fileInput: document.getElementById("fileInput"),
+      folderInput: document.getElementById("folderInput"),
       linkInput: document.getElementById("linkInput"),
       verifyBtn: document.getElementById("verifyBtn"),
       dropZone: document.getElementById("dropZone"),
@@ -582,7 +597,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       chunkJson: document.getElementById("chunkJson")
     };
 
-    let selectedFile = null;
+    let selectedFiles = [];
 
     function setStatus(kind, title, note) {
       ui.statusBox.className = `status ${kind}`;
@@ -590,12 +605,19 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.statusNote.textContent = note;
     }
 
-    function setFileMeta(file) {
-      if (!file) {
-        ui.fileMeta.textContent = "No file selected.";
+    function setFileMeta(files) {
+      const list = Array.isArray(files) ? files : [];
+      if (list.length === 0) {
+        ui.fileMeta.textContent = "No files selected.";
         return;
       }
-      ui.fileMeta.textContent = `${file.name} - ${formatBytes(file.size)}`;
+      if (list.length === 1) {
+        const file = list[0];
+        ui.fileMeta.textContent = `${file.name} - ${formatBytes(file.size)}`;
+        return;
+      }
+      const total = list.reduce((sum, file) => sum + (Number.isFinite(file.size) ? file.size : 0), 0);
+      ui.fileMeta.textContent = `${list.length} files selected - ${formatBytes(total)}`;
     }
 
     function formatBytes(size) {
@@ -659,14 +681,122 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
     }
 
+    function hasMissingPackageManifestError(result) {
+      if (!result || !Array.isArray(result.errors)) return false;
+      return result.errors.some((entry) => typeof entry === "string" && entry.toLowerCase().includes("no valid sealed package manifest found"));
+    }
+
+    async function verifyEntriesIndividually(entries, optionalLink) {
+      if (!Array.isArray(entries) || entries.length === 0) {
+        return {
+          ok: false,
+          errors: ["No files selected."],
+          warnings: [],
+          checks: [{ state: "bad", message: "File selection" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null,
+          folderScanSummary: null
+        };
+      }
+
+      const itemResults = [];
+      const warnings = [];
+      const errors = [];
+      let verifiedCount = 0;
+      let failedCount = 0;
+      let firstVerifiedBundle = null;
+
+      for (const entry of entries) {
+        let verifyResult;
+        try {
+          verifyResult = await verifyReceizBytes(entry.path || "artifact", entry.bytes, optionalLink);
+        } catch (err) {
+          const reason = err instanceof Error ? err.message : String(err || "Verification failed.");
+          failedCount += 1;
+          errors.push(`${entry.path}: ${reason}`);
+          itemResults.push({
+            path: entry.path,
+            ok: false,
+            kind: "unknown",
+            reason,
+            code: "",
+            pulse: "",
+            ts: ""
+          });
+          continue;
+        }
+
+        const bundle = verifyResult.bundle || null;
+        const ok = !!verifyResult.ok;
+        const reason = ok ? "Receized artifact verified." : (verifyResult.errors[0] || "Not receized.");
+
+        if (ok) {
+          verifiedCount += 1;
+          if (!firstVerifiedBundle && bundle) firstVerifiedBundle = bundle;
+        } else {
+          failedCount += 1;
+          errors.push(`${entry.path}: ${reason}`);
+        }
+
+        if (Array.isArray(verifyResult.warnings)) {
+          for (const warning of verifyResult.warnings) {
+            warnings.push(`${entry.path}: ${warning}`);
+          }
+        }
+
+        itemResults.push({
+          path: entry.path,
+          ok,
+          kind: verifyResult.kind || "unknown",
+          reason,
+          code: bundle && typeof bundle.code === "string" ? bundle.code : "",
+          pulse: bundle && typeof bundle.kaiPulseEternal === "string" ? bundle.kaiPulseEternal : "",
+          ts: bundle && typeof bundle.ts === "string" ? bundle.ts : ""
+        });
+      }
+
+      itemResults.sort((a, b) => String(a.path || "").localeCompare(String(b.path || "")));
+      const itemCount = itemResults.length;
+
+      const checks = [];
+      if (verifiedCount > 0 && failedCount === 0) {
+        checks.push({ state: "ok", message: "All files verified in folder scan" });
+      } else if (verifiedCount > 0) {
+        checks.push({ state: "warn", message: `Mixed folder results: ${verifiedCount} verified, ${failedCount} not receized` });
+      } else {
+        checks.push({ state: "bad", message: "No receized artifacts found in folder scan" });
+      }
+
+      return {
+        ok: verifiedCount > 0 && failedCount === 0,
+        errors,
+        warnings,
+        checks,
+        bundle: verifiedCount === 1 && failedCount === 0 ? firstVerifiedBundle : null,
+        anchor: null,
+        fileHash: "",
+        chunkSummary: [],
+        packageSummary: null,
+        folderScanSummary: {
+          itemCount,
+          verifiedCount,
+          failedCount,
+          itemResults
+        }
+      };
+    }
+
     async function onVerifyClick() {
-      if (!selectedFile) return;
+      if (!Array.isArray(selectedFiles) || selectedFiles.length === 0) return;
       ui.verifyBtn.disabled = true;
       clearChecks();
       setStatus("warn", "Verifying", "Running offline checks...");
 
       try {
-        const result = await verifyReceizFile(selectedFile, ui.linkInput.value);
+        const result = await verifySelectedFiles(selectedFiles, ui.linkInput.value);
         renderResult(result);
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
@@ -686,8 +816,39 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       for (const check of result.checks) {
         addCheck(check.state, check.message);
       }
+      if (result.packageSummary && Array.isArray(result.packageSummary.itemResults)) {
+        const preview = result.packageSummary.itemResults.slice(0, 24);
+        for (const item of preview) {
+          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Verified" : "Failed"}: ${item.sealedPath}`);
+        }
+        const hidden = result.packageSummary.itemResults.length - preview.length;
+        if (hidden > 0) addCheck("warn", `+ ${hidden} more package file checks.`);
+      }
+      if (result.folderScanSummary && Array.isArray(result.folderScanSummary.itemResults)) {
+        const preview = result.folderScanSummary.itemResults.slice(0, 24);
+        for (const item of preview) {
+          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Receized" : "Not receized"}: ${item.path}`);
+        }
+        const hidden = result.folderScanSummary.itemResults.length - preview.length;
+        if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
+      }
 
-      if (result.ok) {
+      if (result.ok && result.packageSummary) {
+        setStatus(
+          "ok",
+          "Verified receized package",
+          `${result.packageSummary.verifiedCount}/${result.packageSummary.itemCount} sealed files verified.`,
+        );
+      } else if (result.folderScanSummary) {
+        const summary = result.folderScanSummary;
+        if (summary.verifiedCount > 0 && summary.failedCount === 0) {
+          setStatus("ok", "Verified folder files", `${summary.verifiedCount}/${summary.itemCount} files are receized.`);
+        } else if (summary.verifiedCount > 0) {
+          setStatus("warn", "Mixed folder results", `${summary.verifiedCount} receized · ${summary.failedCount} not receized.`);
+        } else {
+          setStatus("bad", "No receized files found", `Checked ${summary.itemCount} files.`);
+        }
+      } else if (result.ok) {
         setStatus("ok", "Verified original receiz", "All required offline checks passed.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
@@ -697,7 +858,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       for (const e of result.errors) addCheck("bad", e);
 
       ui.bundleJson.textContent = result.bundle ? safeJson(result.bundle) : "(none)";
-      ui.chunkJson.textContent = safeJson(result.chunkSummary);
+      ui.chunkJson.textContent = safeJson(
+        result.packageSummary
+          ? { chunkSummary: result.chunkSummary, packageSummary: result.packageSummary }
+          : result.folderScanSummary
+            ? { chunkSummary: result.chunkSummary, folderScanSummary: result.folderScanSummary }
+            : result.chunkSummary
+      );
       writeFacts(result);
     }
 
@@ -734,13 +901,54 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       );
     }
 
-    function detectDocumentFormat(bytes) {
+    function extensionFromName(filename) {
+      const trimmed = String(filename || "").trim();
+      if (!trimmed) return null;
+      const slash = Math.max(trimmed.lastIndexOf("/"), trimmed.lastIndexOf("\\"));
+      const leaf = slash >= 0 ? trimmed.slice(slash + 1) : trimmed;
+      const dot = leaf.lastIndexOf(".");
+      if (dot <= 0 || dot === leaf.length - 1) return null;
+      return leaf.slice(dot + 1).toLowerCase();
+    }
+
+    function detectFromHints(hints) {
+      const mime = String((hints && hints.mime) || "").trim().toLowerCase();
+      if (mime === "image/svg+xml") return "svg";
+      if (mime === "application/json" || mime.endsWith("+json")) return "json";
+
+      const ext = extensionFromName((hints && hints.filename) || "");
+      if (ext === "svg") return "svg";
+      if (ext === "json") return "json";
+      return null;
+    }
+
+    function detectFromTextPrefix(bytes) {
+      const sample = bytes.slice(0, Math.min(bytes.length, 4096));
+      const raw = textDecoder.decode(sample);
+      const trimmed = raw.replace(/^\uFEFF/, "").trimStart();
+      const lower = trimmed.toLowerCase();
+
+      if (lower.startsWith("<svg") || (lower.startsWith("<?xml") && lower.includes("<svg"))) {
+        return "svg";
+      }
+      if (trimmed.length > 0) {
+        const first = trimmed[0];
+        if (first === "{" || first === "[") return "json";
+      }
+      return null;
+    }
+
+    function detectDocumentFormat(bytes, hints) {
       if (startsWithBytes(bytes, PNG_SIGNATURE)) return "png";
       if (startsWithBytes(bytes, PDF_SIGNATURE)) return "pdf";
       if (startsWithBytes(bytes, JPEG_SIGNATURE)) return "jpeg";
       if (startsWithBytes(bytes, GIF87A_SIGNATURE) || startsWithBytes(bytes, GIF89A_SIGNATURE)) return "gif";
       if (isWebp(bytes)) return "webp";
       if (startsWithBytes(bytes, ZIP_SIGNATURE)) return "zip";
+      const hinted = detectFromHints(hints);
+      if (hinted) return hinted;
+      const textHint = detectFromTextPrefix(bytes);
+      if (textHint) return textHint;
       return "unknown";
     }
 
@@ -777,7 +985,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const compressionMethod = data[cursor + 1] || 0;
       cursor += 2;
 
-      if (compressionFlag !== 0 || compressionMethod !== 0) return null;
+      if (compressionMethod !== 0) return null;
 
       const langEnd = indexOfNull(data, cursor);
       if (langEnd < 0) return null;
@@ -788,7 +996,21 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       cursor = translatedEnd + 1;
 
       if (cursor > data.length) return null;
-      const text = textDecoder.decode(data.slice(cursor));
+      const payload = data.slice(cursor);
+      let textBytes = payload;
+      if (compressionFlag === 1) {
+        try {
+          textBytes = (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function")
+            ? fflate.inflateSync(payload)
+            : null;
+        } catch {
+          return null;
+        }
+        if (!textBytes) return null;
+      } else if (compressionFlag !== 0) {
+        return null;
+      }
+      const text = textDecoder.decode(textBytes);
       return { keyword, text };
     }
 
@@ -1475,6 +1697,224 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return { trailerCount, basisBytes, bundle: parsed, parseError: null };
     }
 
+    function proofTagRegex() {
+      return new RegExp(
+        `<metadata\\b[^>]*\\b${RECEIZ_SVG_ATTR}\\s*=\\s*(["'])([^"']+)\\1[^>]*>(?:[\\s\\S]*?<\\/metadata\\s*>)?`,
+        "gi",
+      );
+    }
+
+    function decodeURIComponentSafeToken(value) {
+      try {
+        return decodeURIComponent(value);
+      } catch {
+        return null;
+      }
+    }
+
+    function isSupportedBundleCodec(value) {
+      return value.startsWith("c1:") || value.startsWith("j0:");
+    }
+
+    function normalizeEncodedBundleToken(raw) {
+      const compact = String(raw || "").replace(/\s+/g, "");
+      const candidates = [String(raw || "").trim(), compact];
+      for (const candidate of candidates) {
+        if (isSupportedBundleCodec(candidate)) return candidate;
+        const decoded = decodeURIComponentSafeToken(candidate);
+        if (decoded && isSupportedBundleCodec(decoded)) return decoded;
+      }
+      return null;
+    }
+
+    function stripReceizSvgProofTags(svgBytes) {
+      const svgText = textDecoder.decode(svgBytes);
+      const encodedBundles = [];
+      let removedCount = 0;
+      const regex = proofTagRegex();
+      let strippedText = "";
+      let cursor = 0;
+      let match = regex.exec(svgText);
+      while (match) {
+        const full = match[0] || "";
+        const encoded = match[2] || "";
+        const matchIndex = match.index;
+        let removeStart = matchIndex;
+        if (removeStart > 0 && svgText.charCodeAt(removeStart - 1) === 0x0a) {
+          removeStart -= 1;
+        }
+
+        strippedText += svgText.slice(cursor, removeStart);
+        cursor = matchIndex + full.length;
+        removedCount += 1;
+        encodedBundles.push(String(encoded));
+        match = regex.exec(svgText);
+      }
+      strippedText += svgText.slice(cursor);
+      return {
+        basisText: strippedText,
+        basisBytes: new TextEncoder().encode(strippedText),
+        removedCount,
+        encodedBundles,
+      };
+    }
+
+    function parseReceizSvgProof(svgBytes) {
+      const stripped = stripReceizSvgProofTags(svgBytes);
+      if (stripped.removedCount === 0) {
+        return { proofCount: 0, basisBytes: stripped.basisBytes, encodedBundle: null, parseError: "missing_svg_proof" };
+      }
+      if (stripped.removedCount > 1) {
+        return {
+          proofCount: stripped.removedCount,
+          basisBytes: stripped.basisBytes,
+          encodedBundle: null,
+          parseError: "duplicate_svg_proof",
+        };
+      }
+      const encodedBundle = normalizeEncodedBundleToken(stripped.encodedBundles[0] || "");
+      if (!encodedBundle) {
+        return { proofCount: 1, basisBytes: stripped.basisBytes, encodedBundle: null, parseError: "invalid_svg_proof" };
+      }
+      return {
+        proofCount: 1,
+        basisBytes: stripped.basisBytes,
+        encodedBundle,
+        parseError: null,
+      };
+    }
+
+    function decodeWhitespaceBits(bits) {
+      if (bits.length % 8 !== 0) return null;
+      const out = new Uint8Array(bits.length / 8);
+      for (let i = 0; i < bits.length; i += 8) {
+        let value = 0;
+        for (let j = 0; j < 8; j += 1) {
+          const ch = bits[i + j];
+          if (ch !== " " && ch !== "\t") return null;
+          value = (value << 1) | (ch === "\t" ? 1 : 0);
+        }
+        out[i / 8] = value;
+      }
+      return out;
+    }
+
+    function unpackBundlePayload(bytes) {
+      if (bytes.length < 4) return null;
+      const size =
+        (((bytes[0] || 0) << 24) >>> 0) + ((bytes[1] || 0) << 16) + ((bytes[2] || 0) << 8) + (bytes[3] || 0);
+      if (size !== bytes.length - 4) return null;
+      return normalizeEncodedBundleToken(textDecoder.decode(bytes.slice(4)));
+    }
+
+    function detectTrailingJsonChannel(current) {
+      for (const channel of JSON_WS_CHANNELS) {
+        if (current.endsWith(channel.suffix)) return channel;
+      }
+      return null;
+    }
+
+    function findTrailingJsonProof(current, channel) {
+      const suffixStart = current.length - channel.suffix.length;
+      let prefixStart = current.lastIndexOf(channel.prefix, suffixStart - 1);
+
+      let sawPrefix = false;
+      let sawInvalidBits = false;
+      let sawInvalidPayload = false;
+
+      while (prefixStart >= 0) {
+        sawPrefix = true;
+        const bits = current.slice(prefixStart + channel.prefix.length, suffixStart);
+        const payloadBytes = decodeWhitespaceBits(bits);
+        if (!payloadBytes) {
+          sawInvalidBits = true;
+          prefixStart = current.lastIndexOf(channel.prefix, prefixStart - 1);
+          continue;
+        }
+
+        const encodedBundle = unpackBundlePayload(payloadBytes);
+        if (!encodedBundle) {
+          sawInvalidPayload = true;
+          prefixStart = current.lastIndexOf(channel.prefix, prefixStart - 1);
+          continue;
+        }
+
+        return {
+          ok: true,
+          prefixStart,
+          encodedBundle
+        };
+      }
+
+      if (!sawPrefix) return { ok: false, parseError: "missing_json_whitespace_proof_prefix" };
+      if (sawInvalidPayload) return { ok: false, parseError: "invalid_json_whitespace_payload" };
+      if (sawInvalidBits) return { ok: false, parseError: "invalid_json_whitespace_bits" };
+      return { ok: false, parseError: "invalid_json_proof" };
+    }
+
+    function stripReceizJsonProof(jsonBytes) {
+      let current = textDecoder.decode(jsonBytes);
+      const encodedBundles = [];
+      let removedCount = 0;
+      let parseError = null;
+
+      while (true) {
+        const channel = detectTrailingJsonChannel(current);
+        if (!channel) break;
+
+        const trailingProof = findTrailingJsonProof(current, channel);
+        if (!trailingProof.ok) {
+          if (trailingProof.parseError === "missing_json_whitespace_proof_prefix") {
+            break;
+          }
+          parseError = trailingProof.parseError;
+          break;
+        }
+
+        encodedBundles.push(trailingProof.encodedBundle);
+        removedCount += 1;
+        current = current.slice(0, trailingProof.prefixStart);
+      }
+
+      return {
+        basisText: current,
+        basisBytes: new TextEncoder().encode(current),
+        removedCount,
+        encodedBundles,
+        parseError,
+      };
+    }
+
+    function parseReceizJsonProof(jsonBytes) {
+      const stripped = stripReceizJsonProof(jsonBytes);
+      if (stripped.parseError) {
+        return {
+          proofCount: stripped.removedCount,
+          basisBytes: stripped.basisBytes,
+          encodedBundle: null,
+          parseError: stripped.parseError,
+        };
+      }
+      if (stripped.removedCount === 0) {
+        return { proofCount: 0, basisBytes: stripped.basisBytes, encodedBundle: null, parseError: "missing_json_proof" };
+      }
+      if (stripped.removedCount > 1) {
+        return {
+          proofCount: stripped.removedCount,
+          basisBytes: stripped.basisBytes,
+          encodedBundle: null,
+          parseError: "duplicate_json_proof",
+        };
+      }
+      const encodedBundle = stripped.encodedBundles[0] || null;
+      return {
+        proofCount: 1,
+        basisBytes: stripped.basisBytes,
+        encodedBundle,
+        parseError: encodedBundle ? null : "invalid_json_proof",
+      };
+    }
+
     function asHex64(value) {
       if (typeof value !== "string") return null;
       const normalized = value.trim().toLowerCase();
@@ -1578,8 +2018,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } catch {
           warnings.push("verifyUrl is not a valid URL.");
         }
-      } else {
-        warnings.push("verifyUrl is empty (path-only bundles are still valid offline).");
       }
 
       const artifactSha256Basis = typeof bundle.artifactSha256Basis === "string" ? bundle.artifactSha256Basis.trim().toLowerCase() : "";
@@ -1648,21 +2086,227 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
     }
 
-    async function verifyReceizFile(file, optionalLink) {
+    function normalizePackagePath(path) {
+      const cleaned = String(path || "").replace(/\\/g, "/").replace(/^\/+/, "");
+      return cleaned
+        .split("/")
+        .map((part) => part.trim())
+        .filter((part) => part && part !== "." && part !== "..")
+        .join("/");
+    }
+
+    function isDirectoryLikePackageEntry(path, bytes, allPaths) {
+      if (!path) return true;
+      if (String(path).endsWith("/")) return true;
+      if (!bytes || typeof bytes.byteLength !== "number") return false;
+      if (bytes.byteLength !== 0) return false;
+      const prefix = `${path}/`;
+      return allPaths.some((other) => other !== path && other.startsWith(prefix));
+    }
+
+    function coerceFolderManifest(value) {
+      if (!isRecord(value)) return null;
+      if (value.kind !== "receiz.folder.manifest.v1" || value.version !== 1) return null;
+      if (typeof value.createdAt !== "string" || !value.createdAt.trim()) return null;
+      if (typeof value.itemCount !== "number" || !Number.isFinite(value.itemCount) || value.itemCount < 0) return null;
+      if (!Array.isArray(value.entries)) return null;
+
+      const entries = [];
+      const seenSealedPaths = new Set();
+      for (const raw of value.entries) {
+        if (!isRecord(raw)) return null;
+        const sourcePath = normalizePackagePath(raw.sourcePath);
+        const sealedPath = normalizePackagePath(raw.sealedPath);
+        const sealedFilename = asString(raw.sealedFilename);
+        const sealedKind = asString(raw.sealedKind);
+        const sealedContentType = asString(raw.sealedContentType);
+        const sealedSize = typeof raw.sealedSize === "number" && Number.isFinite(raw.sealedSize) ? Math.trunc(raw.sealedSize) : null;
+        const sealedSha256 = asHex64(raw.sealedSha256);
+        const basisSha256 = asHex64(raw.basisSha256);
+        const verifyPath = asString(raw.verifyPath);
+        const code = asString(raw.code);
+        const pulse = asString(raw.pulse);
+        const ts = asString(raw.ts);
+        if (
+          !sourcePath ||
+          !sealedPath ||
+          !sealedFilename ||
+          !sealedKind ||
+          !sealedContentType ||
+          sealedSize === null ||
+          sealedSize < 0 ||
+          !sealedSha256 ||
+          !basisSha256 ||
+          !verifyPath ||
+          !code ||
+          !pulse ||
+          !ts
+        ) {
+          return null;
+        }
+        if (seenSealedPaths.has(sealedPath)) return null;
+        seenSealedPaths.add(sealedPath);
+        entries.push({
+          sourcePath,
+          sealedPath,
+          sealedFilename,
+          sealedKind,
+          sealedContentType,
+          sealedSize,
+          sealedSha256,
+          basisSha256,
+          verifyPath,
+          code,
+          pulse,
+          ts,
+          note: typeof raw.note === "string" && raw.note.trim() ? raw.note.trim() : ""
+        });
+      }
+
+      if (entries.length !== Math.trunc(value.itemCount)) return null;
+      return {
+        kind: "receiz.folder.manifest.v1",
+        version: 1,
+        createdAt: value.createdAt.trim(),
+        itemCount: entries.length,
+        entries
+      };
+    }
+
+    function coerceRootPackageManifest(value) {
+      if (!isRecord(value)) return null;
+      if (value.kind !== "receiz.package.root.manifest.v1" || value.version !== 1) return null;
+      if (typeof value.createdAt !== "string" || !value.createdAt.trim()) return null;
+      const folderManifestPath = normalizePackagePath(value.folderManifestPath);
+      if (!folderManifestPath) return null;
+      if (typeof value.itemCount !== "number" || !Number.isFinite(value.itemCount) || value.itemCount < 0) return null;
+      if (!Array.isArray(value.entries)) return null;
+
+      const entries = [];
+      const seenPaths = new Set();
+      for (const raw of value.entries) {
+        if (!isRecord(raw)) return null;
+        const path = normalizePackagePath(raw.path);
+        const size = typeof raw.size === "number" && Number.isFinite(raw.size) ? Math.trunc(raw.size) : null;
+        const sha256 = asHex64(raw.sha256);
+        if (!path || size === null || size < 0 || !sha256) return null;
+        if (seenPaths.has(path)) return null;
+        seenPaths.add(path);
+        entries.push({ path, size, sha256 });
+      }
+
+      if (entries.length !== Math.trunc(value.itemCount)) return null;
+      return {
+        kind: "receiz.package.root.manifest.v1",
+        version: 1,
+        createdAt: value.createdAt.trim(),
+        folderManifestPath,
+        itemCount: entries.length,
+        entries
+      };
+    }
+
+    function parseFolderManifestBytes(bytes) {
+      try {
+        const parsed = JSON.parse(new TextDecoder().decode(bytes));
+        return coerceFolderManifest(parsed);
+      } catch {
+        return null;
+      }
+    }
+
+    function parseRootPackageManifestBytes(bytes) {
+      try {
+        const parsed = JSON.parse(new TextDecoder().decode(bytes));
+        return coerceRootPackageManifest(parsed);
+      } catch {
+        return null;
+      }
+    }
+
+    function pickManifestCandidate(candidates) {
+      const scored = candidates.map((candidate) => {
+        let score = 0;
+        if (candidate.path.startsWith("_receiz/")) score += 200;
+        if (candidate.path.includes("/_receiz/")) score += 100;
+        if (candidate.path.includes("manifest")) score += 20;
+        score += candidate.manifest.itemCount;
+        return { candidate, score };
+      });
+      scored.sort((a, b) => b.score - a.score || a.candidate.path.localeCompare(b.candidate.path));
+      return scored[0]?.candidate || null;
+    }
+
+    function pickRootPackageManifestCandidate(candidates) {
+      const scored = candidates.map((candidate) => {
+        let score = 0;
+        if (candidate.path === "manifest.receizbundle") score += 300;
+        if (!candidate.path.includes("/")) score += 120;
+        if (candidate.path.includes("manifest")) score += 20;
+        score += candidate.manifest.itemCount;
+        return { candidate, score };
+      });
+      scored.sort((a, b) => b.score - a.score || a.candidate.path.localeCompare(b.candidate.path));
+      return scored[0]?.candidate || null;
+    }
+
+    function findFolderManifestCandidateByPath(candidates, path) {
+      const normalized = normalizePackagePath(path);
+      if (!normalized) return null;
+
+      const direct = candidates.filter((candidate) => normalizePackagePath(candidate.path) === normalized);
+      if (direct.length === 1) return direct[0];
+      if (direct.length > 1) return null;
+
+      const suffix = `/${normalized}`;
+      const suffixMatches = candidates.filter((candidate) => normalizePackagePath(candidate.path).endsWith(suffix));
+      if (suffixMatches.length === 1) return suffixMatches[0];
+      return null;
+    }
+
+    function findPackageFileByPath(fileMap, sealedPath) {
+      const direct = fileMap.get(sealedPath);
+      if (direct) return direct;
+
+      const suffix = `/${sealedPath}`;
+      let found = null;
+      for (const file of fileMap.values()) {
+        if (!file.path.endsWith(suffix)) continue;
+        if (found) return null;
+        found = file;
+      }
+      return found;
+    }
+
+    async function verifyReceizBytes(fileName, bytes, optionalLink) {
       const errors = [];
       const warnings = [];
       const checks = [];
 
-      const bytes = new Uint8Array(await file.arrayBuffer());
       const fileHash = await sha256Hex(bytes);
-      const format = detectDocumentFormat(bytes);
+      const format = detectDocumentFormat(bytes, { filename: fileName });
 
       let bundle = null;
       let anchor = null;
       let basisBytes = null;
       let chunkSummary = [];
+      let packageSummary = null;
+      const bundleParsed = decodeReceizBundleEnvelope(bytes);
+      if (bundleParsed) {
+        checks.push({ state: "ok", message: "Container envelope parse" });
+        basisBytes = bundleParsed.originalBytes;
+        bundle = bundleParsed.envelope.proofbundle;
+        chunkSummary = [{ keyword: "receiz.bundle.v1", bytes: bytes.length }];
 
-      if (format === "png") {
+        const manifestBasis = (await sha256Hex(bundleParsed.originalBytes)).toLowerCase();
+        if (manifestBasis !== bundleParsed.envelope.manifest.basisSha256.toLowerCase()) {
+          errors.push("Bundle manifest basis hash mismatch.");
+        }
+        const bundleBasis = typeof bundle.artifactSha256Basis === "string" ? bundle.artifactSha256Basis.toLowerCase() : "";
+        if (bundleBasis !== manifestBasis) {
+          errors.push("Proof bundle artifact binding does not match container original bytes.");
+        }
+      } else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
         chunkSummary = summarizeChunks(chunks);
         const chunkMap = new Map(chunks.map((x) => [x.keyword, x.text]));
@@ -1707,14 +2351,20 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } else if (anchor) {
           checks.push({ state: "ok", message: "Anchor bundle parse" });
         } else {
-          checks.push({ state: "warn", message: "Anchor bundle not present (normal for unsealed receiz)." });
+          checks.push({ state: "ok", message: "Anchor bundle optional (not present)." });
         }
 
         const g16Notice = chunkMap.get(G16_NOTICE_KEY) || null;
-        if (!g16Notice) {
-          warnings.push("Groth16 notice chunk is missing.");
-        } else {
+        const hasBundleGroth16 = Boolean(
+          bundle &&
+          isRecord(bundle) &&
+          asString(bundle.groth16ProofDigest) &&
+          asString(bundle.groth16Proof)
+        );
+        if (g16Notice || hasBundleGroth16) {
           checks.push({ state: "ok", message: "Groth16 notice chunk present" });
+        } else {
+          warnings.push("Groth16 notice/proof metadata is missing.");
         }
       } else if (format === "pdf") {
         const proofBundles = extractReceizProofBundlesFromPdf(bytes);
@@ -1742,6 +2392,86 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
+      } else if (format === "svg") {
+        const parsed = parseReceizSvgProof(bytes);
+        if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
+          const trailerParsed = parseReceizTrailer(bytes);
+          if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
+            warnings.push("Used trailer proof fallback for SVG artifact.");
+            checks.push({ state: "ok", message: "Proof bundle fallback (Receiz trailer)" });
+            bundle = trailerParsed.bundle;
+            basisBytes = trailerParsed.basisBytes;
+            chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
+          } else {
+            if (parsed.proofCount !== 1) {
+              errors.push(
+                parsed.proofCount > 1
+                  ? "Duplicate proof bundles detected in SVG metadata."
+                  : "Missing embedded Receiz SVG proof bundle."
+              );
+              checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+            } else {
+              checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+              errors.push("Receiz SVG proof bundle is malformed.");
+              checks.push({ state: "bad", message: "Proof bundle decode" });
+            }
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          }
+        } else {
+          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+          chunkSummary = [{ keyword: "svg.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
+          try {
+            bundle = await decodeReceizProofBundle(parsed.encodedBundle);
+            if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
+          } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            errors.push(`Proof bundle decode failed: ${message}`);
+            checks.push({ state: "bad", message: "Proof bundle decode" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          }
+          checks.push({ state: "ok", message: "Proof bundle decode" });
+          basisBytes = parsed.basisBytes;
+        }
+      } else if (format === "json") {
+        const parsed = parseReceizJsonProof(bytes);
+        if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
+          const trailerParsed = parseReceizTrailer(bytes);
+          if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
+            warnings.push("Used trailer proof fallback for JSON artifact.");
+            checks.push({ state: "ok", message: "Proof bundle fallback (Receiz trailer)" });
+            bundle = trailerParsed.bundle;
+            basisBytes = trailerParsed.basisBytes;
+            chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
+          } else {
+            if (parsed.proofCount !== 1) {
+              errors.push(
+                parsed.proofCount > 1
+                  ? "Duplicate proof bundles detected in JSON whitespace channel."
+                  : "Missing embedded Receiz JSON proof bundle."
+              );
+              checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+            } else {
+              checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+              errors.push("Receiz JSON proof bundle is malformed.");
+              checks.push({ state: "bad", message: "Proof bundle decode" });
+            }
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          }
+        } else {
+          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+          chunkSummary = [{ keyword: "json.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
+          try {
+            bundle = await decodeReceizProofBundle(parsed.encodedBundle);
+            if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
+          } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            errors.push(`Proof bundle decode failed: ${message}`);
+            checks.push({ state: "bad", message: "Proof bundle decode" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          }
+          checks.push({ state: "ok", message: "Proof bundle decode" });
+          basisBytes = parsed.basisBytes;
+        }
       } else {
         const trailerParsed = parseReceizTrailer(bytes);
         if (trailerParsed.trailerCount > 0) {
@@ -1767,25 +2497,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
-          const bundleParsed = decodeReceizBundleEnvelope(bytes);
-          if (!bundleParsed) {
-            errors.push("Unsupported artifact format. Upload a PNG, PDF, trailer-sealed file, or .receizbundle.");
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
-          }
-
-          checks.push({ state: "ok", message: "Container envelope parse" });
-          basisBytes = bundleParsed.originalBytes;
-          bundle = bundleParsed.envelope.proofbundle;
-          chunkSummary = [{ keyword: "receiz.bundle.v1", bytes: bytes.length }];
-
-          const manifestBasis = (await sha256Hex(bundleParsed.originalBytes)).toLowerCase();
-          if (manifestBasis !== bundleParsed.envelope.manifest.basisSha256.toLowerCase()) {
-            errors.push("Bundle manifest basis hash mismatch.");
-          }
-          const bundleBasis = typeof bundle.artifactSha256Basis === "string" ? bundle.artifactSha256Basis.toLowerCase() : "";
-          if (bundleBasis !== manifestBasis) {
-            errors.push("Proof bundle artifact binding does not match container original bytes.");
-          }
+          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a receized package ZIP/folder.");
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
         }
       }
 
@@ -1811,8 +2524,410 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         bundle,
         anchor,
         fileHash,
-        chunkSummary
+        chunkSummary,
+        packageSummary
       };
+    }
+
+    async function verifyReceizFile(file, optionalLink) {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
+    }
+
+    async function verifyFolderPackageEntries(entries, optionalLink) {
+      const fileMap = new Map();
+      const normalizedEntries = [];
+      for (const entry of entries) {
+        const normalized = normalizePackagePath(entry.path);
+        if (!normalized) continue;
+        normalizedEntries.push({ ...entry, path: normalized });
+      }
+
+      const allPaths = normalizedEntries.map((entry) => entry.path);
+      for (const entry of normalizedEntries) {
+        if (isDirectoryLikePackageEntry(entry.path, entry.bytes, allPaths)) continue;
+        fileMap.set(entry.path, entry);
+      }
+      if (fileMap.size === 0) {
+        return {
+          ok: false,
+          errors: ["No files found to verify."],
+          warnings: [],
+          checks: [{ state: "bad", message: "Folder input" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null
+        };
+      }
+
+      const candidates = [];
+      const rootManifestCandidates = [];
+      for (const file of fileMap.values()) {
+        const parsed = decodeReceizBundleEnvelope(file.bytes);
+        if (!parsed) continue;
+        const manifest = parseFolderManifestBytes(parsed.originalBytes);
+        if (manifest) {
+          candidates.push({ path: file.path, bytes: file.bytes, manifest });
+        }
+        const rootManifest = parseRootPackageManifestBytes(parsed.originalBytes);
+        if (rootManifest) {
+          rootManifestCandidates.push({ path: file.path, bytes: file.bytes, manifest: rootManifest });
+        }
+      }
+
+      if (candidates.length === 0) {
+        return {
+          ok: false,
+          errors: ["No valid sealed package manifest found."],
+          warnings: [],
+          checks: [{ state: "bad", message: "Package manifest artifact" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null
+        };
+      }
+
+      const checks = [];
+      const errors = [];
+      const warnings = [];
+
+      let rootManifestArtifact = null;
+      if (rootManifestCandidates.length > 0) {
+        if (rootManifestCandidates.length > 1) {
+          warnings.push("Multiple root package manifests found; highest-confidence artifact used.");
+        }
+        rootManifestArtifact = pickRootPackageManifestCandidate(rootManifestCandidates);
+        if (rootManifestArtifact) {
+          checks.push({ state: "ok", message: "Root package manifest artifact found" });
+          const rootManifestVerify = await verifyReceizBytes(rootManifestArtifact.path, rootManifestArtifact.bytes, "");
+          if (rootManifestVerify.ok) {
+            checks.push({ state: "ok", message: "Root manifest artifact verification" });
+          } else {
+            checks.push({ state: "bad", message: "Root manifest artifact verification" });
+            for (const err of rootManifestVerify.errors) errors.push(`Root manifest artifact: ${err}`);
+          }
+
+          const declaredRootPaths = new Set(rootManifestArtifact.manifest.entries.map((entry) => normalizePackagePath(entry.path)));
+          const matchedRootPaths = new Set();
+          for (const rootEntry of rootManifestArtifact.manifest.entries) {
+            const declaredPath = normalizePackagePath(rootEntry.path);
+            const target = findPackageFileByPath(fileMap, declaredPath);
+            if (!target) {
+              errors.push(`Root manifest missing file: ${declaredPath}`);
+              continue;
+            }
+            matchedRootPaths.add(target.path);
+            if (target.bytes.byteLength !== rootEntry.size) {
+              errors.push(`Root manifest size mismatch for ${declaredPath}. expected ${rootEntry.size}, got ${target.bytes.byteLength}.`);
+            }
+            const digest = (await sha256Hex(target.bytes)).toLowerCase();
+            if (digest !== String(rootEntry.sha256 || "").toLowerCase()) {
+              errors.push(`Root manifest hash mismatch for ${declaredPath}.`);
+            }
+          }
+
+          for (const file of fileMap.values()) {
+            if (normalizePackagePath(file.path) === normalizePackagePath(rootManifestArtifact.path)) continue;
+            if (!declaredRootPaths.has(file.path) && !matchedRootPaths.has(file.path)) {
+              warnings.push(`Extra file not listed in root manifest: ${file.path}`);
+            }
+          }
+        }
+      } else {
+        warnings.push("Root package manifest proof bundle is missing (expected manifest.receizbundle).");
+      }
+
+      let manifestArtifact = null;
+      if (rootManifestArtifact) {
+        const expectedPath = normalizePackagePath(rootManifestArtifact.manifest.folderManifestPath);
+        manifestArtifact = findFolderManifestCandidateByPath(candidates, expectedPath);
+        if (!expectedPath) {
+          errors.push("Root manifest folderManifestPath is empty.");
+          manifestArtifact = pickManifestCandidate(candidates);
+        } else if (!manifestArtifact) {
+          errors.push(`Root manifest folderManifestPath does not match a sealed folder manifest artifact: ${expectedPath}`);
+          manifestArtifact = pickManifestCandidate(candidates);
+        }
+      } else {
+        if (candidates.length > 1) {
+          warnings.push("Multiple package manifests found; highest-confidence artifact used.");
+        }
+        manifestArtifact = pickManifestCandidate(candidates);
+      }
+
+      if (!manifestArtifact) {
+        return {
+          ok: false,
+          errors: ["Package manifest artifact selection failed."],
+          warnings: [],
+          checks: [{ state: "bad", message: "Package manifest artifact" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null
+        };
+      }
+      checks.push({ state: "ok", message: "Package manifest artifact found" });
+      const manifestVerify = await verifyReceizBytes(manifestArtifact.path, manifestArtifact.bytes, "");
+      if (manifestVerify.ok) {
+        checks.push({ state: "ok", message: "Manifest artifact verification" });
+      } else {
+        checks.push({ state: "bad", message: "Manifest artifact verification" });
+        for (const err of manifestVerify.errors) errors.push(`Manifest artifact: ${err}`);
+      }
+
+      const itemResults = [];
+      let verifiedCount = 0;
+      let failedCount = 0;
+      let missingCount = 0;
+      const matchedPaths = new Set();
+
+      for (const manifestEntry of manifestArtifact.manifest.entries) {
+        const sealedPath = normalizePackagePath(manifestEntry.sealedPath);
+        const sourcePath = normalizePackagePath(manifestEntry.sourcePath);
+        const sealedFile = findPackageFileByPath(fileMap, sealedPath);
+
+        if (!sealedFile) {
+          missingCount += 1;
+          failedCount += 1;
+          errors.push(`Missing sealed artifact listed in manifest: ${sealedPath}`);
+          itemResults.push({
+            sourcePath,
+            sealedPath,
+            ok: false,
+            kind: "missing",
+            errors: [`Missing sealed artifact: ${sealedPath}`],
+            warnings: [],
+            code: manifestEntry.code,
+            pulse: manifestEntry.pulse,
+            ts: manifestEntry.ts
+          });
+          continue;
+        }
+
+        matchedPaths.add(sealedFile.path);
+        const itemErrors = [];
+        const itemWarnings = [];
+        const sealedSha = (await sha256Hex(sealedFile.bytes)).toLowerCase();
+        if (sealedSha !== String(manifestEntry.sealedSha256 || "").toLowerCase()) {
+          itemErrors.push("Sealed artifact hash mismatch against package manifest.");
+        }
+        if (sealedFile.bytes.byteLength !== manifestEntry.sealedSize) {
+          itemErrors.push(`Sealed artifact size mismatch. expected ${manifestEntry.sealedSize}, got ${sealedFile.bytes.byteLength}.`);
+        }
+
+        const verifyResult = await verifyReceizBytes(manifestEntry.sealedFilename, sealedFile.bytes, "");
+        if (!verifyResult.ok) {
+          itemErrors.push(verifyResult.errors[0] || "Sealed artifact verification failed.");
+        }
+        for (const w of verifyResult.warnings) itemWarnings.push(w);
+
+        if (!verifyResult.bundle) {
+          itemErrors.push("Missing proof bundle in sealed artifact.");
+        } else {
+          if (String(verifyResult.bundle.code || "").toUpperCase() !== String(manifestEntry.code || "").toUpperCase()) {
+            itemErrors.push("Bundle code mismatch.");
+          }
+          if (String(verifyResult.bundle.kaiPulseEternal || "") !== String(manifestEntry.pulse || "")) {
+            itemErrors.push("Bundle pulse mismatch.");
+          }
+          if (String(verifyResult.bundle.ts || "") !== String(manifestEntry.ts || "")) {
+            itemErrors.push("Bundle timestamp mismatch.");
+          }
+          if (String(verifyResult.bundle.verifyPath || "") !== String(manifestEntry.verifyPath || "")) {
+            itemErrors.push("Bundle verifyPath mismatch.");
+          }
+          if (String(verifyResult.bundle.artifactSha256Basis || "").toLowerCase() !== String(manifestEntry.basisSha256 || "").toLowerCase()) {
+            itemErrors.push("Bundle artifact basis mismatch.");
+          }
+        }
+
+        const itemOk = itemErrors.length === 0;
+        if (itemOk) verifiedCount += 1;
+        else failedCount += 1;
+        if (!itemOk) {
+          errors.push(`${sealedPath}: ${itemErrors[0]}`);
+        }
+
+        itemResults.push({
+          sourcePath,
+          sealedPath,
+          ok: itemOk,
+          kind: verifyResult.bundle ? "sealed" : "unknown",
+          errors: itemErrors,
+          warnings: itemWarnings,
+          code: manifestEntry.code,
+          pulse: manifestEntry.pulse,
+          ts: manifestEntry.ts
+        });
+      }
+
+      const declaredPaths = new Set(manifestArtifact.manifest.entries.map((entry) => normalizePackagePath(entry.sealedPath)));
+      for (const file of fileMap.values()) {
+        if (!file.path.startsWith("sealed/")) continue;
+        if (!declaredPaths.has(file.path) && !matchedPaths.has(file.path)) {
+          warnings.push(`Extra sealed artifact not listed in manifest: ${file.path}`);
+        }
+      }
+
+      if (missingCount === 0 && failedCount === 0 && errors.length === 0) {
+        checks.push({ state: "ok", message: "All sealed artifacts match package manifest" });
+      } else {
+        checks.push({ state: "bad", message: "Package manifest/file integrity check" });
+      }
+
+      const manifestHash = await sha256Hex(manifestArtifact.bytes);
+      const packageResult = {
+        ok: errors.length === 0,
+        errors,
+        warnings,
+        checks,
+        bundle: manifestVerify.bundle || null,
+        anchor: null,
+        fileHash: manifestHash,
+        chunkSummary: [{ keyword: "receiz.folder.manifest.v1", bytes: manifestArtifact.bytes.length }],
+        packageSummary: {
+          manifestArtifactPath: manifestArtifact.path,
+          itemCount: manifestArtifact.manifest.itemCount,
+          verifiedCount,
+          failedCount,
+          missingCount,
+          itemResults
+        }
+      };
+      return packageResult;
+    }
+
+    async function verifySelectedFiles(files, optionalLink) {
+      if (!Array.isArray(files) || files.length === 0) {
+        return {
+          ok: false,
+          errors: ["No files selected."],
+          warnings: [],
+          checks: [{ state: "bad", message: "File selection" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null,
+          folderScanSummary: null
+        };
+      }
+
+      if (files.length === 1) {
+        const file = files[0];
+        let bytes;
+        try {
+          bytes = new Uint8Array(await file.arrayBuffer());
+        } catch (err) {
+          const reason = err instanceof Error ? err.message : String(err || "Failed to read selected file.");
+          return {
+            ok: false,
+            errors: [reason],
+            warnings: [],
+            checks: [{ state: "bad", message: `File read failed: ${file.name || "selected file"}` }],
+            bundle: null,
+            anchor: null,
+            fileHash: "",
+            chunkSummary: [],
+            packageSummary: null,
+            folderScanSummary: null
+          };
+        }
+        if (detectDocumentFormat(bytes, { filename: file.name || "artifact", mime: file.type || "" }) === "zip") {
+          if (!fflate || typeof fflate.unzipSync !== "function") {
+            return {
+              ok: false,
+              errors: ["ZIP package verification requires fflate unzip runtime."],
+              warnings: [],
+              checks: [{ state: "bad", message: "ZIP package runtime" }],
+              bundle: null,
+              anchor: null,
+              fileHash: await sha256Hex(bytes),
+              chunkSummary: [],
+              packageSummary: null,
+              folderScanSummary: null
+            };
+          }
+          try {
+            const unzipped = fflate.unzipSync(bytes);
+            const entries = Object.keys(unzipped).map((path) => ({
+              path,
+              bytes: unzipped[path],
+              mime: ""
+            }));
+            const packageResult = await verifyFolderPackageEntries(entries, optionalLink);
+            const fallbackToFolderScan = hasMissingPackageManifestError(packageResult);
+            const baseResult = fallbackToFolderScan
+              ? await verifyEntriesIndividually(entries, optionalLink)
+              : packageResult;
+            baseResult.fileHash = await sha256Hex(bytes);
+            baseResult.chunkSummary = [{ keyword: "receiz.folder.package.zip", bytes: bytes.length }, ...baseResult.chunkSummary];
+            return baseResult;
+          } catch {
+            return {
+              ok: false,
+              errors: ["Invalid ZIP file. Could not parse package."],
+              warnings: [],
+              checks: [{ state: "bad", message: "ZIP parse" }],
+              bundle: null,
+              anchor: null,
+              fileHash: await sha256Hex(bytes),
+              chunkSummary: [],
+              packageSummary: null,
+              folderScanSummary: null
+            };
+          }
+        }
+        return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
+      }
+
+      const entries = [];
+      const readWarnings = [];
+      for (const file of files) {
+        const path = normalizePackagePath(file.webkitRelativePath || file.name);
+        try {
+          entries.push({
+            path,
+            bytes: new Uint8Array(await file.arrayBuffer()),
+            mime: file.type || ""
+          });
+        } catch (err) {
+          const reason = err instanceof Error ? err.message : String(err || "Failed to read file.");
+          readWarnings.push(`Skipped unreadable file: ${path} (${reason})`);
+        }
+      }
+
+      if (entries.length === 0) {
+        return {
+          ok: false,
+          errors: ["No readable files were found in the selected folder."],
+          warnings: readWarnings,
+          checks: [{ state: "bad", message: "Folder file read failed" }],
+          bundle: null,
+          anchor: null,
+          fileHash: "",
+          chunkSummary: [],
+          packageSummary: null,
+          folderScanSummary: null
+        };
+      }
+
+      const packageResult = await verifyFolderPackageEntries(entries, optionalLink);
+      if (hasMissingPackageManifestError(packageResult)) {
+        const scanResult = await verifyEntriesIndividually(entries, optionalLink);
+        return readWarnings.length > 0
+          ? { ...scanResult, warnings: [...readWarnings, ...(Array.isArray(scanResult.warnings) ? scanResult.warnings : [])] }
+          : scanResult;
+      }
+      return readWarnings.length > 0
+        ? { ...packageResult, warnings: [...readWarnings, ...(Array.isArray(packageResult.warnings) ? packageResult.warnings : [])] }
+        : packageResult;
     }
 
     function installDnD() {
@@ -1829,10 +2944,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const onDrop = (event) => {
         event.preventDefault();
         ui.dropZone.classList.remove("is-over");
-        const file = event.dataTransfer && event.dataTransfer.files ? event.dataTransfer.files[0] : null;
-        if (!file) return;
-        selectedFile = file;
-        setFileMeta(file);
+        const files = event.dataTransfer && event.dataTransfer.files ? Array.from(event.dataTransfer.files) : [];
+        if (!files.length) return;
+        selectedFiles = files;
+        setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = false;
       };
 
@@ -1844,10 +2959,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
-        const file = event.target && event.target.files ? event.target.files[0] : null;
-        selectedFile = file || null;
-        setFileMeta(selectedFile);
-        ui.verifyBtn.disabled = !selectedFile;
+        const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+        selectedFiles = files;
+        setFileMeta(selectedFiles);
+        ui.verifyBtn.disabled = selectedFiles.length === 0;
+      });
+
+      ui.folderInput.addEventListener("change", (event) => {
+        const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+        selectedFiles = files;
+        setFileMeta(selectedFiles);
+        ui.verifyBtn.disabled = selectedFiles.length === 0;
       });
 
       ui.verifyBtn.addEventListener("click", () => {
@@ -1858,7 +2980,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function init() {
       installEvents();
       installDnD();
-      setFileMeta(null);
+      setFileMeta([]);
       ui.bundleJson.textContent = "(none)";
       ui.chunkJson.textContent = "(none)";
       writeFacts(null);

@@ -1,6 +1,6 @@
 # Copy guide
 
-Use these strings and framing rules for v11 verifier UX and release communications.
+Use these strings and framing rules for v12 verifier UX and release communications.
 
 ## Core product line
 - "Verify a receiz offline."

@@ -2,33 +2,21 @@
 
 Verify a Receiz artifact offline. Proof lives in the file.
 
-Current release: `v11.0.0`
+Current release: `v12.0.0`
 
-## What stayed the same from v10
+## What stayed the same from v11
 - Fail-closed verification: if integrity cannot be proven from artifact bytes, result is not verified.
 - Canonical identity checks: `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`.
 - Artifact binding checks: SHA-256 basis hash must match embedded binding.
 - Optional `/v/...` link cross-check against embedded canonical paths.
 - No third-party network dependencies.
 
-## What changed in v11
-- Multi-format verification instead of PNG-only:
-  - PNG with embedded text chunks.
-  - PDF with embedded Receiz proof object metadata.
-  - Trailer-sealed artifacts with end-of-file Receiz trailer markers.
-  - `.receizbundle` JSON envelope containers.
-- Expanded file chooser support for `.png`, `.pdf`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.receizbundle`.
-- PDF parser support for `/Type /ReceizProof` objects and `/ProofBundle` literal or hex payloads.
-- Trailer parser support for:
-  - prefix: `--RECEIZ-TRAILER-v1--`
-  - suffix: `--END-RECEIZ-TRAILER--`
-- Container support for `kind: "receiz.bundle.v1"` envelopes with manifest + original bytes + proof bundle.
-- Deterministic and real Groth16 artifact verification paths:
-  - deterministic artifact validation for canonical proof bundles.
-  - optional real Groth16 verify path using `snarkjs` and `/zk/document_seal_verification_key.json`.
-- More detailed result diagnostics (chunk summary, anchor info, format-specific checks).
+## What changed in v12
+- Release marker and docs updated from `v11.0.0` to `v12.0.0`.
+- Release notes/changelog now describe migration from `v11` to `v12`.
+- Verifier behavior and contracts remain aligned with the multi-carrier model introduced in `v11`.
 
-## Supported artifact inputs (v11)
+## Supported artifact inputs (v12)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. Trailer-sealed artifact ending with one Receiz trailer payload.
@@ -66,7 +54,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for full v11 feature coverage:
+Required runtime assets for full v12 feature coverage:
 - `index.html`
 - `receiz-offline-verifier.html` (if served as an alternate entry path)
 - `snarkjs.min.js` (for real Groth16 mode)

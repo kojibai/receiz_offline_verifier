@@ -1,18 +1,18 @@
 # Release Notes
 
-## v11.0.0 (from v10.0.0)
+## v12.0.0 (from v11.0.0)
 Release date: 2026-02-24
 
-`v11.0.0` expands the verifier from a PNG-only flow (`v10`) to a multi-carrier verifier while preserving fail-closed, byte-level integrity guarantees.
+`v12.0.0` is a version-alignment release that keeps the multi-carrier verifier contract introduced in `v11.0.0` while updating release markers and documentation references to `v12.0.0`.
 
 ## Summary
-- Moved from single-carrier verification to multi-carrier verification.
-- Added strict extraction and uniqueness rules per carrier.
-- Added optional real Groth16 verification path using `snarkjs`.
-- Added schema set for proof, anchor, and container payload contracts.
-- Kept core invariants and fail-closed semantics from `v10`.
+- Updated release markers and references from `v11.0.0` to `v12.0.0`.
+- Kept strict extraction and uniqueness rules for each carrier.
+- Kept optional real Groth16 verification path using `snarkjs`.
+- Kept schema set for proof, anchor, and container payload contracts.
+- Kept core invariants and fail-closed semantics from `v11`.
 
-## New in v11
+## Feature set in v12
 
 ### 1) Multi-carrier artifact support
 The verifier now accepts and validates:
@@ -49,7 +49,7 @@ Notes:
   - Basis is decoded `originalBase64`.
 
 ### 3) Groth16 verification modes
-When Groth16 fields exist, v11 validates via one of two modes:
+When Groth16 fields exist, v12 validates via one of two modes:
 - Deterministic mode:
   - Validates canonical deterministic artifacts against bundle identity.
 - Real mode:
@@ -61,7 +61,7 @@ When Groth16 fields exist, v11 validates via one of two modes:
 If real-mode assets are missing, checks fail explicitly (no silent pass).
 
 ### 4) Documentation and schema coverage
-Added/updated v11 contracts in:
+Updated v12 contracts in:
 - `docs/FORMAT.md`
 - `docs/ARCHITECTURE.md`
 - `docs/COMPATIBILITY.md`
@@ -76,14 +76,14 @@ Added schemas:
 - `docs/schemas/README.md`
 
 ### 5) UX and diagnostics
-- UI version marker updated: `v10.0.0` → `v11.0.0`.
+- UI version marker updated: `v11.0.0` → `v12.0.0`.
 - Displays richer diagnostics:
   - per-check results
   - chunk/container summary
   - decoded proof bundle view
   - anchor metadata visibility when present
 
-## Preserved from v10
+## Preserved from v11
 - Fail-closed verification model.
 - Canonical field validation:
   - `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`
@@ -104,18 +104,17 @@ Added schemas:
 Baseline verification:
 - `/index.html`
 
-Full v11 feature coverage:
+Full v12 feature coverage:
 - `/receiz-offline-verifier.html` (alternate route, if used)
 - `/snarkjs.min.js` (real Groth16 mode)
 - `/zk/document_seal_verification_key.json` (real Groth16 mode)
 - `/sw.js` (optional; warm/caching behavior)
 
-## Migration checklist (v10 → v11)
+## Migration checklist (v11 → v12)
 - Deploy updated `site/` artifacts.
+- Ensure UI/docs/changelog/release references use `v12.0.0`.
 - If using real Groth16, publish `snarkjs.min.js` and verification key JSON at expected same-origin paths.
-- Update any integration docs that assumed PNG-only verification.
-- Add handling for trailer/envelope inputs if upstream tooling emits them.
-- Validate CI/docs references against v11 schema and format docs.
+- Validate CI/docs references against v12 schema and format docs.
 
 ## Security posture
 The release goal remains unchanged: detect tampering deterministically and refuse verification when integrity conditions are not fully proven from artifact bytes and required checks.

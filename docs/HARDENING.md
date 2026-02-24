@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v11 carriers.
+These rules preserve "proof lives in the file" semantics across all v12 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:

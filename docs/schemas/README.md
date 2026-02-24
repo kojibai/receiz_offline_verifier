@@ -1,6 +1,6 @@
 # Receiz schemas
 
-This directory contains JSON Schemas for verifier-visible payloads used in v11.
+This directory contains JSON Schemas for verifier-visible payloads used in v12.
 
 ## Files
 - `receiz-proof-bundle.schema.json`: proof bundle payload shape.
