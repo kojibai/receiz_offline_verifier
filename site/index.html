@@ -921,7 +921,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setStatus("bad", "No receized files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
-        setStatus("ok", "Verified original receiz", "All required offline checks passed.");
+        setStatus("ok", "Verified original", "All required offline checks passed.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
       }
