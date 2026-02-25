@@ -8,7 +8,7 @@
 
 ## Implementation shape
 - Static HTML app with embedded verifier logic and decompression runtime.
-- Input via file chooser and drag/drop.
+- Input via unified upload surface (file picker + drag/drop).
 - Format detection by signature bytes (PNG, PDF, JPEG, GIF, WEBP, ZIP/unknown fallback).
 
 ## Verification pipeline
@@ -17,7 +17,7 @@
 3. Build basis bytes according to carrier normalization rules.
 4. Decode and validate canonical bundle fields.
 5. Verify artifact SHA-256 binding.
-6. Optionally cross-check user-provided `/v/...` path.
+6. Optionally cross-check integration-provided `/v/...` path.
 7. Validate Groth16 artifacts when fields are present.
 
 ## Groth16 modes

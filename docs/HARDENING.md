@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v12 carriers.
+These rules preserve "proof lives in the file" semantics across all v13 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -13,7 +13,7 @@ These rules preserve "proof lives in the file" semantics across all v12 carriers
   - `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`
   - `slug` derived from `ts`
   - `verifyPath` derived from `slug` / `code` / `pulse`
-- Validate optional link input when provided.
+- Validate optional integration-supplied link input when provided.
 - Fail closed with explicit error reasons.
 
 ## Allowed runtime network behavior

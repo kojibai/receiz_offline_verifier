@@ -14,7 +14,7 @@
 - Canonical identity field validation and path derivation checks.
 - Proof decoding limits and malformed payload hard-fail behavior.
 - Deterministic or real Groth16 verification when Groth16 fields are present.
-- Optional link canonical-path matching when link input is provided.
+- Optional link canonical-path matching when an integration supplies link input.
 - Explicit fail-closed status and reason reporting.
 
 ## Non-goals

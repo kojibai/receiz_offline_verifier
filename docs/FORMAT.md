@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v12.0.0`.
+This document defines the verifier-visible data contract for `v13.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -66,10 +66,12 @@ Proof bundle must resolve to a canonical verify path:
 - `.receizbundle`: basis is decoded `originalBase64` payload.
 
 ## Optional link cross-check
-If a link/path input is provided, parsed path must match one of:
+If a link/path value is provided by an integration, parsed path must match one of:
 - `bundle.verifyPath`
 - `anchor.parent.viewUrl` (if anchor exists)
 - `bundle.wireproof.verifierPath` (if present)
+
+Note: the default `v13` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

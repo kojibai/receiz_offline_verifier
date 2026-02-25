@@ -1,18 +1,18 @@
 # Copy guide
 
-Use these strings and framing rules for v12 verifier UX and release communications.
+Use these strings and framing rules for v13 verifier UX and release communications.
 
 ## Core product line
-- "Verify a receiz offline."
-- "Upload the original receiz. Proof lives in the file."
+- "Verify an original."
+- "Upload anything. Proof lives in the original."
 
 ## Capability summary
-- "Supports PNG, PDF, trailer-sealed artifacts, and .receizbundle containers."
-- "Screenshots will not verify. Ask for the original receiz."
+- "Supports PNG, PDF, trailer-sealed artifacts, .receizbundle containers, and package ZIP/folder scans."
+- "Screenshots won’t verify. Ask for the original."
 
 ## Verification success
-- "Verified original receiz"
-- "All required offline checks passed."
+- "Verified original"
+- "All required checks passed."
 
 ## Verification failure framing
 - "Not verified"

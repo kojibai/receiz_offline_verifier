@@ -538,7 +538,7 @@
 
       <div id="statusBox" class="status warn" role="status" aria-live="polite">
         <div class="status-title"><span class="dot" aria-hidden="true"></span><span id="statusTitle">Waiting for a file</span></div>
-        <p class="status-note" id="statusNote">Load the original receiz, then run verification.</p>
+        <p class="status-note" id="statusNote">Load the original sealed artifact, then run verification.</p>
       </div>
 
       <ul id="checks" class="list" aria-label="Verification checks"></ul>
@@ -803,7 +803,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
         const bundle = verifyResult.bundle || null;
         const ok = !!verifyResult.ok;
-        const reason = ok ? "Receized artifact verified." : (verifyResult.errors[0] || "Not receized.");
+        const reason = ok ? "Sealed original artifact verified." : (verifyResult.errors[0] || "Not a sealed original.");
 
         if (ok) {
           verifiedCount += 1;
@@ -837,9 +837,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (verifiedCount > 0 && failedCount === 0) {
         checks.push({ state: "ok", message: "All files verified in folder scan" });
       } else if (verifiedCount > 0) {
-        checks.push({ state: "warn", message: `Mixed folder results: ${verifiedCount} verified, ${failedCount} not receized` });
+        checks.push({ state: "warn", message: `Mixed folder results: ${verifiedCount} verified, ${failedCount} not sealed originals` });
       } else {
-        checks.push({ state: "bad", message: "No receized artifacts found in folder scan" });
+        checks.push({ state: "bad", message: "No sealed originals found in folder scan" });
       }
 
       return {
@@ -899,7 +899,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (result.folderScanSummary && Array.isArray(result.folderScanSummary.itemResults)) {
         const preview = result.folderScanSummary.itemResults.slice(0, 24);
         for (const item of preview) {
-          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Receized" : "Not receized"}: ${item.path}`);
+          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Sealed original" : "Not sealed original"}: ${item.path}`);
         }
         const hidden = result.folderScanSummary.itemResults.length - preview.length;
         if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
@@ -908,17 +908,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (result.ok && result.packageSummary) {
         setStatus(
           "ok",
-          "Verified receized package",
+          "Verified sealed package",
           `${result.packageSummary.verifiedCount}/${result.packageSummary.itemCount} sealed files verified.`,
         );
       } else if (result.folderScanSummary) {
         const summary = result.folderScanSummary;
         if (summary.verifiedCount > 0 && summary.failedCount === 0) {
-          setStatus("ok", "Verified folder files", `${summary.verifiedCount}/${summary.itemCount} files are receized.`);
+          setStatus("ok", "Verified folder files", `${summary.verifiedCount}/${summary.itemCount} files are sealed originals.`);
         } else if (summary.verifiedCount > 0) {
-          setStatus("warn", "Mixed folder results", `${summary.verifiedCount} receized · ${summary.failedCount} not receized.`);
+          setStatus("warn", "Mixed folder results", `${summary.verifiedCount} sealed originals · ${summary.failedCount} not sealed originals.`);
         } else {
-          setStatus("bad", "No receized files found", `Checked ${summary.itemCount} files.`);
+          setStatus("bad", "No sealed original files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
         setStatus("ok", "Verified original", "All required checks passed.");
@@ -2053,7 +2053,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const claimId = asString(bundle.receizClaimId);
       const seed = asString(bundle.sigilClaimSeed);
 
-      if (kind !== "receiz.proof_bundle") errors.push("Bundle kind is not receiz.proof_bundle.");
+      if (kind !== "receiz.proof_bundle") errors.push("Bundle kind is not proof bundle.");
       if (payloadVersion !== "v1" && payloadVersion !== "v2") errors.push("Bundle payloadVersion is invalid.");
       if (!ts) errors.push("Bundle ts is missing.");
       if (!slug) errors.push("Bundle slug is missing.");
@@ -2107,7 +2107,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           }
         }
       } else {
-        errors.push("Not an original receiz (missing artifact binding). Ask for the original receiz.");
+        errors.push("Not a sealed original artifact (missing artifact binding). Ask for the original sealed artifact.");
         checks.push({ state: "bad", message: "Artifact binding" });
       }
 
@@ -2387,8 +2387,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (proofChunkCount !== 1) {
           errors.push(
             proofChunkCount > 1
-              ? "Duplicate proof bundles detected (receiz.proof_bundle count > 1)."
-              : "Missing receiz.proof_bundle chunk (likely not the original artifact)."
+              ? "Duplicate proof bundles detected (proof bundle chunk count > 1)."
+              : "Missing proof bundle chunk (likely not the original sealed artifact)."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
         } else {
@@ -2444,7 +2444,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push(
             proofBundles.length > 1
               ? "Duplicate proof bundles detected in PDF metadata."
-              : "Missing embedded Receiz PDF proof bundle."
+              : "Missing embedded PDF proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
           return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
@@ -2470,7 +2470,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const trailerParsed = parseReceizTrailer(bytes);
           if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
             warnings.push("Used trailer proof fallback for SVG artifact.");
-            checks.push({ state: "ok", message: "Proof bundle fallback (Receiz trailer)" });
+            checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
             bundle = trailerParsed.bundle;
             basisBytes = trailerParsed.basisBytes;
             chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
@@ -2479,12 +2479,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push(
                 parsed.proofCount > 1
                   ? "Duplicate proof bundles detected in SVG metadata."
-                  : "Missing embedded Receiz SVG proof bundle."
+                  : "Missing embedded SVG proof bundle."
               );
               checks.push({ state: "bad", message: "Proof bundle uniqueness" });
             } else {
               checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-              errors.push("Receiz SVG proof bundle is malformed.");
+              errors.push("SVG proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
             return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
@@ -2510,7 +2510,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const trailerParsed = parseReceizTrailer(bytes);
           if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
             warnings.push("Used trailer proof fallback for JSON artifact.");
-            checks.push({ state: "ok", message: "Proof bundle fallback (Receiz trailer)" });
+            checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
             bundle = trailerParsed.bundle;
             basisBytes = trailerParsed.basisBytes;
             chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
@@ -2519,12 +2519,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push(
                 parsed.proofCount > 1
                   ? "Duplicate proof bundles detected in JSON whitespace channel."
-                  : "Missing embedded Receiz JSON proof bundle."
+                  : "Missing embedded JSON proof bundle."
               );
               checks.push({ state: "bad", message: "Proof bundle uniqueness" });
             } else {
               checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-              errors.push("Receiz JSON proof bundle is malformed.");
+              errors.push("JSON proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
             return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
@@ -2551,7 +2551,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             errors.push(
               trailerParsed.trailerCount > 1
                 ? "Duplicate trailer proof bundles detected."
-                : "Missing Receiz trailer proof bundle."
+                : "Missing trailer proof bundle."
             );
             checks.push({ state: "bad", message: "Proof bundle uniqueness" });
             return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
@@ -2559,7 +2559,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
           if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
-            errors.push("Receiz trailer proof bundle is malformed.");
+            errors.push("Trailer proof bundle is malformed.");
             checks.push({ state: "bad", message: "Proof bundle decode" });
             return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
           }
@@ -2569,7 +2569,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
-          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a receized package ZIP/folder.");
+          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a sealed package ZIP/folder.");
           return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
         }
       }

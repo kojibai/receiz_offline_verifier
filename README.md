@@ -2,33 +2,35 @@
 
 Verify a Receiz artifact offline. Proof lives in the file.
 
-Current release: `v12.0.0`
+Current release: `v13.0.0`
 
-## What stayed the same from v11
+## What stayed the same from v12
 - Fail-closed verification: if integrity cannot be proven from artifact bytes, result is not verified.
 - Canonical identity checks: `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`.
 - Artifact binding checks: SHA-256 basis hash must match embedded binding.
-- Optional `/v/...` link cross-check against embedded canonical paths.
+- Optional `/v/...` canonical-path cross-check remains available when an integration supplies a path value (default UI does not prompt for this in `v13`).
 - No third-party network dependencies.
 
-## What changed in v12
-- Release marker and docs updated from `v11.0.0` to `v12.0.0`.
-- Release notes/changelog now describe migration from `v11` to `v12`.
-- Verifier behavior and contracts remain aligned with the multi-carrier model introduced in `v11`.
+## What changed in v13
+- UI copy and visual framing were refreshed around "Verify an original."
+- Separate `Choose files` / `Choose folder` controls were replaced by a single upload surface.
+- Default UI no longer includes a manual `/v/...` link input field.
+- Action/status wording was simplified (`Verify Offline` -> `Verify`, `Verified original receiz` -> `Verified original`).
 
-## Supported artifact inputs (v12)
+## Supported artifact inputs (v13)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. Trailer-sealed artifact ending with one Receiz trailer payload.
 4. `.receizbundle` container (`kind: receiz.bundle.v1`).
+5. Sealed package payloads provided as ZIP or multi-file folder-style selections (manifest-driven verification path).
 
 ## Primitive contract (what "Verified" means)
-A file is verified only if the verifier can prove integrity from bytes plus optional user link input:
+A file is verified only if the verifier can prove integrity from bytes (plus optional integration-supplied path input):
 - proof bundle payload is found exactly once for the selected format
 - proof bundle decoding succeeds
 - canonical field invariants pass
 - artifact binding hash matches normalized basis bytes
-- optional provided link path matches an accepted embedded canonical path
+- if an optional path is supplied, it matches an accepted embedded canonical path
 - when Groth16 fields are present, deterministic or real Groth16 checks pass
 
 ## Runtime notes
@@ -54,7 +56,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for full v12 feature coverage:
+Required runtime assets for full v13 feature coverage:
 - `index.html`
 - `receiz-offline-verifier.html` (if served as an alternate entry path)
 - `snarkjs.min.js` (for real Groth16 mode)
