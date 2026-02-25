@@ -503,7 +503,7 @@
       <div class="brand-row">
         <div class="mark" aria-hidden="true">R</div>
         <div class="wordmark">Receiz</div>
-        <div class="tag">100% offline verifier</div>
+        <div class="tag">Offline reference verifier</div>
       </div>
       <h1>Verify an original.</h1>
       <p class="sub">Upload anything. Proof lives in the original.</p>
@@ -921,7 +921,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setStatus("bad", "No receized files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
-        setStatus("ok", "Verified original", "All required offline checks passed.");
+        setStatus("ok", "Verified original", "All required checks passed.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
       }
