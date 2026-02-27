@@ -61,7 +61,7 @@ Baseline verification:
 - `/index.html`
 
 Full v13 feature coverage:
-- `/receiz-offline-verifier.html` (alternate route, if used)
+- `/offline-verifier.html` (alternate route, if used)
 - `/snarkjs.min.js` (real Groth16 mode)
 - `/zk/document_seal_verification_key.json` (real Groth16 mode)
 - `/sw.js` (optional; warm/caching behavior)

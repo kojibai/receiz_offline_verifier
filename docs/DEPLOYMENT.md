@@ -6,7 +6,7 @@ Deploy `site/` to any static host.
 - `/index.html`
 
 ## Required for full v13 feature coverage
-- `/receiz-offline-verifier.html` (if used as alternate path)
+- `/offline-verifier.html` (if used as alternate path)
 - `/snarkjs.min.js` (real Groth16 verification)
 - `/zk/document_seal_verification_key.json` (real Groth16 verification)
 - `/sw.js` (optional; enables service worker warm behavior)

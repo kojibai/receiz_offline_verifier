@@ -58,7 +58,7 @@ Deploy the `site/` directory to any static host.
 
 Required runtime assets for full v13 feature coverage:
 - `index.html`
-- `receiz-offline-verifier.html` (if served as an alternate entry path)
+- `offline-verifier.html` (if served as an alternate entry path)
 - `snarkjs.min.js` (for real Groth16 mode)
 - `zk/document_seal_verification_key.json` (for real Groth16 mode)
 - `sw.js` (optional, for service worker warm behavior)
@@ -71,7 +71,7 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 
 ## Repository layout
 - [site/index.html](site/index.html): published verifier entrypoint.
-- [apps/receiz-offline-verifier.html](apps/receiz-offline-verifier.html): mirrored app entrypoint.
+- [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [docs/FORMAT.md](docs/FORMAT.md): artifact and payload format contract.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): runtime and verification flow.
 - [docs/HARDENING.md](docs/HARDENING.md): non-regression security rules.
