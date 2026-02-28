@@ -509,13 +509,13 @@
         <div class="wordmark">Receiz</div>
         <div class="tag">Offline reference verifier</div>
       </div>
-      <h1>Verify an original.</h1>
-      <p class="sub">Upload anything. Proof lives in the original.</p>
+      <h1>Verify a file.</h1>
+      <p class="sub">Upload a file. Proof, in the file.</p>
     </section>
 
     <section class="card" aria-labelledby="input-title">
-      <h2 id="input-title">1) Load original</h2>
-      <p class="hint">Screenshots won’t verify. Ask for the original.</p>
+      <h2 id="input-title">1) Load file</h2>
+      <p class="hint">Screenshots won’t verify. Ask for the file.</p>
 
       <label class="drop" id="dropZone">
         <input id="fileInput" class="drop-file" type="file" multiple accept="*/*" />
@@ -523,7 +523,7 @@
           <span class="drop-icon" aria-hidden="true">⇣</span>
           <span class="drop-copy">
             <span class="drop-kicker">Artifact</span>
-            <strong>Drop an original</strong>
+            <strong>Drop a file</strong>
             <span class="drop-sub">or tap to upload.</span>
           </span>
           <span class="drop-badge" aria-hidden="true">R</span>
@@ -542,7 +542,7 @@
 
       <div id="statusBox" class="status warn" role="status" aria-live="polite">
         <div class="status-title"><span class="dot" aria-hidden="true"></span><span id="statusTitle">Waiting for a file</span></div>
-        <p class="status-note" id="statusNote">Load the original sealed artifact, then run verification.</p>
+        <p class="status-note" id="statusNote">Load the file, then run verification.</p>
       </div>
 
       <ul id="checks" class="list" aria-label="Verification checks"></ul>
@@ -573,7 +573,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v15.5.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v16.0.0</a>
     </p>
   </main>
 
@@ -759,7 +759,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     function hasMissingPackageManifestError(result) {
       if (!result || !Array.isArray(result.errors)) return false;
-      return result.errors.some((entry) => typeof entry === "string" && entry.toLowerCase().includes("no valid sealed package manifest found"));
+      return result.errors.some((entry) => typeof entry === "string" && entry.toLowerCase().includes("no valid package manifest found"));
     }
 
     async function verifyEntriesIndividually(entries, optionalLink) {
@@ -807,7 +807,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
         const bundle = verifyResult.bundle || null;
         const ok = !!verifyResult.ok;
-        const reason = ok ? "Sealed original artifact verified." : (verifyResult.errors[0] || "Not a sealed original.");
+        const reason = ok ? "File verified." : (verifyResult.errors[0] || "Not a sealed file.");
 
         if (ok) {
           verifiedCount += 1;
@@ -841,9 +841,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (verifiedCount > 0 && failedCount === 0) {
         checks.push({ state: "ok", message: "All files verified in folder scan" });
       } else if (verifiedCount > 0) {
-        checks.push({ state: "warn", message: `Mixed folder results: ${verifiedCount} verified, ${failedCount} not sealed originals` });
+        checks.push({ state: "warn", message: `Mixed folder results: ${verifiedCount} verified, ${failedCount} not sealed files` });
       } else {
-        checks.push({ state: "bad", message: "No sealed originals found in folder scan" });
+        checks.push({ state: "bad", message: "No sealed files found in folder scan" });
       }
 
       return {
@@ -903,7 +903,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (result.folderScanSummary && Array.isArray(result.folderScanSummary.itemResults)) {
         const preview = result.folderScanSummary.itemResults.slice(0, 24);
         for (const item of preview) {
-          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Sealed original" : "Not sealed original"}: ${item.path}`);
+          addCheck(item.ok ? "ok" : "bad", `${item.ok ? "Sealed file" : "Not sealed file"}: ${item.path}`);
         }
         const hidden = result.folderScanSummary.itemResults.length - preview.length;
         if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
@@ -912,20 +912,20 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (result.ok && result.packageSummary) {
         setStatus(
           "ok",
-          "Verified sealed package",
-          `${result.packageSummary.verifiedCount}/${result.packageSummary.itemCount} sealed files verified.`,
+          "Verified package",
+          `${result.packageSummary.verifiedCount}/${result.packageSummary.itemCount} files verified.`,
         );
       } else if (result.folderScanSummary) {
         const summary = result.folderScanSummary;
         if (summary.verifiedCount > 0 && summary.failedCount === 0) {
-          setStatus("ok", "Verified folder files", `${summary.verifiedCount}/${summary.itemCount} files are sealed originals.`);
+          setStatus("ok", "Verified folder files", `${summary.verifiedCount}/${summary.itemCount} files are sealed files.`);
         } else if (summary.verifiedCount > 0) {
-          setStatus("warn", "Mixed folder results", `${summary.verifiedCount} sealed originals · ${summary.failedCount} not sealed originals.`);
+          setStatus("warn", "Mixed folder results", `${summary.verifiedCount} sealed files · ${summary.failedCount} not sealed files.`);
         } else {
-          setStatus("bad", "No sealed original files found", `Checked ${summary.itemCount} files.`);
+          setStatus("bad", "No sealed files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
-        setStatus("ok", "Verified original", "All required checks passed.");
+        setStatus("ok", "Verified file", "All required checks passed.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
       }
@@ -2111,7 +2111,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           }
         }
       } else {
-        errors.push("Not a sealed original artifact (missing artifact binding). Ask for the original sealed artifact.");
+        errors.push("Not a sealed file (missing artifact binding). Ask for the sealed file.");
         checks.push({ state: "bad", message: "Artifact binding" });
       }
 
@@ -2380,7 +2380,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         }
         const bundleBasis = typeof bundle.artifactSha256Basis === "string" ? bundle.artifactSha256Basis.toLowerCase() : "";
         if (bundleBasis !== manifestBasis) {
-          errors.push("Proof bundle artifact binding does not match container original bytes.");
+          errors.push("Proof bundle artifact binding does not match container file bytes.");
         }
       } else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
@@ -2392,7 +2392,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push(
             proofChunkCount > 1
               ? "Duplicate proof bundles detected (proof bundle chunk count > 1)."
-              : "Missing proof bundle chunk (likely not the original sealed artifact)."
+              : "Missing proof bundle chunk (likely not the sealed file)."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
         } else {
@@ -2573,7 +2573,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
-          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a sealed package ZIP/folder.");
+          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
           return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
         }
       }
@@ -2656,7 +2656,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (candidates.length === 0) {
         return {
           ok: false,
-          errors: ["No valid sealed package manifest found."],
+          errors: ["No valid package manifest found."],
           warnings: [],
           checks: [{ state: "bad", message: "Package manifest artifact" }],
           bundle: null,
@@ -2725,7 +2725,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push("Root manifest folderManifestPath is empty.");
           manifestArtifact = pickManifestCandidate(candidates);
         } else if (!manifestArtifact) {
-          errors.push(`Root manifest folderManifestPath does not match a sealed folder manifest artifact: ${expectedPath}`);
+          errors.push(`Root manifest folderManifestPath does not match a folder manifest sealed file: ${expectedPath}`);
           manifestArtifact = pickManifestCandidate(candidates);
         }
       } else {
@@ -2771,13 +2771,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (!sealedFile) {
           missingCount += 1;
           failedCount += 1;
-          errors.push(`Missing sealed artifact listed in manifest: ${sealedPath}`);
+          errors.push(`Missing sealed file listed in manifest: ${sealedPath}`);
           itemResults.push({
             sourcePath,
             sealedPath,
             ok: false,
             kind: "missing",
-            errors: [`Missing sealed artifact: ${sealedPath}`],
+            errors: [`Missing sealed file: ${sealedPath}`],
             warnings: [],
             code: manifestEntry.code,
             pulse: manifestEntry.pulse,
@@ -2791,20 +2791,20 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const itemWarnings = [];
         const sealedSha = (await sha256Hex(sealedFile.bytes)).toLowerCase();
         if (sealedSha !== String(manifestEntry.sealedSha256 || "").toLowerCase()) {
-          itemErrors.push("Sealed artifact hash mismatch against package manifest.");
+          itemErrors.push("Sealed file hash mismatch against package manifest.");
         }
         if (sealedFile.bytes.byteLength !== manifestEntry.sealedSize) {
-          itemErrors.push(`Sealed artifact size mismatch. expected ${manifestEntry.sealedSize}, got ${sealedFile.bytes.byteLength}.`);
+          itemErrors.push(`Sealed file size mismatch. expected ${manifestEntry.sealedSize}, got ${sealedFile.bytes.byteLength}.`);
         }
 
         const verifyResult = await verifyReceizBytes(manifestEntry.sealedFilename, sealedFile.bytes, "");
         if (!verifyResult.ok) {
-          itemErrors.push(verifyResult.errors[0] || "Sealed artifact verification failed.");
+          itemErrors.push(verifyResult.errors[0] || "Sealed file verification failed.");
         }
         for (const w of verifyResult.warnings) itemWarnings.push(w);
 
         if (!verifyResult.bundle) {
-          itemErrors.push("Missing proof bundle in sealed artifact.");
+          itemErrors.push("Missing proof bundle in sealed file.");
         } else {
           if (String(verifyResult.bundle.code || "").toUpperCase() !== String(manifestEntry.code || "").toUpperCase()) {
             itemErrors.push("Bundle code mismatch.");
@@ -2847,12 +2847,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       for (const file of fileMap.values()) {
         if (!file.path.startsWith("sealed/")) continue;
         if (!declaredPaths.has(file.path) && !matchedPaths.has(file.path)) {
-          warnings.push(`Extra sealed artifact not listed in manifest: ${file.path}`);
+          warnings.push(`Extra sealed file not listed in manifest: ${file.path}`);
         }
       }
 
       if (missingCount === 0 && failedCount === 0 && errors.length === 0) {
-        checks.push({ state: "ok", message: "All sealed artifacts match package manifest" });
+        checks.push({ state: "ok", message: "All package files match package manifest" });
       } else {
         checks.push({ state: "bad", message: "Package manifest/file integrity check" });
       }
