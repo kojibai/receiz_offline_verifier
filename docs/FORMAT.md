@@ -1,13 +1,15 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v13.0.0`.
+This document defines the verifier-visible data contract for `v17.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
 - PDF with embedded Receiz proof object metadata.
+- SVG with embedded Receiz proof metadata attribute.
+- JSON with embedded Receiz trailing-whitespace proof channel.
 - Trailer-sealed files (binary or text artifacts with Receiz trailer markers).
 - `.receizbundle` JSON envelope container (`kind: receiz.bundle.v1`).
-- Non-PNG/PDF signatures (for example JPEG, GIF, WEBP, ZIP, unknown) use trailer/envelope fallback parsing.
+- Package ZIP/folder inputs with manifest-driven verification paths.
 
 ## Proof bundle location rules
 
@@ -24,6 +26,14 @@ This document defines the verifier-visible data contract for `v13.0.0`.
 - `/ProofBundle` may be encoded as:
   - PDF literal string `( ... )`
   - PDF hex string `<...>`
+
+### SVG
+- Required: exactly one encoded proof payload in SVG metadata attribute `data-receiz-proof-bundle`.
+- If missing/malformed, verifier may attempt trailer-proof fallback when trailer markers are present.
+
+### JSON
+- Required: exactly one encoded proof payload in Receiz trailing-whitespace proof channel.
+- If missing/malformed, verifier may attempt trailer-proof fallback when trailer markers are present.
 
 ### Trailer-sealed
 - Required markers at EOF:
@@ -62,16 +72,18 @@ Proof bundle must resolve to a canonical verify path:
 ## Basis-bytes normalization rules
 - PNG: remove only proof bundle chunk(s) when computing basis hash.
 - PDF: strip appended Receiz seal updates marked by `%RECEIZ_SEAL_UPDATE_v1%`.
+- SVG: remove embedded proof metadata payload(s) when computing basis hash.
+- JSON: remove Receiz trailing-whitespace proof payload(s) when computing basis hash.
 - Trailer: basis is bytes before trailer prefix.
 - `.receizbundle`: basis is decoded `originalBase64` payload.
 
 ## Optional link cross-check
 If a link/path value is provided by an integration, parsed path must match one of:
 - `bundle.verifyPath`
-- `anchor.parent.viewUrl` (if anchor exists)
+- `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v13` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v17` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

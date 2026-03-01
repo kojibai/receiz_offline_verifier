@@ -1,17 +1,17 @@
 # Copy guide
 
-Use these strings and framing rules for v13 verifier UX and release communications.
+Use these strings and framing rules for v17 verifier UX and release communications.
 
 ## Core product line
-- "Verify an original."
-- "Upload anything. Proof lives in the original."
+- "Verify a file."
+- "Upload a file. Proof is in the file."
 
 ## Capability summary
-- "Supports PNG, PDF, trailer-sealed artifacts, .receizbundle containers, and package ZIP/folder scans."
-- "Screenshots won’t verify. Ask for the original."
+- "Supports PNG, PDF, SVG, JSON, trailer-sealed artifacts, .receizbundle containers, and package ZIP/folder scans."
+- "Copies fail. Ask for the receiz."
 
 ## Verification success
-- "Verified original"
+- "Verified file"
 - "All required checks passed."
 
 ## Verification failure framing

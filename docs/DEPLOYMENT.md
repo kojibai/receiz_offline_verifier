@@ -5,7 +5,7 @@ Deploy `site/` to any static host.
 ## Required for baseline verification
 - `/index.html`
 
-## Required for full v13 feature coverage
+## Required for full v17 feature coverage
 - `/offline-verifier.html` (if used as alternate path)
 - `/snarkjs.min.js` (real Groth16 verification)
 - `/zk/document_seal_verification_key.json` (real Groth16 verification)

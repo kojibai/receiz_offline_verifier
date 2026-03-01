@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v17.0.0] - 2026-03-01
+
+### Added
+- Anchor fallback derivation from proof bundle fields when an explicit anchor bundle is missing.
+- Anchor ID consistency check between explicit anchor bundle and derived anchor data.
+
+### Changed
+- Anchor fact display now resolves from explicit anchor, derived anchor, or `bundle.anchorId`.
+- Optional-link/canonical-path checks now use an effective anchor model (explicit anchor or derived anchor).
+- Verifier UI version marker from `v16.0.0` to `v17.0.0`.
+
+### Kept
+- Core offline verification pipeline and fail-closed semantics from `v16`.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Deterministic and real Groth16 verification modes.
+
+## [v16.0.0] - 2026-02-28
+
+### Changed
+- Verifier UI copy reframed from "original/sealed artifact" wording to "file/sealed file" wording.
+- Hero, load-step, folder scan, package status, and verification-result text updated for file-first wording.
+- Package/folder manifest and unsupported-format errors rewritten to match current "sealed file" terminology.
+- Hint copy tuned to `Copies fail. Ask for the receiz.`
+- Verifier UI version marker from `v15.5.0` to `v16.0.0`.
+
+### Kept
+- Verification contract and canonical checks from `v15.5.0`.
+- Multi-carrier support and package verification flow.
+
+## [v15.5.0] - 2026-02-27
+
+### Changed
+- Verifier UI version marker from `v15.0.0` to `v15.5.0`.
+
+### Kept
+- Runtime behavior and verification semantics from `v15.0.0`.
+
+## [v15.0.0] - 2026-02-26
+
+### Changed
+- Service-worker route references aligned from `/receiz-offline-verifier.html` to `/offline-verifier.html`.
+- Deployment/docs references aligned to `offline-verifier.html` naming.
+- Verifier UI version marker from `v14.0.0` to `v15.0.0`.
+
+### Kept
+- Core verifier logic and UI behavior from `v14`.
+
+## [v14.0.0] - 2026-02-26
+
+### Changed
+- Verifier UI version marker from `v13.0.0` to `v14.0.0`.
+- App entrypoint filename alignment: `apps/receiz-offline-verifier.html` -> `apps/offline-verifier.html`.
+
+### Kept
+- Core offline verification pipeline and fail-closed semantics from `v13`.
+- Carrier extraction and normalization rules.
+
 ## [v13.0.0] - 2026-02-25
 
 ### Changed

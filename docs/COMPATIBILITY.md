@@ -5,14 +5,16 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v13)
+## Supported artifact types (v17)
 - `.png`
 - `.pdf`
+- `.svg`
+- `.json`
 - trailer-sealed files (including image/document binaries)
 - `.receizbundle`
 - sealed package ZIP / folder-style multi-file selections (manifest-driven path)
 - Upload control accepts any file type; verification succeeds only for supported carriers/contracts.
-- Non-PNG/PDF files verify only when they contain a valid Receiz trailer payload or valid `.receizbundle` envelope JSON.
+- Non-matching signatures can still verify when they contain a valid Receiz trailer payload or valid `.receizbundle` envelope JSON.
 
 ## Required host capabilities
 - JavaScript runtime
@@ -26,7 +28,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - service worker support for cache warm behavior
 
 ## Notes
-- Deterministic verification path works without real-Groth16 assets.
-- Real-Groth16 checks fail explicitly when runtime assets are missing.
-- Default `v13` UI does not collect an optional `/v/...` path value.
+- Deterministic verification path works without real Groth16 assets.
+- Real Groth16 checks fail explicitly when runtime assets are missing.
+- Default `v17` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.

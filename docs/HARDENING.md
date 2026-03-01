@@ -1,11 +1,13 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v13 carriers.
+These rules preserve "proof lives in the file" semantics across all v17 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
   - exactly one `receiz.proof_bundle` for PNG
   - exactly one `/Type /ReceizProof` object in PDF
+  - exactly one SVG proof metadata payload when using embedded SVG proof channel
+  - exactly one JSON whitespace proof payload when using embedded JSON proof channel
   - exactly one Receiz trailer payload when trailer markers are present
 - Decode proof bundle deterministically with size limits.
 - Verify artifact binding hash against normalized basis bytes.
