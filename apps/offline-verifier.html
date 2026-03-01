@@ -573,7 +573,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v16.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v17.0.0</a>
     </p>
   </main>
 
@@ -739,7 +739,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.factPulse.textContent = result.bundle.kaiPulseEternal || "-";
       ui.factPath.textContent = result.bundle.verifyPath || "-";
       ui.factHash.textContent = result.fileHash || "-";
-      ui.factAnchor.textContent = result.anchor?.anchorId || "none";
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
+      const bundleAnchorId = asString(result.bundle.anchorId);
+      ui.factAnchor.textContent = result.anchor?.anchorId || derivedAnchor?.anchorId || bundleAnchorId || "none";
       if (result.anchor?.contextPreset) {
         ui.factPreset.textContent = result.anchor.contextPreset;
         ui.factPresetRow.hidden = false;
@@ -1283,6 +1285,39 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     function slugFromTs(ts) {
       return ts.replace(/-/g, "").replace(/:/g, "").replace(/ /g, "_");
+    }
+
+    function deriveAnchorBundleFromProofBundle(bundle) {
+      if (!isRecord(bundle)) return null;
+
+      const anchorIdRaw = typeof bundle.anchorId === "string" ? bundle.anchorId.trim().toLowerCase() : "";
+      if (!isHex(anchorIdRaw, 8)) return null;
+
+      const code = asString(bundle.code);
+      const pulse = asString(bundle.kaiPulseEternal);
+      const verifyPath = asString(bundle.verifyPath);
+      if (!code || !pulse || !verifyPath) return null;
+
+      const createdAtMsRaw = Number(bundle.createdAtMs);
+      const createdAtMs = Number.isFinite(createdAtMsRaw) ? Math.trunc(createdAtMsRaw) : null;
+      const params = new URLSearchParams();
+      params.set("a", anchorIdRaw);
+      if (createdAtMs !== null) {
+        params.set("ms", String(createdAtMs));
+      }
+      const joiner = verifyPath.includes("?") ? "&" : "?";
+      const viewUrl = `${verifyPath}${joiner}${params.toString()}`;
+
+      return {
+        version: 1,
+        parent: {
+          code,
+          pulse,
+          viewUrl
+        },
+        anchorId: anchorIdRaw,
+        anchoredAt: new Date(createdAtMs !== null ? createdAtMs : Date.now()).toISOString()
+      };
     }
 
     function parseVerifyInputToPath(raw) {
@@ -2056,6 +2091,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const kind = asString(bundle.kind);
       const claimId = asString(bundle.receizClaimId);
       const seed = asString(bundle.sigilClaimSeed);
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(bundle);
+      const effectiveAnchor = anchor || derivedAnchor;
 
       if (kind !== "receiz.proof_bundle") errors.push("Bundle kind is not proof bundle.");
       if (payloadVersion !== "v1" && payloadVersion !== "v2") errors.push("Bundle payloadVersion is invalid.");
@@ -2117,11 +2154,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       checks.push({ state: errors.length ? "bad" : "ok", message: "Canonical fields (ts / slug / code / pulse / path)" });
 
-      if (anchor) {
-        if (code && anchor.parent.code !== code) {
+      if (effectiveAnchor) {
+        if (anchor && derivedAnchor && anchor.anchorId !== derivedAnchor.anchorId) {
+          errors.push("Anchor ID mismatch between anchor bundle and proof bundle.");
+        }
+        if (code && effectiveAnchor.parent.code !== code) {
           errors.push("Anchor parent.code does not match proof bundle code.");
         }
-        if (pulse && anchor.parent.pulse !== pulse) {
+        if (pulse && effectiveAnchor.parent.pulse !== pulse) {
           errors.push("Anchor parent.pulse does not match proof bundle pulse.");
         }
       }
@@ -2147,7 +2187,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } else {
           const acceptedPaths = new Set();
           if (verifyPath) acceptedPaths.add(verifyPath);
-          if (anchor && typeof anchor.parent.viewUrl === "string") acceptedPaths.add(anchor.parent.viewUrl);
+          if (effectiveAnchor && typeof effectiveAnchor.parent.viewUrl === "string") acceptedPaths.add(effectiveAnchor.parent.viewUrl);
           if (isRecord(bundle.wireproof) && typeof bundle.wireproof.verifierPath === "string") {
             acceptedPaths.add(bundle.wireproof.verifierPath);
           }
@@ -2580,6 +2620,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       if (!bundle || !basisBytes || !isRecord(bundle)) {
         return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary };
+      }
+
+      if (!anchor) {
+        anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
 
       await validateBundleAgainstBasis({
