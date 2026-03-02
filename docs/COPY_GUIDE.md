@@ -1,6 +1,6 @@
 # Copy guide
 
-Use these strings and framing rules for v17 verifier UX and release communications.
+Use these strings and framing rules for v18 verifier UX and release communications.
 
 ## Core product line
 - "Verify a file."
@@ -14,6 +14,12 @@ Use these strings and framing rules for v17 verifier UX and release communicatio
 - "Verified file"
 - "All required checks passed."
 
+## Signature check copy
+- "Receiz Signature (v3) verified (<kid>)"
+- "Receiz Signature (v3) invalid"
+- "Receiz Signature (v3) missing"
+- "Receiz Signature (v3) unavailable"
+
 ## Verification failure framing
 - "Not verified"
 - "Verification failed"
@@ -22,4 +28,4 @@ Use these strings and framing rules for v17 verifier UX and release communicatio
 ## Integrity language constraints
 - Prefer "verified" / "not verified" over subjective trust wording.
 - Always tie outcomes to byte-level checks and canonical fields.
-- Do not imply verification if artifact binding or canonical invariants fail.
+- Do not imply verification if artifact binding, canonical invariants, or required signature checks fail.

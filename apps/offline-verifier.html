@@ -573,7 +573,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v17.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v18.0.0</a>
     </p>
   </main>
 
@@ -1279,6 +1279,89 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return typeof v === "string" && v.length > 0 ? v : null;
     }
 
+    const RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_STATIC = Object.freeze([
+      {
+        kid: "receiz.v3.prod.2026-03-02",
+        alg: "Ed25519",
+        publicKeyRawB64u: "z2pQNWhfQIfrFlkdutiHYLXmgwlt90UX8iIc8HvKtI0",
+        status: "active"
+      }
+    ]);
+    const RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE = Array.isArray(globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__)
+      ? globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__
+      : null;
+    const RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED =
+      RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE && RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE.length > 0
+        ? Object.freeze([...RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE])
+        : RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_STATIC;
+    const HEX64_RE = /^[0-9a-f]{64}$/;
+    const B64U_RE = /^[A-Za-z0-9_-]+$/;
+    const KID_RE = /^[a-z0-9._:-]{3,64}$/i;
+    const SIGNATURE_V3_MAX_FUTURE_SKEW_MS = 5 * 60 * 1000;
+    const SIGNATURE_V3_KEY_POLICY_SKEW_MS = 5 * 60 * 1000;
+
+    function asKid(value) {
+      if (typeof value !== "string") return null;
+      const kid = value.trim();
+      if (!KID_RE.test(kid)) return null;
+      return kid;
+    }
+
+    function asB64u(value) {
+      if (typeof value !== "string") return null;
+      const text = value.trim();
+      if (!text || !B64U_RE.test(text)) return null;
+      return text;
+    }
+
+    function parseSignatureV3Status(value) {
+      return value === "retired" ? "retired" : "active";
+    }
+
+    function asEpochMs(value) {
+      if (typeof value === "number" && Number.isFinite(value)) {
+        const ms = Math.trunc(value);
+        return ms >= 0 ? ms : null;
+      }
+      if (typeof value === "string") {
+        const text = value.trim();
+        if (!/^\d{1,16}$/.test(text)) return null;
+        const parsed = Number.parseInt(text, 10);
+        if (!Number.isSafeInteger(parsed) || parsed < 0) return null;
+        return parsed;
+      }
+      return null;
+    }
+
+    function normalizeSignatureV3PublicKey(value) {
+      if (!isRecord(value)) return null;
+      const kid = asKid(value.kid);
+      const alg = value.alg === "Ed25519" ? "Ed25519" : null;
+      const publicKeyRawB64u = asB64u(value.publicKeyRawB64u);
+      const activeFromMs = asEpochMs(value.activeFromMs);
+      const retiredAtMs = asEpochMs(value.retiredAtMs);
+      if (!kid || !alg || !publicKeyRawB64u) return null;
+      if (activeFromMs !== null && retiredAtMs !== null && retiredAtMs < activeFromMs) return null;
+      return {
+        kid,
+        alg,
+        publicKeyRawB64u,
+        status: parseSignatureV3Status(value.status),
+        ...(activeFromMs !== null ? { activeFromMs } : {}),
+        ...(retiredAtMs !== null ? { retiredAtMs } : {})
+      };
+    }
+
+    const RECEIZ_SIGNATURE_V3_PUBLIC_KEY_MAP = (() => {
+      const out = new Map();
+      for (const entry of RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED) {
+        const key = normalizeSignatureV3PublicKey(entry);
+        if (!key) continue;
+        out.set(key.kid, key);
+      }
+      return out;
+    })();
+
     function isHex(v, length) {
       return typeof v === "string" && new RegExp(`^[0-9a-fA-F]{${length}}$`).test(v);
     }
@@ -1425,6 +1508,129 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         `code=${bundle.code}`,
         `pulse=${bundle.kaiPulseEternal}`
       ].join("|");
+    }
+
+    function signedPayloadForBundle(bundle) {
+      const canonical = {
+        kind: bundle.kind,
+        payloadVersion: bundle.payloadVersion,
+        createdAtMs: bundle.createdAtMs,
+        ts: bundle.ts,
+        tsDisplay: bundle.tsDisplay || "",
+        tzMinutesEast: typeof bundle.tzMinutesEast === "number" ? bundle.tzMinutesEast : null,
+        code: bundle.code,
+        slug: bundle.slug,
+        verifyPath: bundle.verifyPath,
+        verifyUrl: bundle.verifyUrl,
+        kaiPulseEternal: bundle.kaiPulseEternal,
+        kaiKlok: bundle.kaiKlok,
+        signerKeyId: bundle.signerKeyId || "",
+        anchorId: bundle.anchorId || "",
+        receizClaimId: bundle.receizClaimId,
+        sigilClaimSeed: bundle.sigilClaimSeed,
+        zkPoseidonHash: bundle.zkPoseidonHash || "",
+        groth16ProofDigest: bundle.groth16ProofDigest || "",
+        artifactSha256Basis: bundle.artifactSha256Basis || "",
+        wireproof: bundle.wireproof || null
+      };
+      return jcsCanonicalize(canonical);
+    }
+
+    function normalizeSignatureV3(value) {
+      if (!isRecord(value)) return null;
+      const version = value.version === 1 ? 1 : null;
+      const alg = value.alg === "Ed25519" ? "Ed25519" : null;
+      const kid = asKid(value.kid);
+      const sig = asB64u(value.sig);
+      const payloadHashSha256 =
+        typeof value.payloadHashSha256 === "string" ? value.payloadHashSha256.trim().toLowerCase() : "";
+      const signedAtMsRaw = Number(value.signedAtMs);
+      const signedAtMs = Number.isFinite(signedAtMsRaw) ? Math.trunc(signedAtMsRaw) : Number.NaN;
+      if (!version || !alg || !kid || !sig || !HEX64_RE.test(payloadHashSha256) || !Number.isFinite(signedAtMs) || signedAtMs < 0) {
+        return null;
+      }
+      return { version, alg, kid, sig, payloadHashSha256, signedAtMs };
+    }
+
+    async function importEd25519PublicKeyRawB64u(publicKeyRawB64u) {
+      try {
+        const publicKeyRaw = base64UrlDecode(publicKeyRawB64u);
+        return await crypto.subtle.importKey("raw", toArrayBuffer(publicKeyRaw), { name: "Ed25519" }, false, ["verify"]);
+      } catch {
+        return null;
+      }
+    }
+
+    async function verifyBundleSignatureV3(bundle) {
+      const rawSignature = isRecord(bundle) ? bundle.signatureV3 : undefined;
+      const signature = normalizeSignatureV3(rawSignature);
+      if (!signature) {
+        return typeof rawSignature === "undefined"
+          ? { state: "missing" }
+          : { state: "invalid", error: "signatureV3 payload is malformed." };
+      }
+
+      const signedBundle = { ...bundle };
+      delete signedBundle.signatureV3;
+
+      const payload = signedPayloadForBundle(signedBundle);
+      const payloadBytes = new TextEncoder().encode(payload);
+      const payloadHashSha256 = (await sha256Hex(payloadBytes)).toLowerCase();
+      if (payloadHashSha256 !== signature.payloadHashSha256) {
+        return { state: "invalid", error: "signatureV3 payload hash mismatch." };
+      }
+
+      const publicKey = RECEIZ_SIGNATURE_V3_PUBLIC_KEY_MAP.get(signature.kid) || null;
+      if (!publicKey) {
+        return { state: "unavailable", error: "signatureV3 key not configured." };
+      }
+      if (publicKey.alg !== signature.alg) {
+        return { state: "invalid", error: "signatureV3 algorithm mismatch." };
+      }
+
+      const nowMs = Date.now();
+      if (signature.signedAtMs > nowMs + SIGNATURE_V3_MAX_FUTURE_SKEW_MS) {
+        return { state: "invalid", error: "signatureV3 signedAtMs is in the future." };
+      }
+
+      if (
+        typeof publicKey.activeFromMs === "number" &&
+        signature.signedAtMs + SIGNATURE_V3_KEY_POLICY_SKEW_MS < publicKey.activeFromMs
+      ) {
+        return { state: "invalid", error: "signatureV3 predates key activation." };
+      }
+
+      if (publicKey.status === "retired" && typeof publicKey.retiredAtMs !== "number") {
+        return { state: "unavailable", error: "signatureV3 key retired without retirement timestamp." };
+      }
+
+      if (
+        typeof publicKey.retiredAtMs === "number" &&
+        signature.signedAtMs > publicKey.retiredAtMs + SIGNATURE_V3_KEY_POLICY_SKEW_MS
+      ) {
+        return { state: "unavailable", error: "signatureV3 key retired for this signature timestamp." };
+      }
+
+      const cryptoKey = await importEd25519PublicKeyRawB64u(publicKey.publicKeyRawB64u);
+      if (!cryptoKey) {
+        return { state: "invalid", error: "signatureV3 key import failed." };
+      }
+
+      let verified = false;
+      try {
+        verified = await crypto.subtle.verify(
+          "Ed25519",
+          cryptoKey,
+          toArrayBuffer(base64UrlDecode(signature.sig)),
+          toArrayBuffer(payloadBytes)
+        );
+      } catch {
+        verified = false;
+      }
+      if (!verified) {
+        return { state: "invalid", error: "signatureV3 verification failed." };
+      }
+      return { state: "verified", kid: signature.kid };
     }
 
     const EMBEDDED_DOCUMENT_SEAL_VKEY = {
@@ -2154,6 +2360,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       checks.push({ state: errors.length ? "bad" : "ok", message: "Canonical fields (ts / slug / code / pulse / path)" });
 
+      const signatureV3 = await verifyBundleSignatureV3(bundle);
+      if (signatureV3.state === "verified") {
+        checks.push({ state: "ok", message: `Receiz Signature (v3) verified (${signatureV3.kid})` });
+      } else if (signatureV3.state === "invalid") {
+        errors.push(signatureV3.error || "signatureV3 verification failed.");
+        checks.push({ state: "bad", message: "Receiz Signature (v3) invalid" });
+      } else if (signatureV3.state === "missing") {
+        warnings.push("Receiz Signature (v3) missing; authorship was not cryptographically verified offline.");
+        checks.push({ state: "warn", message: "Receiz Signature (v3) missing" });
+      } else if (signatureV3.state === "unavailable") {
+        warnings.push(
+          signatureV3.error
+            ? `Receiz Signature (v3) unavailable: ${signatureV3.error}`
+            : "Receiz Signature (v3) key unavailable in this verifier; authorship could not be cryptographically verified offline."
+        );
+        checks.push({ state: "warn", message: "Receiz Signature (v3) unavailable" });
+      }
+
       if (effectiveAnchor) {
         if (anchor && derivedAnchor && anchor.anchorId !== derivedAnchor.anchorId) {
           errors.push("Anchor ID mismatch between anchor bundle and proof bundle.");
@@ -2625,6 +2849,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (!anchor) {
         anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
+
 
       await validateBundleAgainstBasis({
         bundle,

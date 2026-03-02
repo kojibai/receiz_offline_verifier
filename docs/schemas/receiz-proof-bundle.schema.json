@@ -86,6 +86,42 @@
     "groth16ProofDigest": {
       "type": "string",
       "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "signatureV3": {
+      "type": "object",
+      "required": [
+        "version",
+        "alg",
+        "kid",
+        "sig",
+        "payloadHashSha256",
+        "signedAtMs"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "alg": {
+          "const": "Ed25519"
+        },
+        "kid": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{3,64}$"
+        },
+        "sig": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "payloadHashSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "signedAtMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

@@ -17,8 +17,18 @@
 3. Build basis bytes according to carrier normalization rules.
 4. Decode and validate canonical bundle fields.
 5. Verify artifact SHA-256 binding.
-6. Optionally cross-check integration-provided `/v/...` path.
-7. Validate Groth16 artifacts when fields are present.
+6. Validate Receiz Signature v3 when `signatureV3` is present.
+7. Optionally cross-check integration-provided `/v/...` path.
+8. Validate Groth16 artifacts when fields are present.
+
+## Receiz Signature v3 model
+- Signature payload is read from `proofbundle.signatureV3`.
+- Signed payload hash is computed from canonicalized bundle content with `signatureV3` removed.
+- Ed25519 verification runs against pinned key metadata selected by `kid`.
+- Built-in pinned keys can be overridden by `globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`.
+- Signature policy validates `signedAtMs` against verifier clock (future-skew guard).
+- Signature policy can enforce key lifecycle windows via key metadata (`activeFromMs` / `retiredAtMs`).
+- Invalid signatures are hard failures; missing/unavailable signatures are warning states.
 
 ## Groth16 modes
 - Deterministic mode: validates deterministic artifact construction from canonical identity.
@@ -26,6 +36,7 @@
 
 ## Offline and network contract
 - No third-party network calls are required for core deterministic verification.
+- Signature v3 verification uses WebCrypto in-process and does not require network fetches.
 - Real Groth16 mode may request same-origin static assets:
   - `/snarkjs.min.js`
   - `/zk/document_seal_verification_key.json`

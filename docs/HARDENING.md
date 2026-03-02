@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v17 carriers.
+These rules preserve "proof lives in the file" semantics across all v18 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -16,6 +16,12 @@ These rules preserve "proof lives in the file" semantics across all v17 carriers
   - `slug` derived from `ts`
   - `verifyPath` derived from `slug` / `code` / `pulse`
 - Validate optional integration-supplied link input when provided.
+- For `signatureV3` payloads:
+  - malformed envelope or payload-hash mismatch must hard fail
+  - `signedAtMs` future-skew violations must hard fail
+  - signatures outside key activation windows must hard fail
+  - Ed25519 verification failure must hard fail
+  - unknown/unconfigured or policy-unavailable key IDs may warn (`unavailable`) but must not produce a false signature-verified state
 - Fail closed with explicit error reasons.
 
 ## Allowed runtime network behavior
@@ -31,3 +37,4 @@ These rules preserve "proof lives in the file" semantics across all v17 carriers
 - relaxed canonical field validation
 - non-deterministic basis hashing rules
 - hidden fallbacks that convert hard failures into verified outcomes
+- signature downgrade paths that convert invalid `signatureV3` into warning-only outcomes

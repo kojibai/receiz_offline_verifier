@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v18.0.0] - 2026-03-02
+
+### Added
+- Offline `signatureV3` verification path for proof bundles using Ed25519 public keys and payload-hash checks.
+- Signature v3 key pinning model with a static key set and optional runtime override (`__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`).
+
+### Changed
+- Verification checks now surface Receiz Signature (v3) states:
+  - verified (OK)
+  - invalid (hard fail)
+  - missing / unavailable (warning)
+- Signature policy checks now enforce `signedAtMs` time sanity and key lifecycle windows (activation/retirement policy).
+- Verifier UI version marker from `v17.0.0` to `v18.0.0`.
+
+### Kept
+- Core offline verification pipeline and fail-closed semantics from `v17`.
+- Anchor fallback derivation + anchor consistency checks from `v17`.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Deterministic and real Groth16 verification modes.
+
 ## [v17.0.0] - 2026-03-01
 
 ### Added

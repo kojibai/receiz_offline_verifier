@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v17.0.0`.
+This document defines the verifier-visible data contract for `v18.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -64,6 +64,35 @@ This document defines the verifier-visible data contract for `v17.0.0`.
 Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
+## Receiz Signature v3 (optional)
+If `signatureV3` is present on a proof bundle, verifier performs offline signature checks.
+
+### Expected payload shape
+- `version`: `1`
+- `alg`: `Ed25519`
+- `kid`: key identifier string (`[A-Za-z0-9._:-]{3,64}`)
+- `sig`: base64url signature bytes
+- `payloadHashSha256`: 64-hex digest of canonical signed payload
+- `signedAtMs`: non-negative integer milliseconds
+
+### Verification model
+- Verifier removes `signatureV3` from the bundle copy before canonicalization.
+- Canonical signed payload includes these fields:
+  - `kind`, `payloadVersion`, `createdAtMs`, `ts`, `tsDisplay`, `tzMinutesEast`
+  - `code`, `slug`, `verifyPath`, `verifyUrl`, `kaiPulseEternal`, `kaiKlok`
+  - `signerKeyId`, `anchorId`, `receizClaimId`, `sigilClaimSeed`
+  - `zkPoseidonHash`, `groth16ProofDigest`, `artifactSha256Basis`, `wireproof`
+- `payloadHashSha256` must match SHA-256 of canonical payload bytes.
+- `sig` must verify with the Ed25519 key resolved by `kid`.
+- `signedAtMs` must not be beyond verifier future-skew policy (currently +5 minutes).
+- Key lifecycle policy (from pinned key metadata) may enforce `activeFromMs` / `retiredAtMs` timestamp windows for the signature.
+
+### Result semantics
+- Verified signature: success check.
+- Invalid/malformed/hash-mismatch/signature-failure: hard verification failure.
+- Missing signature: warning only.
+- Unknown/unconfigured or policy-unavailable key: warning only.
+
 ## Groth16 artifact modes
 - Deterministic mode: `groth16Proof` is base64url bytes derived from canonical identity.
 - Real mode: `groth16Proof` is `g16:<base64url(json)>` where payload `v` is `receiz.g16.real.v1`.
@@ -83,7 +112,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v17` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v18` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

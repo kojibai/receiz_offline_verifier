@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v17)
+## Supported artifact types (v18)
 - `.png`
 - `.pdf`
 - `.svg`
@@ -23,6 +23,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - Text decoding APIs (`TextDecoder`)
 
 ## Optional capabilities for full feature set
+- WebCrypto Ed25519 key import/verify support (for signed `signatureV3` bundles)
 - `snarkjs` runtime for real Groth16 proof verification
 - hosted verification key file at `/zk/document_seal_verification_key.json`
 - service worker support for cache warm behavior
@@ -30,5 +31,8 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 ## Notes
 - Deterministic verification path works without real Groth16 assets.
 - Real Groth16 checks fail explicitly when runtime assets are missing.
-- Default `v17` UI does not collect an optional `/v/...` path value.
+- Signed bundles with invalid `signatureV3` payloads fail closed.
+- Signed bundles with unknown/unconfigured or lifecycle-unavailable signature key IDs surface warning state (`Receiz Signature (v3) unavailable`).
+- Signed-bundle policy checks use verifier local clock for `signedAtMs` future-skew validation.
+- Default `v18` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.
