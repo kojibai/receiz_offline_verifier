@@ -5,7 +5,7 @@ Deploy `site/` to any static host.
 ## Required for baseline verification
 - `/index.html`
 
-## Required for full v18 feature coverage
+## Required for full v19 feature coverage
 - `/offline-verifier.html` (if used as alternate path)
 - `/snarkjs.min.js` (real Groth16 verification)
 - `/zk/document_seal_verification_key.json` (real Groth16 verification)
@@ -13,7 +13,7 @@ Deploy `site/` to any static host.
 
 ## Optional Signature v3 key pin override
 Use this only if you need a custom key set beyond the built-in pinned defaults.
-Key entries may optionally include lifecycle policy metadata (`activeFromMs`, `retiredAtMs`).
+Key entries may optionally include lifecycle policy metadata (`activeFromPulse`, `retiredAtPulse`).
 
 ```html
 <script>
@@ -22,14 +22,15 @@ Key entries may optionally include lifecycle policy metadata (`activeFromMs`, `r
       kid: "receiz.v3.prod.2026-03-02",
       alg: "Ed25519",
       publicKeyRawB64u: "z2pQNWhfQIfrFlkdutiHYLXmgwlt90UX8iIc8HvKtI0",
-      status: "active"
+      status: "active",
+      activeFromPulse: "0"
     }
   ];
 </script>
 ```
 
 Set the override before verifier initialization.
-If `status` is `retired`, include `retiredAtMs` to avoid policy-unavailable warnings.
+If `status` is `retired`, include `retiredAtPulse` to avoid policy-unavailable warnings.
 
 ## GitHub Pages
 Serve repository `site/` output over HTTPS.

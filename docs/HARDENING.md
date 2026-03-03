@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v18 carriers.
+These rules preserve "proof lives in the file" semantics across all v19 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -18,8 +18,10 @@ These rules preserve "proof lives in the file" semantics across all v18 carriers
 - Validate optional integration-supplied link input when provided.
 - For `signatureV3` payloads:
   - malformed envelope or payload-hash mismatch must hard fail
-  - `signedAtMs` future-skew violations must hard fail
-  - signatures outside key activation windows must hard fail
+  - bundle `kaiPulseEternal` must parse as a non-negative integer pulse policy value
+  - signatures before `activeFromPulse` must hard fail
+  - signatures after `retiredAtPulse` must surface `unavailable` warning state
+  - retired keys without `retiredAtPulse` must surface `unavailable` warning state
   - Ed25519 verification failure must hard fail
   - unknown/unconfigured or policy-unavailable key IDs may warn (`unavailable`) but must not produce a false signature-verified state
 - Fail closed with explicit error reasons.

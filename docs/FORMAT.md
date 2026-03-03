@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v18.0.0`.
+This document defines the verifier-visible data contract for `v19.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -84,8 +84,9 @@ If `signatureV3` is present on a proof bundle, verifier performs offline signatu
   - `zkPoseidonHash`, `groth16ProofDigest`, `artifactSha256Basis`, `wireproof`
 - `payloadHashSha256` must match SHA-256 of canonical payload bytes.
 - `sig` must verify with the Ed25519 key resolved by `kid`.
-- `signedAtMs` must not be beyond verifier future-skew policy (currently +5 minutes).
-- Key lifecycle policy (from pinned key metadata) may enforce `activeFromMs` / `retiredAtMs` timestamp windows for the signature.
+- `signedAtMs` is validated as a non-negative integer envelope field.
+- Key lifecycle policy (from pinned key metadata) enforces pulse windows against `bundle.kaiPulseEternal` using `activeFromPulse` / `retiredAtPulse`.
+- No verifier-clock future-skew guard is applied to `signedAtMs`.
 
 ### Result semantics
 - Verified signature: success check.
@@ -112,7 +113,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v18` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v19` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

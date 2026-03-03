@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v19.0.0] - 2026-03-03
+
+### Changed
+- Signature v3 key lifecycle policy now evaluates bundle `kaiPulseEternal` instead of signature timestamp windows.
+- Pinned key lifecycle metadata now uses pulse fields: `activeFromPulse` / `retiredAtPulse`.
+- Removed Signature v3 verifier-clock future-skew gating (`signedAtMs` is no longer used as an acceptance-time policy guard).
+- Retired key handling now reports bundle-pulse policy outcomes (`retired without retirement pulse` / `retired for this bundle pulse`).
+- Verifier UI version marker from `v18.0.0` to `v19.0.0`.
+
+### Kept
+- Offline `signatureV3` verification path for proof bundles using Ed25519 public keys and payload-hash checks.
+- Signature v3 key pinning model with a static key set and optional runtime override (`__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`).
+- Core offline verification pipeline and fail-closed semantics from `v18`.
+- Anchor fallback derivation + anchor consistency checks from `v18`.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Deterministic and real Groth16 verification modes.
+
 ## [v18.0.0] - 2026-03-02
 
 ### Added

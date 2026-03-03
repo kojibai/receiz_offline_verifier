@@ -1,6 +1,6 @@
 # Receiz schemas
 
-This directory contains JSON Schemas for verifier-visible payloads used in v18.
+This directory contains JSON Schemas for verifier-visible payloads used in v19.
 
 ## Files
 - `receiz-proof-bundle.schema.json`: proof bundle payload shape.
@@ -13,4 +13,4 @@ This directory contains JSON Schemas for verifier-visible payloads used in v18.
 - Trailer payloads decode directly to proof bundle objects and therefore reuse the proof bundle schema.
 - `groth16Proof` schema accepts both deterministic base64url proofs and real-mode `g16:<base64url(json)>` payloads.
 - Proof bundle schema includes optional `signatureV3` envelope fields for Receiz Signature v3 validation.
-- Signature timestamp skew and pinned-key lifecycle policy are runtime checks and are not fully expressible in JSON Schema.
+- Signature envelope semantics (including `signedAtMs`) and pinned-key pulse lifecycle policy (`activeFromPulse` / `retiredAtPulse`) are runtime checks and are not fully expressible in JSON Schema.

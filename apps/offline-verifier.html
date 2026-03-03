@@ -573,7 +573,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v18.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v19.0.0</a>
     </p>
   </main>
 
@@ -1297,8 +1297,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const HEX64_RE = /^[0-9a-f]{64}$/;
     const B64U_RE = /^[A-Za-z0-9_-]+$/;
     const KID_RE = /^[a-z0-9._:-]{3,64}$/i;
-    const SIGNATURE_V3_MAX_FUTURE_SKEW_MS = 5 * 60 * 1000;
-    const SIGNATURE_V3_KEY_POLICY_SKEW_MS = 5 * 60 * 1000;
 
     function asKid(value) {
       if (typeof value !== "string") return null;
@@ -1318,17 +1316,19 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return value === "retired" ? "retired" : "active";
     }
 
-    function asEpochMs(value) {
-      if (typeof value === "number" && Number.isFinite(value)) {
-        const ms = Math.trunc(value);
-        return ms >= 0 ? ms : null;
-      }
+    function asPulse(value) {
       if (typeof value === "string") {
         const text = value.trim();
-        if (!/^\d{1,16}$/.test(text)) return null;
-        const parsed = Number.parseInt(text, 10);
-        if (!Number.isSafeInteger(parsed) || parsed < 0) return null;
-        return parsed;
+        if (!/^\d+$/.test(text)) return null;
+        try {
+          return BigInt(text).toString();
+        } catch {
+          return null;
+        }
+      }
+      if (typeof value === "number" && Number.isFinite(value)) {
+        if (!Number.isSafeInteger(value) || value < 0) return null;
+        return BigInt(value).toString();
       }
       return null;
     }
@@ -1338,17 +1338,21 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const kid = asKid(value.kid);
       const alg = value.alg === "Ed25519" ? "Ed25519" : null;
       const publicKeyRawB64u = asB64u(value.publicKeyRawB64u);
-      const activeFromMs = asEpochMs(value.activeFromMs);
-      const retiredAtMs = asEpochMs(value.retiredAtMs);
+      const activeFromPulse = asPulse(value.activeFromPulse);
+      const retiredAtPulse = asPulse(value.retiredAtPulse);
       if (!kid || !alg || !publicKeyRawB64u) return null;
-      if (activeFromMs !== null && retiredAtMs !== null && retiredAtMs < activeFromMs) return null;
+      if (
+        activeFromPulse !== null &&
+        retiredAtPulse !== null &&
+        BigInt(retiredAtPulse) < BigInt(activeFromPulse)
+      ) return null;
       return {
         kid,
         alg,
         publicKeyRawB64u,
         status: parseSignatureV3Status(value.status),
-        ...(activeFromMs !== null ? { activeFromMs } : {}),
-        ...(retiredAtMs !== null ? { retiredAtMs } : {})
+        ...(activeFromPulse !== null ? { activeFromPulse } : {}),
+        ...(retiredAtPulse !== null ? { retiredAtPulse } : {})
       };
     }
 
@@ -1587,28 +1591,21 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (publicKey.alg !== signature.alg) {
         return { state: "invalid", error: "signatureV3 algorithm mismatch." };
       }
-
-      const nowMs = Date.now();
-      if (signature.signedAtMs > nowMs + SIGNATURE_V3_MAX_FUTURE_SKEW_MS) {
-        return { state: "invalid", error: "signatureV3 signedAtMs is in the future." };
+      const bundlePulse = asPulse(bundle && bundle.kaiPulseEternal);
+      if (bundlePulse === null) {
+        return { state: "invalid", error: "signatureV3 bundle pulse is invalid." };
       }
+      const keyPolicyPulse = BigInt(bundlePulse);
 
-      if (
-        typeof publicKey.activeFromMs === "number" &&
-        signature.signedAtMs + SIGNATURE_V3_KEY_POLICY_SKEW_MS < publicKey.activeFromMs
-      ) {
+      if (typeof publicKey.activeFromPulse === "string" && keyPolicyPulse < BigInt(publicKey.activeFromPulse)) {
         return { state: "invalid", error: "signatureV3 predates key activation." };
       }
 
-      if (publicKey.status === "retired" && typeof publicKey.retiredAtMs !== "number") {
-        return { state: "unavailable", error: "signatureV3 key retired without retirement timestamp." };
+      if (publicKey.status === "retired" && typeof publicKey.retiredAtPulse !== "string") {
+        return { state: "unavailable", error: "signatureV3 key retired without retirement pulse." };
       }
-
-      if (
-        typeof publicKey.retiredAtMs === "number" &&
-        signature.signedAtMs > publicKey.retiredAtMs + SIGNATURE_V3_KEY_POLICY_SKEW_MS
-      ) {
-        return { state: "unavailable", error: "signatureV3 key retired for this signature timestamp." };
+      if (typeof publicKey.retiredAtPulse === "string" && keyPolicyPulse > BigInt(publicKey.retiredAtPulse)) {
+        return { state: "unavailable", error: "signatureV3 key retired for this bundle pulse." };
       }
 
       const cryptoKey = await importEd25519PublicKeyRawB64u(publicKey.publicKeyRawB64u);
@@ -2850,7 +2847,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
 
-
+      
       await validateBundleAgainstBasis({
         bundle,
         basisBytes,

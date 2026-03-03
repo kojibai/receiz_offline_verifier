@@ -2,26 +2,27 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v18.0.0`
+Current release: `v19.0.0`
 
-## What changed in v18
-- Added offline `signatureV3` verification for proof bundles using Ed25519 and payload-hash validation.
-- Added a pinned Signature v3 key registry (default key ID: `receiz.v3.prod.2026-03-02`) with optional host override support.
-- Added signature policy enforcement for timestamp and key lifecycle windows (`signedAtMs` future-skew check + activation/retirement handling).
-- Added explicit signature check outcomes in verifier results:
+## What changed in v19
+- Updated Signature v3 key lifecycle policy to use bundle pulse windows (`kaiPulseEternal`) instead of timestamp windows.
+- Updated pinned Signature v3 key lifecycle metadata fields to `activeFromPulse` / `retiredAtPulse`.
+- Removed local-clock future-skew gating for `signedAtMs` during signature acceptance.
+- Kept explicit signature check outcomes in verifier results:
   - `Receiz Signature (v3) verified (<kid>)`
   - `Receiz Signature (v3) invalid` (hard fail)
   - `Receiz Signature (v3) missing` / `unavailable` (warning)
-- Advanced release marker to `v18.0.0`.
+- Advanced release marker to `v19.0.0`.
 
-## Release train highlights (v14 -> v18)
+## Release train highlights (v14 -> v19)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
 - `v17.0.0`: anchor derivation + cross-check hardening shipped.
 - `v18.0.0`: Signature v3 offline verification + key pinning model shipped.
+- `v19.0.0`: Signature v3 key policy shifted to pulse-based lifecycle enforcement.
 
-## Supported artifact inputs (v18)
+## Supported artifact inputs (v19)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -45,12 +46,13 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - Verification logic runs client-side in browser JavaScript.
 - Signature v3 verification uses WebCrypto Ed25519 verification when `signatureV3` is present.
 - `signatureV3` missing or key-unavailable states are warnings; malformed/hash-mismatch/signature-failure states are hard failures.
-- Signature policy also validates `signedAtMs` against verifier clock (future skew window) and pinned-key lifecycle windows (activation/retirement).
+- Signature policy validates bundle `kaiPulseEternal` against pinned-key lifecycle windows (`activeFromPulse` / `retiredAtPulse`).
+- `signedAtMs` remains required in Signature v3 payload shape but is not used for local-clock skew gating.
 - Real Groth16 mode requires:
   - `snarkjs` runtime (`/snarkjs.min.js`)
   - verification key JSON (`/zk/document_seal_verification_key.json`)
 - If those assets are unavailable, deterministic verification still works and real Groth16 checks fail with explicit messaging.
-- The default `v18` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v19` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -67,7 +69,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for full `v18` feature coverage:
+Required runtime assets for full `v19` feature coverage:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `snarkjs.min.js` (for real Groth16 mode)

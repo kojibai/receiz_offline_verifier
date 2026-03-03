@@ -26,8 +26,9 @@
 - Signed payload hash is computed from canonicalized bundle content with `signatureV3` removed.
 - Ed25519 verification runs against pinned key metadata selected by `kid`.
 - Built-in pinned keys can be overridden by `globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`.
-- Signature policy validates `signedAtMs` against verifier clock (future-skew guard).
-- Signature policy can enforce key lifecycle windows via key metadata (`activeFromMs` / `retiredAtMs`).
+- Signature policy validates bundle pulse (`kaiPulseEternal`) as a non-negative integer policy value.
+- Signature policy enforces key lifecycle windows via key metadata (`activeFromPulse` / `retiredAtPulse`).
+- `signedAtMs` is shape-validated but is not used for local-clock future-skew gating.
 - Invalid signatures are hard failures; missing/unavailable signatures are warning states.
 
 ## Groth16 modes
