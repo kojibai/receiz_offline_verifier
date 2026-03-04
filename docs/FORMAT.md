@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v19.0.0`.
+This document defines the verifier-visible data contract for `v20.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -113,7 +113,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v19` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v20` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

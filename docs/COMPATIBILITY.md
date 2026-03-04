@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v19)
+## Supported artifact types (v20)
 - `.png`
 - `.pdf`
 - `.svg`
@@ -35,5 +35,5 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - Signed bundles with unknown/unconfigured or lifecycle-unavailable signature key IDs surface warning state (`Receiz Signature (v3) unavailable`).
 - Signed-bundle policy checks use bundle pulse (`kaiPulseEternal`) against key lifecycle metadata (`activeFromPulse` / `retiredAtPulse`).
 - `signedAtMs` is envelope-shape validated but does not gate verification on local clock skew.
-- Default `v19` UI does not collect an optional `/v/...` path value.
+- Default `v20` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.

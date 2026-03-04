@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v20.0.0] - 2026-03-04
+
+### Changed
+- Added a footer download action (`Download Offline Verifier`) linked to `/offline-verifier.html`.
+- Applied footer action styling and markup updates to both `site/index.html` and `apps/offline-verifier.html`.
+- Verifier UI version marker from `v19.0.0` to `v20.0.0`.
+
+### Kept
+- Verification semantics, proof extraction rules, and fail-closed behavior from `v19`.
+- Signature v3 pulse-based lifecycle policy and key pinning behavior from `v19`.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Deterministic and real Groth16 verification modes.
+
 ## [v19.0.0] - 2026-03-03
 
 ### Changed
