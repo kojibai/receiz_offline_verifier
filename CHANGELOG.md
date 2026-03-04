@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v21.0.0] - 2026-03-04
+
+### Changed
+- Signature verification is now required for a verified outcome: `signatureV3` states `missing` and `unavailable` now hard fail.
+- Anchor context is now required; verification fails when neither explicit nor derivable anchor data is available.
+- Groth16 verification is now strict real-proof only: missing Groth16 fields fail, and non-`g16:` proofs are rejected.
+- Verifier UI version marker from `v20.0.0` to `v21.0.0`.
+
+### Kept
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v20.0.0] - 2026-03-04
 
 ### Changed

@@ -618,7 +618,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v20.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v21.0.0</a>
     </p>
   </main>
 
@@ -1786,9 +1786,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     async function verifyDeterministicArtifacts(bundle) {
       if (!bundle.zkPoseidonHash || !bundle.groth16Proof || !bundle.groth16ProofDigest) {
         return {
-          hasZk: false,
-          ok: true,
-          message: "Legacy bundle: no Groth16 artifact fields present."
+          hasZk: true,
+          ok: false,
+          message: "Groth16 fields are missing."
         };
       }
 
@@ -1848,39 +1848,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         }
       }
 
-      const canonicalIdentity = buildCanonicalIdentity(bundle);
-      const kaiSignatureHex = await sha256Hex(`${canonicalIdentity}|kaiSig`);
-      const canon = deriveCanonLikeFromPulse(bundle.kaiPulseEternal);
-
-      const canonicalInput = jcsCanonicalize({
-        v: "receiz.g16.v3",
-        canonicalIdentity,
-        zkPoseidonHashHex32: bundle.zkPoseidonHash,
-        canon,
-        kaiSignatureHex,
-        proof: REFERENCE_GROTH16_PROOF
-      });
-
-      const proofSeed = await sha256Bytes(canonicalInput);
-      const suffix = await sha256Bytes(`receiz.g16.proof|${canonicalIdentity}`);
-      const proofBytes = concatBytes(proofSeed, suffix);
-      const expectedProof = base64UrlEncode(proofBytes);
-      const expectedDigest = await sha256Hex(proofBytes);
-
-      const proofMatches = bundle.groth16Proof === expectedProof;
-      const digestMatches = bundle.groth16ProofDigest.toLowerCase() === expectedDigest;
-
       return {
         hasZk: true,
-        ok: proofMatches && digestMatches,
-        proofMatches,
-        digestMatches,
-        expectedDigest,
-        canonicalIdentity,
-        canon,
-        message: proofMatches && digestMatches
-          ? "Deterministic Groth16 artifacts match canonical identity."
-          : "Deterministic Groth16 artifacts do not match canonical identity."
+        ok: false,
+        message: "Only real g16: Groth16 proofs are accepted."
       };
     }
 
@@ -2409,15 +2380,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         errors.push(signatureV3.error || "signatureV3 verification failed.");
         checks.push({ state: "bad", message: "Receiz Signature (v3) invalid" });
       } else if (signatureV3.state === "missing") {
-        warnings.push("Receiz Signature (v3) missing; authorship was not cryptographically verified offline.");
-        checks.push({ state: "warn", message: "Receiz Signature (v3) missing" });
+        errors.push("Receiz Signature (v3) missing.");
+        checks.push({ state: "bad", message: "Receiz Signature (v3) missing" });
       } else if (signatureV3.state === "unavailable") {
-        warnings.push(
+        errors.push(
           signatureV3.error
             ? `Receiz Signature (v3) unavailable: ${signatureV3.error}`
-            : "Receiz Signature (v3) key unavailable in this verifier; authorship could not be cryptographically verified offline."
+            : "Receiz Signature (v3) key unavailable in this verifier."
         );
-        checks.push({ state: "warn", message: "Receiz Signature (v3) unavailable" });
+        checks.push({ state: "bad", message: "Receiz Signature (v3) unavailable" });
       }
 
       if (effectiveAnchor) {
@@ -2430,6 +2401,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (pulse && effectiveAnchor.parent.pulse !== pulse) {
           errors.push("Anchor parent.pulse does not match proof bundle pulse.");
         }
+        checks.push({ state: "ok", message: "Anchor data present" });
+      } else {
+        errors.push("Anchor data is required for trusted verification.");
+        checks.push({ state: "bad", message: "Anchor data present" });
       }
 
       const zkCheck = await verifyDeterministicArtifacts(bundle);

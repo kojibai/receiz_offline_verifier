@@ -17,9 +17,10 @@
 3. Build basis bytes according to carrier normalization rules.
 4. Decode and validate canonical bundle fields.
 5. Verify artifact SHA-256 binding.
-6. Validate Receiz Signature v3 when `signatureV3` is present.
-7. Optionally cross-check integration-provided `/v/...` path.
-8. Validate Groth16 artifacts when fields are present.
+6. Validate Receiz Signature v3 (required for a verified outcome).
+7. Resolve/validate effective anchor context (required for trusted verification).
+8. Validate Groth16 proof artifacts (required; real `g16:` payload only).
+9. Optionally cross-check integration-provided `/v/...` path.
 
 ## Receiz Signature v3 model
 - Signature payload is read from `proofbundle.signatureV3`.
@@ -29,16 +30,26 @@
 - Signature policy validates bundle pulse (`kaiPulseEternal`) as a non-negative integer policy value.
 - Signature policy enforces key lifecycle windows via key metadata (`activeFromPulse` / `retiredAtPulse`).
 - `signedAtMs` is shape-validated but is not used for local-clock future-skew gating.
-- Invalid signatures are hard failures; missing/unavailable signatures are warning states.
+- Invalid/missing/unavailable signatures are hard failures.
 
-## Groth16 modes
-- Deterministic mode: validates deterministic artifact construction from canonical identity.
-- Real mode (`g16:` payload): verifies with `snarkjs.groth16.verify` against `/zk/document_seal_verification_key.json`.
+## Anchor context model
+- Effective anchor context is either:
+  - explicit parsed anchor bundle, or
+  - anchor context derived from proof bundle fields.
+- Verification fails when effective anchor context is unavailable.
+- When both explicit and derived anchor values exist, anchor ID consistency is validated.
+
+## Groth16 model (`v21`)
+- Required fields: `zkPoseidonHash`, `groth16Proof`, `groth16ProofDigest`.
+- Accepted proof format: real `g16:` payload (`receiz.g16.real.v1`).
+- Validation checks:
+  - encoded proof digest
+  - public-signal alignment with `zkPoseidonHash`
+  - `snarkjs.groth16.verify` success
+- Missing fields or non-`g16:` payloads fail verification.
 
 ## Offline and network contract
-- No third-party network calls are required for core deterministic verification.
-- Signature v3 verification uses WebCrypto in-process and does not require network fetches.
-- Real Groth16 mode may request same-origin static assets:
-  - `/snarkjs.min.js`
-  - `/zk/document_seal_verification_key.json`
+- No third-party network calls are required for verification.
+- Signature v3 verification uses WebCrypto in-process.
+- Default shipped entrypoints embed Groth16 runtime/key material.
 - Service worker registration and warm messaging is non-critical and failure-tolerant.

@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v20.0.0`.
+This document defines the verifier-visible data contract for `v21.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -64,8 +64,17 @@ This document defines the verifier-visible data contract for `v20.0.0`.
 Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
-## Receiz Signature v3 (optional)
-If `signatureV3` is present on a proof bundle, verifier performs offline signature checks.
+## Anchor context requirement
+Verified outcomes in `v21` require effective anchor context.
+
+Effective anchor context is resolved from:
+- explicit `receiz_anchor_bundle` carrier data, or
+- derived anchor context from proof bundle fields (`anchorId`, `code`, `kaiPulseEternal`, `verifyPath`).
+
+If neither explicit nor derivable anchor context is available, verification fails.
+
+## Receiz Signature v3 (required)
+`v21` requires `signatureV3` for verified outcomes.
 
 ### Expected payload shape
 - `version`: `1`
@@ -91,13 +100,27 @@ If `signatureV3` is present on a proof bundle, verifier performs offline signatu
 ### Result semantics
 - Verified signature: success check.
 - Invalid/malformed/hash-mismatch/signature-failure: hard verification failure.
-- Missing signature: warning only.
-- Unknown/unconfigured or policy-unavailable key: warning only.
+- Missing signature: hard verification failure.
+- Unknown/unconfigured or policy-unavailable key: hard verification failure.
 
-## Groth16 artifact modes
-- Deterministic mode: `groth16Proof` is base64url bytes derived from canonical identity.
-- Real mode: `groth16Proof` is `g16:<base64url(json)>` where payload `v` is `receiz.g16.real.v1`.
-- In real mode, verifier checks digest, public signal alignment with `zkPoseidonHash`, then runs `snarkjs.groth16.verify`.
+## Groth16 requirements (`v21`)
+`v21` requires Groth16 artifact fields and accepts only real-mode proof payloads.
+
+Required proof bundle fields:
+- `zkPoseidonHash` (64-hex)
+- `groth16Proof`
+- `groth16ProofDigest` (64-hex)
+
+Accepted proof format:
+- Real mode only: `groth16Proof = g16:<base64url(json)>` where envelope `v = receiz.g16.real.v1`
+
+Verification checks:
+- digest match on encoded `g16:` payload
+- public signal alignment with `zkPoseidonHash`
+- `snarkjs.groth16.verify` validation
+
+Non-`g16:` proof payloads fail verification.
+Missing Groth16 fields fail verification.
 
 ## Basis-bytes normalization rules
 - PNG: remove only proof bundle chunk(s) when computing basis hash.
@@ -113,7 +136,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v20` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v21` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

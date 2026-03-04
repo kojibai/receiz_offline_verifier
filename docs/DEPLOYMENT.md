@@ -5,15 +5,18 @@ Deploy `site/` to any static host.
 ## Required for baseline verification
 - `/index.html`
 
-## Required for full v20 feature coverage
-- `/offline-verifier.html` (if used as alternate path)
-- `/snarkjs.min.js` (real Groth16 verification)
-- `/zk/document_seal_verification_key.json` (real Groth16 verification)
+## Optional by route/runtime behavior
+- `/offline-verifier.html` (alternate route + footer download target)
 - `/sw.js` (optional; enables service worker warm behavior)
+
+## Embedded verification runtime notes
+- Default shipped entrypoints embed the Groth16 verifier runtime and verification key material.
+- Signature v3 verification uses in-process WebCrypto and pinned key metadata.
+- No third-party network dependencies are required for verification.
 
 ## Optional Signature v3 key pin override
 Use this only if you need a custom key set beyond the built-in pinned defaults.
-Key entries may optionally include lifecycle policy metadata (`activeFromPulse`, `retiredAtPulse`).
+Key entries may include lifecycle policy metadata (`activeFromPulse`, `retiredAtPulse`).
 
 ```html
 <script>
@@ -30,7 +33,7 @@ Key entries may optionally include lifecycle policy metadata (`activeFromPulse`,
 ```
 
 Set the override before verifier initialization.
-If `status` is `retired`, include `retiredAtPulse` to avoid policy-unavailable warnings.
+If `status` is `retired`, include `retiredAtPulse` to avoid `unavailable` policy states that fail verification in `v21`.
 
 ## GitHub Pages
 Serve repository `site/` output over HTTPS.

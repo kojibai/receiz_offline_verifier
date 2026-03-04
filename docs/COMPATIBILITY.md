@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v20)
+## Supported artifact types (v21)
 - `.png`
 - `.pdf`
 - `.svg`
@@ -20,20 +20,21 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - JavaScript runtime
 - file access via `<input type="file">` or equivalent
 - WebCrypto SHA-256 (`crypto.subtle.digest`)
+- WebCrypto Ed25519 key import/verify support (required for Signature v3 verification)
 - Text decoding APIs (`TextDecoder`)
+- `snarkjs` Groth16 verify runtime availability (embedded in shipped entrypoints)
 
-## Optional capabilities for full feature set
-- WebCrypto Ed25519 key import/verify support (for signed `signatureV3` bundles)
-- `snarkjs` runtime for real Groth16 proof verification
-- hosted verification key file at `/zk/document_seal_verification_key.json`
+## Optional capabilities
 - service worker support for cache warm behavior
 
 ## Notes
-- Deterministic verification path works without real Groth16 assets.
-- Real Groth16 checks fail explicitly when runtime assets are missing.
 - Signed bundles with invalid `signatureV3` payloads fail closed.
-- Signed bundles with unknown/unconfigured or lifecycle-unavailable signature key IDs surface warning state (`Receiz Signature (v3) unavailable`).
+- Signed bundles with unknown/unconfigured or lifecycle-unavailable signature key IDs fail closed in `v21`.
+- Missing `signatureV3` fails closed in `v21`.
+- Anchor context is required for trusted verification (`receiz_anchor_bundle` or derivable anchor context from proof bundle fields).
+- Groth16 fields are required in `v21`; missing fields fail closed.
+- Only real `g16:` Groth16 payloads are accepted in `v21`.
 - Signed-bundle policy checks use bundle pulse (`kaiPulseEternal`) against key lifecycle metadata (`activeFromPulse` / `retiredAtPulse`).
 - `signedAtMs` is envelope-shape validated but does not gate verification on local clock skew.
-- Default `v20` UI does not collect an optional `/v/...` path value.
+- Default `v21` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.

@@ -11,7 +11,11 @@
     "code",
     "kaiPulseEternal",
     "verifyPath",
-    "artifactSha256Basis"
+    "artifactSha256Basis",
+    "zkPoseidonHash",
+    "groth16Proof",
+    "groth16ProofDigest",
+    "signatureV3"
   ],
   "properties": {
     "kind": {
@@ -74,14 +78,7 @@
     },
     "groth16Proof": {
       "type": "string",
-      "oneOf": [
-        {
-          "pattern": "^[A-Za-z0-9_-]+$"
-        },
-        {
-          "pattern": "^g16:[A-Za-z0-9_\\-+/]+={0,2}$"
-        }
-      ]
+      "pattern": "^g16:[A-Za-z0-9_\\-+/]+={0,2}$"
     },
     "groth16ProofDigest": {
       "type": "string",

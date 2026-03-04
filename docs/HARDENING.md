@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v20 carriers.
+These rules preserve "proof lives in the file" semantics across all v21 carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -15,28 +15,36 @@ These rules preserve "proof lives in the file" semantics across all v20 carriers
   - `ts`, `slug`, `code`, `kaiPulseEternal`, `verifyPath`
   - `slug` derived from `ts`
   - `verifyPath` derived from `slug` / `code` / `pulse`
+- Require and validate effective anchor context:
+  - explicit anchor bundle or derivable anchor context must exist
+  - when both explicit and derived anchors exist, anchor ID consistency must hold
+  - anchor parent code/pulse must match proof bundle code/pulse
 - Validate optional integration-supplied link input when provided.
-- For `signatureV3` payloads:
+- Require and validate `signatureV3`:
+  - missing signature must hard fail
   - malformed envelope or payload-hash mismatch must hard fail
   - bundle `kaiPulseEternal` must parse as a non-negative integer pulse policy value
   - signatures before `activeFromPulse` must hard fail
-  - signatures after `retiredAtPulse` must surface `unavailable` warning state
-  - retired keys without `retiredAtPulse` must surface `unavailable` warning state
+  - signatures with unavailable key policy state (including retired-without-pulse / retired-for-pulse) must hard fail
   - Ed25519 verification failure must hard fail
-  - unknown/unconfigured or policy-unavailable key IDs may warn (`unavailable`) but must not produce a false signature-verified state
+  - unknown/unconfigured key IDs must hard fail
+- Require and validate Groth16 proof artifacts:
+  - `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest` must be present
+  - `groth16Proof` must be real `g16:` payload format
+  - digest and public-signal checks must pass
+  - `snarkjs.groth16.verify` must pass
 - Fail closed with explicit error reasons.
 
 ## Allowed runtime network behavior
 - No third-party network endpoints.
-- Same-origin static asset load/fetch is allowed only for real Groth16 assets:
-  - `/snarkjs.min.js`
-  - `/zk/document_seal_verification_key.json`
 - Service worker registration/warm messaging is allowed and must be non-critical.
-- Missing real-Groth16 assets must fail real-Groth16 checks explicitly and must not produce a verified outcome.
+- Verification must not depend on network fetches for correctness in default shipped entrypoints.
 
 ## Must not introduce
 - silent pass-through on malformed proof bundles
 - relaxed canonical field validation
 - non-deterministic basis hashing rules
 - hidden fallbacks that convert hard failures into verified outcomes
-- signature downgrade paths that convert invalid `signatureV3` into warning-only outcomes
+- signature downgrade paths that convert invalid/missing/unavailable `signatureV3` into warning-only outcomes
+- Groth16 downgrade paths that accept missing fields or non-`g16:` proofs
+- anchor downgrade paths that allow verification without effective anchor context
