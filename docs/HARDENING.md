@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all v22 carriers.
+These rules preserve "proof lives in the file" semantics across all `v23` carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -20,14 +20,26 @@ These rules preserve "proof lives in the file" semantics across all v22 carriers
   - when both explicit and derived anchors exist, anchor ID consistency must hold
   - anchor parent code/pulse must match proof bundle code/pulse
 - Validate optional integration-supplied link input when provided.
-- Require and validate `signatureV3`:
-  - missing signature must hard fail
+- Require and validate trusted signatures:
+  - at least one signature path must verify (`signatureV3` or `signatureV4`)
+  - any present invalid signature payload must hard fail
+  - if no path verifies, unavailable signature states must hard fail
+  - if neither signature path is present, trusted-signature missing must hard fail
+- Signature v3 checks:
   - malformed envelope or payload-hash mismatch must hard fail
   - bundle `kaiPulseEternal` must parse as a non-negative integer pulse policy value
   - signatures before `activeFromPulse` must hard fail
-  - signatures with unavailable key policy state (including retired-without-pulse / retired-for-pulse) must hard fail
+  - signatures with unavailable key policy state (including retired-without-pulse / retired-for-pulse) must hard fail unless another signature path verifies
   - Ed25519 verification failure must hard fail
-  - unknown/unconfigured key IDs must hard fail
+  - unknown/unconfigured key IDs must hard fail unless another signature path verifies
+- Signature v4 checks:
+  - malformed envelope must hard fail
+  - payload-hash mismatch must hard fail
+  - root key resolution/policy must enforce pulse lifecycle constraints
+  - certificate ID derivation mismatch must hard fail
+  - certificate signature verification failure must hard fail
+  - `signedAtMs` outside certificate window must fail
+  - subject-key payload signature verification failure must hard fail
 - Require and validate Groth16 proof artifacts:
   - `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest` must be present
   - `groth16Proof` must be real `g16:` payload format
@@ -45,6 +57,7 @@ These rules preserve "proof lives in the file" semantics across all v22 carriers
 - relaxed canonical field validation
 - non-deterministic basis hashing rules
 - hidden fallbacks that convert hard failures into verified outcomes
-- signature downgrade paths that convert invalid/missing/unavailable `signatureV3` into warning-only outcomes
+- signature downgrade paths that convert invalid trusted signatures into warning-only outcomes
+- missing-signature downgrade paths that bypass trusted-signature requirements
 - Groth16 downgrade paths that accept missing fields or non-`g16:` proofs
 - anchor downgrade paths that allow verification without effective anchor context

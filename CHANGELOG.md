@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v23.0.0] - 2026-03-05
+
+### Added
+- Offline `signatureV4` verification path with rooted device-certificate validation.
+- Signature v4 root key pinning with static defaults and optional runtime override (`__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__`).
+
+### Changed
+- Trusted-signature gating now accepts either verified `signatureV3` or verified `signatureV4`.
+- Trusted-signature evaluation precedence is now explicit:
+  - any present invalid signature path hard fails (`Trusted signature invalid`)
+  - unavailable signature paths are warnings only when another signature path verifies
+  - when no signature path verifies, unavailable/missing trusted signatures hard fail
+- Verifier UI version marker from `v22.0.0` to `v23.0.0`.
+- Applied the same footer release marker update in both entrypoints:
+  - `site/index.html`
+  - `apps/offline-verifier.html`
+- Updated release and operations documentation references from `v22` to `v23`.
+
+### Kept
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v22.0.0] - 2026-03-05
 
 ### Changed

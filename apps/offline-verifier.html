@@ -618,7 +618,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v22.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v23.0.0</a>
     </p>
   </main>
 
@@ -1339,7 +1339,23 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE && RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE.length > 0
         ? Object.freeze([...RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_OVERRIDE])
         : RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_STATIC;
+    const RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_STATIC = Object.freeze([
+      {
+        kid: "receiz.v3.prod.2026-03-02",
+        alg: "Ed25519",
+        publicKeyRawB64u: "z2pQNWhfQIfrFlkdutiHYLXmgwlt90UX8iIc8HvKtI0",
+        status: "active"
+      }
+    ]);
+    const RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_OVERRIDE = Array.isArray(globalThis.__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__)
+      ? globalThis.__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__
+      : null;
+    const RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED =
+      RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_OVERRIDE && RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_OVERRIDE.length > 0
+        ? Object.freeze([...RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_OVERRIDE])
+        : RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_STATIC;
     const HEX64_RE = /^[0-9a-f]{64}$/;
+    const HEX32_RE = /^[0-9a-f]{32}$/;
     const B64U_RE = /^[A-Za-z0-9_-]+$/;
     const KID_RE = /^[a-z0-9._:-]{3,64}$/i;
 
@@ -1357,7 +1373,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return text;
     }
 
-    function parseSignatureV3Status(value) {
+    function parseSignatureKeyStatus(value) {
       return value === "retired" ? "retired" : "active";
     }
 
@@ -1395,7 +1411,30 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         kid,
         alg,
         publicKeyRawB64u,
-        status: parseSignatureV3Status(value.status),
+        status: parseSignatureKeyStatus(value.status),
+        ...(activeFromPulse !== null ? { activeFromPulse } : {}),
+        ...(retiredAtPulse !== null ? { retiredAtPulse } : {})
+      };
+    }
+
+    function normalizeSignatureV4RootPublicKey(value) {
+      if (!isRecord(value)) return null;
+      const kid = asKid(value.kid);
+      const alg = value.alg === "Ed25519" ? "Ed25519" : null;
+      const publicKeyRawB64u = asB64u(value.publicKeyRawB64u);
+      const activeFromPulse = asPulse(value.activeFromPulse);
+      const retiredAtPulse = asPulse(value.retiredAtPulse);
+      if (!kid || !alg || !publicKeyRawB64u) return null;
+      if (
+        activeFromPulse !== null &&
+        retiredAtPulse !== null &&
+        BigInt(retiredAtPulse) < BigInt(activeFromPulse)
+      ) return null;
+      return {
+        kid,
+        alg,
+        publicKeyRawB64u,
+        status: parseSignatureKeyStatus(value.status),
         ...(activeFromPulse !== null ? { activeFromPulse } : {}),
         ...(retiredAtPulse !== null ? { retiredAtPulse } : {})
       };
@@ -1405,6 +1444,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const out = new Map();
       for (const entry of RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED) {
         const key = normalizeSignatureV3PublicKey(entry);
+        if (!key) continue;
+        out.set(key.kid, key);
+      }
+      return out;
+    })();
+
+    const RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEY_MAP = (() => {
+      const out = new Map();
+      for (const entry of RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED) {
+        const key = normalizeSignatureV4RootPublicKey(entry);
         if (!key) continue;
         out.set(key.kid, key);
       }
@@ -1673,6 +1722,219 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         return { state: "invalid", error: "signatureV3 verification failed." };
       }
       return { state: "verified", kid: signature.kid };
+    }
+
+    function buildSignatureV4DeviceCertIdentityPayload(cert) {
+      const canonical = {
+        version: cert.version,
+        certType: cert.certType,
+        issuerKid: cert.issuerKid,
+        alg: cert.alg,
+        subjectPublicKeyRawB64u: cert.subjectPublicKeyRawB64u,
+        issuedAtMs: cert.issuedAtMs,
+        expiresAtMs: cert.expiresAtMs
+      };
+      return jcsCanonicalize(canonical);
+    }
+
+    function buildSignatureV4DeviceCertPayload(cert) {
+      const canonical = {
+        version: cert.version,
+        certType: cert.certType,
+        certId: cert.certId,
+        issuerKid: cert.issuerKid,
+        alg: cert.alg,
+        subjectPublicKeyRawB64u: cert.subjectPublicKeyRawB64u,
+        issuedAtMs: cert.issuedAtMs,
+        expiresAtMs: cert.expiresAtMs
+      };
+      return jcsCanonicalize(canonical);
+    }
+
+    function normalizeSignatureV4DeviceCert(value) {
+      if (!isRecord(value)) return null;
+      const version = value.version === 1 ? 1 : null;
+      const certType = value.certType === "receiz.device.v1" ? "receiz.device.v1" : null;
+      const certIdRaw = typeof value.certId === "string" ? value.certId.trim().toLowerCase() : "";
+      const certId = HEX32_RE.test(certIdRaw) ? certIdRaw : null;
+      const issuerKid = asKid(value.issuerKid);
+      const alg = value.alg === "Ed25519" ? "Ed25519" : null;
+      const subjectPublicKeyRawB64u = asB64u(value.subjectPublicKeyRawB64u);
+      const issuedAtMsRaw = Number(value.issuedAtMs);
+      const expiresAtMsRaw = Number(value.expiresAtMs);
+      const issuedAtMs = Number.isFinite(issuedAtMsRaw) ? Math.trunc(issuedAtMsRaw) : Number.NaN;
+      const expiresAtMs = Number.isFinite(expiresAtMsRaw) ? Math.trunc(expiresAtMsRaw) : Number.NaN;
+      const sig = asB64u(value.sig);
+      if (
+        !version ||
+        !certType ||
+        !certId ||
+        !issuerKid ||
+        !alg ||
+        !subjectPublicKeyRawB64u ||
+        !Number.isFinite(issuedAtMs) ||
+        !Number.isFinite(expiresAtMs) ||
+        expiresAtMs <= issuedAtMs ||
+        !sig
+      ) {
+        return null;
+      }
+      return {
+        version,
+        certType,
+        certId,
+        issuerKid,
+        alg,
+        subjectPublicKeyRawB64u,
+        issuedAtMs,
+        expiresAtMs,
+        sig
+      };
+    }
+
+    function normalizeSignatureV4(value) {
+      if (!isRecord(value)) return null;
+      const version = value.version === 1 ? 1 : null;
+      const alg = value.alg === "Ed25519" ? "Ed25519" : null;
+      const cert = normalizeSignatureV4DeviceCert(value.cert);
+      const sig = asB64u(value.sig);
+      const payloadHashSha256 =
+        typeof value.payloadHashSha256 === "string" ? value.payloadHashSha256.trim().toLowerCase() : "";
+      const signedAtMsRaw = Number(value.signedAtMs);
+      const signedAtMs = Number.isFinite(signedAtMsRaw) ? Math.trunc(signedAtMsRaw) : Number.NaN;
+      if (!version || !alg || !cert || !sig || !HEX64_RE.test(payloadHashSha256) || !Number.isFinite(signedAtMs) || signedAtMs < 0) {
+        return null;
+      }
+      return { version, alg, cert, sig, payloadHashSha256, signedAtMs };
+    }
+
+    async function verifyBundleSignatureV4(bundle) {
+      const rawSignature = isRecord(bundle) ? bundle.signatureV4 : undefined;
+      const signature = normalizeSignatureV4(rawSignature);
+      if (!signature) {
+        return typeof rawSignature === "undefined"
+          ? { state: "missing" }
+          : { state: "invalid", error: "signatureV4 payload is malformed." };
+      }
+
+      const signedBundle = { ...bundle };
+      delete signedBundle.signatureV3;
+      delete signedBundle.signatureV4;
+
+      const payload = signedPayloadForBundle(signedBundle);
+      const payloadBytes = new TextEncoder().encode(payload);
+      const payloadHashSha256 = (await sha256Hex(payloadBytes)).toLowerCase();
+      if (payloadHashSha256 !== signature.payloadHashSha256) {
+        return { state: "invalid", error: "signatureV4 payload hash mismatch." };
+      }
+
+      const rootKey = RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEY_MAP.get(signature.cert.issuerKid) || null;
+      if (!rootKey) {
+        return { state: "unavailable", error: "signatureV4 root key not configured." };
+      }
+      if (rootKey.alg !== signature.cert.alg) {
+        return { state: "invalid", error: "signatureV4 root-key algorithm mismatch." };
+      }
+
+      const bundlePulse = asPulse(bundle && bundle.kaiPulseEternal);
+      if (bundlePulse === null) {
+        return { state: "invalid", error: "signatureV4 bundle pulse is invalid." };
+      }
+      const keyPolicyPulse = BigInt(bundlePulse);
+
+      if (typeof rootKey.activeFromPulse === "string" && keyPolicyPulse < BigInt(rootKey.activeFromPulse)) {
+        return { state: "invalid", error: "signatureV4 root key predates activation pulse." };
+      }
+      if (rootKey.status === "retired" && typeof rootKey.retiredAtPulse !== "string") {
+        return { state: "unavailable", error: "signatureV4 root key retired without retirement pulse." };
+      }
+      if (typeof rootKey.retiredAtPulse === "string" && keyPolicyPulse > BigInt(rootKey.retiredAtPulse)) {
+        return { state: "unavailable", error: "signatureV4 root key retired for this bundle pulse." };
+      }
+
+      const certExpectedId = (
+        await sha256Hex(
+          new TextEncoder().encode(
+            buildSignatureV4DeviceCertIdentityPayload({
+              version: signature.cert.version,
+              certType: signature.cert.certType,
+              issuerKid: signature.cert.issuerKid,
+              alg: signature.cert.alg,
+              subjectPublicKeyRawB64u: signature.cert.subjectPublicKeyRawB64u,
+              issuedAtMs: signature.cert.issuedAtMs,
+              expiresAtMs: signature.cert.expiresAtMs
+            })
+          )
+        )
+      ).slice(0, 32).toLowerCase();
+      if (certExpectedId !== signature.cert.certId) {
+        return { state: "invalid", error: "signatureV4 device certificate ID mismatch." };
+      }
+
+      const certPayload = buildSignatureV4DeviceCertPayload({
+        version: signature.cert.version,
+        certType: signature.cert.certType,
+        certId: signature.cert.certId,
+        issuerKid: signature.cert.issuerKid,
+        alg: signature.cert.alg,
+        subjectPublicKeyRawB64u: signature.cert.subjectPublicKeyRawB64u,
+        issuedAtMs: signature.cert.issuedAtMs,
+        expiresAtMs: signature.cert.expiresAtMs
+      });
+      const certPayloadBytes = new TextEncoder().encode(certPayload);
+
+      const rootCryptoKey = await importEd25519PublicKeyRawB64u(rootKey.publicKeyRawB64u);
+      if (!rootCryptoKey) {
+        return { state: "invalid", error: "signatureV4 root key import failed." };
+      }
+
+      let certValid = false;
+      try {
+        certValid = await crypto.subtle.verify(
+          "Ed25519",
+          rootCryptoKey,
+          toArrayBuffer(base64UrlDecode(signature.cert.sig)),
+          toArrayBuffer(certPayloadBytes)
+        );
+      } catch {
+        certValid = false;
+      }
+      if (!certValid) {
+        return { state: "invalid", error: "signatureV4 device certificate verification failed." };
+      }
+
+      if (signature.signedAtMs < signature.cert.issuedAtMs) {
+        return { state: "invalid", error: "signatureV4 signedAtMs predates certificate issuance." };
+      }
+      if (signature.signedAtMs > signature.cert.expiresAtMs) {
+        return { state: "unavailable", error: "signatureV4 device certificate expired at signedAtMs." };
+      }
+
+      const subjectCryptoKey = await importEd25519PublicKeyRawB64u(signature.cert.subjectPublicKeyRawB64u);
+      if (!subjectCryptoKey) {
+        return { state: "invalid", error: "signatureV4 subject key import failed." };
+      }
+
+      let verified = false;
+      try {
+        verified = await crypto.subtle.verify(
+          "Ed25519",
+          subjectCryptoKey,
+          toArrayBuffer(base64UrlDecode(signature.sig)),
+          toArrayBuffer(payloadBytes)
+        );
+      } catch {
+        verified = false;
+      }
+      if (!verified) {
+        return { state: "invalid", error: "signatureV4 verification failed." };
+      }
+
+      return {
+        state: "verified",
+        issuerKid: signature.cert.issuerKid,
+        certId: signature.cert.certId
+      };
     }
 
     const EMBEDDED_DOCUMENT_SEAL_VKEY = {
@@ -2373,22 +2635,72 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       checks.push({ state: errors.length ? "bad" : "ok", message: "Canonical fields (ts / slug / code / pulse / path)" });
 
+      const hasSignatureV3 = Object.prototype.hasOwnProperty.call(bundle, "signatureV3") && typeof bundle.signatureV3 !== "undefined";
+      const hasSignatureV4 = Object.prototype.hasOwnProperty.call(bundle, "signatureV4") && typeof bundle.signatureV4 !== "undefined";
       const signatureV3 = await verifyBundleSignatureV3(bundle);
-      if (signatureV3.state === "verified") {
-        checks.push({ state: "ok", message: `Receiz Signature (v3) verified (${signatureV3.kid})` });
-      } else if (signatureV3.state === "invalid") {
-        errors.push(signatureV3.error || "signatureV3 verification failed.");
-        checks.push({ state: "bad", message: "Receiz Signature (v3) invalid" });
-      } else if (signatureV3.state === "missing") {
-        errors.push("Receiz Signature (v3) missing.");
-        checks.push({ state: "bad", message: "Receiz Signature (v3) missing" });
-      } else if (signatureV3.state === "unavailable") {
-        errors.push(
-          signatureV3.error
-            ? `Receiz Signature (v3) unavailable: ${signatureV3.error}`
-            : "Receiz Signature (v3) key unavailable in this verifier."
-        );
-        checks.push({ state: "bad", message: "Receiz Signature (v3) unavailable" });
+      const signatureV4 = await verifyBundleSignatureV4(bundle);
+      const signatureInvalidErrors = [];
+
+      if (hasSignatureV3 && signatureV3.state === "invalid") {
+        signatureInvalidErrors.push(signatureV3.error || "signatureV3 verification failed.");
+      }
+      if (hasSignatureV4 && signatureV4.state === "invalid") {
+        signatureInvalidErrors.push(signatureV4.error || "signatureV4 verification failed.");
+      }
+
+      if (signatureInvalidErrors.length > 0) {
+        errors.push(...signatureInvalidErrors);
+        checks.push({ state: "bad", message: "Trusted signature invalid" });
+      } else {
+        const signatureVerified = signatureV3.state === "verified" || signatureV4.state === "verified";
+        if (signatureVerified) {
+          if (signatureV4.state === "verified") {
+            checks.push({
+              state: "ok",
+              message: `Receiz Signature (v4) verified (${signatureV4.issuerKid} • ${signatureV4.certId})`
+            });
+          } else {
+            checks.push({ state: "ok", message: `Receiz Signature (v3) verified (${signatureV3.kid})` });
+          }
+
+          if (hasSignatureV3 && signatureV3.state === "unavailable") {
+            warnings.push(
+              signatureV3.error
+                ? `Receiz Signature (v3) unavailable: ${signatureV3.error}`
+                : "Receiz Signature (v3) key unavailable in this verifier."
+            );
+          }
+          if (hasSignatureV4 && signatureV4.state === "unavailable") {
+            warnings.push(
+              signatureV4.error
+                ? `Receiz Signature (v4) unavailable: ${signatureV4.error}`
+                : "Receiz Signature (v4) root key unavailable in this verifier."
+            );
+          }
+        } else {
+          const unavailableErrors = [];
+          if (hasSignatureV3 && signatureV3.state === "unavailable") {
+            unavailableErrors.push(
+              signatureV3.error
+                ? `Receiz Signature (v3) unavailable: ${signatureV3.error}`
+                : "Receiz Signature (v3) key unavailable in this verifier."
+            );
+          }
+          if (hasSignatureV4 && signatureV4.state === "unavailable") {
+            unavailableErrors.push(
+              signatureV4.error
+                ? `Receiz Signature (v4) unavailable: ${signatureV4.error}`
+                : "Receiz Signature (v4) root key unavailable in this verifier."
+            );
+          }
+          if (unavailableErrors.length > 0) {
+            errors.push(...unavailableErrors);
+            checks.push({ state: "bad", message: "Trusted signature unavailable" });
+          } else {
+            errors.push("Trusted signature missing. Expected signatureV3 or signatureV4.");
+            checks.push({ state: "bad", message: "Trusted signature missing" });
+          }
+        }
       }
 
       if (effectiveAnchor) {

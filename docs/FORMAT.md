@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v22.0.0`.
+This document defines the verifier-visible data contract for `v23.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -65,7 +65,7 @@ Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
 ## Anchor context requirement
-Verified outcomes in `v22` require effective anchor context.
+Verified outcomes in `v23` require effective anchor context.
 
 Effective anchor context is resolved from:
 - explicit `receiz_anchor_bundle` carrier data, or
@@ -73,8 +73,22 @@ Effective anchor context is resolved from:
 
 If neither explicit nor derivable anchor context is available, verification fails.
 
-## Receiz Signature v3 (required)
-`v22` requires `signatureV3` for verified outcomes.
+## Trusted signatures (`signatureV3` / `signatureV4`)
+`v23` requires trusted signature verification for verified outcomes.
+
+At least one signature path must verify:
+- `signatureV3`, or
+- `signatureV4`.
+
+### Combined result semantics
+- Any present invalid signature payload causes hard failure (`Trusted signature invalid`).
+- If either signature path verifies, signature requirements are satisfied.
+- Unavailable signature paths are warning-only when another signature path verifies.
+- If no signature path verifies:
+  - unavailable signature paths hard fail (`Trusted signature unavailable`)
+  - missing trusted signatures hard fail (`Trusted signature missing`)
+
+## Receiz Signature v3
 
 ### Expected payload shape
 - `version`: `1`
@@ -94,17 +108,44 @@ If neither explicit nor derivable anchor context is available, verification fail
 - `payloadHashSha256` must match SHA-256 of canonical payload bytes.
 - `sig` must verify with the Ed25519 key resolved by `kid`.
 - `signedAtMs` is validated as a non-negative integer envelope field.
-- Key lifecycle policy (from pinned key metadata) enforces pulse windows against `bundle.kaiPulseEternal` using `activeFromPulse` / `retiredAtPulse`.
+- Key lifecycle policy enforces pulse windows against `bundle.kaiPulseEternal` using `activeFromPulse` / `retiredAtPulse`.
 - No verifier-clock future-skew guard is applied to `signedAtMs`.
 
-### Result semantics
-- Verified signature: success check.
-- Invalid/malformed/hash-mismatch/signature-failure: hard verification failure.
-- Missing signature: hard verification failure.
-- Unknown/unconfigured or policy-unavailable key: hard verification failure.
+## Receiz Signature v4
 
-## Groth16 requirements (`v22`)
-`v22` requires Groth16 artifact fields and accepts only real-mode proof payloads.
+### Expected payload shape
+- `version`: `1`
+- `alg`: `Ed25519`
+- `cert`: object
+  - `version`: `1`
+  - `certType`: `receiz.device.v1`
+  - `certId`: 32-hex ID
+  - `issuerKid`: root key ID (`[A-Za-z0-9._:-]{3,64}`)
+  - `alg`: `Ed25519`
+  - `subjectPublicKeyRawB64u`: base64url public key bytes
+  - `issuedAtMs`: integer milliseconds
+  - `expiresAtMs`: integer milliseconds (`expiresAtMs > issuedAtMs`)
+  - `sig`: base64url Ed25519 signature over canonical cert payload
+- `sig`: base64url payload signature by the device key
+- `payloadHashSha256`: 64-hex digest of canonical signed payload
+- `signedAtMs`: non-negative integer milliseconds
+
+### Verification model
+- Verifier removes both `signatureV3` and `signatureV4` from the bundle copy before canonicalization.
+- `payloadHashSha256` must match SHA-256 of canonical payload bytes.
+- Root key is resolved from pinned Signature v4 root keys by `cert.issuerKid`.
+- Root-key lifecycle policy is evaluated against `bundle.kaiPulseEternal` (`activeFromPulse` / `retiredAtPulse`).
+- `certId` must match `sha256(JCS(cert identity payload)).slice(0, 32)`.
+- `cert.sig` must verify against canonical cert payload using the resolved root key.
+- `signedAtMs` must be within certificate validity (`issuedAtMs <= signedAtMs <= expiresAtMs`).
+- Final `sig` must verify against canonical payload bytes using `cert.subjectPublicKeyRawB64u`.
+
+## Signature key pin overrides
+- Signature v3 override: `globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`
+- Signature v4 root-key override: `globalThis.__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__`
+
+## Groth16 requirements (`v23`)
+`v23` requires Groth16 artifact fields and accepts only real-mode proof payloads.
 
 Required proof bundle fields:
 - `zkPoseidonHash` (64-hex)
@@ -136,7 +177,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v22` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v23` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

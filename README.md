@@ -2,25 +2,27 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v22.0.0`
+Current release: `v23.0.0`
 
-## What changed in v22
-- Advanced footer release marker to `v22.0.0` in both entrypoints.
-- Updated release and operations documentation to use `v22` as the current version.
-- Verification semantics are unchanged from `v21.0.0`.
+## What changed in v23
+- Added Receiz Signature v4 verification with rooted device-certificate validation.
+- Added Signature v4 root-key pinning with optional runtime override support.
+- Trusted-signature policy now accepts `signatureV3` or `signatureV4` for verified outcomes, with invalid-signature fail-closed behavior.
+- Advanced footer release marker to `v23.0.0` in both entrypoints.
 
-## Release train highlights (v14 -> v22)
+## Release train highlights (v14 -> v23)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
 - `v17.0.0`: anchor derivation + cross-check hardening shipped.
 - `v18.0.0`: Signature v3 offline verification + key pinning model shipped.
 - `v19.0.0`: Signature v3 key policy shifted to pulse-based lifecycle enforcement.
-- `v20.0.0`: Added footer download action for the offline verifier page.
-- `v21.0.0`: Strict verification gating requires signature, anchor context, and real `g16:` Groth16 proof artifacts.
-- `v22.0.0`: Release marker and docs alignment with no policy/runtime behavior change.
+- `v20.0.0`: added footer download action for the offline verifier page.
+- `v21.0.0`: strict verification gating requires signature, anchor context, and real `g16:` Groth16 proof artifacts.
+- `v22.0.0`: release marker and docs alignment with no policy/runtime behavior change.
+- `v23.0.0`: Signature v4 trust-chain verification and trusted-signature policy expansion (`signatureV3` or `signatureV4`).
 
-## Supported artifact inputs (v22)
+## Supported artifact inputs (v23)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -35,7 +37,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - proof bundle decoding succeeds
 - canonical field invariants pass
 - artifact binding hash matches normalized basis bytes
-- `signatureV3` is present and verifies for payload hash, key, and pulse policy
+- trusted signature checks pass (`signatureV3` or `signatureV4` must verify)
 - anchor context is present (explicit or derived) and matches bundle code/pulse
 - real `g16:` Groth16 proof artifacts are present and verify against digest/public-signal constraints
 - if an optional path is supplied, it matches an accepted embedded canonical path
@@ -43,13 +45,18 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 ## Runtime notes
 - The verifier is a static HTML app.
 - Verification logic runs client-side in browser JavaScript.
-- Signature v3 verification uses WebCrypto Ed25519 verification.
-- Signature v3 states `missing`, `unavailable`, or `invalid` are hard failures.
+- Signature v3 and Signature v4 verification use WebCrypto Ed25519 verification.
+- Trusted-signature outcomes are fail-closed:
+  - any present invalid signature payload fails verification
+  - at least one verified path (`v3` or `v4`) satisfies signature requirements
+  - unavailable paths become warnings only when another signature path verifies
+  - if no path verifies, missing/unavailable trusted signatures fail verification
 - Signature policy validates bundle `kaiPulseEternal` against pinned-key lifecycle windows (`activeFromPulse` / `retiredAtPulse`).
-- `signedAtMs` remains required in Signature v3 payload shape but is not used for local-clock skew gating.
+- Signature v4 validates a device certificate chain rooted in pinned v4 root keys.
+- `signedAtMs` remains required in signature payload shape; v3 does not use local-clock skew gating and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v22` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v23` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -66,12 +73,12 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v22`:
+Required runtime assets for `v23`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
 
-Note: Signature and Groth16 verification runtimes/key material are embedded in the shipped HTML entrypoints.
+Note: Signature/Groth16 verification runtime and pinned key material are embedded in the shipped HTML entrypoints.
 
 ## Schemas
 Machine-readable schemas are provided in [docs/schemas](docs/schemas):

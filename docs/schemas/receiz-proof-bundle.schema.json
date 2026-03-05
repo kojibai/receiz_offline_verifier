@@ -14,8 +14,7 @@
     "artifactSha256Basis",
     "zkPoseidonHash",
     "groth16Proof",
-    "groth16ProofDigest",
-    "signatureV3"
+    "groth16ProofDigest"
   ],
   "properties": {
     "kind": {
@@ -119,7 +118,101 @@
         }
       },
       "additionalProperties": true
+    },
+    "signatureV4": {
+      "type": "object",
+      "required": [
+        "version",
+        "alg",
+        "cert",
+        "sig",
+        "payloadHashSha256",
+        "signedAtMs"
+      ],
+      "properties": {
+        "version": {
+          "const": 1
+        },
+        "alg": {
+          "const": "Ed25519"
+        },
+        "cert": {
+          "type": "object",
+          "required": [
+            "version",
+            "certType",
+            "certId",
+            "issuerKid",
+            "alg",
+            "subjectPublicKeyRawB64u",
+            "issuedAtMs",
+            "expiresAtMs",
+            "sig"
+          ],
+          "properties": {
+            "version": {
+              "const": 1
+            },
+            "certType": {
+              "const": "receiz.device.v1"
+            },
+            "certId": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{32}$"
+            },
+            "issuerKid": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9._:-]{3,64}$"
+            },
+            "alg": {
+              "const": "Ed25519"
+            },
+            "subjectPublicKeyRawB64u": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            },
+            "issuedAtMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "expiresAtMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "sig": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+$"
+            }
+          },
+          "additionalProperties": true
+        },
+        "sig": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "payloadHashSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        },
+        "signedAtMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
     }
   },
+  "anyOf": [
+    {
+      "required": [
+        "signatureV3"
+      ]
+    },
+    {
+      "required": [
+        "signatureV4"
+      ]
+    }
+  ],
   "additionalProperties": true
 }
