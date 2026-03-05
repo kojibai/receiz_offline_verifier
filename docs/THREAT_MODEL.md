@@ -5,7 +5,7 @@
 2. Bundle swap: proof data copied from one artifact to another.
 3. Carrier confusion: malformed PNG/PDF/trailer/container payloads to bypass checks.
 4. Metadata grafting: duplicate or conflicting proof payloads injected.
-5. Signature forgery: fake `signatureV3`/`signatureV4` payloads or forged Signature v4 device certificates attempting to spoof Receiz authorship.
+5. Signature forgery: fake `signatureV4` payloads, forged Signature v4 device certificates, or downgrade attempts that rely on `signatureV3`-only payloads.
 6. Groth16 spoofing: fake real `g16:` proof artifacts.
 7. Anchor-context evasion: attempts to verify without valid anchor context.
 8. UI deception: presenting verified state without required integrity proofs.
@@ -16,8 +16,9 @@
 - Canonical identity field validation and path derivation checks.
 - Proof decoding limits and malformed payload hard-fail behavior.
 - Trusted signature enforcement:
-  - at least one valid signature path (`v3` or `v4`) required
-  - invalid present signatures hard fail
+  - valid `signatureV4` required
+  - invalid/unavailable/missing `signatureV4` hard fail
+  - `signatureV3` must not satisfy trusted-signature requirements
   - Signature v4 root-key lifecycle policy and device-certificate chain validation
 - Anchor-context enforcement (explicit or derived anchor required; mismatch checks enforced).
 - Real `g16:` Groth16 verification with digest/public-signal/verifier checks.

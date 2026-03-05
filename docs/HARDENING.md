@@ -1,6 +1,6 @@
 # Hardening rules (must not regress)
 
-These rules preserve "proof lives in the file" semantics across all `v23` carriers.
+These rules preserve "proof lives in the file" semantics across all `v24` carriers.
 
 ## Must-haves
 - Enforce proof bundle uniqueness per carrier:
@@ -21,17 +21,10 @@ These rules preserve "proof lives in the file" semantics across all `v23` carrie
   - anchor parent code/pulse must match proof bundle code/pulse
 - Validate optional integration-supplied link input when provided.
 - Require and validate trusted signatures:
-  - at least one signature path must verify (`signatureV3` or `signatureV4`)
-  - any present invalid signature payload must hard fail
-  - if no path verifies, unavailable signature states must hard fail
-  - if neither signature path is present, trusted-signature missing must hard fail
-- Signature v3 checks:
-  - malformed envelope or payload-hash mismatch must hard fail
-  - bundle `kaiPulseEternal` must parse as a non-negative integer pulse policy value
-  - signatures before `activeFromPulse` must hard fail
-  - signatures with unavailable key policy state (including retired-without-pulse / retired-for-pulse) must hard fail unless another signature path verifies
-  - Ed25519 verification failure must hard fail
-  - unknown/unconfigured key IDs must hard fail unless another signature path verifies
+  - `signatureV4` must verify for trusted-signature success
+  - any present invalid `signatureV4` payload must hard fail
+  - present but unavailable `signatureV4` states must hard fail
+  - missing `signatureV4` must hard fail
 - Signature v4 checks:
   - malformed envelope must hard fail
   - payload-hash mismatch must hard fail
@@ -40,6 +33,7 @@ These rules preserve "proof lives in the file" semantics across all `v23` carrie
   - certificate signature verification failure must hard fail
   - `signedAtMs` outside certificate window must fail
   - subject-key payload signature verification failure must hard fail
+- Signature v3 payloads may be present for compatibility but must not satisfy trusted-signature requirements.
 - Require and validate Groth16 proof artifacts:
   - `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest` must be present
   - `groth16Proof` must be real `g16:` payload format

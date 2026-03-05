@@ -17,29 +17,23 @@
 3. Build basis bytes according to carrier normalization rules.
 4. Decode and validate canonical bundle fields.
 5. Verify artifact SHA-256 binding.
-6. Validate trusted signatures (`signatureV3` / `signatureV4`).
+6. Validate trusted signature (`signatureV4`).
 7. Resolve/validate effective anchor context (required for trusted verification).
 8. Validate Groth16 proof artifacts (required; real `g16:` payload only).
 9. Optionally cross-check integration-provided `/v/...` path.
 
 ## Trusted signature model
 - Trusted signature payloads are read from:
-  - `proofbundle.signatureV3`
   - `proofbundle.signatureV4`
-- At least one signature path must verify for trusted-signature success.
-- If any present signature path is invalid, verification fails.
-- If one path verifies and another present path is unavailable, verification continues with warnings.
-- If no path verifies:
-  - unavailable signature paths fail verification
-  - missing signature paths fail verification
+- Trusted-signature success requires verified `proofbundle.signatureV4`.
+- If present `signatureV4` is invalid, verification fails (`Trusted signature invalid`).
+- If present `signatureV4` is unavailable, verification fails (`Trusted signature unavailable`).
+- If `signatureV4` is missing, verification fails (`Trusted signature missing`).
 
-## Receiz Signature v3 model
-- Signed payload hash is computed from canonicalized bundle content with `signatureV3` removed.
-- Ed25519 verification runs against pinned key metadata selected by `kid`.
-- Built-in pinned keys can be overridden by `globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`.
-- Signature policy validates bundle pulse (`kaiPulseEternal`) as a non-negative integer policy value.
-- Signature policy enforces key lifecycle windows via key metadata (`activeFromPulse` / `retiredAtPulse`).
-- `signedAtMs` is shape-validated but is not used for local-clock future-skew gating.
+## Receiz Signature v3 handling (legacy field)
+- `signatureV3` may exist in payloads for compatibility with older producers.
+- `v24` does not execute Signature v3 verification or key-policy evaluation.
+- `signatureV3` does not contribute to trusted-signature success.
 
 ## Receiz Signature v4 model
 - Signed payload hash is computed from canonicalized bundle content with both `signatureV3` and `signatureV4` removed.
@@ -60,7 +54,7 @@
 - Verification fails when effective anchor context is unavailable.
 - When both explicit and derived anchor values exist, anchor ID consistency is validated.
 
-## Groth16 model (`v23`)
+## Groth16 model (`v24`)
 - Required fields: `zkPoseidonHash`, `groth16Proof`, `groth16ProofDigest`.
 - Accepted proof format: real `g16:` payload (`receiz.g16.real.v1`).
 - Validation checks:
@@ -71,6 +65,6 @@
 
 ## Offline and network contract
 - No third-party network calls are required for verification.
-- Signature v3/v4 verification uses WebCrypto in-process.
+- Signature v4 verification uses WebCrypto in-process.
 - Default shipped entrypoints embed Groth16 runtime/key material.
 - Service worker registration and warm messaging is non-critical and failure-tolerant.

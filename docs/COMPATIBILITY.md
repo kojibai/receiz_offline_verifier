@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v23)
+## Supported artifact types (v24)
 - `.png`
 - `.pdf`
 - `.svg`
@@ -28,13 +28,15 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - service worker support for cache warm behavior
 
 ## Notes
-- Trusted-signature verification requires at least one valid signature path (`signatureV3` or `signatureV4`).
-- Any present invalid signature payload fails closed (`Trusted signature invalid`).
-- If no signature path verifies, missing/unavailable trusted signatures fail closed.
+- Trusted-signature verification requires a valid `signatureV4` path.
+- Any present invalid `signatureV4` payload fails closed (`Trusted signature invalid`).
+- If present `signatureV4` is unavailable, trusted verification fails closed (`Trusted signature unavailable`).
+- If `signatureV4` is missing, trusted verification fails closed (`Trusted signature missing. Expected signatureV4.`).
+- `signatureV3` may be present in payloads but does not satisfy trusted-signature requirements in `v24`.
 - Signature key lifecycle checks use bundle pulse (`kaiPulseEternal`) against `activeFromPulse` / `retiredAtPulse`.
 - Signature v4 validates root-key policy plus device certificate chain and validity window checks.
 - Anchor context is required for trusted verification (`receiz_anchor_bundle` or derivable anchor context from proof bundle fields).
-- Groth16 fields are required in `v23`; missing fields fail closed.
-- Only real `g16:` Groth16 payloads are accepted in `v23`.
-- Default `v23` UI does not collect an optional `/v/...` path value.
+- Groth16 fields are required in `v24`; missing fields fail closed.
+- Only real `g16:` Groth16 payloads are accepted in `v24`.
+- Default `v24` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.

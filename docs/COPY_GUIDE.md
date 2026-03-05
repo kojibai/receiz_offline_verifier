@@ -1,6 +1,6 @@
 # Copy guide
 
-Use these strings and framing rules for `v23` verifier UX and release communications.
+Use these strings and framing rules for `v24` verifier UX and release communications.
 
 ## Core product line
 - "Verify a file."
@@ -8,7 +8,7 @@ Use these strings and framing rules for `v23` verifier UX and release communicat
 
 ## Capability summary
 - "Supports PNG, PDF, SVG, JSON, trailer-sealed artifacts, .receizbundle containers, and package ZIP/folder scans."
-- "Requires trusted signature verification (`signatureV3` or `signatureV4`), anchor context, and real Groth16 proof artifacts."
+- "Requires trusted signature verification (`signatureV4`), anchor context, and real Groth16 proof artifacts."
 - "Copies fail. Ask for the receiz."
 
 ## Verification success
@@ -17,9 +17,8 @@ Use these strings and framing rules for `v23` verifier UX and release communicat
 
 ## Required check copy
 - "Receiz Signature (v4) verified (<issuerKid> • <certId>)"
-- "Receiz Signature (v3) verified (<kid>)"
 - "Anchor data present"
-- "Deterministic Groth16 proof artifacts" (UI label; `v23` policy enforces real `g16:` proof validation)
+- "Deterministic Groth16 proof artifacts" (UI label; `v24` policy enforces real `g16:` proof validation)
 
 ## Verification failure check copy
 - "Trusted signature invalid"
@@ -30,9 +29,7 @@ Use these strings and framing rules for `v23` verifier UX and release communicat
 - "Only real g16: Groth16 proofs are accepted."
 
 ## Warning copy
-- "Receiz Signature (v3) unavailable: ..."
-- "Receiz Signature (v4) unavailable: ..."
-- Use these only when another trusted signature path verifies.
+- No trusted-signature warning copy is used in `v24`; unavailable `signatureV4` is a hard failure.
 
 ## Verification failure framing
 - "Not verified"

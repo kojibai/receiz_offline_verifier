@@ -1,6 +1,6 @@
 # Receiz schemas
 
-This directory contains JSON Schemas for verifier-visible payloads used in `v23`.
+This directory contains JSON Schemas for verifier-visible payloads used in `v24`.
 
 ## Files
 - `receiz-proof-bundle.schema.json`: proof bundle payload shape.
@@ -11,6 +11,6 @@ This directory contains JSON Schemas for verifier-visible payloads used in `v23`
 - Runtime invariants are stricter than schema shape checks.
 - Canonical derivations (`slug <- ts`, `verifyPath <- slug/code/pulse`) are enforced in verifier code.
 - Trailer payloads decode directly to proof bundle objects and therefore reuse the proof bundle schema.
-- In `v23`, trusted verification requires at least one valid signature path (`signatureV3` or `signatureV4`), effective anchor context, and real `g16:` Groth16 proof artifacts.
-- Proof bundle schema includes both `signatureV3` and `signatureV4` envelope shapes and requires at least one to be present.
+- In `v24`, trusted verification requires valid `signatureV4`, effective anchor context, and real `g16:` Groth16 proof artifacts.
+- Proof bundle schema keeps both `signatureV3` and `signatureV4` envelope shapes, but requires `signatureV4` to be present.
 - Signature semantics (`signedAtMs`, key lifecycle policy, certificate chain checks) are runtime checks and are not fully expressible in JSON Schema.

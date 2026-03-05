@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v23.0.0`.
+This document defines the verifier-visible data contract for `v24.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -65,7 +65,7 @@ Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
 ## Anchor context requirement
-Verified outcomes in `v23` require effective anchor context.
+Verified outcomes in `v24` require effective anchor context.
 
 Effective anchor context is resolved from:
 - explicit `receiz_anchor_bundle` carrier data, or
@@ -73,43 +73,22 @@ Effective anchor context is resolved from:
 
 If neither explicit nor derivable anchor context is available, verification fails.
 
-## Trusted signatures (`signatureV3` / `signatureV4`)
-`v23` requires trusted signature verification for verified outcomes.
+## Trusted signatures (`signatureV4`)
+`v24` requires trusted Signature v4 verification for verified outcomes.
 
-At least one signature path must verify:
-- `signatureV3`, or
-- `signatureV4`.
+Trusted signature success requires:
+- `signatureV4` verifies.
 
 ### Combined result semantics
-- Any present invalid signature payload causes hard failure (`Trusted signature invalid`).
-- If either signature path verifies, signature requirements are satisfied.
-- Unavailable signature paths are warning-only when another signature path verifies.
-- If no signature path verifies:
-  - unavailable signature paths hard fail (`Trusted signature unavailable`)
-  - missing trusted signatures hard fail (`Trusted signature missing`)
+- Any present invalid `signatureV4` payload causes hard failure (`Trusted signature invalid`).
+- If present `signatureV4` is unavailable, verification hard fails (`Trusted signature unavailable`).
+- If `signatureV4` is missing, verification hard fails (`Trusted signature missing` with detail `Trusted signature missing. Expected signatureV4.`).
+- `signatureV3` may be present for compatibility but does not satisfy trusted-signature success in `v24`.
 
-## Receiz Signature v3
+## Receiz Signature v3 (legacy payload support)
 
-### Expected payload shape
-- `version`: `1`
-- `alg`: `Ed25519`
-- `kid`: key identifier string (`[A-Za-z0-9._:-]{3,64}`)
-- `sig`: base64url signature bytes
-- `payloadHashSha256`: 64-hex digest of canonical signed payload
-- `signedAtMs`: non-negative integer milliseconds
-
-### Verification model
-- Verifier removes `signatureV3` from the bundle copy before canonicalization.
-- Canonical signed payload includes these fields:
-  - `kind`, `payloadVersion`, `createdAtMs`, `ts`, `tsDisplay`, `tzMinutesEast`
-  - `code`, `slug`, `verifyPath`, `verifyUrl`, `kaiPulseEternal`, `kaiKlok`
-  - `signerKeyId`, `anchorId`, `receizClaimId`, `sigilClaimSeed`
-  - `zkPoseidonHash`, `groth16ProofDigest`, `artifactSha256Basis`, `wireproof`
-- `payloadHashSha256` must match SHA-256 of canonical payload bytes.
-- `sig` must verify with the Ed25519 key resolved by `kid`.
-- `signedAtMs` is validated as a non-negative integer envelope field.
-- Key lifecycle policy enforces pulse windows against `bundle.kaiPulseEternal` using `activeFromPulse` / `retiredAtPulse`.
-- No verifier-clock future-skew guard is applied to `signedAtMs`.
+`signatureV3` payload shape is retained in schema for compatibility.
+In `v24`, Signature v3 verification and key-policy evaluation are not executed, and `signatureV3` does not satisfy trusted-signature requirements.
 
 ## Receiz Signature v4
 
@@ -141,11 +120,10 @@ At least one signature path must verify:
 - Final `sig` must verify against canonical payload bytes using `cert.subjectPublicKeyRawB64u`.
 
 ## Signature key pin overrides
-- Signature v3 override: `globalThis.__RECEIZ_SIGNATURE_V3_PUBLIC_KEYS_PINNED__`
 - Signature v4 root-key override: `globalThis.__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__`
 
-## Groth16 requirements (`v23`)
-`v23` requires Groth16 artifact fields and accepts only real-mode proof payloads.
+## Groth16 requirements (`v24`)
+`v24` requires Groth16 artifact fields and accepts only real-mode proof payloads.
 
 Required proof bundle fields:
 - `zkPoseidonHash` (64-hex)
@@ -177,7 +155,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v23` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v24` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)

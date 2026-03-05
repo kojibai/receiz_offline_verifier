@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v24.0.0] - 2026-03-05
+
+### Added
+- Signature v4 root key pin set expanded with `receiz.v4.prod.2026-03-02` in shipped entrypoints.
+
+### Changed
+- Trusted-signature gating now requires verified `signatureV4` for verified outcomes.
+- `signatureV3` no longer satisfies trusted-signature requirements for final verification.
+- Signature v3 verification runtime path and v3 key-pin override usage were removed from active verifier logic.
+- Trusted-signature v4 failure handling is explicit and fail-closed:
+  - any present invalid `signatureV4` payload hard fails (`Trusted signature invalid`)
+  - unavailable present `signatureV4` hard fails (`Trusted signature unavailable`)
+  - missing `signatureV4` hard fails (`Trusted signature missing. Expected signatureV4.`)
+- Verifier UI version marker from `v23.0.0` to `v24.0.0`.
+- Applied the same footer release marker update in both entrypoints:
+  - `site/index.html`
+  - `apps/offline-verifier.html`
+- Updated release and operations documentation references from `v23` to `v24`.
+
+### Kept
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v23.0.0] - 2026-03-05
 
 ### Added

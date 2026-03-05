@@ -14,7 +14,8 @@
     "artifactSha256Basis",
     "zkPoseidonHash",
     "groth16Proof",
-    "groth16ProofDigest"
+    "groth16ProofDigest",
+    "signatureV4"
   ],
   "properties": {
     "kind": {
@@ -202,17 +203,5 @@
       "additionalProperties": true
     }
   },
-  "anyOf": [
-    {
-      "required": [
-        "signatureV3"
-      ]
-    },
-    {
-      "required": [
-        "signatureV4"
-      ]
-    }
-  ],
   "additionalProperties": true
 }
