@@ -39,7 +39,7 @@
 - Verification fails when effective anchor context is unavailable.
 - When both explicit and derived anchor values exist, anchor ID consistency is validated.
 
-## Groth16 model (`v21`)
+## Groth16 model (`v22`)
 - Required fields: `zkPoseidonHash`, `groth16Proof`, `groth16ProofDigest`.
 - Accepted proof format: real `g16:` payload (`receiz.g16.real.v1`).
 - Validation checks:

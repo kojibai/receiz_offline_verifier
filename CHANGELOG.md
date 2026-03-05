@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v22.0.0] - 2026-03-05
+
+### Changed
+- Verifier UI version marker from `v21.0.0` to `v22.0.0`.
+- Applied the same footer release marker update in both entrypoints:
+  - `site/index.html`
+  - `apps/offline-verifier.html`
+- Updated release and operations documentation references from `v21` to `v22`.
+
+### Kept
+- Verification semantics from `v21` (required `signatureV3`, required effective anchor context, required real `g16:` Groth16 proof artifacts).
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v21.0.0] - 2026-03-04
 
 ### Changed

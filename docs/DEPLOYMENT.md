@@ -33,7 +33,7 @@ Key entries may include lifecycle policy metadata (`activeFromPulse`, `retiredAt
 ```
 
 Set the override before verifier initialization.
-If `status` is `retired`, include `retiredAtPulse` to avoid `unavailable` policy states that fail verification in `v21`.
+If `status` is `retired`, include `retiredAtPulse` to avoid `unavailable` policy states that fail verification in `v22`.
 
 ## GitHub Pages
 Serve repository `site/` output over HTTPS.

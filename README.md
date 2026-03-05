@@ -2,15 +2,14 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v21.0.0`
+Current release: `v22.0.0`
 
-## What changed in v21
-- Verification now requires a valid `signatureV3`; `missing` and `unavailable` states are hard failures.
-- Verification now requires anchor data (`receiz_anchor_bundle` or derivable anchor context from proof bundle fields).
-- Groth16 policy is strict real-proof only: missing Groth16 fields fail and non-`g16:` proofs fail.
-- Advanced footer release marker to `v21.0.0` in both entrypoints.
+## What changed in v22
+- Advanced footer release marker to `v22.0.0` in both entrypoints.
+- Updated release and operations documentation to use `v22` as the current version.
+- Verification semantics are unchanged from `v21.0.0`.
 
-## Release train highlights (v14 -> v21)
+## Release train highlights (v14 -> v22)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -19,8 +18,9 @@ Current release: `v21.0.0`
 - `v19.0.0`: Signature v3 key policy shifted to pulse-based lifecycle enforcement.
 - `v20.0.0`: Added footer download action for the offline verifier page.
 - `v21.0.0`: Strict verification gating requires signature, anchor context, and real `g16:` Groth16 proof artifacts.
+- `v22.0.0`: Release marker and docs alignment with no policy/runtime behavior change.
 
-## Supported artifact inputs (v21)
+## Supported artifact inputs (v22)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -49,7 +49,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in Signature v3 payload shape but is not used for local-clock skew gating.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v21` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v22` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -66,7 +66,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v21`:
+Required runtime assets for `v22`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)

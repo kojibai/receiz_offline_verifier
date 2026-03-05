@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v21.0.0`.
+This document defines the verifier-visible data contract for `v22.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -65,7 +65,7 @@ Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
 ## Anchor context requirement
-Verified outcomes in `v21` require effective anchor context.
+Verified outcomes in `v22` require effective anchor context.
 
 Effective anchor context is resolved from:
 - explicit `receiz_anchor_bundle` carrier data, or
@@ -74,7 +74,7 @@ Effective anchor context is resolved from:
 If neither explicit nor derivable anchor context is available, verification fails.
 
 ## Receiz Signature v3 (required)
-`v21` requires `signatureV3` for verified outcomes.
+`v22` requires `signatureV3` for verified outcomes.
 
 ### Expected payload shape
 - `version`: `1`
@@ -103,8 +103,8 @@ If neither explicit nor derivable anchor context is available, verification fail
 - Missing signature: hard verification failure.
 - Unknown/unconfigured or policy-unavailable key: hard verification failure.
 
-## Groth16 requirements (`v21`)
-`v21` requires Groth16 artifact fields and accepts only real-mode proof payloads.
+## Groth16 requirements (`v22`)
+`v22` requires Groth16 artifact fields and accepts only real-mode proof payloads.
 
 Required proof bundle fields:
 - `zkPoseidonHash` (64-hex)
@@ -136,7 +136,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v21` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v22` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)
