@@ -2,18 +2,14 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v24.0.0`
+Current release: `v26.0.0`
 
-## What changed in v24
-- Trusted-signature policy now requires verified `signatureV4` for verified outcomes.
-- Added an additional pinned Signature v4 root key (`receiz.v4.prod.2026-03-02`) with existing runtime override support.
-- Trusted-signature failure outcomes are explicit and fail-closed:
-  - invalid present `signatureV4` -> `Trusted signature invalid`
-  - unavailable present `signatureV4` -> `Trusted signature unavailable`
-  - missing `signatureV4` -> `Trusted signature missing. Expected signatureV4.`
-- Advanced footer release marker to `v24.0.0` in both entrypoints.
+## What changed in v26
+- No verifier runtime or policy logic changed relative to `v24.0.0`.
+- Footer release marker advanced to `v26.0.0` in both entrypoints.
+- Repository release/docs references were aligned to `v26.0.0`.
 
-## Release train highlights (v14 -> v24)
+## Release train highlights (v14 -> v26)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -25,8 +21,9 @@ Current release: `v24.0.0`
 - `v22.0.0`: release marker and docs alignment with no policy/runtime behavior change.
 - `v23.0.0`: Signature v4 trust-chain verification and trusted-signature policy expansion (`signatureV3` or `signatureV4`).
 - `v24.0.0`: trusted-signature gating narrowed to `signatureV4` and v4 root-key pin set expanded.
+- `v26.0.0`: release-marker/docs alignment only; verification semantics unchanged from `v24`.
 
-## Supported artifact inputs (v24)
+## Supported artifact inputs (v26)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -59,7 +56,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in signature payload shape and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v24` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v26` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -76,7 +73,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v24`:
+Required runtime assets for `v26`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
