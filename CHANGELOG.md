@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v27.0.0] - 2026-03-08
+
+### Changed
+- Verifier UI version marker from `v26.0.0` to `v27.0.0`.
+- Applied the same footer release marker update in both entrypoints:
+  - `site/index.html`
+  - `apps/offline-verifier.html`
+- Updated release and operations documentation references from `v26` to `v27`.
+- No verifier runtime or policy logic changes were introduced between `v26.0.0` and `v27.0.0`.
+
+### Kept
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v26.0.0] - 2026-03-06
 
 ### Changed
