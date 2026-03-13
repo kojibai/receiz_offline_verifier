@@ -32,7 +32,7 @@
 
 ## Receiz Signature v3 handling (legacy field)
 - `signatureV3` may exist in payloads for compatibility with older producers.
-- `v28` does not execute Signature v3 verification or key-policy evaluation.
+- `v29` does not execute Signature v3 verification or key-policy evaluation.
 - `signatureV3` does not contribute to trusted-signature success.
 
 ## Receiz Signature v4 model
@@ -54,7 +54,7 @@
 - Verification fails when effective anchor context is unavailable.
 - When both explicit and derived anchor values exist, anchor ID consistency is validated.
 
-## Groth16 model (`v28`)
+## Groth16 model (`v29`)
 - Required fields: `zkPoseidonHash`, `groth16Proof`, `groth16ProofDigest`.
 - Accepted proof format: real `g16:` payload (`receiz.g16.real.v1`).
 - Validation checks:
