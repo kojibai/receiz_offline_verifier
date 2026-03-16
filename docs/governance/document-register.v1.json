@@ -1,0 +1,160 @@
+{
+  "schema": "receiz-governance-document-register-v1",
+  "generatedAt": "2026-03-08T00:00:00Z",
+  "documents": [
+    {
+      "id": "receiz-governance-charter-v1",
+      "family": "governance-charter",
+      "revisionId": "receiz-governance-charter-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/charter.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-change-control-standard-v1",
+      "family": "change-control",
+      "revisionId": "receiz-change-control-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/change-control-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-release-attestation-standard-v1",
+      "family": "release-attestation",
+      "revisionId": "receiz-release-attestation-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/release-attestation-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-incident-governance-standard-v1",
+      "family": "incident-governance",
+      "revisionId": "receiz-incident-governance-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/incident-governance-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-control-testing-standard-v1",
+      "family": "control-testing",
+      "revisionId": "receiz-control-testing-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/control-testing-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-independent-assurance-standard-v1",
+      "family": "independent-assurance",
+      "revisionId": "receiz-independent-assurance-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/independent-assurance-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-control-boundaries-v1",
+      "family": "control-boundaries",
+      "revisionId": "receiz-control-boundaries-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/control-boundaries.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-exception-log-v1",
+      "family": "exception-log",
+      "revisionId": "receiz-exception-log-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/exception-log.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-postmortem-template-v1",
+      "family": "postmortem-template",
+      "revisionId": "receiz-postmortem-template-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/templates/postmortem-template.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-corrective-action-register-v1",
+      "family": "corrective-action-register",
+      "revisionId": "receiz-corrective-action-register-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/corrective-action-register.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-governance-evidence-register-v1",
+      "family": "governance-evidence-register",
+      "revisionId": "receiz-governance-evidence-register-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/evidence-register.v1.json",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-governance-artifact-signature-standard-v1",
+      "family": "governance-artifact-signature",
+      "revisionId": "receiz-governance-artifact-signature-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/governance-artifact-signature-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-governance-key-custody-standard-v1",
+      "family": "governance-key-custody",
+      "revisionId": "receiz-governance-key-custody-standard-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/governance-key-custody-standard.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    },
+    {
+      "id": "receiz-governance-artifact-verification-v1",
+      "family": "governance-artifact-verification",
+      "revisionId": "receiz-governance-artifact-verification-v1-r1",
+      "supersedesRevisionId": "none",
+      "status": "active",
+      "path": "docs/governance/governance-artifact-verification.v1.md",
+      "issuer": "Receiz Governance Office",
+      "approvalAuthority": "Receiz Core Protocol Review",
+      "riskOwner": "Enterprise Risk and Resilience"
+    }
+  ]
+}

@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v30.0.0] - 2026-03-16
+
+### Changed
+- Verifier UI version marker from `v29.0.0` to `v30.0.0`.
+- Applied the same footer release marker update in both entrypoints:
+  - `site/index.html`
+  - `apps/offline-verifier.html`
+- Updated repository release and verifier-contract documentation references from `v29` to `v30`.
+- Published the `v30.0.0` release note and added public standards/governance docs:
+  - `docs/releases/v30.0.0.md`
+  - `docs/receiz-standard-v1.md`
+  - `docs/deterministic-surfaces.md`
+  - `docs/presencebound-canonical-realm.md`
+  - `docs/governance/`
+- Reframed governance evidence artifacts as public summary material and removed low-value operational detail from the key-rotation example.
+
+### Kept
+- No verifier runtime or policy logic changed relative to `v29.0.0`.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v29.0.0] - 2026-03-12
 
 ### Changed

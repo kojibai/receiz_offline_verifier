@@ -1,0 +1,46 @@
+{
+  "schema": "receiz-governance-evidence-register-v1",
+  "generatedAt": "2026-03-08T00:00:00Z",
+  "controls": [
+    {
+      "id": "periodic-access-review",
+      "control": "Access review for privileged production and governance roles",
+      "frequencyDays": 90,
+      "owner": "Enterprise Risk and Resilience",
+      "lastTestedAt": "2026-03-08T00:00:00Z",
+      "nextDueAt": "2026-06-06T00:00:00Z",
+      "evidencePath": "docs/governance/evidence/access-review-2026-03-08.md",
+      "status": "pass"
+    },
+    {
+      "id": "periodic-key-rotation-evidence",
+      "control": "Key rotation evidence review for signing and auth key material",
+      "frequencyDays": 90,
+      "owner": "Receiz Core Protocol Review",
+      "lastTestedAt": "2026-03-08T00:00:00Z",
+      "nextDueAt": "2026-06-06T00:00:00Z",
+      "evidencePath": "docs/governance/evidence/key-rotation-evidence-2026-03-08.md",
+      "status": "pass"
+    },
+    {
+      "id": "periodic-dr-restore-test",
+      "control": "Disaster-recovery restore and replay validation test",
+      "frequencyDays": 180,
+      "owner": "Enterprise Risk and Resilience",
+      "lastTestedAt": "2026-03-08T00:00:00Z",
+      "nextDueAt": "2026-09-04T00:00:00Z",
+      "evidencePath": "docs/governance/evidence/dr-restore-test-2026-03-08.md",
+      "status": "pass"
+    },
+    {
+      "id": "annual-independent-assurance",
+      "control": "Independent external assurance cycle",
+      "frequencyDays": 365,
+      "owner": "Receiz Governance Office",
+      "lastTestedAt": "2026-03-08T00:00:00Z",
+      "nextDueAt": "2027-03-08T00:00:00Z",
+      "evidencePath": "docs/governance/evidence/independent-assurance-cycle-2026.md",
+      "status": "in_progress"
+    }
+  ]
+}
