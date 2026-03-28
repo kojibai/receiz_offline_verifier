@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v40.0.0] - 2026-03-27
+
+### Changed
+- Advanced the current release/documentation surface from `v30.0.0` to `v40.0.0`.
+- Published the canonical `v40.0.0` release note:
+  - `docs/releases/v40.0.0.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v40`.
+- Aligned public release framing around hardened trust/signing, deeper offline proof and studio operation, wallet/settlement controls, richer verified artifact delivery, stronger admin/business rails, and the world runtime stack.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v30.0.0] - 2026-03-16
 
 ### Changed
