@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v45.0.0] - 2026-03-28
+
+### Changed
+- Advanced the current release/documentation surface from `v40.0.0` to `v45.0.0`.
+- Published the canonical `v45.0.0` release note:
+  - `docs/releases/v45.0.0.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v45`.
+- Aligned public release framing around the production Public Twin and World consolidation release, including photoreal live stages, owned-runtime rendering, deterministic proof/trail bundles, and hardened calendar/booking flows.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v45.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v40.0.0] - 2026-03-27
 
 ### Changed

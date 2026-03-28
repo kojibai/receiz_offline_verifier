@@ -1,6 +1,6 @@
 # Copy guide
 
-Use these strings and framing rules for `v40` verifier UX and release communications.
+Use these strings and framing rules for `v45` verifier UX and release communications.
 
 ## Core product line
 - "Verify a file."
@@ -18,7 +18,7 @@ Use these strings and framing rules for `v40` verifier UX and release communicat
 ## Required check copy
 - "Receiz Signature (v4) verified (<issuerKid> • <certId>)"
 - "Anchor data present"
-- "Deterministic Groth16 proof artifacts" (UI label; `v40` policy enforces real `g16:` proof validation)
+- "Deterministic Groth16 proof artifacts" (UI label; `v45` policy enforces real `g16:` proof validation)
 
 ## Verification failure check copy
 - "Trusted signature invalid"
@@ -29,7 +29,7 @@ Use these strings and framing rules for `v40` verifier UX and release communicat
 - "Only real g16: Groth16 proofs are accepted."
 
 ## Warning copy
-- No trusted-signature warning copy is used in `v40`; unavailable `signatureV4` is a hard failure.
+- No trusted-signature warning copy is used in `v45`; unavailable `signatureV4` is a hard failure.
 
 ## Verification failure framing
 - "Not verified"

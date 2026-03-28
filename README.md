@@ -2,12 +2,12 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v40.0.0`
+Current release: `v45.0.0`
 
-## What changed in v40
-- Current release/docs surfaces are aligned to `v40.0.0`.
-- Published the canonical `v40.0.0` release note at [docs/releases/v40.0.0.md](docs/releases/v40.0.0.md).
-- Release framing now centers hardened trust, deeper offline proof delivery, wallet and settlement operations, richer artifact delivery, stronger admin/business rails, and the first full world runtime stack.
+## What changed in v45
+- Current release/docs surfaces are aligned to `v45.0.0`.
+- Published the canonical `v45.0.0` release note at [docs/releases/v45.0.0.md](docs/releases/v45.0.0.md).
+- Release framing now centers production-ready Public Twin and World surfaces, photoreal live stages, owned-runtime rendering, deterministic trail/Twin Mind bundles, and hardened calendar/booking flows.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -26,7 +26,7 @@ Current release: `v40.0.0`
 
 The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) follows the official Powered by Receiz trust-row order and includes live badge surfaces, current imported live results, and suite-by-suite requirement coverage docs.
 
-## Release train highlights (v14 -> v40)
+## Release train highlights (v14 -> v45)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -44,8 +44,9 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v29.0.0`: release-marker/docs alignment only; verification semantics unchanged from `v28`.
 - `v30.0.0`: release/docs alignment plus public standards, governance, and release-note expansion; verifier semantics unchanged from `v29`.
 - `v40.0.0`: release/docs alignment for the broader operational trust-platform release, including offline proof, wallet/settlement, public artifact delivery, admin/business rails, and world-runtime framing.
+- `v45.0.0`: release/docs alignment for the production Public Twin and World consolidation release, including photoreal live stages, owned-runtime rendering, deterministic trail bundles, and hardened calendar/booking flows.
 
-## Supported artifact inputs (v40)
+## Supported artifact inputs (v45)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -78,7 +79,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in signature payload shape and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v40` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v45` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -95,7 +96,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v40`:
+Required runtime assets for `v45`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
@@ -109,12 +110,12 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v40.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v45.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v40.0.0.md](docs/releases/v40.0.0.md): canonical `v40.0.0` release note.
+- [docs/releases/v45.0.0.md](docs/releases/v45.0.0.md): canonical `v45.0.0` release note.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current snapshot results, and deep suite docs for all six public conformance suites.

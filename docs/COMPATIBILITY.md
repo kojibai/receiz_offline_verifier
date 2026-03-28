@@ -5,7 +5,7 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - modern mobile browsers
 - embedded WebViews that allow local HTML/JS execution
 
-## Supported artifact types (v40)
+## Supported artifact types (v45)
 - `.png`
 - `.pdf`
 - `.svg`
@@ -32,11 +32,11 @@ The Receiz Offline Verifier is a static browser app designed to run in:
 - Any present invalid `signatureV4` payload fails closed (`Trusted signature invalid`).
 - If present `signatureV4` is unavailable, trusted verification fails closed (`Trusted signature unavailable`).
 - If `signatureV4` is missing, trusted verification fails closed (`Trusted signature missing. Expected signatureV4.`).
-- `signatureV3` may be present in payloads but does not satisfy trusted-signature requirements in `v40`.
+- `signatureV3` may be present in payloads but does not satisfy trusted-signature requirements in `v45`.
 - Signature key lifecycle checks use bundle pulse (`kaiPulseEternal`) against `activeFromPulse` / `retiredAtPulse`.
 - Signature v4 validates root-key policy plus device certificate chain and validity window checks.
 - Anchor context is required for trusted verification (`receiz_anchor_bundle` or derivable anchor context from proof bundle fields).
-- Groth16 fields are required in `v40`; missing fields fail closed.
-- Only real `g16:` Groth16 payloads are accepted in `v40`.
-- Default `v40` UI does not collect an optional `/v/...` path value.
+- Groth16 fields are required in `v45`; missing fields fail closed.
+- Only real `g16:` Groth16 payloads are accepted in `v45`.
+- Default `v45` UI does not collect an optional `/v/...` path value.
 - Actual behavior in document viewers depends on whether the viewer exposes a real WebView runtime.
