@@ -1,0 +1,4227 @@
+{
+  "sourcePage": "https://receiz.com/conformance",
+  "snapshotDateUtc": "2026-03-28",
+  "generatedRangeUtc": {
+    "start": "2026-03-28T00:42:58.408Z",
+    "end": "2026-03-28T00:43:07.163Z"
+  },
+  "suiteCount": 6,
+  "requirementCount": 143,
+  "checkCount": 198,
+  "allPassing": true,
+  "suites": [
+    {
+      "slug": "identity",
+      "shortName": "Identity",
+      "name": "Identity Conformance Suite",
+      "description": "Runtime and source controls for OIDC authorization, token exchange, introspection, revocation, and Connect scope-enforcement contracts.",
+      "suiteUrl": "https://receiz.com/identity/conformance",
+      "reportUrl": "https://receiz.com/api/identity/conformance",
+      "historyUrl": "https://receiz.com/api/identity/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/identity/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/identity/conformance/badge",
+      "docPath": "identity.md",
+      "snapshotPath": "snapshots/2026-03-28/identity.conformance.json",
+      "familyOrder": [
+        "I",
+        "C",
+        "O"
+      ],
+      "familyLabels": {
+        "I": "OIDC authorization, token, userinfo, introspection, revocation, and JWKS contracts.",
+        "C": "Connect endpoint auth gates, scope gates, CORS, payload limits, and proxy binding.",
+        "O": "Operational integrity and cross-surface runtime coverage."
+      },
+      "familySummary": [
+        {
+          "code": "I",
+          "label": "OIDC authorization, token, userinfo, introspection, revocation, and JWKS contracts.",
+          "requirementCount": 12,
+          "mappedCheckCount": 19
+        },
+        {
+          "code": "C",
+          "label": "Connect endpoint auth gates, scope gates, CORS, payload limits, and proxy binding.",
+          "requirementCount": 10,
+          "mappedCheckCount": 22
+        },
+        {
+          "code": "O",
+          "label": "Operational integrity and cross-surface runtime coverage.",
+          "requirementCount": 4,
+          "mappedCheckCount": 6
+        }
+      ],
+      "checkCategoryCounts": {
+        "runtime": 22,
+        "source": 25
+      },
+      "standardId": "receiz-identity-standard-v1",
+      "schema": "receiz-identity-conformance-report-v1",
+      "verificationVersion": "identity-runtime-v1",
+      "generatedAt": "2026-03-28T00:42:58.408Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 26,
+        "checkCount": 47,
+        "passRequirements": 26,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 47,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "5554d2840cbd8f0ec2270829e0d7964c80c486271a518df578ab97c39e67eb55",
+        "sourceDigestCount": 21
+      },
+      "requirements": [
+        {
+          "id": "I-001",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.authorize.request_parse",
+            "runtime.oidc.authorize.invalid_request"
+          ]
+        },
+        {
+          "id": "I-002",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.authorize.pkce_required"
+          ]
+        },
+        {
+          "id": "I-003",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.authorize.redirect_allowlist"
+          ]
+        },
+        {
+          "id": "I-004",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.authorize.scope_openid_gate"
+          ]
+        },
+        {
+          "id": "I-005",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.token.form_contract",
+            "runtime.oidc.token.invalid_client_authorization_code"
+          ]
+        },
+        {
+          "id": "I-006",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.token.pkce_verification",
+            "source.oidc.token.refresh_scope_subset"
+          ]
+        },
+        {
+          "id": "I-007",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.userinfo.bearer_gate",
+            "runtime.oidc.userinfo.token_required"
+          ]
+        },
+        {
+          "id": "I-008",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.userinfo.revocation_check"
+          ]
+        },
+        {
+          "id": "I-009",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.introspect.client_auth",
+            "runtime.oidc.introspect.invalid_client"
+          ]
+        },
+        {
+          "id": "I-010",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.revoke.rfc7009_behavior",
+            "runtime.oidc.revoke.invalid_client"
+          ]
+        },
+        {
+          "id": "I-011",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.jwks.enabled_gate",
+            "runtime.oidc.jwks.available"
+          ]
+        },
+        {
+          "id": "I-012",
+          "status": "pass",
+          "checkIds": [
+            "source.oidc.protocol.no_store"
+          ]
+        },
+        {
+          "id": "C-001",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.record.scope_gate",
+            "runtime.connect.record.auth_gate"
+          ]
+        },
+        {
+          "id": "C-002",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.seal.scope_gate",
+            "runtime.connect.seal.auth_gate"
+          ]
+        },
+        {
+          "id": "C-003",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.verify.scope_gate",
+            "runtime.connect.verify.auth_gate"
+          ]
+        },
+        {
+          "id": "C-004",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.wallet.scope_gate",
+            "runtime.connect.wallet.auth_gate"
+          ]
+        },
+        {
+          "id": "C-005",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.transfers.scope_gate",
+            "runtime.connect.transfers.auth_gate"
+          ]
+        },
+        {
+          "id": "C-006",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.payments.checkout.scope_gate",
+            "source.connect.payments.session.scope_gate",
+            "runtime.connect.payments.checkout.auth_gate",
+            "runtime.connect.payments.session.auth_gate"
+          ]
+        },
+        {
+          "id": "C-007",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.notes.scope_gates",
+            "runtime.connect.notes.mint.auth_gate",
+            "runtime.connect.notes.claim.auth_gate",
+            "runtime.connect.notes.download.auth_gate"
+          ]
+        },
+        {
+          "id": "C-008",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.cors.preflight",
+            "runtime.connect.record.options_cors"
+          ]
+        },
+        {
+          "id": "C-009",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.proxy_headers_actor_binding"
+          ]
+        },
+        {
+          "id": "C-010",
+          "status": "pass",
+          "checkIds": [
+            "source.connect.payload_limits"
+          ]
+        },
+        {
+          "id": "O-001",
+          "status": "pass",
+          "checkIds": [
+            "source.integrity.required_files_present"
+          ]
+        },
+        {
+          "id": "O-002",
+          "status": "pass",
+          "checkIds": [
+            "runtime.connect.seal.options_cors",
+            "runtime.connect.payments.checkout.options_cors"
+          ]
+        },
+        {
+          "id": "O-003",
+          "status": "pass",
+          "checkIds": [
+            "runtime.connect.notes.claim.options_cors",
+            "runtime.connect.payments.session.options_cors"
+          ]
+        },
+        {
+          "id": "O-004",
+          "status": "pass",
+          "checkIds": [
+            "runtime.oidc.token.invalid_client_refresh_token"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "runtime.connect.notes.claim.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect notes claim endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.notes.claim.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect notes claim endpoint publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.connect.notes.download.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect notes download endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.notes.mint.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect notes mint endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.payments.checkout.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect payments checkout endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.payments.checkout.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect payments checkout endpoint publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.connect.payments.session.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect payments session endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.payments.session.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect payments session endpoint publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "GET, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.connect.record.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect record endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.record.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect record endpoint publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.connect.seal.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect seal endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.seal.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect seal endpoint publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.connect.transfers.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect transfer endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.verify.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect verify endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.connect.wallet.auth_gate",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Connect wallet summary endpoint denies unauthenticated calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "runtime.oidc.authorize.invalid_request",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC authorize endpoint rejects missing required parameters.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "invalid_request",
+            "expectedError": "invalid_request"
+          }
+        },
+        {
+          "id": "runtime.oidc.introspect.invalid_client",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC introspection endpoint requires authenticated client.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_client",
+            "expectedError": "invalid_client"
+          }
+        },
+        {
+          "id": "runtime.oidc.jwks.available",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC JWKS endpoint is available with JSON key-set response.",
+          "evidence": {
+            "status": 200,
+            "expectedStatuses": "200",
+            "error": "none",
+            "expectedError": "none"
+          }
+        },
+        {
+          "id": "runtime.oidc.revoke.invalid_client",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC revocation endpoint requires authenticated client.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_client",
+            "expectedError": "invalid_client"
+          }
+        },
+        {
+          "id": "runtime.oidc.token.invalid_client_authorization_code",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC token endpoint rejects unauthenticated authorization_code exchange.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_client",
+            "expectedError": "invalid_client"
+          }
+        },
+        {
+          "id": "runtime.oidc.token.invalid_client_refresh_token",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC token endpoint rejects unauthenticated refresh_token exchange.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_client",
+            "expectedError": "invalid_client"
+          }
+        },
+        {
+          "id": "runtime.oidc.userinfo.token_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "OIDC userinfo endpoint returns invalid_token without bearer token.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "invalid_token",
+            "expectedError": "invalid_token"
+          }
+        },
+        {
+          "id": "source.connect.cors.preflight",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect endpoints expose CORS preflight and CORS-wrapped responses.",
+          "evidence": {
+            "path": "app/lib/connect/cors.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.notes.scope_gates",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect notes endpoints require mint/claim/read scopes.",
+          "evidence": {
+            "path": "app/api/connect/payments/notes/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.payload_limits",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect mutating endpoints enforce request payload size limits.",
+          "evidence": {
+            "path": "app/api/connect/record/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.payments.checkout.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect payments checkout endpoint requires receiz:payments.create scope.",
+          "evidence": {
+            "path": "app/api/connect/payments/checkout/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.payments.session.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect payments session endpoint requires receiz:payments.read scope.",
+          "evidence": {
+            "path": "app/api/connect/payments/session/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.proxy_headers_actor_binding",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect proxy-style endpoints bind actor user and forward upstream headers explicitly.",
+          "evidence": {
+            "path": "app/api/connect/verify/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.record.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect record endpoint requires receiz:record scope.",
+          "evidence": {
+            "path": "app/api/connect/record/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.seal.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect seal endpoint requires receiz:seal scope.",
+          "evidence": {
+            "path": "app/api/connect/seal/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.transfers.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect transfer endpoint requires receiz:wallet.transfer scope.",
+          "evidence": {
+            "path": "app/api/connect/transfers/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.verify.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect verify endpoint requires receiz:verify scope.",
+          "evidence": {
+            "path": "app/api/connect/verify/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.connect.wallet.scope_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Connect wallet endpoint requires receiz:wallet.read scope.",
+          "evidence": {
+            "path": "app/api/connect/wallet/me/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for identity conformance are present and hashable.",
+          "evidence": {
+            "sourceDigestCount": 21,
+            "missingFiles": "none"
+          }
+        },
+        {
+          "id": "source.oidc.authorize.pkce_required",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC authorize endpoint enforces PKCE challenge presence.",
+          "evidence": {
+            "path": "app/api/oidc/authorize/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.authorize.redirect_allowlist",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC authorize endpoint requires normalized redirect URI and allowlist match.",
+          "evidence": {
+            "path": "app/api/oidc/authorize/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.authorize.request_parse",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC authorize endpoint parses and validates authorization requests.",
+          "evidence": {
+            "path": "app/api/oidc/authorize/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.authorize.scope_openid_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC authorize endpoint requires openid scope and allowed scope subset.",
+          "evidence": {
+            "path": "app/api/oidc/authorize/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.introspect.client_auth",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC introspection endpoint authenticates client credentials before token status disclosure.",
+          "evidence": {
+            "path": "app/api/oidc/introspect/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.jwks.enabled_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC JWKS endpoint enforces OIDC enabled state and publishes key set.",
+          "evidence": {
+            "path": "app/api/oidc/jwks/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.protocol.no_store",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC protocol helpers provide no-store response contract.",
+          "evidence": {
+            "path": "app/lib/oidc/protocol.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.revoke.rfc7009_behavior",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC revocation endpoint implements RFC7009 non-disclosing response behavior.",
+          "evidence": {
+            "path": "app/api/oidc/revoke/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.token.form_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC token endpoint requires form-encoded body and known grant types.",
+          "evidence": {
+            "path": "app/api/oidc/token/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.token.pkce_verification",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC token endpoint validates authorization code and PKCE verifier.",
+          "evidence": {
+            "path": "app/api/oidc/token/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.token.refresh_scope_subset",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC token refresh flow enforces scope subset and openid presence.",
+          "evidence": {
+            "path": "app/api/oidc/token/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.userinfo.bearer_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC userinfo endpoint requires bearer token and emits invalid_token challenge.",
+          "evidence": {
+            "path": "app/api/oidc/userinfo/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.oidc.userinfo.revocation_check",
+          "status": "pass",
+          "category": "source",
+          "description": "OIDC userinfo endpoint checks access-token revocation and token-use.",
+          "evidence": {
+            "path": "app/api/oidc/userinfo/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-identity-conformance-history-v1",
+        "snapshotId": "aae98e5f8c265923f6bea146a1e45d76187d84b650a8eb2b805c88613ab8db54",
+        "recordedAt": "2026-03-28T00:42:58.409Z",
+        "historyLength": 120,
+        "historyPath": "/api/identity/conformance/history",
+        "badgePath": "/api/identity/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-identity-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    },
+    {
+      "slug": "issuance",
+      "shortName": "Issuance",
+      "name": "Issuance Conformance Suite",
+      "description": "Runtime and source controls for WireProof issuance, AssetSeal custody issuance, and signer enrollment/signing contract integrity.",
+      "suiteUrl": "https://receiz.com/issuance/conformance",
+      "reportUrl": "https://receiz.com/api/issuance/conformance",
+      "historyUrl": "https://receiz.com/api/issuance/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/issuance/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/issuance/conformance/badge",
+      "docPath": "issuance.md",
+      "snapshotPath": "snapshots/2026-03-28/issuance.conformance.json",
+      "familyOrder": [
+        "W",
+        "A",
+        "S",
+        "O"
+      ],
+      "familyLabels": {
+        "W": "WireProof issuance, webhook auth, key lifecycle, rate limiting, and mint contracts.",
+        "A": "AssetSeal minting, custody chain continuity, visibility, and append semantics.",
+        "S": "Signer v1/v4 sign and enroll trust contracts.",
+        "O": "Operational controls that span issuance surfaces."
+      },
+      "familySummary": [
+        {
+          "code": "W",
+          "label": "WireProof issuance, webhook auth, key lifecycle, rate limiting, and mint contracts.",
+          "requirementCount": 10,
+          "mappedCheckCount": 20
+        },
+        {
+          "code": "A",
+          "label": "AssetSeal minting, custody chain continuity, visibility, and append semantics.",
+          "requirementCount": 8,
+          "mappedCheckCount": 12
+        },
+        {
+          "code": "S",
+          "label": "Signer v1/v4 sign and enroll trust contracts.",
+          "requirementCount": 6,
+          "mappedCheckCount": 9
+        },
+        {
+          "code": "O",
+          "label": "Operational controls that span issuance surfaces.",
+          "requirementCount": 4,
+          "mappedCheckCount": 4
+        }
+      ],
+      "checkCategoryCounts": {
+        "runtime": 13,
+        "source": 32
+      },
+      "standardId": "receiz-issuance-standard-v1",
+      "schema": "receiz-issuance-conformance-report-v1",
+      "verificationVersion": "issuance-runtime-v1",
+      "generatedAt": "2026-03-28T00:43:00.285Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 28,
+        "checkCount": 45,
+        "passRequirements": 28,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 45,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "e19305ad0d930e40e1c32967ee14bb8ac2ba95445184fef1edd60d5c0eb04e3e",
+        "sourceDigestCount": 20
+      },
+      "requirements": [
+        {
+          "id": "W-001",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.auth.bearer_then_legacy",
+            "runtime.wireproof.mint.signin_required"
+          ]
+        },
+        {
+          "id": "W-002",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.webhook.signature_required",
+            "runtime.wireproof.webhook.signature_required"
+          ]
+        },
+        {
+          "id": "W-003",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.keys.create.pro_gate",
+            "source.wireproof.keys.create.payload_limits",
+            "runtime.wireproof.keys.create.signin_required"
+          ]
+        },
+        {
+          "id": "W-004",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.keys.revoke.request_contract",
+            "runtime.wireproof.keys.revoke.missing_issuer_key_id"
+          ]
+        },
+        {
+          "id": "W-005",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.keys.list.pro_gate",
+            "runtime.wireproof.keys.list.signin_required"
+          ]
+        },
+        {
+          "id": "W-006",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.mint.rate_limit"
+          ]
+        },
+        {
+          "id": "W-007",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.claim.canonicalize",
+            "source.wireproof.mint.canonical_anchor"
+          ]
+        },
+        {
+          "id": "W-008",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.mint.visibility_contract",
+            "source.wireproof.auth.secret_hash_lookup"
+          ]
+        },
+        {
+          "id": "W-009",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.mint.no_store_json",
+            "source.wireproof.webhook.forwarding_contract"
+          ]
+        },
+        {
+          "id": "W-010",
+          "status": "pass",
+          "checkIds": [
+            "source.wireproof.health.table_probe",
+            "runtime.wireproof.health.contract"
+          ]
+        },
+        {
+          "id": "A-001",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.mint.session_premium_gate",
+            "runtime.assetseal.mint.signin_required"
+          ]
+        },
+        {
+          "id": "A-002",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.mint.anchor_contract",
+            "source.assetseal.claim.genesis_chain"
+          ]
+        },
+        {
+          "id": "A-003",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.append.session_premium_gate",
+            "runtime.assetseal.custody.append.signin_required"
+          ]
+        },
+        {
+          "id": "A-004",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.append.hash_chain"
+          ]
+        },
+        {
+          "id": "A-005",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.append.pbi_receipt_hash"
+          ]
+        },
+        {
+          "id": "A-006",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.list.coordinate_validation",
+            "runtime.assetseal.custody.list.invalid_coordinates"
+          ]
+        },
+        {
+          "id": "A-007",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.list.visibility_gate"
+          ]
+        },
+        {
+          "id": "A-008",
+          "status": "pass",
+          "checkIds": [
+            "source.assetseal.custody.append.event_timestamp_contract"
+          ]
+        },
+        {
+          "id": "S-001",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v1.sign.auth_gate",
+            "runtime.signer.v1.sign.unauthorized_or_unavailable"
+          ]
+        },
+        {
+          "id": "S-002",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v1.sign.payload_hash_gate"
+          ]
+        },
+        {
+          "id": "S-003",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v1.sign.key_status_gate"
+          ]
+        },
+        {
+          "id": "S-004",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v1.keyring.public_surface",
+            "runtime.signer.v1.keyring.available"
+          ]
+        },
+        {
+          "id": "S-005",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v4.enroll.input_and_origin_gates",
+            "runtime.signer.v4.enroll.invalid_request"
+          ]
+        },
+        {
+          "id": "S-006",
+          "status": "pass",
+          "checkIds": [
+            "source.signer.v4.enroll.challenge_and_root_signer"
+          ]
+        },
+        {
+          "id": "O-001",
+          "status": "pass",
+          "checkIds": [
+            "source.integrity.required_files_present"
+          ]
+        },
+        {
+          "id": "O-002",
+          "status": "pass",
+          "checkIds": [
+            "source.rate_limits.cross_surface"
+          ]
+        },
+        {
+          "id": "O-003",
+          "status": "pass",
+          "checkIds": [
+            "source.payload_limits.cross_surface"
+          ]
+        },
+        {
+          "id": "O-004",
+          "status": "pass",
+          "checkIds": [
+            "runtime.issuance.endpoints.reachable"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "runtime.assetseal.custody.append.signin_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "AssetSeal custody append denies unsigned session calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "Not signed in.",
+            "expectedError": "Not signed in.",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.assetseal.custody.list.invalid_coordinates",
+          "status": "pass",
+          "category": "runtime",
+          "description": "AssetSeal custody list validates code/pulse/anchor coordinate formats.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "Missing/invalid code.",
+            "expectedError": "Missing/invalid code.",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.assetseal.mint.signin_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "AssetSeal mint requires signed-in session outside demo mode.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401"
+          }
+        },
+        {
+          "id": "runtime.issuance.endpoints.reachable",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Core issuance conformance endpoints are reachable with expected contract envelopes.",
+          "evidence": {
+            "checked": "runtime.wireproof.health.contract,runtime.signer.v1.keyring.available,runtime.signer.v4.enroll.invalid_request",
+            "passCount": 3,
+            "failCount": 0
+          }
+        },
+        {
+          "id": "runtime.signer.v1.keyring.available",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Signer v1 keyring endpoint is reachable and publishes JSON key material metadata.",
+          "evidence": {
+            "status": 200,
+            "expectedStatuses": "200",
+            "error": "none",
+            "expectedError": "none",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.signer.v1.sign.unauthorized_or_unavailable",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Signer v1 sign rejects unauthorized requests unless signer configuration is unavailable.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401,503",
+            "error": "unauthorized",
+            "expectedError": "none",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.signer.v4.enroll.invalid_request",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Signer v4 enrollment enforces request contract and origin policy on malformed payloads.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400,403,404,429",
+            "error": "invalid_enrollment_request",
+            "expectedError": "none",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.health.contract",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof health endpoint publishes operational/outage JSON contract.",
+          "evidence": {
+            "status": 200,
+            "expectedStatuses": "200,503",
+            "error": "none",
+            "expectedError": "none",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.keys.create.signin_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof key creation denies unauthenticated requests.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "signin_required",
+            "expectedError": "signin_required",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.keys.list.signin_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof key listing denies unauthenticated requests.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "signin_required",
+            "expectedError": "signin_required",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.keys.revoke.missing_issuer_key_id",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof key revoke rejects missing issuer key identifiers.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "missing_issuerKeyId",
+            "expectedError": "missing_issuerKeyId",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.mint.signin_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof mint requires issuer auth or signed-in Pro session.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "signin_required",
+            "expectedError": "signin_required",
+            "bodyValid": true
+          }
+        },
+        {
+          "id": "runtime.wireproof.webhook.signature_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "WireProof webhook rejects unsigned ingress payloads.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401"
+          }
+        },
+        {
+          "id": "source.assetseal.claim.genesis_chain",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal canonical claim ensures genesis custody chain continuity for minted assets.",
+          "evidence": {
+            "path": "app/lib/assetseal/claim.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.append.event_timestamp_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody append records normalized event pulse/time and transfer field constraints.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/append/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.append.hash_chain",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody append links events through prev-hash and canonical event hashing.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/append/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.append.pbi_receipt_hash",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody append requires strict PBI receipt hash contract for event integrity.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/append/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.append.session_premium_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody append is session and premium access gated.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/append/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.list.coordinate_validation",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody list validates code, pulse, and anchor coordinates before ledger reads.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/list/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.custody.list.visibility_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal custody list enforces premium gating for private visibility reads.",
+          "evidence": {
+            "path": "app/api/assetseal/custody/list/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.mint.anchor_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal mint canonicalizes claim content, computes anchor IDs, and persists issuance anchors.",
+          "evidence": {
+            "path": "app/api/assetseal/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.assetseal.mint.session_premium_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "AssetSeal mint requires session and premium access outside demo mode.",
+          "evidence": {
+            "path": "app/api/assetseal/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for issuance conformance are present and hashable.",
+          "evidence": {
+            "sourceDigestCount": 20,
+            "missingFiles": "none"
+          }
+        },
+        {
+          "id": "source.payload_limits.cross_surface",
+          "status": "pass",
+          "category": "source",
+          "description": "Payload size guards and bounded body reads are enforced across issuance write surfaces.",
+          "evidence": {
+            "missingPaths": "none"
+          }
+        },
+        {
+          "id": "source.rate_limits.cross_surface",
+          "status": "pass",
+          "category": "source",
+          "description": "Rate-limit controls are present across issuance, signer service, and enrollment surfaces.",
+          "evidence": {
+            "missingPaths": "none"
+          }
+        },
+        {
+          "id": "source.signer.v1.keyring.public_surface",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v1 keyring endpoint publishes public keys with explicit cache profile.",
+          "evidence": {
+            "path": "app/api/signer/v1/receiz/keyring/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.signer.v1.sign.auth_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v1 sign endpoint enforces bearer authorization and unavailable-state fallback.",
+          "evidence": {
+            "path": "app/api/signer/v1/receiz/sign/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.signer.v1.sign.key_status_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v1 sign endpoint validates key existence and retired-key policy.",
+          "evidence": {
+            "path": "app/api/signer/v1/receiz/sign/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.signer.v1.sign.payload_hash_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v1 sign endpoint verifies payload hashes before signing material is used.",
+          "evidence": {
+            "path": "app/api/signer/v1/receiz/sign/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.signer.v4.enroll.challenge_and_root_signer",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v4 enrollment verifies challenge signatures and requires active trusted root signer state.",
+          "evidence": {
+            "path": "app/api/signer/v4/receiz/enroll/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.signer.v4.enroll.input_and_origin_gates",
+          "status": "pass",
+          "category": "source",
+          "description": "Signer v4 enrollment validates same-origin policy and request payload contract.",
+          "evidence": {
+            "path": "app/api/signer/v4/receiz/enroll/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.auth.bearer_then_legacy",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof auth prioritizes issuer key bearer auth then legacy webhook signature fallback.",
+          "evidence": {
+            "path": "app/lib/wireproof/auth.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.auth.secret_hash_lookup",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof issuer secret lookup is hash-based, revocation aware, and updates usage telemetry.",
+          "evidence": {
+            "path": "app/lib/wireproof/auth.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.claim.canonicalize",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof claim canonicalization emits deterministic kind/version/payment payload structure.",
+          "evidence": {
+            "path": "app/lib/wireproof/claim.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.health.table_probe",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof health probes critical issuance storage tables.",
+          "evidence": {
+            "path": "app/api/wireproof/health/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.keys.create.payload_limits",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof issuer key creation enforces payload bounds with oversized body rejection.",
+          "evidence": {
+            "path": "app/api/wireproof/keys/create/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.keys.create.pro_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof issuer key creation is session and Pro-plan gated.",
+          "evidence": {
+            "path": "app/api/wireproof/keys/create/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.keys.list.pro_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof key listing is session and Pro-plan gated with no-store response headers.",
+          "evidence": {
+            "path": "app/api/wireproof/keys/list/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.keys.revoke.request_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof key revoke endpoint validates request body contract and ownership checks.",
+          "evidence": {
+            "path": "app/api/wireproof/keys/revoke/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.mint.canonical_anchor",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof mint computes canonical anchor IDs from code/pulse/claim hash and persists anchors.",
+          "evidence": {
+            "path": "app/api/wireproof/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.mint.no_store_json",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof mint JSON response contracts disable caching for runtime issuance artifacts.",
+          "evidence": {
+            "path": "app/api/wireproof/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.mint.rate_limit",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof mint enforces issuer/session-aware rate limits and Retry-After signaling.",
+          "evidence": {
+            "path": "app/api/wireproof/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.mint.visibility_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof mint applies deterministic visibility defaults across demo, issuer-key, and session issuance.",
+          "evidence": {
+            "path": "app/api/wireproof/mint/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.webhook.forwarding_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof webhook forwards authenticated payloads to mint JSON path with no-store contract.",
+          "evidence": {
+            "path": "app/api/wireproof/webhook/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.wireproof.webhook.signature_required",
+          "status": "pass",
+          "category": "source",
+          "description": "WireProof webhook requires signature verification before processing requests.",
+          "evidence": {
+            "path": "app/api/wireproof/webhook/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-issuance-conformance-history-v1",
+        "snapshotId": "0b7414fd509c31ca0d4241ac7a88d79b16e58a703c3044ec5d4d4407a4704219",
+        "recordedAt": "2026-03-28T00:43:00.286Z",
+        "historyLength": 120,
+        "historyPath": "/api/issuance/conformance/history",
+        "badgePath": "/api/issuance/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-issuance-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    },
+    {
+      "slug": "verification",
+      "shortName": "Verification",
+      "name": "Verification Conformance Suite",
+      "description": "Runtime and source controls for verification contracts, trusted signature policy, artifact validation, and deterministic verdict behavior.",
+      "suiteUrl": "https://receiz.com/verify/conformance",
+      "reportUrl": "https://receiz.com/api/verification/conformance",
+      "historyUrl": "https://receiz.com/api/verification/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/verification/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/verification/conformance/badge",
+      "docPath": "verification.md",
+      "snapshotPath": "snapshots/2026-03-28/verification.conformance.json",
+      "familyOrder": [
+        "V",
+        "D",
+        "T",
+        "G",
+        "O"
+      ],
+      "familyLabels": {
+        "V": "Verify route payload validation, deterministic code generation, and legacy compatibility.",
+        "D": "Document verify upload gates, file limits, and trusted root-key resolution.",
+        "T": "Trusted signature v4 policy, key pinning, payload-hash, and certificate-window checks.",
+        "G": "Artifact trust gates for real Groth16 proofs and anchor coherence.",
+        "O": "Operational controls shared across verify surfaces."
+      },
+      "familySummary": [
+        {
+          "code": "V",
+          "label": "Verify route payload validation, deterministic code generation, and legacy compatibility.",
+          "requirementCount": 6,
+          "mappedCheckCount": 13
+        },
+        {
+          "code": "D",
+          "label": "Document verify upload gates, file limits, and trusted root-key resolution.",
+          "requirementCount": 6,
+          "mappedCheckCount": 10
+        },
+        {
+          "code": "T",
+          "label": "Trusted signature v4 policy, key pinning, payload-hash, and certificate-window checks.",
+          "requirementCount": 6,
+          "mappedCheckCount": 10
+        },
+        {
+          "code": "G",
+          "label": "Artifact trust gates for real Groth16 proofs and anchor coherence.",
+          "requirementCount": 4,
+          "mappedCheckCount": 4
+        },
+        {
+          "code": "O",
+          "label": "Operational controls shared across verify surfaces.",
+          "requirementCount": 4,
+          "mappedCheckCount": 8
+        }
+      ],
+      "checkCategoryCounts": {
+        "source": 24,
+        "runtime": 12
+      },
+      "standardId": "receiz-verification-standard-v1",
+      "schema": "receiz-verification-conformance-report-v1",
+      "verificationVersion": "verification-runtime-v1",
+      "generatedAt": "2026-03-28T00:43:02.433Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 26,
+        "checkCount": 36,
+        "passRequirements": 26,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 36,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "6bd1ca2b33bf5803c7430aab7b53b51e1829c02e215d724703f119d77a1ce864",
+        "sourceDigestCount": 9
+      },
+      "requirements": [
+        {
+          "id": "V-001",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.body_size_guard",
+            "runtime.verify.route_payload_limit_guard"
+          ]
+        },
+        {
+          "id": "V-002",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.input_regex_validation",
+            "runtime.verify.route_missing_fields_guard"
+          ]
+        },
+        {
+          "id": "V-003",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.signing_key_gate",
+            "runtime.verify.signer_key_id_deterministic"
+          ]
+        },
+        {
+          "id": "V-004",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.v2_payload_contract",
+            "runtime.verify.v2_code_deterministic",
+            "runtime.verify.route_v2_fixture_accepts_valid"
+          ]
+        },
+        {
+          "id": "V-005",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.v1_legacy_fallback",
+            "runtime.verify.route_v1_fixture_accepts_valid"
+          ]
+        },
+        {
+          "id": "V-006",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.error_envelopes",
+            "runtime.verify.v2_code_changes_with_pulse"
+          ]
+        },
+        {
+          "id": "D-001",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.rate_limit_gate"
+          ]
+        },
+        {
+          "id": "D-002",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.multipart_and_file_gates",
+            "runtime.document_verify.route_unsupported_content_type"
+          ]
+        },
+        {
+          "id": "D-003",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.file_size_guards",
+            "runtime.document_limits.constants_positive"
+          ]
+        },
+        {
+          "id": "D-004",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.root_key_fallback",
+            "runtime.document_verify.root_key_set_resolved"
+          ]
+        },
+        {
+          "id": "D-005",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.no_store_cache",
+            "runtime.document_verify.route_missing_file"
+          ]
+        },
+        {
+          "id": "D-006",
+          "status": "pass",
+          "checkIds": [
+            "source.document_limits.constants"
+          ]
+        },
+        {
+          "id": "T-001",
+          "status": "pass",
+          "checkIds": [
+            "source.artifact.trusted_signature_requirement",
+            "source.verify.ui_signature_state_surface"
+          ]
+        },
+        {
+          "id": "T-002",
+          "status": "pass",
+          "checkIds": [
+            "source.artifact.signature_v4_unavailable_gate",
+            "source.signature_v4.root_key_pulse_policy"
+          ]
+        },
+        {
+          "id": "T-003",
+          "status": "pass",
+          "checkIds": [
+            "source.signature_v4.payload_hash_gate"
+          ]
+        },
+        {
+          "id": "T-004",
+          "status": "pass",
+          "checkIds": [
+            "source.signature_v4.cert_window_policy"
+          ]
+        },
+        {
+          "id": "T-005",
+          "status": "pass",
+          "checkIds": [
+            "source.signature_v4.crypto_verification_gate"
+          ]
+        },
+        {
+          "id": "T-006",
+          "status": "pass",
+          "checkIds": [
+            "source.signature_v4.pinned_root_keys",
+            "source.signature_v4.server_root_key_config",
+            "runtime.signature_v4.pinned_map_non_empty"
+          ]
+        },
+        {
+          "id": "G-001",
+          "status": "pass",
+          "checkIds": [
+            "source.artifact.real_groth16_gate"
+          ]
+        },
+        {
+          "id": "G-002",
+          "status": "pass",
+          "checkIds": [
+            "source.artifact.anchor_coherence_gate"
+          ]
+        },
+        {
+          "id": "G-003",
+          "status": "pass",
+          "checkIds": [
+            "source.artifact.signature_v4_unavailable_gate"
+          ]
+        },
+        {
+          "id": "G-004",
+          "status": "pass",
+          "checkIds": [
+            "source.integrity.required_files_present"
+          ]
+        },
+        {
+          "id": "O-001",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.body_size_guard",
+            "source.document_verify.file_size_guards"
+          ]
+        },
+        {
+          "id": "O-002",
+          "status": "pass",
+          "checkIds": [
+            "source.document_verify.rate_limit_gate",
+            "source.document_limits.constants"
+          ]
+        },
+        {
+          "id": "O-003",
+          "status": "pass",
+          "checkIds": [
+            "source.verify.error_envelopes",
+            "source.document_verify.no_store_cache"
+          ]
+        },
+        {
+          "id": "O-004",
+          "status": "pass",
+          "checkIds": [
+            "runtime.verify.route_v2_fixture_accepts_valid",
+            "runtime.verify.route_v1_fixture_accepts_valid"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "source.verify.body_size_guard",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route enforces hard request body limits and emits payload_too_large on overflow.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 2,
+            "matchedPatternCount": 2,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.verify.input_regex_validation",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route validates ts/code input shape and emits deterministic field errors.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.verify.signing_key_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route fails closed when signing key is unavailable.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.verify.v2_payload_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route computes v2 pulse-aware signatures and returns canonical /v slug/code/pulse path.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.verify.v1_legacy_fallback",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route preserves legacy v1 compatibility when pulse is absent.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.verify.error_envelopes",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify route publishes stable invalid_* and missing_fields error envelopes.",
+          "evidence": {
+            "path": "app/api/verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "1cb0b95ecf72bca0dca2de9b5f4ec7166fe7217f34889ccd594970faa2647f3a"
+          }
+        },
+        {
+          "id": "source.document_verify.rate_limit_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Document verify route enforces IP rate limiting and exposes retry metadata.",
+          "evidence": {
+            "path": "app/api/document-verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "3e1791f43cb37e5b33f3c01efe16b850c3d7774d6f08c3d0c2fe5d9730faa3a5"
+          }
+        },
+        {
+          "id": "source.document_verify.multipart_and_file_gates",
+          "status": "pass",
+          "category": "source",
+          "description": "Document verify route accepts only multipart file uploads and rejects missing files.",
+          "evidence": {
+            "path": "app/api/document-verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "3e1791f43cb37e5b33f3c01efe16b850c3d7774d6f08c3d0c2fe5d9730faa3a5"
+          }
+        },
+        {
+          "id": "source.document_verify.file_size_guards",
+          "status": "pass",
+          "category": "source",
+          "description": "Document verify route enforces request/file size boundaries with 413 file_too_large responses.",
+          "evidence": {
+            "path": "app/api/document-verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "3e1791f43cb37e5b33f3c01efe16b850c3d7774d6f08c3d0c2fe5d9730faa3a5"
+          }
+        },
+        {
+          "id": "source.document_verify.root_key_fallback",
+          "status": "pass",
+          "category": "source",
+          "description": "Document verify trusted key source prefers server-configured roots and falls back to pinned roots.",
+          "evidence": {
+            "path": "app/api/document-verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "3e1791f43cb37e5b33f3c01efe16b850c3d7774d6f08c3d0c2fe5d9730faa3a5"
+          }
+        },
+        {
+          "id": "source.document_verify.no_store_cache",
+          "status": "pass",
+          "category": "source",
+          "description": "Document verify responses are emitted with no-store caching semantics.",
+          "evidence": {
+            "path": "app/api/document-verify/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "3e1791f43cb37e5b33f3c01efe16b850c3d7774d6f08c3d0c2fe5d9730faa3a5"
+          }
+        },
+        {
+          "id": "source.artifact.trusted_signature_requirement",
+          "status": "pass",
+          "category": "source",
+          "description": "Artifact verifier enforces trusted signature requirement when trusted mode is requested.",
+          "evidence": {
+            "path": "app/lib/receizArtifactVerifier.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "c63b713c7264e62b2e4a493525c67dddb48824b84ea252c73ef7509a0581d683"
+          }
+        },
+        {
+          "id": "source.artifact.signature_v4_unavailable_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Artifact verifier reports trusted-mode failure when signature v4 root keys are unavailable.",
+          "evidence": {
+            "path": "app/lib/receizArtifactVerifier.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "c63b713c7264e62b2e4a493525c67dddb48824b84ea252c73ef7509a0581d683"
+          }
+        },
+        {
+          "id": "source.artifact.real_groth16_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Artifact verifier requires real g16 proofs with digest/public signal coherence checks.",
+          "evidence": {
+            "path": "app/lib/receizArtifactVerifier.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "c63b713c7264e62b2e4a493525c67dddb48824b84ea252c73ef7509a0581d683"
+          }
+        },
+        {
+          "id": "source.artifact.anchor_coherence_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Artifact verifier enforces anchor bundle/code/pulse coherence in trusted mode.",
+          "evidence": {
+            "path": "app/lib/receizArtifactVerifier.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "c63b713c7264e62b2e4a493525c67dddb48824b84ea252c73ef7509a0581d683"
+          }
+        },
+        {
+          "id": "source.signature_v4.payload_hash_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Signature v4 verifier enforces exact payloadHashSha256 match before signature verification.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "13541a5fdde559b5ae7570db423e70298c864038060cd4dbdc00fe891dee0404"
+          }
+        },
+        {
+          "id": "source.signature_v4.root_key_pulse_policy",
+          "status": "pass",
+          "category": "source",
+          "description": "Signature v4 verifier enforces root key activation and retirement pulse policy.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "13541a5fdde559b5ae7570db423e70298c864038060cd4dbdc00fe891dee0404"
+          }
+        },
+        {
+          "id": "source.signature_v4.cert_window_policy",
+          "status": "pass",
+          "category": "source",
+          "description": "Signature v4 verifier enforces certificate chain and signedAt validity windows.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "13541a5fdde559b5ae7570db423e70298c864038060cd4dbdc00fe891dee0404"
+          }
+        },
+        {
+          "id": "source.signature_v4.crypto_verification_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Signature v4 verifier enforces cryptographic verification for the signed payload.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "13541a5fdde559b5ae7570db423e70298c864038060cd4dbdc00fe891dee0404"
+          }
+        },
+        {
+          "id": "source.signature_v4.pinned_root_keys",
+          "status": "pass",
+          "category": "source",
+          "description": "Pinned signature v4 root key list is versioned and available for client verification.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4Pinned.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "a049b92bba61dcec6acb6b757ccdfb891b279cdb94f106ab3e95cf17cf41bf0e"
+          }
+        },
+        {
+          "id": "source.signature_v4.server_root_key_config",
+          "status": "pass",
+          "category": "source",
+          "description": "Server signature v4 root key configuration supports env overrides and pinned defaults.",
+          "evidence": {
+            "path": "app/lib/security/receizSignatureV4ServerConfig.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "926335ae9b3c7ab9a01f545040d5b75dc9e7122f0b065d68872f39a239135f01"
+          }
+        },
+        {
+          "id": "source.document_limits.constants",
+          "status": "pass",
+          "category": "source",
+          "description": "Document limit constants and parsing helpers are centralized and deterministic.",
+          "evidence": {
+            "path": "app/lib/security/documentLimits.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 5,
+            "matchedNeedleCount": 5,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "9af4993fcf062b67f5b14ed95cb41e708fae9d53a7e53dc7ce68a3a72e0e8d17"
+          }
+        },
+        {
+          "id": "source.verify.ui_signature_state_surface",
+          "status": "pass",
+          "category": "source",
+          "description": "Verify UI surfaces trusted signature state with explicit missing/unavailable/invalid handling.",
+          "evidence": {
+            "path": "app/verify/page.tsx",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 0,
+            "matchedPatternCount": 0,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "16990599846dfa34652918a8697f96696372ff3beff8352f9b92a747e4c9356f"
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for verification conformance are present and hashable.",
+          "evidence": {
+            "requiredFileCount": 9,
+            "presentFileCount": 9
+          }
+        },
+        {
+          "id": "runtime.verify.signer_key_id_deterministic",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Signer key ID derivation is deterministic and fixed-width hex.",
+          "evidence": {
+            "signerKeyIdA": "dec76e6ff973",
+            "signerKeyIdB": "dec76e6ff973",
+            "equal": true
+          }
+        },
+        {
+          "id": "runtime.verify.v2_code_deterministic",
+          "status": "pass",
+          "category": "runtime",
+          "description": "v2 code derivation is deterministic and canonicalized to 8 uppercase alphanumerics.",
+          "evidence": {
+            "codeV2A": "453DE643",
+            "codeV2ARepeat": "453DE643",
+            "equal": true
+          }
+        },
+        {
+          "id": "runtime.verify.v2_code_changes_with_pulse",
+          "status": "pass",
+          "category": "runtime",
+          "description": "v2 verification code changes when pulse changes.",
+          "evidence": {
+            "pulseA": "1042",
+            "pulseB": "1043",
+            "codeA": "453DE643",
+            "codeB": "7C68F15C"
+          }
+        },
+        {
+          "id": "runtime.verify.route_v2_fixture_accepts_valid",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Verify route accepts a deterministic valid v2 fixture payload.",
+          "evidence": {
+            "status": 200,
+            "valid": true,
+            "version": "v2",
+            "observedPath": "/v/20260101_0000/453DE643/1042",
+            "expectedPath": "/v/20260101_0000/453DE643/1042"
+          }
+        },
+        {
+          "id": "runtime.verify.route_v1_fixture_accepts_valid",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Verify route preserves valid legacy v1 fixtures.",
+          "evidence": {
+            "status": 200,
+            "valid": true,
+            "version": "v1",
+            "observedPath": "/v/20260101_0000/63720611",
+            "expectedPath": "/v/20260101_0000/63720611"
+          }
+        },
+        {
+          "id": "runtime.verify.route_payload_limit_guard",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Verify route rejects payloads that exceed configured body limits.",
+          "evidence": {
+            "status": 413,
+            "error": "payload_too_large"
+          }
+        },
+        {
+          "id": "runtime.verify.route_missing_fields_guard",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Verify route rejects empty payloads with missing_fields.",
+          "evidence": {
+            "status": 400,
+            "error": "missing_fields"
+          }
+        },
+        {
+          "id": "runtime.document_verify.route_unsupported_content_type",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Document verify route rejects non-multipart requests.",
+          "evidence": {
+            "status": 415,
+            "error": "unsupported_content_type"
+          }
+        },
+        {
+          "id": "runtime.document_verify.route_missing_file",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Document verify route rejects multipart payloads without an uploaded file.",
+          "evidence": {
+            "status": 400,
+            "error": "missing_file"
+          }
+        },
+        {
+          "id": "runtime.document_verify.root_key_set_resolved",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Trusted verification root key set resolves from server config or pinned fallback.",
+          "evidence": {
+            "serverRootKeyCount": 1,
+            "pinnedRootKeyCount": 1,
+            "resolvedRootKeyCount": 1
+          }
+        },
+        {
+          "id": "runtime.signature_v4.pinned_map_non_empty",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Pinned signature v4 root key map is non-empty.",
+          "evidence": {
+            "pinnedRootKeyCount": 1
+          }
+        },
+        {
+          "id": "runtime.document_limits.constants_positive",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Document verification limits resolve to positive deterministic values.",
+          "evidence": {
+            "maxUploadBytes": 524288000,
+            "multipartOverheadBytes": 2097152,
+            "optionalLinkMaxChars": 2048,
+            "zipMaxEntries": 5000,
+            "zipMaxEntryBytes": 1073741824,
+            "zipMaxTotalBytes": 2147483648,
+            "parsedContentLength": 1234,
+            "invalidContentLengthIsNull": true
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-verification-conformance-history-v1",
+        "snapshotId": "4da9a52aa4309c46c7f54d70af844b05759e0b6cf0a00f61839b12384507f002",
+        "recordedAt": "2026-03-28T00:43:02.434Z",
+        "historyLength": 120,
+        "historyPath": "/api/verification/conformance/history",
+        "badgePath": "/api/verification/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-verification-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    },
+    {
+      "slug": "settlement",
+      "shortName": "Settlement",
+      "name": "Settlement Conformance Suite",
+      "description": "Runtime and source controls for deterministic settlement behavior, replay fields, conversion rules, and ledger continuity contracts.",
+      "suiteUrl": "https://receiz.com/economy/conformance",
+      "reportUrl": "https://receiz.com/api/economy/conformance",
+      "historyUrl": "https://receiz.com/api/economy/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/economy/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/economy/conformance/badge",
+      "docPath": "settlement.md",
+      "snapshotPath": "snapshots/2026-03-28/settlement.conformance.json",
+      "familyOrder": [
+        "R",
+        "V",
+        "S",
+        "T",
+        "L"
+      ],
+      "familyLabels": {
+        "R": "Wallet summary and settlement record semantics.",
+        "V": "Pulse-derived valuation and reference-rate determinism.",
+        "S": "Settlement integrity, note minting, and claim gating.",
+        "T": "Transfer posting, amount validation, nonce, and replay continuity.",
+        "L": "Ledger continuity across private and public ledger surfaces."
+      },
+      "familySummary": [
+        {
+          "code": "R",
+          "label": "Wallet summary and settlement record semantics.",
+          "requirementCount": 7,
+          "mappedCheckCount": 15
+        },
+        {
+          "code": "V",
+          "label": "Pulse-derived valuation and reference-rate determinism.",
+          "requirementCount": 4,
+          "mappedCheckCount": 7
+        },
+        {
+          "code": "S",
+          "label": "Settlement integrity, note minting, and claim gating.",
+          "requirementCount": 5,
+          "mappedCheckCount": 10
+        },
+        {
+          "code": "T",
+          "label": "Transfer posting, amount validation, nonce, and replay continuity.",
+          "requirementCount": 6,
+          "mappedCheckCount": 11
+        },
+        {
+          "code": "L",
+          "label": "Ledger continuity across private and public ledger surfaces.",
+          "requirementCount": 6,
+          "mappedCheckCount": 6
+        }
+      ],
+      "checkCategoryCounts": {
+        "source": 16,
+        "runtime": 6
+      },
+      "standardId": "receiz-settlement-standard-v1",
+      "schema": "receiz-conformance-report-v1",
+      "verificationVersion": "wallet-ledger-v1",
+      "generatedAt": "2026-03-28T00:43:03.618Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 28,
+        "checkCount": 22,
+        "passRequirements": 28,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 22,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "30747d889f815980f80ee88bf9e145fd6ab6bd86b4ccf35e72a3a41ed473dc98",
+        "sourceDigestCount": 10
+      },
+      "requirements": [
+        {
+          "id": "R-001",
+          "status": "pass",
+          "checkIds": [
+            "source.wallet.ui.usd_labels",
+            "source.wallet.server.summary_fields"
+          ]
+        },
+        {
+          "id": "R-002",
+          "status": "pass",
+          "checkIds": [
+            "source.wallet.server.summary_fields",
+            "source.ledger.private.value_tuple"
+          ]
+        },
+        {
+          "id": "R-003",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.rate_derivation",
+            "runtime.pulse.recomputable_no_drift",
+            "runtime.rate.fixed_pulse_deterministic",
+            "runtime.rate.wallet_rate_positive"
+          ]
+        },
+        {
+          "id": "R-004",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.integer_conversion",
+            "runtime.conversion.phi_to_usd_half_up",
+            "runtime.conversion.usd_to_phi_half_up",
+            "runtime.conversion.usd_roundtrip_tolerance"
+          ]
+        },
+        {
+          "id": "R-005",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple",
+            "source.notes.mint.value_tuple"
+          ]
+        },
+        {
+          "id": "R-006",
+          "status": "pass",
+          "checkIds": [
+            "source.notes.mint.value_tuple",
+            "source.notes.claim.verification_gate"
+          ]
+        },
+        {
+          "id": "R-007",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.public.identity_partition",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "V-001",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.rate_derivation",
+            "runtime.pulse.recomputable_no_drift",
+            "runtime.rate.fixed_pulse_deterministic"
+          ]
+        },
+        {
+          "id": "V-002",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.rate_derivation",
+            "runtime.rate.fixed_pulse_deterministic"
+          ]
+        },
+        {
+          "id": "V-003",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.rate_derivation",
+            "runtime.rate.wallet_rate_positive"
+          ]
+        },
+        {
+          "id": "V-004",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple",
+            "source.notes.mint.value_tuple"
+          ]
+        },
+        {
+          "id": "S-001",
+          "status": "pass",
+          "checkIds": [
+            "source.wallet.server.summary_fields",
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "S-002",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.integer_conversion",
+            "runtime.conversion.phi_to_usd_half_up",
+            "runtime.conversion.usd_to_phi_half_up"
+          ]
+        },
+        {
+          "id": "S-003",
+          "status": "pass",
+          "checkIds": [
+            "source.notes.mint.value_tuple"
+          ]
+        },
+        {
+          "id": "S-004",
+          "status": "pass",
+          "checkIds": [
+            "source.notes.claim.verification_gate"
+          ]
+        },
+        {
+          "id": "S-005",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.proof_bundle_contract",
+            "source.ledger.public.identity_partition"
+          ]
+        },
+        {
+          "id": "T-001",
+          "status": "pass",
+          "checkIds": [
+            "source.transfers.value_tuple_and_nonce"
+          ]
+        },
+        {
+          "id": "T-002",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.rate_derivation",
+            "runtime.rate.wallet_rate_positive",
+            "source.transfers.value_tuple_and_nonce"
+          ]
+        },
+        {
+          "id": "T-003",
+          "status": "pass",
+          "checkIds": [
+            "source.amounts.integer_conversion",
+            "runtime.conversion.phi_to_usd_half_up",
+            "runtime.conversion.usd_to_phi_half_up",
+            "runtime.conversion.usd_roundtrip_tolerance"
+          ]
+        },
+        {
+          "id": "T-004",
+          "status": "pass",
+          "checkIds": [
+            "source.transfers.value_tuple_and_nonce",
+            "source.notes.mint.value_tuple"
+          ]
+        },
+        {
+          "id": "T-005",
+          "status": "pass",
+          "checkIds": [
+            "source.transfers.value_tuple_and_nonce",
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "T-006",
+          "status": "pass",
+          "checkIds": [
+            "source.transfers.value_tuple_and_nonce",
+            "source.notes.claim.verification_gate"
+          ]
+        },
+        {
+          "id": "L-001",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "L-002",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.public.identity_partition",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "L-003",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.private.value_tuple",
+            "source.ledger.public.value_tuple"
+          ]
+        },
+        {
+          "id": "L-004",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.proof_bundle_contract"
+          ]
+        },
+        {
+          "id": "L-005",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.private.query_bounds",
+            "source.ledger.public.query_bounds"
+          ]
+        },
+        {
+          "id": "L-006",
+          "status": "pass",
+          "checkIds": [
+            "source.ledger.public.identity_partition"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "source.wallet.ui.usd_labels",
+          "status": "pass",
+          "category": "source",
+          "description": "Wallet interface keeps USD as the user-facing display with supporting phi context.",
+          "evidence": {
+            "path": "app/wallet/WalletAccountExperience.tsx",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "ae0417ea4972070f2a72b65d764aac0a8d19cf79719301b428a8e7e2c329f312"
+          }
+        },
+        {
+          "id": "source.wallet.server.summary_fields",
+          "status": "pass",
+          "category": "source",
+          "description": "Wallet summary contract includes custody (`balancePhiMicro`) and USD presentation (`balanceUsd`) fields.",
+          "evidence": {
+            "path": "app/lib/wallet/server.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 2,
+            "matchedPatternCount": 2,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "4c46ca7eabd4c64e1c2aa4d923fff98412c20c0e4d5bbd98d0ddd96192166496"
+          }
+        },
+        {
+          "id": "source.amounts.rate_derivation",
+          "status": "pass",
+          "category": "source",
+          "description": "Rate derivation path is pulse-resolved and policy-driven with deterministic quantization.",
+          "evidence": {
+            "path": "app/lib/wallet/amounts.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "584d62f825173735621593b0655292c187e845de34f60be948eea10033ddc927"
+          }
+        },
+        {
+          "id": "source.amounts.integer_conversion",
+          "status": "pass",
+          "category": "source",
+          "description": "Conversion uses fixed denominator integer arithmetic with explicit half-up rounding in both directions.",
+          "evidence": {
+            "path": "app/lib/wallet/amounts.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "584d62f825173735621593b0655292c187e845de34f60be948eea10033ddc927"
+          }
+        },
+        {
+          "id": "source.ledger.private.value_tuple",
+          "status": "pass",
+          "category": "source",
+          "description": "Private ledger route exposes USD, phi, and posting-rate tuple fields.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+          }
+        },
+        {
+          "id": "source.ledger.public.value_tuple",
+          "status": "pass",
+          "category": "source",
+          "description": "Public ledger route preserves the same value tuple fields for attestation continuity.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/public/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+          }
+        },
+        {
+          "id": "source.ledger.proof_bundle_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "Ledger proof bundle contract includes capsule hash, bundle hash, and verification version identifiers.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 3,
+            "matchedNeedleCount": 3,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+          }
+        },
+        {
+          "id": "source.notes.mint.value_tuple",
+          "status": "pass",
+          "category": "source",
+          "description": "Note mint route persists value tuple and idempotency nonce fields.",
+          "evidence": {
+            "path": "app/api/wallet/notes/mint/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 5,
+            "matchedNeedleCount": 5,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "2a843d4d048f43cf64a25005d5e3017390823effb8a583c0e5e0a39946224fcd"
+          }
+        },
+        {
+          "id": "source.notes.claim.verification_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Note claim route enforces verification gate before claim posting.",
+          "evidence": {
+            "path": "app/api/wallet/notes/claim/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 4,
+            "matchedNeedleCount": 4,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "73f561985d0948ce8b24f19bf0f1a2510b1e158ae3d276f9f830c8cc085fe44c"
+          }
+        },
+        {
+          "id": "source.transfers.value_tuple_and_nonce",
+          "status": "pass",
+          "category": "source",
+          "description": "Transfer route enforces amount validation and posts value tuple with idempotency nonce.",
+          "evidence": {
+            "path": "app/api/chat/conversations/[conversationId]/transfers/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 6,
+            "matchedNeedleCount": 6,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "d5fc0d3532d36e9aa901fd816e4321a4b033952249c28f610254911af4cae737"
+          }
+        },
+        {
+          "id": "source.ledger.public.identity_partition",
+          "status": "pass",
+          "category": "source",
+          "description": "Public ledger route uses stable pseudonymous actor mapping for identity partition boundaries.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/public/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 3,
+            "matchedPatternCount": 3,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+          }
+        },
+        {
+          "id": "source.ledger.private.query_bounds",
+          "status": "pass",
+          "category": "source",
+          "description": "Private ledger route clamps query limits to bounded deterministic windows.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+          }
+        },
+        {
+          "id": "source.ledger.public.query_bounds",
+          "status": "pass",
+          "category": "source",
+          "description": "Public ledger route clamps query limits to bounded deterministic windows.",
+          "evidence": {
+            "path": "app/api/wallet/ledger/public/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 2,
+            "matchedNeedleCount": 2,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+          }
+        },
+        {
+          "id": "source.connect.wallet.read_scope",
+          "status": "pass",
+          "category": "source",
+          "description": "Delegated wallet summary endpoint requires explicit read scope.",
+          "evidence": {
+            "path": "app/api/connect/wallet/me/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 1,
+            "matchedNeedleCount": 1,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "f1c99a42f26853ff3f86baed2048e0f07f00e13c1884202cb8935cacf2e32cb9"
+          }
+        },
+        {
+          "id": "source.connect.wallet.transfer_scope",
+          "status": "pass",
+          "category": "source",
+          "description": "Delegated transfer endpoint requires explicit transfer scope.",
+          "evidence": {
+            "path": "app/api/connect/transfers/route.ts",
+            "exists": true,
+            "matched": true,
+            "requiredNeedleCount": 1,
+            "matchedNeedleCount": 1,
+            "requiredPatternCount": 1,
+            "matchedPatternCount": 1,
+            "missingNeedles": "",
+            "missingPatterns": "",
+            "sha256": "eb0019ca51c9c623a3a954360b99140696e320984f0b559c4056eb311ad7d94e"
+          }
+        },
+        {
+          "id": "runtime.pulse.recomputable_no_drift",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Canonical pulse resolution is recomputable and non-drifting for identical reference instants.",
+          "evidence": {
+            "sampleCount": 7,
+            "mismatchCount": 0,
+            "firstMismatch": ""
+          }
+        },
+        {
+          "id": "runtime.rate.fixed_pulse_deterministic",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Rate derivation at a fixed pulse is deterministic and quantizes to a positive microcent integer.",
+          "evidence": {
+            "pulse": 11331984,
+            "fixedA": "8696558885",
+            "fixedB": "8696558885",
+            "equal": true
+          }
+        },
+        {
+          "id": "runtime.rate.wallet_rate_positive",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Wallet posting reference rate resolves to a strictly positive integer value.",
+          "evidence": {
+            "liveRate": "8696558885",
+            "positive": true
+          }
+        },
+        {
+          "id": "runtime.conversion.phi_to_usd_half_up",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Phi-to-USD conversion rounds a 0.5 cent boundary up (half-up contract).",
+          "evidence": {
+            "phiMicro": "1",
+            "usdPerPhiMicrocents": "500000000000",
+            "outputUsdCents": "1",
+            "expectedUsdCents": "1"
+          }
+        },
+        {
+          "id": "runtime.conversion.usd_to_phi_half_up",
+          "status": "pass",
+          "category": "runtime",
+          "description": "USD-to-phi conversion rounds a 0.5 boundary up (half-up contract).",
+          "evidence": {
+            "usdCents": 1,
+            "usdPerPhiMicrocents": "8192",
+            "outputPhiMicro": "122070313",
+            "expectedPhiMicro": "122070313"
+          }
+        },
+        {
+          "id": "runtime.conversion.usd_roundtrip_tolerance",
+          "status": "pass",
+          "category": "runtime",
+          "description": "USD -> phi -> USD replay remains within 1 cent tolerance under integer rounding.",
+          "evidence": {
+            "usdPerPhiMicrocents": "8696558885",
+            "maxDeltaCents": "0",
+            "sampleCount": 5
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for this conformance report are present and hashable.",
+          "evidence": {
+            "requiredFileCount": 10,
+            "presentFileCount": 10
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-conformance-history-v1",
+        "snapshotId": "1c47248933f929e3cf71219212e1f690ff4de1de8472cd798e49dc9a143b0245",
+        "recordedAt": "2026-03-28T00:43:03.618Z",
+        "historyLength": 120,
+        "historyPath": "/api/economy/conformance/history",
+        "badgePath": "/api/economy/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    },
+    {
+      "slug": "interoperability",
+      "shortName": "Interoperability",
+      "name": "Interoperability Conformance Suite",
+      "description": "Runtime and source controls for external interface contracts across payment embeds, note-claim embeds, scheduler embed flows, and booking policy gates.",
+      "suiteUrl": "https://receiz.com/interoperability/conformance",
+      "reportUrl": "https://receiz.com/api/interoperability/conformance",
+      "historyUrl": "https://receiz.com/api/interoperability/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/interoperability/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/interoperability/conformance/badge",
+      "docPath": "interoperability.md",
+      "snapshotPath": "snapshots/2026-03-28/interoperability.conformance.json",
+      "familyOrder": [
+        "X",
+        "O"
+      ],
+      "familyLabels": {
+        "X": "External embed checkout, note-claim, scheduler, booking, and settings contracts.",
+        "O": "Operational linkage between builder surfaces and live API contracts."
+      },
+      "familySummary": [
+        {
+          "code": "X",
+          "label": "External embed checkout, note-claim, scheduler, booking, and settings contracts.",
+          "requirementCount": 20,
+          "mappedCheckCount": 24
+        },
+        {
+          "code": "O",
+          "label": "Operational linkage between builder surfaces and live API contracts.",
+          "requirementCount": 2,
+          "mappedCheckCount": 2
+        }
+      ],
+      "checkCategoryCounts": {
+        "runtime": 9,
+        "source": 17
+      },
+      "standardId": "receiz-interoperability-standard-v1",
+      "schema": "receiz-interoperability-conformance-report-v1",
+      "verificationVersion": "interoperability-runtime-v1",
+      "generatedAt": "2026-03-28T00:43:05.295Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 22,
+        "checkCount": 26,
+        "passRequirements": 22,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 26,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "580b352f6100bb236d822619ba734f206a3bae8a53b9f96695c527a0c7a85f58",
+        "sourceDigestCount": 9
+      },
+      "requirements": [
+        {
+          "id": "X-001",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.merchant_resolution"
+          ]
+        },
+        {
+          "id": "X-002",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.checkout.amount_bounds",
+            "source.embed.checkout.currency_lock"
+          ]
+        },
+        {
+          "id": "X-003",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.checkout.callback_allowlist"
+          ]
+        },
+        {
+          "id": "X-004",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.checkout.payload_limits"
+          ]
+        },
+        {
+          "id": "X-005",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.note_claim.token_extraction"
+          ]
+        },
+        {
+          "id": "X-006",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.note_claim.file_size_limits"
+          ]
+        },
+        {
+          "id": "X-007",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.note_claim.merchant_resolution"
+          ]
+        },
+        {
+          "id": "X-008",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.owner_resolution",
+            "runtime.calendar.embed.owner_not_found_get"
+          ]
+        },
+        {
+          "id": "X-009",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.slot_computation"
+          ]
+        },
+        {
+          "id": "X-010",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.overlap_rejection"
+          ]
+        },
+        {
+          "id": "X-011",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.booking_required_fields"
+          ]
+        },
+        {
+          "id": "X-012",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.settings_auth_gate",
+            "runtime.calendar.embed.settings_signin_required_put"
+          ]
+        },
+        {
+          "id": "X-013",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.override_contract"
+          ]
+        },
+        {
+          "id": "X-014",
+          "status": "pass",
+          "checkIds": [
+            "source.calendar.embed.no_store_on_success"
+          ]
+        },
+        {
+          "id": "X-015",
+          "status": "pass",
+          "checkIds": [
+            "runtime.embed.checkout.invalid_payload"
+          ]
+        },
+        {
+          "id": "X-016",
+          "status": "pass",
+          "checkIds": [
+            "runtime.embed.checkout.merchant_not_found"
+          ]
+        },
+        {
+          "id": "X-017",
+          "status": "pass",
+          "checkIds": [
+            "runtime.embed.note_claim.invalid_payload"
+          ]
+        },
+        {
+          "id": "X-018",
+          "status": "pass",
+          "checkIds": [
+            "runtime.embed.note_claim.merchant_not_found"
+          ]
+        },
+        {
+          "id": "X-019",
+          "status": "pass",
+          "checkIds": [
+            "runtime.calendar.embed.owner_not_found_post"
+          ]
+        },
+        {
+          "id": "X-020",
+          "status": "pass",
+          "checkIds": [
+            "runtime.embed.checkout.options_cors",
+            "runtime.embed.note_claim.options_cors"
+          ]
+        },
+        {
+          "id": "O-001",
+          "status": "pass",
+          "checkIds": [
+            "source.integrity.required_files_present"
+          ]
+        },
+        {
+          "id": "O-002",
+          "status": "pass",
+          "checkIds": [
+            "source.embed.cross_surface.contract_linkage"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "runtime.calendar.embed.owner_not_found_get",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Calendar embed GET returns owner-not-found for unknown usernames.",
+          "evidence": {
+            "status": 404,
+            "expectedStatuses": "404",
+            "error": "calendar_owner_not_found",
+            "expectedError": "calendar_owner_not_found"
+          }
+        },
+        {
+          "id": "runtime.calendar.embed.owner_not_found_post",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Calendar embed POST returns owner-not-found for unknown usernames.",
+          "evidence": {
+            "status": 404,
+            "expectedStatuses": "404",
+            "error": "calendar_owner_not_found",
+            "expectedError": "calendar_owner_not_found"
+          }
+        },
+        {
+          "id": "runtime.calendar.embed.settings_signin_required_put",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Calendar embed settings PUT requires sign-in session.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "signin_required",
+            "expectedError": "signin_required"
+          }
+        },
+        {
+          "id": "runtime.embed.checkout.invalid_payload",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed checkout rejects malformed JSON payloads.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "invalid_payload",
+            "expectedError": "invalid_payload"
+          }
+        },
+        {
+          "id": "runtime.embed.checkout.merchant_not_found",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed checkout returns merchant_not_found for unknown usernames.",
+          "evidence": {
+            "status": 404,
+            "expectedStatuses": "404",
+            "error": "merchant_not_found",
+            "expectedError": "merchant_not_found"
+          }
+        },
+        {
+          "id": "runtime.embed.checkout.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed checkout publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "runtime.embed.note_claim.invalid_payload",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed note-claim rejects malformed JSON payloads.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "wallet_invalid_payload",
+            "expectedError": "wallet_invalid_payload"
+          }
+        },
+        {
+          "id": "runtime.embed.note_claim.merchant_not_found",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed note-claim returns merchant_not_found for unknown usernames.",
+          "evidence": {
+            "status": 404,
+            "expectedStatuses": "404",
+            "error": "merchant_not_found",
+            "expectedError": "merchant_not_found"
+          }
+        },
+        {
+          "id": "runtime.embed.note_claim.options_cors",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Payments embed note-claim publishes CORS preflight policy.",
+          "evidence": {
+            "status": 204,
+            "allowOrigin": "*",
+            "allowMethods": "POST, OPTIONS"
+          }
+        },
+        {
+          "id": "source.calendar.embed.booking_required_fields",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed requires booking name, email, and slot start fields.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.no_store_on_success",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed success responses disable cache with no-store headers.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.overlap_rejection",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed rejects booking attempts that overlap existing events.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.override_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed exposes explicit schedule override contract for query/body controls.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.owner_resolution",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed resolves public owner profile and denies private or missing owners.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.settings_auth_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed settings update endpoint requires authenticated owner session.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.calendar.embed.slot_computation",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar embed computes deterministic slot windows from schedule configuration.",
+          "evidence": {
+            "path": "app/api/calendar/embed/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.checkout.amount_bounds",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed checkout enforces min and max USD amount bounds.",
+          "evidence": {
+            "path": "app/api/payments/embed/checkout/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.checkout.callback_allowlist",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed checkout restricts callback URLs to HTTPS or localhost HTTP.",
+          "evidence": {
+            "path": "app/api/payments/embed/checkout/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.checkout.currency_lock",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed checkout allows only USD currency contract.",
+          "evidence": {
+            "path": "app/api/payments/embed/checkout/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.checkout.payload_limits",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed checkout enforces payload length and JSON decode guards.",
+          "evidence": {
+            "path": "app/api/payments/embed/checkout/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.cross_surface.contract_linkage",
+          "status": "pass",
+          "category": "source",
+          "description": "Calendar and payment embed builders target their matching API surfaces.",
+          "evidence": {
+            "path": "app/calendar/embed/EmbedScheduler.tsx",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.merchant_resolution",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed merchant resolution enforces username normalization and public-profile checks.",
+          "evidence": {
+            "path": "app/lib/payments/embedMerchant.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.note_claim.file_size_limits",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed note claim enforces JSON and upload size limits.",
+          "evidence": {
+            "path": "app/api/payments/embed/note-claim/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.note_claim.merchant_resolution",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed note claim resolves merchant by username before settlement claim.",
+          "evidence": {
+            "path": "app/api/payments/embed/note-claim/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.embed.note_claim.token_extraction",
+          "status": "pass",
+          "category": "source",
+          "description": "Embed note claim extracts note token from payload artifacts safely.",
+          "evidence": {
+            "path": "app/api/payments/embed/note-claim/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for interoperability conformance are present and hashable.",
+          "evidence": {
+            "sourceDigestCount": 9,
+            "missingFiles": "none"
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-interoperability-conformance-history-v1",
+        "snapshotId": "5c9e45c52c0f96003907e385c3276c51994fbf6ab44098fc90e84fc87051a327",
+        "recordedAt": "2026-03-28T00:43:05.296Z",
+        "historyLength": 120,
+        "historyPath": "/api/interoperability/conformance/history",
+        "badgePath": "/api/interoperability/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-interoperability-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    },
+    {
+      "slug": "world",
+      "shortName": "World",
+      "name": "World Conformance Suite",
+      "description": "Runtime and source controls for Receiz World and Public Twin contracts across public routes, disclosure/provenance, promotion gates, and canonical pipeline guarantees.",
+      "suiteUrl": "https://receiz.com/world/conformance",
+      "reportUrl": "https://receiz.com/api/world/conformance",
+      "historyUrl": "https://receiz.com/api/world/conformance/history",
+      "rollupsUrl": "https://receiz.com/api/world/conformance/history/rollups",
+      "badgeUrl": "https://receiz.com/api/world/conformance/badge",
+      "docPath": "world.md",
+      "snapshotPath": "snapshots/2026-03-28/world.conformance.json",
+      "familyOrder": [
+        "W"
+      ],
+      "familyLabels": {
+        "W": "World public-surface, public twin runtime, provenance, policy, promotion, and publisher-session guardrails."
+      },
+      "familySummary": [
+        {
+          "code": "W",
+          "label": "World public-surface, public twin runtime, provenance, policy, promotion, and publisher-session guardrails.",
+          "requirementCount": 13,
+          "mappedCheckCount": 22
+        }
+      ],
+      "checkCategoryCounts": {
+        "runtime": 6,
+        "source": 16
+      },
+      "standardId": "receiz-world-standard-v1",
+      "schema": "receiz-world-conformance-report-v1",
+      "verificationVersion": "world-runtime-v1",
+      "generatedAt": "2026-03-28T00:43:07.163Z",
+      "overallStatus": "pass",
+      "summary": {
+        "requirementCount": 13,
+        "checkCount": 22,
+        "passRequirements": 13,
+        "warnRequirements": 0,
+        "failRequirements": 0,
+        "passChecks": 22,
+        "warnChecks": 0,
+        "failChecks": 0
+      },
+      "revision": {
+        "hash": "04af62bf4b1fec84ef6afc78632f0c85d8eab6a925990d23a301963e28b3bc8b",
+        "sourceDigestCount": 12
+      },
+      "requirements": [
+        {
+          "id": "W-001",
+          "status": "pass",
+          "checkIds": [
+            "source.world.public_surface.world_endpoints"
+          ]
+        },
+        {
+          "id": "W-002",
+          "status": "pass",
+          "checkIds": [
+            "source.world.public.route_contract",
+            "runtime.world.public.snapshot_route"
+          ]
+        },
+        {
+          "id": "W-003",
+          "status": "pass",
+          "checkIds": [
+            "source.world.profile.route_limits_and_errors",
+            "source.world.profile.route_actions",
+            "runtime.world.profile.post.invalid_payload",
+            "runtime.world.profile.post.visitor_key_required"
+          ]
+        },
+        {
+          "id": "W-004",
+          "status": "pass",
+          "checkIds": [
+            "source.world.stream.sse_contract",
+            "source.world.stream.rate_limits",
+            "runtime.world.stream.invalid_payload",
+            "runtime.world.stream.sse_contract"
+          ]
+        },
+        {
+          "id": "W-005",
+          "status": "pass",
+          "checkIds": [
+            "source.world.public_projection.helpers"
+          ]
+        },
+        {
+          "id": "W-006",
+          "status": "pass",
+          "checkIds": [
+            "source.world.policy.runtime_permissions",
+            "source.world.runtime.prompt_and_lineage_guardrails"
+          ]
+        },
+        {
+          "id": "W-007",
+          "status": "pass",
+          "checkIds": [
+            "source.world.synthetic_reply.provenance"
+          ]
+        },
+        {
+          "id": "W-008",
+          "status": "pass",
+          "checkIds": [
+            "source.world.source_identity.continuity",
+            "source.world.runtime.prompt_and_lineage_guardrails"
+          ]
+        },
+        {
+          "id": "W-009",
+          "status": "pass",
+          "checkIds": [
+            "source.world.twin_promotion.pending_downgrade"
+          ]
+        },
+        {
+          "id": "W-010",
+          "status": "pass",
+          "checkIds": [
+            "source.world.realism.approved_public_gate"
+          ]
+        },
+        {
+          "id": "W-011",
+          "status": "pass",
+          "checkIds": [
+            "source.world.twin_promotion.manifest_history"
+          ]
+        },
+        {
+          "id": "W-012",
+          "status": "pass",
+          "checkIds": [
+            "source.world.live_publisher.auth_gate",
+            "runtime.world.live.publisher.unauthorized"
+          ]
+        },
+        {
+          "id": "W-013",
+          "status": "pass",
+          "checkIds": [
+            "source.integrity.required_files_present"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "id": "runtime.world.live.publisher.unauthorized",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Live publisher-session route denies unauthorized worker calls.",
+          "evidence": {
+            "status": 401,
+            "expectedStatuses": "401",
+            "error": "unauthorized",
+            "expectedError": "unauthorized",
+            "cacheControl": "no-store, max-age=0",
+            "contentType": "application/json"
+          }
+        },
+        {
+          "id": "runtime.world.profile.post.invalid_payload",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Public profile POST rejects malformed JSON bodies with a stable invalid-payload envelope.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "invalid_payload",
+            "expectedError": "invalid_payload",
+            "cacheControl": "no-store, max-age=0",
+            "contentType": "application/json"
+          }
+        },
+        {
+          "id": "runtime.world.profile.post.visitor_key_required",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Public profile POST requires a visitor key before welcome generation is allowed.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "world_agent_visitor_key_required",
+            "expectedError": "world_agent_visitor_key_required",
+            "cacheControl": "no-store, max-age=0",
+            "contentType": "application/json"
+          }
+        },
+        {
+          "id": "runtime.world.public.snapshot_route",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Public world snapshot route returns no-store JSON when the snapshot is resolved.",
+          "evidence": {
+            "status": 200,
+            "expectedStatuses": "200",
+            "error": "none",
+            "expectedError": "none",
+            "cacheControl": "no-store, max-age=0",
+            "contentType": "application/json"
+          }
+        },
+        {
+          "id": "runtime.world.stream.invalid_payload",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Public twin stream POST rejects malformed JSON before opening the SSE channel.",
+          "evidence": {
+            "status": 400,
+            "expectedStatuses": "400",
+            "error": "invalid_payload",
+            "expectedError": "invalid_payload",
+            "cacheControl": "no-store, max-age=0",
+            "contentType": "application/json"
+          }
+        },
+        {
+          "id": "runtime.world.stream.sse_contract",
+          "status": "pass",
+          "category": "runtime",
+          "description": "Public twin stream opens an SSE channel with reply-start and terminal event semantics for valid streaming requests.",
+          "evidence": {
+            "status": 200,
+            "cacheControl": "no-store, no-transform",
+            "contentType": "text/event-stream; charset=utf-8",
+            "hasReplyStart": true,
+            "hasResolution": true,
+            "hasDone": false,
+            "sample": "data: {\"type\":\"reply_start\",\"messageId\":\"8735e9d6-3901-4537-a5e1-8c522d8edc6e\",\"createdAt\":\"2026-03-28T00:43:07.008Z\"}\n\ndata: {\"type\":\"error\",\"error\":\"world_profile_not_found\"}\n\n"
+          }
+        },
+        {
+          "id": "source.integrity.required_files_present",
+          "status": "pass",
+          "category": "source",
+          "description": "All referenced source files for world conformance are present and hashable.",
+          "evidence": {
+            "sourceDigestCount": 12,
+            "missingFiles": "none"
+          }
+        },
+        {
+          "id": "source.world.live_publisher.auth_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Live publisher-session route requires worker authorization before issuing public twin SFU publisher sessions.",
+          "evidence": {
+            "path": "app/api/world/profile/[username]/live/publisher-session/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.policy.runtime_permissions",
+          "status": "pass",
+          "category": "source",
+          "description": "World runtime permissions and presentation labels are derived from explicit owner policy and capabilities.",
+          "evidence": {
+            "path": "app/lib/world/policy.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.profile.route_actions",
+          "status": "pass",
+          "category": "source",
+          "description": "Public profile route multiplexes welcome, message, and booking actions through explicit handlers.",
+          "evidence": {
+            "path": "app/api/world/profile/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.profile.route_limits_and_errors",
+          "status": "pass",
+          "category": "source",
+          "description": "Public profile route enforces IP and visitor rate limits with stable error envelopes.",
+          "evidence": {
+            "path": "app/api/world/profile/[username]/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.public_projection.helpers",
+          "status": "pass",
+          "category": "source",
+          "description": "Public projection helpers expose only the public world and public twin view models.",
+          "evidence": {
+            "path": "app/lib/world/publicProfile.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.public_surface.world_endpoints",
+          "status": "pass",
+          "category": "source",
+          "description": "Public surface inventory publishes world snapshot, profile, stream, and public message routes.",
+          "evidence": {
+            "path": "app/lib/publicSurface.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.public.route_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "Public world snapshot route uses no-store JSON and surfaces the schema-missing guard.",
+          "evidence": {
+            "path": "app/api/world/public/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.realism.approved_public_gate",
+          "status": "pass",
+          "category": "source",
+          "description": "Approved public twin acceptance gate blocks non-canonical or non-worker photoreal pipelines.",
+          "evidence": {
+            "path": "app/lib/world/realism.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.runtime.prompt_and_lineage_guardrails",
+          "status": "pass",
+          "category": "source",
+          "description": "Runtime preserves source and approval lineage while keeping public twin prompts inside guarded action lanes.",
+          "evidence": {
+            "path": "app/lib/world/runtime.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.source_identity.continuity",
+          "status": "pass",
+          "category": "source",
+          "description": "World source identity resolution distinguishes canonical avatar-source continuity from fallback surfaces.",
+          "evidence": {
+            "path": "app/lib/world/sourceIdentity.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.stream.rate_limits",
+          "status": "pass",
+          "category": "source",
+          "description": "Public twin stream route enforces IP and visitor rate limits before opening the stream.",
+          "evidence": {
+            "path": "app/api/world/profile/[username]/stream/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.stream.sse_contract",
+          "status": "pass",
+          "category": "source",
+          "description": "Public twin stream route emits reply lifecycle events over no-store SSE transport.",
+          "evidence": {
+            "path": "app/api/world/profile/[username]/stream/route.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.synthetic_reply.provenance",
+          "status": "pass",
+          "category": "source",
+          "description": "Synthetic public twin replies are disclosed and signed with provider, source-identity, and approval lineage provenance.",
+          "evidence": {
+            "path": "app/lib/world/syntheticReply.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.twin_promotion.manifest_history",
+          "status": "pass",
+          "category": "source",
+          "description": "Twin promotion records are persisted as versioned current, avatar, and history manifests.",
+          "evidence": {
+            "path": "app/lib/world/twinApproval.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        },
+        {
+          "id": "source.world.twin_promotion.pending_downgrade",
+          "status": "pass",
+          "category": "source",
+          "description": "Pending photoreal twin promotion downgrades public presentation away from live-video promotion.",
+          "evidence": {
+            "path": "app/lib/world/twinApproval.ts",
+            "exists": true,
+            "missingNeedles": "none",
+            "missingPatterns": "none"
+          }
+        }
+      ],
+      "history": {
+        "schema": "receiz-world-conformance-history-v1",
+        "snapshotId": "e7a886bef52a1702a1685f234ecd4627a1fad8fd0999dafd72bd3e9f1906e5da",
+        "recordedAt": "2026-03-28T00:43:07.163Z",
+        "historyLength": 35,
+        "historyPath": "/api/world/conformance/history",
+        "badgePath": "/api/world/conformance/badge",
+        "attestation": {
+          "state": "signed",
+          "schema": "receiz-world-conformance-attestation-v1",
+          "issuerKid": "receiz.v4.prod.2026-03-02",
+          "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9"
+        }
+      }
+    }
+  ]
+}

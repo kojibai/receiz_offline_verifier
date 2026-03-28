@@ -10,6 +10,22 @@ Current release: `v40.0.0`
 - Release framing now centers hardened trust, deeper offline proof delivery, wallet and settlement operations, richer artifact delivery, stronger admin/business rails, and the first full world runtime stack.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
+## Live Conformance
+
+<table>
+  <tr>
+    <td align="center" valign="middle"><a href="https://receiz.com/powered-by"><img alt="Powered by Receiz" src="https://receiz.com/powered-by-receiz.svg" height="32" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/verify/conformance"><img alt="Verification conformance badge" src="https://receiz.com/api/verification/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/economy/conformance"><img alt="Settlement conformance badge" src="https://receiz.com/api/economy/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/identity/conformance"><img alt="Identity conformance badge" src="https://receiz.com/api/identity/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/issuance/conformance"><img alt="Issuance conformance badge" src="https://receiz.com/api/issuance/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/interoperability/conformance"><img alt="Interoperability conformance badge" src="https://receiz.com/api/interoperability/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/world/conformance"><img alt="World conformance badge" src="https://receiz.com/api/world/conformance/badge" height="30" /></a></td>
+  </tr>
+</table>
+
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) follows the official Powered by Receiz trust-row order and includes live badge surfaces, current imported live results, and suite-by-suite requirement coverage docs.
+
 ## Release train highlights (v14 -> v40)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
@@ -101,6 +117,7 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v40.0.0.md](docs/releases/v40.0.0.md): canonical `v40.0.0` release note.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
+- [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current snapshot results, and deep suite docs for all six public conformance suites.
 - [docs/presencebound-canonical-realm.md](docs/presencebound-canonical-realm.md): canonical PresenceBound/WebAuthn realm requirements.
 - [docs/governance/README.md](docs/governance/README.md): public governance standards, registers, and evidence-summary map.
 - [docs/FORMAT.md](docs/FORMAT.md): artifact and payload format contract.
@@ -114,4 +131,4 @@ If you discover a vulnerability (including false-positive verification), do not 
 Use [SECURITY.md](SECURITY.md).
 
 ## License
-MIT. See [LICENSE](LICENSE).
+MIT for repository contents. See [LICENSE](LICENSE) for scope notes covering live `receiz.com` assets and Receiz branding references.

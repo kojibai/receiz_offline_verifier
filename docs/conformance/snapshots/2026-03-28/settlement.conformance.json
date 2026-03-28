@@ -1,0 +1,700 @@
+{
+  "ok": true,
+  "schema": "receiz-conformance-report-v1",
+  "standardId": "receiz-settlement-standard-v1",
+  "verificationVersion": "wallet-ledger-v1",
+  "generatedAt": "2026-03-28T00:43:03.618Z",
+  "revision": {
+    "hash": "30747d889f815980f80ee88bf9e145fd6ab6bd86b4ccf35e72a3a41ed473dc98",
+    "sourceDigestCount": 10
+  },
+  "overallStatus": "pass",
+  "summary": {
+    "requirementCount": 28,
+    "checkCount": 22,
+    "passRequirements": 28,
+    "warnRequirements": 0,
+    "failRequirements": 0,
+    "passChecks": 22,
+    "warnChecks": 0,
+    "failChecks": 0
+  },
+  "requirements": [
+    {
+      "id": "R-001",
+      "status": "pass",
+      "checkIds": [
+        "source.wallet.ui.usd_labels",
+        "source.wallet.server.summary_fields"
+      ]
+    },
+    {
+      "id": "R-002",
+      "status": "pass",
+      "checkIds": [
+        "source.wallet.server.summary_fields",
+        "source.ledger.private.value_tuple"
+      ]
+    },
+    {
+      "id": "R-003",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.rate_derivation",
+        "runtime.pulse.recomputable_no_drift",
+        "runtime.rate.fixed_pulse_deterministic",
+        "runtime.rate.wallet_rate_positive"
+      ]
+    },
+    {
+      "id": "R-004",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.integer_conversion",
+        "runtime.conversion.phi_to_usd_half_up",
+        "runtime.conversion.usd_to_phi_half_up",
+        "runtime.conversion.usd_roundtrip_tolerance"
+      ]
+    },
+    {
+      "id": "R-005",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple",
+        "source.notes.mint.value_tuple"
+      ]
+    },
+    {
+      "id": "R-006",
+      "status": "pass",
+      "checkIds": [
+        "source.notes.mint.value_tuple",
+        "source.notes.claim.verification_gate"
+      ]
+    },
+    {
+      "id": "R-007",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.public.identity_partition",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "V-001",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.rate_derivation",
+        "runtime.pulse.recomputable_no_drift",
+        "runtime.rate.fixed_pulse_deterministic"
+      ]
+    },
+    {
+      "id": "V-002",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.rate_derivation",
+        "runtime.rate.fixed_pulse_deterministic"
+      ]
+    },
+    {
+      "id": "V-003",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.rate_derivation",
+        "runtime.rate.wallet_rate_positive"
+      ]
+    },
+    {
+      "id": "V-004",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple",
+        "source.notes.mint.value_tuple"
+      ]
+    },
+    {
+      "id": "S-001",
+      "status": "pass",
+      "checkIds": [
+        "source.wallet.server.summary_fields",
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "S-002",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.integer_conversion",
+        "runtime.conversion.phi_to_usd_half_up",
+        "runtime.conversion.usd_to_phi_half_up"
+      ]
+    },
+    {
+      "id": "S-003",
+      "status": "pass",
+      "checkIds": [
+        "source.notes.mint.value_tuple"
+      ]
+    },
+    {
+      "id": "S-004",
+      "status": "pass",
+      "checkIds": [
+        "source.notes.claim.verification_gate"
+      ]
+    },
+    {
+      "id": "S-005",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.proof_bundle_contract",
+        "source.ledger.public.identity_partition"
+      ]
+    },
+    {
+      "id": "T-001",
+      "status": "pass",
+      "checkIds": [
+        "source.transfers.value_tuple_and_nonce"
+      ]
+    },
+    {
+      "id": "T-002",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.rate_derivation",
+        "runtime.rate.wallet_rate_positive",
+        "source.transfers.value_tuple_and_nonce"
+      ]
+    },
+    {
+      "id": "T-003",
+      "status": "pass",
+      "checkIds": [
+        "source.amounts.integer_conversion",
+        "runtime.conversion.phi_to_usd_half_up",
+        "runtime.conversion.usd_to_phi_half_up",
+        "runtime.conversion.usd_roundtrip_tolerance"
+      ]
+    },
+    {
+      "id": "T-004",
+      "status": "pass",
+      "checkIds": [
+        "source.transfers.value_tuple_and_nonce",
+        "source.notes.mint.value_tuple"
+      ]
+    },
+    {
+      "id": "T-005",
+      "status": "pass",
+      "checkIds": [
+        "source.transfers.value_tuple_and_nonce",
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "T-006",
+      "status": "pass",
+      "checkIds": [
+        "source.transfers.value_tuple_and_nonce",
+        "source.notes.claim.verification_gate"
+      ]
+    },
+    {
+      "id": "L-001",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "L-002",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.public.identity_partition",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "L-003",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.private.value_tuple",
+        "source.ledger.public.value_tuple"
+      ]
+    },
+    {
+      "id": "L-004",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.proof_bundle_contract"
+      ]
+    },
+    {
+      "id": "L-005",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.private.query_bounds",
+        "source.ledger.public.query_bounds"
+      ]
+    },
+    {
+      "id": "L-006",
+      "status": "pass",
+      "checkIds": [
+        "source.ledger.public.identity_partition"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "source.wallet.ui.usd_labels",
+      "status": "pass",
+      "category": "source",
+      "description": "Wallet interface keeps USD as the user-facing display with supporting phi context.",
+      "evidence": {
+        "path": "app/wallet/WalletAccountExperience.tsx",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 3,
+        "matchedNeedleCount": 3,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "ae0417ea4972070f2a72b65d764aac0a8d19cf79719301b428a8e7e2c329f312"
+      }
+    },
+    {
+      "id": "source.wallet.server.summary_fields",
+      "status": "pass",
+      "category": "source",
+      "description": "Wallet summary contract includes custody (`balancePhiMicro`) and USD presentation (`balanceUsd`) fields.",
+      "evidence": {
+        "path": "app/lib/wallet/server.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 4,
+        "matchedNeedleCount": 4,
+        "requiredPatternCount": 2,
+        "matchedPatternCount": 2,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "4c46ca7eabd4c64e1c2aa4d923fff98412c20c0e4d5bbd98d0ddd96192166496"
+      }
+    },
+    {
+      "id": "source.amounts.rate_derivation",
+      "status": "pass",
+      "category": "source",
+      "description": "Rate derivation path is pulse-resolved and policy-driven with deterministic quantization.",
+      "evidence": {
+        "path": "app/lib/wallet/amounts.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 4,
+        "matchedNeedleCount": 4,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "584d62f825173735621593b0655292c187e845de34f60be948eea10033ddc927"
+      }
+    },
+    {
+      "id": "source.amounts.integer_conversion",
+      "status": "pass",
+      "category": "source",
+      "description": "Conversion uses fixed denominator integer arithmetic with explicit half-up rounding in both directions.",
+      "evidence": {
+        "path": "app/lib/wallet/amounts.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 4,
+        "matchedNeedleCount": 4,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "584d62f825173735621593b0655292c187e845de34f60be948eea10033ddc927"
+      }
+    },
+    {
+      "id": "source.ledger.private.value_tuple",
+      "status": "pass",
+      "category": "source",
+      "description": "Private ledger route exposes USD, phi, and posting-rate tuple fields.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 3,
+        "matchedNeedleCount": 3,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+      }
+    },
+    {
+      "id": "source.ledger.public.value_tuple",
+      "status": "pass",
+      "category": "source",
+      "description": "Public ledger route preserves the same value tuple fields for attestation continuity.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/public/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 3,
+        "matchedNeedleCount": 3,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+      }
+    },
+    {
+      "id": "source.ledger.proof_bundle_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "Ledger proof bundle contract includes capsule hash, bundle hash, and verification version identifiers.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 3,
+        "matchedNeedleCount": 3,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+      }
+    },
+    {
+      "id": "source.notes.mint.value_tuple",
+      "status": "pass",
+      "category": "source",
+      "description": "Note mint route persists value tuple and idempotency nonce fields.",
+      "evidence": {
+        "path": "app/api/wallet/notes/mint/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 5,
+        "matchedNeedleCount": 5,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "2a843d4d048f43cf64a25005d5e3017390823effb8a583c0e5e0a39946224fcd"
+      }
+    },
+    {
+      "id": "source.notes.claim.verification_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Note claim route enforces verification gate before claim posting.",
+      "evidence": {
+        "path": "app/api/wallet/notes/claim/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 4,
+        "matchedNeedleCount": 4,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "73f561985d0948ce8b24f19bf0f1a2510b1e158ae3d276f9f830c8cc085fe44c"
+      }
+    },
+    {
+      "id": "source.transfers.value_tuple_and_nonce",
+      "status": "pass",
+      "category": "source",
+      "description": "Transfer route enforces amount validation and posts value tuple with idempotency nonce.",
+      "evidence": {
+        "path": "app/api/chat/conversations/[conversationId]/transfers/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 6,
+        "matchedNeedleCount": 6,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "d5fc0d3532d36e9aa901fd816e4321a4b033952249c28f610254911af4cae737"
+      }
+    },
+    {
+      "id": "source.ledger.public.identity_partition",
+      "status": "pass",
+      "category": "source",
+      "description": "Public ledger route uses stable pseudonymous actor mapping for identity partition boundaries.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/public/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 2,
+        "matchedNeedleCount": 2,
+        "requiredPatternCount": 3,
+        "matchedPatternCount": 3,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+      }
+    },
+    {
+      "id": "source.ledger.private.query_bounds",
+      "status": "pass",
+      "category": "source",
+      "description": "Private ledger route clamps query limits to bounded deterministic windows.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 2,
+        "matchedNeedleCount": 2,
+        "requiredPatternCount": 1,
+        "matchedPatternCount": 1,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5"
+      }
+    },
+    {
+      "id": "source.ledger.public.query_bounds",
+      "status": "pass",
+      "category": "source",
+      "description": "Public ledger route clamps query limits to bounded deterministic windows.",
+      "evidence": {
+        "path": "app/api/wallet/ledger/public/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 2,
+        "matchedNeedleCount": 2,
+        "requiredPatternCount": 1,
+        "matchedPatternCount": 1,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915"
+      }
+    },
+    {
+      "id": "source.connect.wallet.read_scope",
+      "status": "pass",
+      "category": "source",
+      "description": "Delegated wallet summary endpoint requires explicit read scope.",
+      "evidence": {
+        "path": "app/api/connect/wallet/me/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 1,
+        "matchedNeedleCount": 1,
+        "requiredPatternCount": 1,
+        "matchedPatternCount": 1,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "f1c99a42f26853ff3f86baed2048e0f07f00e13c1884202cb8935cacf2e32cb9"
+      }
+    },
+    {
+      "id": "source.connect.wallet.transfer_scope",
+      "status": "pass",
+      "category": "source",
+      "description": "Delegated transfer endpoint requires explicit transfer scope.",
+      "evidence": {
+        "path": "app/api/connect/transfers/route.ts",
+        "exists": true,
+        "matched": true,
+        "requiredNeedleCount": 1,
+        "matchedNeedleCount": 1,
+        "requiredPatternCount": 1,
+        "matchedPatternCount": 1,
+        "missingNeedles": "",
+        "missingPatterns": "",
+        "sha256": "eb0019ca51c9c623a3a954360b99140696e320984f0b559c4056eb311ad7d94e"
+      }
+    },
+    {
+      "id": "runtime.pulse.recomputable_no_drift",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Canonical pulse resolution is recomputable and non-drifting for identical reference instants.",
+      "evidence": {
+        "sampleCount": 7,
+        "mismatchCount": 0,
+        "firstMismatch": ""
+      }
+    },
+    {
+      "id": "runtime.rate.fixed_pulse_deterministic",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Rate derivation at a fixed pulse is deterministic and quantizes to a positive microcent integer.",
+      "evidence": {
+        "pulse": 11331984,
+        "fixedA": "8696558885",
+        "fixedB": "8696558885",
+        "equal": true
+      }
+    },
+    {
+      "id": "runtime.rate.wallet_rate_positive",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Wallet posting reference rate resolves to a strictly positive integer value.",
+      "evidence": {
+        "liveRate": "8696558885",
+        "positive": true
+      }
+    },
+    {
+      "id": "runtime.conversion.phi_to_usd_half_up",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Phi-to-USD conversion rounds a 0.5 cent boundary up (half-up contract).",
+      "evidence": {
+        "phiMicro": "1",
+        "usdPerPhiMicrocents": "500000000000",
+        "outputUsdCents": "1",
+        "expectedUsdCents": "1"
+      }
+    },
+    {
+      "id": "runtime.conversion.usd_to_phi_half_up",
+      "status": "pass",
+      "category": "runtime",
+      "description": "USD-to-phi conversion rounds a 0.5 boundary up (half-up contract).",
+      "evidence": {
+        "usdCents": 1,
+        "usdPerPhiMicrocents": "8192",
+        "outputPhiMicro": "122070313",
+        "expectedPhiMicro": "122070313"
+      }
+    },
+    {
+      "id": "runtime.conversion.usd_roundtrip_tolerance",
+      "status": "pass",
+      "category": "runtime",
+      "description": "USD -> phi -> USD replay remains within 1 cent tolerance under integer rounding.",
+      "evidence": {
+        "usdPerPhiMicrocents": "8696558885",
+        "maxDeltaCents": "0",
+        "sampleCount": 5
+      }
+    },
+    {
+      "id": "source.integrity.required_files_present",
+      "status": "pass",
+      "category": "source",
+      "description": "All referenced source files for this conformance report are present and hashable.",
+      "evidence": {
+        "requiredFileCount": 10,
+        "presentFileCount": 10
+      }
+    }
+  ],
+  "evidence": {
+    "sourceDigests": [
+      {
+        "path": "app/lib/wallet/amounts.ts",
+        "exists": true,
+        "sha256": "584d62f825173735621593b0655292c187e845de34f60be948eea10033ddc927",
+        "sizeBytes": 4972
+      },
+      {
+        "path": "app/lib/wallet/server.ts",
+        "exists": true,
+        "sha256": "4c46ca7eabd4c64e1c2aa4d923fff98412c20c0e4d5bbd98d0ddd96192166496",
+        "sizeBytes": 41395
+      },
+      {
+        "path": "app/wallet/WalletAccountExperience.tsx",
+        "exists": true,
+        "sha256": "ae0417ea4972070f2a72b65d764aac0a8d19cf79719301b428a8e7e2c329f312",
+        "sizeBytes": 184441
+      },
+      {
+        "path": "app/api/wallet/ledger/route.ts",
+        "exists": true,
+        "sha256": "bec652a1f555530011be4d3d03b66e1be0caaf33a41d374f3606d3b8ac0021b5",
+        "sizeBytes": 26155
+      },
+      {
+        "path": "app/api/wallet/ledger/public/route.ts",
+        "exists": true,
+        "sha256": "674d2523af145fe90b10d18ba8bec101fbe96d94490a9247bbb4145a146ed915",
+        "sizeBytes": 29014
+      },
+      {
+        "path": "app/api/wallet/notes/mint/route.ts",
+        "exists": true,
+        "sha256": "2a843d4d048f43cf64a25005d5e3017390823effb8a583c0e5e0a39946224fcd",
+        "sizeBytes": 28752
+      },
+      {
+        "path": "app/api/wallet/notes/claim/route.ts",
+        "exists": true,
+        "sha256": "73f561985d0948ce8b24f19bf0f1a2510b1e158ae3d276f9f830c8cc085fe44c",
+        "sizeBytes": 27519
+      },
+      {
+        "path": "app/api/chat/conversations/[conversationId]/transfers/route.ts",
+        "exists": true,
+        "sha256": "d5fc0d3532d36e9aa901fd816e4321a4b033952249c28f610254911af4cae737",
+        "sizeBytes": 15415
+      },
+      {
+        "path": "app/api/connect/transfers/route.ts",
+        "exists": true,
+        "sha256": "eb0019ca51c9c623a3a954360b99140696e320984f0b559c4056eb311ad7d94e",
+        "sizeBytes": 15156
+      },
+      {
+        "path": "app/api/connect/wallet/me/route.ts",
+        "exists": true,
+        "sha256": "f1c99a42f26853ff3f86baed2048e0f07f00e13c1884202cb8935cacf2e32cb9",
+        "sizeBytes": 1487
+      }
+    ]
+  },
+  "history": {
+    "schema": "receiz-conformance-history-v1",
+    "snapshotId": "1c47248933f929e3cf71219212e1f690ff4de1de8472cd798e49dc9a143b0245",
+    "recordedAt": "2026-03-28T00:43:03.618Z",
+    "historyLength": 120,
+    "attestation": {
+      "state": "signed",
+      "schema": "receiz-conformance-attestation-v1",
+      "version": 1,
+      "alg": "Ed25519",
+      "payloadHashSha256": "cdf97b6f73156ae2da7e847d67b26b8d03abadae7e23ac09fdb7c7d5c9c1e16d",
+      "sig": "N9ByK_cp0YE7x21RFk83YV9qb3V9-h1EsWfH_2XtwVOEyNiR1uS9eMu5E-eZUN66e_Zl4mxKGLBMVMMHFwtGCA",
+      "signedAtMs": 1774658583618,
+      "issuerKid": "receiz.v4.prod.2026-03-02",
+      "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+      "cert": {
+        "version": 1,
+        "certType": "receiz.device.v1",
+        "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+        "issuerKid": "receiz.v4.prod.2026-03-02",
+        "alg": "Ed25519",
+        "subjectPublicKeyRawB64u": "kzrn6i0ESUgOg9h9-w-uYOOIuGGEfMsQRWf94ufAwH4",
+        "issuedAtMs": 1774658236080,
+        "expiresAtMs": 1790210236080,
+        "sig": "uwPyVvYe1ymcWBUGrnSPLMaYdwcbj9rgZJBk09yfV-gbHGX9rTXZj89BQy_Z3j72caJLFWRRV1JT4ISuyFPVBQ"
+      }
+    },
+    "historyPath": "/api/economy/conformance/history",
+    "badgePath": "/api/economy/conformance/badge"
+  }
+}

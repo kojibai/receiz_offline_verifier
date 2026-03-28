@@ -1,0 +1,946 @@
+{
+  "ok": true,
+  "schema": "receiz-identity-conformance-report-v1",
+  "standardId": "receiz-identity-standard-v1",
+  "verificationVersion": "identity-runtime-v1",
+  "generatedAt": "2026-03-28T00:42:58.408Z",
+  "revision": {
+    "hash": "5554d2840cbd8f0ec2270829e0d7964c80c486271a518df578ab97c39e67eb55",
+    "sourceDigestCount": 21
+  },
+  "overallStatus": "pass",
+  "summary": {
+    "requirementCount": 26,
+    "checkCount": 47,
+    "passRequirements": 26,
+    "warnRequirements": 0,
+    "failRequirements": 0,
+    "passChecks": 47,
+    "warnChecks": 0,
+    "failChecks": 0
+  },
+  "requirements": [
+    {
+      "id": "I-001",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.authorize.request_parse",
+        "runtime.oidc.authorize.invalid_request"
+      ]
+    },
+    {
+      "id": "I-002",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.authorize.pkce_required"
+      ]
+    },
+    {
+      "id": "I-003",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.authorize.redirect_allowlist"
+      ]
+    },
+    {
+      "id": "I-004",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.authorize.scope_openid_gate"
+      ]
+    },
+    {
+      "id": "I-005",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.token.form_contract",
+        "runtime.oidc.token.invalid_client_authorization_code"
+      ]
+    },
+    {
+      "id": "I-006",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.token.pkce_verification",
+        "source.oidc.token.refresh_scope_subset"
+      ]
+    },
+    {
+      "id": "I-007",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.userinfo.bearer_gate",
+        "runtime.oidc.userinfo.token_required"
+      ]
+    },
+    {
+      "id": "I-008",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.userinfo.revocation_check"
+      ]
+    },
+    {
+      "id": "I-009",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.introspect.client_auth",
+        "runtime.oidc.introspect.invalid_client"
+      ]
+    },
+    {
+      "id": "I-010",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.revoke.rfc7009_behavior",
+        "runtime.oidc.revoke.invalid_client"
+      ]
+    },
+    {
+      "id": "I-011",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.jwks.enabled_gate",
+        "runtime.oidc.jwks.available"
+      ]
+    },
+    {
+      "id": "I-012",
+      "status": "pass",
+      "checkIds": [
+        "source.oidc.protocol.no_store"
+      ]
+    },
+    {
+      "id": "C-001",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.record.scope_gate",
+        "runtime.connect.record.auth_gate"
+      ]
+    },
+    {
+      "id": "C-002",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.seal.scope_gate",
+        "runtime.connect.seal.auth_gate"
+      ]
+    },
+    {
+      "id": "C-003",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.verify.scope_gate",
+        "runtime.connect.verify.auth_gate"
+      ]
+    },
+    {
+      "id": "C-004",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.wallet.scope_gate",
+        "runtime.connect.wallet.auth_gate"
+      ]
+    },
+    {
+      "id": "C-005",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.transfers.scope_gate",
+        "runtime.connect.transfers.auth_gate"
+      ]
+    },
+    {
+      "id": "C-006",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.payments.checkout.scope_gate",
+        "source.connect.payments.session.scope_gate",
+        "runtime.connect.payments.checkout.auth_gate",
+        "runtime.connect.payments.session.auth_gate"
+      ]
+    },
+    {
+      "id": "C-007",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.notes.scope_gates",
+        "runtime.connect.notes.mint.auth_gate",
+        "runtime.connect.notes.claim.auth_gate",
+        "runtime.connect.notes.download.auth_gate"
+      ]
+    },
+    {
+      "id": "C-008",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.cors.preflight",
+        "runtime.connect.record.options_cors"
+      ]
+    },
+    {
+      "id": "C-009",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.proxy_headers_actor_binding"
+      ]
+    },
+    {
+      "id": "C-010",
+      "status": "pass",
+      "checkIds": [
+        "source.connect.payload_limits"
+      ]
+    },
+    {
+      "id": "O-001",
+      "status": "pass",
+      "checkIds": [
+        "source.integrity.required_files_present"
+      ]
+    },
+    {
+      "id": "O-002",
+      "status": "pass",
+      "checkIds": [
+        "runtime.connect.seal.options_cors",
+        "runtime.connect.payments.checkout.options_cors"
+      ]
+    },
+    {
+      "id": "O-003",
+      "status": "pass",
+      "checkIds": [
+        "runtime.connect.notes.claim.options_cors",
+        "runtime.connect.payments.session.options_cors"
+      ]
+    },
+    {
+      "id": "O-004",
+      "status": "pass",
+      "checkIds": [
+        "runtime.oidc.token.invalid_client_refresh_token"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "runtime.connect.notes.claim.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect notes claim endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.notes.claim.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect notes claim endpoint publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.connect.notes.download.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect notes download endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.notes.mint.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect notes mint endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.payments.checkout.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect payments checkout endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.payments.checkout.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect payments checkout endpoint publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.connect.payments.session.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect payments session endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.payments.session.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect payments session endpoint publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "GET, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.connect.record.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect record endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.record.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect record endpoint publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.connect.seal.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect seal endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.seal.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect seal endpoint publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.connect.transfers.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect transfer endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.verify.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect verify endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.connect.wallet.auth_gate",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Connect wallet summary endpoint denies unauthenticated calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "runtime.oidc.authorize.invalid_request",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC authorize endpoint rejects missing required parameters.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "invalid_request",
+        "expectedError": "invalid_request"
+      }
+    },
+    {
+      "id": "runtime.oidc.introspect.invalid_client",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC introspection endpoint requires authenticated client.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_client",
+        "expectedError": "invalid_client"
+      }
+    },
+    {
+      "id": "runtime.oidc.jwks.available",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC JWKS endpoint is available with JSON key-set response.",
+      "evidence": {
+        "status": 200,
+        "expectedStatuses": "200",
+        "error": "none",
+        "expectedError": "none"
+      }
+    },
+    {
+      "id": "runtime.oidc.revoke.invalid_client",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC revocation endpoint requires authenticated client.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_client",
+        "expectedError": "invalid_client"
+      }
+    },
+    {
+      "id": "runtime.oidc.token.invalid_client_authorization_code",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC token endpoint rejects unauthenticated authorization_code exchange.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_client",
+        "expectedError": "invalid_client"
+      }
+    },
+    {
+      "id": "runtime.oidc.token.invalid_client_refresh_token",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC token endpoint rejects unauthenticated refresh_token exchange.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_client",
+        "expectedError": "invalid_client"
+      }
+    },
+    {
+      "id": "runtime.oidc.userinfo.token_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "OIDC userinfo endpoint returns invalid_token without bearer token.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "invalid_token",
+        "expectedError": "invalid_token"
+      }
+    },
+    {
+      "id": "source.connect.cors.preflight",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect endpoints expose CORS preflight and CORS-wrapped responses.",
+      "evidence": {
+        "path": "app/lib/connect/cors.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.notes.scope_gates",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect notes endpoints require mint/claim/read scopes.",
+      "evidence": {
+        "path": "app/api/connect/payments/notes/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.payload_limits",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect mutating endpoints enforce request payload size limits.",
+      "evidence": {
+        "path": "app/api/connect/record/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.payments.checkout.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect payments checkout endpoint requires receiz:payments.create scope.",
+      "evidence": {
+        "path": "app/api/connect/payments/checkout/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.payments.session.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect payments session endpoint requires receiz:payments.read scope.",
+      "evidence": {
+        "path": "app/api/connect/payments/session/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.proxy_headers_actor_binding",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect proxy-style endpoints bind actor user and forward upstream headers explicitly.",
+      "evidence": {
+        "path": "app/api/connect/verify/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.record.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect record endpoint requires receiz:record scope.",
+      "evidence": {
+        "path": "app/api/connect/record/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.seal.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect seal endpoint requires receiz:seal scope.",
+      "evidence": {
+        "path": "app/api/connect/seal/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.transfers.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect transfer endpoint requires receiz:wallet.transfer scope.",
+      "evidence": {
+        "path": "app/api/connect/transfers/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.verify.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect verify endpoint requires receiz:verify scope.",
+      "evidence": {
+        "path": "app/api/connect/verify/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.connect.wallet.scope_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Connect wallet endpoint requires receiz:wallet.read scope.",
+      "evidence": {
+        "path": "app/api/connect/wallet/me/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.integrity.required_files_present",
+      "status": "pass",
+      "category": "source",
+      "description": "All referenced source files for identity conformance are present and hashable.",
+      "evidence": {
+        "sourceDigestCount": 21,
+        "missingFiles": "none"
+      }
+    },
+    {
+      "id": "source.oidc.authorize.pkce_required",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC authorize endpoint enforces PKCE challenge presence.",
+      "evidence": {
+        "path": "app/api/oidc/authorize/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.authorize.redirect_allowlist",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC authorize endpoint requires normalized redirect URI and allowlist match.",
+      "evidence": {
+        "path": "app/api/oidc/authorize/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.authorize.request_parse",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC authorize endpoint parses and validates authorization requests.",
+      "evidence": {
+        "path": "app/api/oidc/authorize/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.authorize.scope_openid_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC authorize endpoint requires openid scope and allowed scope subset.",
+      "evidence": {
+        "path": "app/api/oidc/authorize/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.introspect.client_auth",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC introspection endpoint authenticates client credentials before token status disclosure.",
+      "evidence": {
+        "path": "app/api/oidc/introspect/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.jwks.enabled_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC JWKS endpoint enforces OIDC enabled state and publishes key set.",
+      "evidence": {
+        "path": "app/api/oidc/jwks/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.protocol.no_store",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC protocol helpers provide no-store response contract.",
+      "evidence": {
+        "path": "app/lib/oidc/protocol.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.revoke.rfc7009_behavior",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC revocation endpoint implements RFC7009 non-disclosing response behavior.",
+      "evidence": {
+        "path": "app/api/oidc/revoke/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.token.form_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC token endpoint requires form-encoded body and known grant types.",
+      "evidence": {
+        "path": "app/api/oidc/token/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.token.pkce_verification",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC token endpoint validates authorization code and PKCE verifier.",
+      "evidence": {
+        "path": "app/api/oidc/token/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.token.refresh_scope_subset",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC token refresh flow enforces scope subset and openid presence.",
+      "evidence": {
+        "path": "app/api/oidc/token/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.userinfo.bearer_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC userinfo endpoint requires bearer token and emits invalid_token challenge.",
+      "evidence": {
+        "path": "app/api/oidc/userinfo/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.oidc.userinfo.revocation_check",
+      "status": "pass",
+      "category": "source",
+      "description": "OIDC userinfo endpoint checks access-token revocation and token-use.",
+      "evidence": {
+        "path": "app/api/oidc/userinfo/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    }
+  ],
+  "evidence": {
+    "sourceDigests": [
+      {
+        "path": "app/api/oidc/authorize/route.ts",
+        "exists": true,
+        "sha256": "682b7b6f1d411096c32ff7de75a2f5c810b01560ccfbd8a98de43fa955d33365",
+        "sizeBytes": 6080
+      },
+      {
+        "path": "app/api/oidc/token/route.ts",
+        "exists": true,
+        "sha256": "fe765d01acdbbb4179eb9efd73783f56b74a766b6165d9a3b8b5933e43a39ca5",
+        "sizeBytes": 6557
+      },
+      {
+        "path": "app/api/oidc/userinfo/route.ts",
+        "exists": true,
+        "sha256": "fa51faa3eab14ea7e2da7dd72840f8fd8e05264b0963f8a9bf5d12cc80e7a19d",
+        "sizeBytes": 2446
+      },
+      {
+        "path": "app/api/oidc/jwks/route.ts",
+        "exists": true,
+        "sha256": "c19d04a87caaf21aac5e3be7ebccbca7963e1641e36987c198d0c8b3cb903347",
+        "sizeBytes": 530
+      },
+      {
+        "path": "app/api/oidc/introspect/route.ts",
+        "exists": true,
+        "sha256": "e34a82743f65234c2c3ded220a34efebf5de08c8a84ceb0f03066eeb153f983d",
+        "sizeBytes": 3992
+      },
+      {
+        "path": "app/api/oidc/revoke/route.ts",
+        "exists": true,
+        "sha256": "12805a3d14daa0932e52e8a8a1a50b045ea1b3dc36111e7b9d25c5cb7e9a4470",
+        "sizeBytes": 3146
+      },
+      {
+        "path": "app/lib/oidc/clientAuth.ts",
+        "exists": true,
+        "sha256": "2c1583613fba562bc8613e4e51ec7ff66bfae2510f41fd49d640f993dc9a7865",
+        "sizeBytes": 3797
+      },
+      {
+        "path": "app/lib/oidc/resourceAuth.ts",
+        "exists": true,
+        "sha256": "858837dae31e5ebcb77f87e21b7b25cafcda90c1957a35d3ccf39f037fee0aba",
+        "sizeBytes": 3995
+      },
+      {
+        "path": "app/lib/oidc/scopes.ts",
+        "exists": true,
+        "sha256": "8d84dab55cd8c4101ba06b28eef002fbb474a6eeaefacc2e802560359baef992",
+        "sizeBytes": 1621
+      },
+      {
+        "path": "app/lib/oidc/protocol.ts",
+        "exists": true,
+        "sha256": "bf9b997d4029b3da3203e1ab05195d509821fe2befa68165ce44040cacff1f31",
+        "sizeBytes": 5034
+      },
+      {
+        "path": "app/api/connect/record/route.ts",
+        "exists": true,
+        "sha256": "0b793a277c866604a7fc4a1073a3e780b9811c2824adf2d4f074d79b12b09bb0",
+        "sizeBytes": 7427
+      },
+      {
+        "path": "app/api/connect/seal/route.ts",
+        "exists": true,
+        "sha256": "b43fc548450c74dc5b0051ebecba2e96aed4266c63e512721e317263b99a3c49",
+        "sizeBytes": 4978
+      },
+      {
+        "path": "app/api/connect/verify/route.ts",
+        "exists": true,
+        "sha256": "8e8654609900979d3a159c61371e55335b96903f31f9c97c8494b675e2f9d1a3",
+        "sizeBytes": 3074
+      },
+      {
+        "path": "app/api/connect/wallet/me/route.ts",
+        "exists": true,
+        "sha256": "f1c99a42f26853ff3f86baed2048e0f07f00e13c1884202cb8935cacf2e32cb9",
+        "sizeBytes": 1487
+      },
+      {
+        "path": "app/api/connect/transfers/route.ts",
+        "exists": true,
+        "sha256": "eb0019ca51c9c623a3a954360b99140696e320984f0b559c4056eb311ad7d94e",
+        "sizeBytes": 15156
+      },
+      {
+        "path": "app/api/connect/payments/checkout/route.ts",
+        "exists": true,
+        "sha256": "cfa248d7271e3cf1a48c5634bce5c8e8ff7d3720900e7ee28bdf44f4b503e233",
+        "sizeBytes": 9106
+      },
+      {
+        "path": "app/api/connect/payments/session/route.ts",
+        "exists": true,
+        "sha256": "77e6c809c3bf1c92094d9760e6e8e4a9eb7466373aa2c5f03d5deae2e9f209c4",
+        "sizeBytes": 7049
+      },
+      {
+        "path": "app/api/connect/payments/notes/mint/route.ts",
+        "exists": true,
+        "sha256": "d7c822944427a9420d8f6eb68745bbf8e22176b226f18c715d96fc523a67c01d",
+        "sizeBytes": 18079
+      },
+      {
+        "path": "app/api/connect/payments/notes/claim/route.ts",
+        "exists": true,
+        "sha256": "34536486f991f5a90d01e457ccbefe7339e415c5fb586902ed39be8bc8afdd4b",
+        "sizeBytes": 7432
+      },
+      {
+        "path": "app/api/connect/payments/notes/[noteId]/download/route.ts",
+        "exists": true,
+        "sha256": "1fb56cba6d94aae3a1598a8316a95d6b0e0be25c331690b2998a86608ad761f7",
+        "sizeBytes": 6977
+      },
+      {
+        "path": "app/lib/connect/cors.ts",
+        "exists": true,
+        "sha256": "9002f26fc7cf06b942af697f926757a539fde1401dd735c4db711aa6a853f76e",
+        "sizeBytes": 1903
+      }
+    ]
+  },
+  "history": {
+    "schema": "receiz-identity-conformance-history-v1",
+    "snapshotId": "aae98e5f8c265923f6bea146a1e45d76187d84b650a8eb2b805c88613ab8db54",
+    "recordedAt": "2026-03-28T00:42:58.409Z",
+    "historyLength": 120,
+    "attestation": {
+      "state": "signed",
+      "schema": "receiz-identity-conformance-attestation-v1",
+      "version": 1,
+      "alg": "Ed25519",
+      "payloadHashSha256": "690340d44f7b5b069c0c602c949099cc0c58c730a44059f0d07c8c93aa8ea95c",
+      "sig": "_QeacBCsKsaTCwCNPLXm2Czom8LVs0Dw_T17uJ6RyOmxtKxunbU3QPbENNEtvcIeVi1_ffCCkVGhYQSH0dc_AA",
+      "signedAtMs": 1774658578409,
+      "issuerKid": "receiz.v4.prod.2026-03-02",
+      "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+      "cert": {
+        "version": 1,
+        "certType": "receiz.device.v1",
+        "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+        "issuerKid": "receiz.v4.prod.2026-03-02",
+        "alg": "Ed25519",
+        "subjectPublicKeyRawB64u": "kzrn6i0ESUgOg9h9-w-uYOOIuGGEfMsQRWf94ufAwH4",
+        "issuedAtMs": 1774658236080,
+        "expiresAtMs": 1790210236080,
+        "sig": "uwPyVvYe1ymcWBUGrnSPLMaYdwcbj9rgZJBk09yfV-gbHGX9rTXZj89BQy_Z3j72caJLFWRRV1JT4ISuyFPVBQ"
+      }
+    },
+    "historyPath": "/api/identity/conformance/history",
+    "badgePath": "/api/identity/conformance/badge"
+  }
+}

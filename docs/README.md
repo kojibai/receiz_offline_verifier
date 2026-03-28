@@ -14,6 +14,7 @@ This directory is the public documentation set for Receiz `v40.0.0`.
 ## Public Standards
 
 - [deterministic-surfaces.md](deterministic-surfaces.md): contract for deterministic public truth routes.
+- [conformance/README.md](conformance/README.md): styled conformance hub with live badges, current imported results, and deep suite-by-suite coverage docs.
 - [presencebound-canonical-realm.md](presencebound-canonical-realm.md): canonical WebAuthn realm and reset guidance.
 - [schemas/README.md](schemas/README.md): schema inventory for proof payloads and containers.
 

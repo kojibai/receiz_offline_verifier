@@ -1,0 +1,930 @@
+{
+  "ok": true,
+  "schema": "receiz-issuance-conformance-report-v1",
+  "standardId": "receiz-issuance-standard-v1",
+  "verificationVersion": "issuance-runtime-v1",
+  "generatedAt": "2026-03-28T00:43:00.285Z",
+  "revision": {
+    "hash": "e19305ad0d930e40e1c32967ee14bb8ac2ba95445184fef1edd60d5c0eb04e3e",
+    "sourceDigestCount": 20
+  },
+  "overallStatus": "pass",
+  "summary": {
+    "requirementCount": 28,
+    "checkCount": 45,
+    "passRequirements": 28,
+    "warnRequirements": 0,
+    "failRequirements": 0,
+    "passChecks": 45,
+    "warnChecks": 0,
+    "failChecks": 0
+  },
+  "requirements": [
+    {
+      "id": "W-001",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.auth.bearer_then_legacy",
+        "runtime.wireproof.mint.signin_required"
+      ]
+    },
+    {
+      "id": "W-002",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.webhook.signature_required",
+        "runtime.wireproof.webhook.signature_required"
+      ]
+    },
+    {
+      "id": "W-003",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.keys.create.pro_gate",
+        "source.wireproof.keys.create.payload_limits",
+        "runtime.wireproof.keys.create.signin_required"
+      ]
+    },
+    {
+      "id": "W-004",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.keys.revoke.request_contract",
+        "runtime.wireproof.keys.revoke.missing_issuer_key_id"
+      ]
+    },
+    {
+      "id": "W-005",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.keys.list.pro_gate",
+        "runtime.wireproof.keys.list.signin_required"
+      ]
+    },
+    {
+      "id": "W-006",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.mint.rate_limit"
+      ]
+    },
+    {
+      "id": "W-007",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.claim.canonicalize",
+        "source.wireproof.mint.canonical_anchor"
+      ]
+    },
+    {
+      "id": "W-008",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.mint.visibility_contract",
+        "source.wireproof.auth.secret_hash_lookup"
+      ]
+    },
+    {
+      "id": "W-009",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.mint.no_store_json",
+        "source.wireproof.webhook.forwarding_contract"
+      ]
+    },
+    {
+      "id": "W-010",
+      "status": "pass",
+      "checkIds": [
+        "source.wireproof.health.table_probe",
+        "runtime.wireproof.health.contract"
+      ]
+    },
+    {
+      "id": "A-001",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.mint.session_premium_gate",
+        "runtime.assetseal.mint.signin_required"
+      ]
+    },
+    {
+      "id": "A-002",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.mint.anchor_contract",
+        "source.assetseal.claim.genesis_chain"
+      ]
+    },
+    {
+      "id": "A-003",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.append.session_premium_gate",
+        "runtime.assetseal.custody.append.signin_required"
+      ]
+    },
+    {
+      "id": "A-004",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.append.hash_chain"
+      ]
+    },
+    {
+      "id": "A-005",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.append.pbi_receipt_hash"
+      ]
+    },
+    {
+      "id": "A-006",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.list.coordinate_validation",
+        "runtime.assetseal.custody.list.invalid_coordinates"
+      ]
+    },
+    {
+      "id": "A-007",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.list.visibility_gate"
+      ]
+    },
+    {
+      "id": "A-008",
+      "status": "pass",
+      "checkIds": [
+        "source.assetseal.custody.append.event_timestamp_contract"
+      ]
+    },
+    {
+      "id": "S-001",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v1.sign.auth_gate",
+        "runtime.signer.v1.sign.unauthorized_or_unavailable"
+      ]
+    },
+    {
+      "id": "S-002",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v1.sign.payload_hash_gate"
+      ]
+    },
+    {
+      "id": "S-003",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v1.sign.key_status_gate"
+      ]
+    },
+    {
+      "id": "S-004",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v1.keyring.public_surface",
+        "runtime.signer.v1.keyring.available"
+      ]
+    },
+    {
+      "id": "S-005",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v4.enroll.input_and_origin_gates",
+        "runtime.signer.v4.enroll.invalid_request"
+      ]
+    },
+    {
+      "id": "S-006",
+      "status": "pass",
+      "checkIds": [
+        "source.signer.v4.enroll.challenge_and_root_signer"
+      ]
+    },
+    {
+      "id": "O-001",
+      "status": "pass",
+      "checkIds": [
+        "source.integrity.required_files_present"
+      ]
+    },
+    {
+      "id": "O-002",
+      "status": "pass",
+      "checkIds": [
+        "source.rate_limits.cross_surface"
+      ]
+    },
+    {
+      "id": "O-003",
+      "status": "pass",
+      "checkIds": [
+        "source.payload_limits.cross_surface"
+      ]
+    },
+    {
+      "id": "O-004",
+      "status": "pass",
+      "checkIds": [
+        "runtime.issuance.endpoints.reachable"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "runtime.assetseal.custody.append.signin_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "AssetSeal custody append denies unsigned session calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "Not signed in.",
+        "expectedError": "Not signed in.",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.assetseal.custody.list.invalid_coordinates",
+      "status": "pass",
+      "category": "runtime",
+      "description": "AssetSeal custody list validates code/pulse/anchor coordinate formats.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "Missing/invalid code.",
+        "expectedError": "Missing/invalid code.",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.assetseal.mint.signin_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "AssetSeal mint requires signed-in session outside demo mode.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401"
+      }
+    },
+    {
+      "id": "runtime.issuance.endpoints.reachable",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Core issuance conformance endpoints are reachable with expected contract envelopes.",
+      "evidence": {
+        "checked": "runtime.wireproof.health.contract,runtime.signer.v1.keyring.available,runtime.signer.v4.enroll.invalid_request",
+        "passCount": 3,
+        "failCount": 0
+      }
+    },
+    {
+      "id": "runtime.signer.v1.keyring.available",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Signer v1 keyring endpoint is reachable and publishes JSON key material metadata.",
+      "evidence": {
+        "status": 200,
+        "expectedStatuses": "200",
+        "error": "none",
+        "expectedError": "none",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.signer.v1.sign.unauthorized_or_unavailable",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Signer v1 sign rejects unauthorized requests unless signer configuration is unavailable.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401,503",
+        "error": "unauthorized",
+        "expectedError": "none",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.signer.v4.enroll.invalid_request",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Signer v4 enrollment enforces request contract and origin policy on malformed payloads.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400,403,404,429",
+        "error": "invalid_enrollment_request",
+        "expectedError": "none",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.health.contract",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof health endpoint publishes operational/outage JSON contract.",
+      "evidence": {
+        "status": 200,
+        "expectedStatuses": "200,503",
+        "error": "none",
+        "expectedError": "none",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.keys.create.signin_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof key creation denies unauthenticated requests.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "signin_required",
+        "expectedError": "signin_required",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.keys.list.signin_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof key listing denies unauthenticated requests.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "signin_required",
+        "expectedError": "signin_required",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.keys.revoke.missing_issuer_key_id",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof key revoke rejects missing issuer key identifiers.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "missing_issuerKeyId",
+        "expectedError": "missing_issuerKeyId",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.mint.signin_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof mint requires issuer auth or signed-in Pro session.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "signin_required",
+        "expectedError": "signin_required",
+        "bodyValid": true
+      }
+    },
+    {
+      "id": "runtime.wireproof.webhook.signature_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "WireProof webhook rejects unsigned ingress payloads.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401"
+      }
+    },
+    {
+      "id": "source.assetseal.claim.genesis_chain",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal canonical claim ensures genesis custody chain continuity for minted assets.",
+      "evidence": {
+        "path": "app/lib/assetseal/claim.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.append.event_timestamp_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody append records normalized event pulse/time and transfer field constraints.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/append/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.append.hash_chain",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody append links events through prev-hash and canonical event hashing.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/append/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.append.pbi_receipt_hash",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody append requires strict PBI receipt hash contract for event integrity.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/append/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.append.session_premium_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody append is session and premium access gated.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/append/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.list.coordinate_validation",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody list validates code, pulse, and anchor coordinates before ledger reads.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/list/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.custody.list.visibility_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal custody list enforces premium gating for private visibility reads.",
+      "evidence": {
+        "path": "app/api/assetseal/custody/list/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.mint.anchor_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal mint canonicalizes claim content, computes anchor IDs, and persists issuance anchors.",
+      "evidence": {
+        "path": "app/api/assetseal/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.assetseal.mint.session_premium_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "AssetSeal mint requires session and premium access outside demo mode.",
+      "evidence": {
+        "path": "app/api/assetseal/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.integrity.required_files_present",
+      "status": "pass",
+      "category": "source",
+      "description": "All referenced source files for issuance conformance are present and hashable.",
+      "evidence": {
+        "sourceDigestCount": 20,
+        "missingFiles": "none"
+      }
+    },
+    {
+      "id": "source.payload_limits.cross_surface",
+      "status": "pass",
+      "category": "source",
+      "description": "Payload size guards and bounded body reads are enforced across issuance write surfaces.",
+      "evidence": {
+        "missingPaths": "none"
+      }
+    },
+    {
+      "id": "source.rate_limits.cross_surface",
+      "status": "pass",
+      "category": "source",
+      "description": "Rate-limit controls are present across issuance, signer service, and enrollment surfaces.",
+      "evidence": {
+        "missingPaths": "none"
+      }
+    },
+    {
+      "id": "source.signer.v1.keyring.public_surface",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v1 keyring endpoint publishes public keys with explicit cache profile.",
+      "evidence": {
+        "path": "app/api/signer/v1/receiz/keyring/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.signer.v1.sign.auth_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v1 sign endpoint enforces bearer authorization and unavailable-state fallback.",
+      "evidence": {
+        "path": "app/api/signer/v1/receiz/sign/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.signer.v1.sign.key_status_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v1 sign endpoint validates key existence and retired-key policy.",
+      "evidence": {
+        "path": "app/api/signer/v1/receiz/sign/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.signer.v1.sign.payload_hash_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v1 sign endpoint verifies payload hashes before signing material is used.",
+      "evidence": {
+        "path": "app/api/signer/v1/receiz/sign/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.signer.v4.enroll.challenge_and_root_signer",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v4 enrollment verifies challenge signatures and requires active trusted root signer state.",
+      "evidence": {
+        "path": "app/api/signer/v4/receiz/enroll/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.signer.v4.enroll.input_and_origin_gates",
+      "status": "pass",
+      "category": "source",
+      "description": "Signer v4 enrollment validates same-origin policy and request payload contract.",
+      "evidence": {
+        "path": "app/api/signer/v4/receiz/enroll/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.auth.bearer_then_legacy",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof auth prioritizes issuer key bearer auth then legacy webhook signature fallback.",
+      "evidence": {
+        "path": "app/lib/wireproof/auth.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.auth.secret_hash_lookup",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof issuer secret lookup is hash-based, revocation aware, and updates usage telemetry.",
+      "evidence": {
+        "path": "app/lib/wireproof/auth.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.claim.canonicalize",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof claim canonicalization emits deterministic kind/version/payment payload structure.",
+      "evidence": {
+        "path": "app/lib/wireproof/claim.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.health.table_probe",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof health probes critical issuance storage tables.",
+      "evidence": {
+        "path": "app/api/wireproof/health/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.keys.create.payload_limits",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof issuer key creation enforces payload bounds with oversized body rejection.",
+      "evidence": {
+        "path": "app/api/wireproof/keys/create/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.keys.create.pro_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof issuer key creation is session and Pro-plan gated.",
+      "evidence": {
+        "path": "app/api/wireproof/keys/create/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.keys.list.pro_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof key listing is session and Pro-plan gated with no-store response headers.",
+      "evidence": {
+        "path": "app/api/wireproof/keys/list/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.keys.revoke.request_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof key revoke endpoint validates request body contract and ownership checks.",
+      "evidence": {
+        "path": "app/api/wireproof/keys/revoke/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.mint.canonical_anchor",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof mint computes canonical anchor IDs from code/pulse/claim hash and persists anchors.",
+      "evidence": {
+        "path": "app/api/wireproof/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.mint.no_store_json",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof mint JSON response contracts disable caching for runtime issuance artifacts.",
+      "evidence": {
+        "path": "app/api/wireproof/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.mint.rate_limit",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof mint enforces issuer/session-aware rate limits and Retry-After signaling.",
+      "evidence": {
+        "path": "app/api/wireproof/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.mint.visibility_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof mint applies deterministic visibility defaults across demo, issuer-key, and session issuance.",
+      "evidence": {
+        "path": "app/api/wireproof/mint/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.webhook.forwarding_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof webhook forwards authenticated payloads to mint JSON path with no-store contract.",
+      "evidence": {
+        "path": "app/api/wireproof/webhook/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.wireproof.webhook.signature_required",
+      "status": "pass",
+      "category": "source",
+      "description": "WireProof webhook requires signature verification before processing requests.",
+      "evidence": {
+        "path": "app/api/wireproof/webhook/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    }
+  ],
+  "evidence": {
+    "sourceDigests": [
+      {
+        "path": "app/api/wireproof/health/route.ts",
+        "exists": true,
+        "sha256": "e94edfd87ab4c6b5de56926a680f7e98bf5d666f4b4a29c92d3325faba50fa8b",
+        "sizeBytes": 1473
+      },
+      {
+        "path": "app/api/wireproof/keys/list/route.ts",
+        "exists": true,
+        "sha256": "0f7c361dc89a04d9482689613bd2bdde20fc63c0b0fe3678b542a00d223e6431",
+        "sizeBytes": 3452
+      },
+      {
+        "path": "app/api/wireproof/keys/create/route.ts",
+        "exists": true,
+        "sha256": "51bd4aec682e978374e1384c93576c9daa8498310e417eb2c2e6fef62ba190db",
+        "sizeBytes": 6013
+      },
+      {
+        "path": "app/api/wireproof/keys/revoke/route.ts",
+        "exists": true,
+        "sha256": "2727f0c8ce404d03ed8c7911b488312ac93606997f9bdd88e3da292dd4444374",
+        "sizeBytes": 4515
+      },
+      {
+        "path": "app/api/wireproof/mint/route.ts",
+        "exists": true,
+        "sha256": "ffd2129fc86396ff34ab5bab12176909b13b2e1786ad323047bba2fa468be912",
+        "sizeBytes": 16636
+      },
+      {
+        "path": "app/api/wireproof/webhook/route.ts",
+        "exists": true,
+        "sha256": "6a03e28e71a303f28a1fde0eea396bfb468f2d9a4f4a59c4f706027e50d031f6",
+        "sizeBytes": 4640
+      },
+      {
+        "path": "app/lib/wireproof/auth.ts",
+        "exists": true,
+        "sha256": "c229b3b662487bf1a96145230bde70472b4dda7b1123412e0d456671e1418e4b",
+        "sizeBytes": 2354
+      },
+      {
+        "path": "app/lib/wireproof/webhook.ts",
+        "exists": true,
+        "sha256": "b46a1a4e99e554c11c3df86f0314b43abcf70a696e7f3a5c24ae1eb4c7815d9c",
+        "sizeBytes": 4103
+      },
+      {
+        "path": "app/lib/wireproof/claim.ts",
+        "exists": true,
+        "sha256": "a5956a4e140cf9322d0be336ff730558f20497578eb16b98c7b2c4497b482fa6",
+        "sizeBytes": 1518
+      },
+      {
+        "path": "app/api/assetseal/mint/route.ts",
+        "exists": true,
+        "sha256": "57a3c2bc3531200fd62abd7c5c1dfe26935f5c5c04122ed0f5d0b6c047d6cc24",
+        "sizeBytes": 7974
+      },
+      {
+        "path": "app/api/assetseal/custody/list/route.ts",
+        "exists": true,
+        "sha256": "eb95cbfcc81c4a917cd1ed3f1116107752c559378f4fee479ebdacef98adf829",
+        "sizeBytes": 3896
+      },
+      {
+        "path": "app/api/assetseal/custody/append/route.ts",
+        "exists": true,
+        "sha256": "545de5c8e772be96a1b38041821e8fe9d626f4dfc7f9d8471207d05cae1cc6fe",
+        "sizeBytes": 10436
+      },
+      {
+        "path": "app/lib/assetseal/claim.ts",
+        "exists": true,
+        "sha256": "070db6ec4e53c3556f18e5e47b94ea949439a2bc9bb3089a052b75f9b5fa84ee",
+        "sizeBytes": 3693
+      },
+      {
+        "path": "app/lib/assetseal/types.ts",
+        "exists": true,
+        "sha256": "89cf3101ddf29bf1af6a46afd5557ee4eaf96aba7da20e900b96d3b889b193aa",
+        "sizeBytes": 865
+      },
+      {
+        "path": "app/api/signer/v1/receiz/sign/route.ts",
+        "exists": true,
+        "sha256": "6320026a205b5547378e7df8631cf2d0a6d088e676fd03a6911e11927c5734f9",
+        "sizeBytes": 14468
+      },
+      {
+        "path": "app/api/signer/v1/receiz/keyring/route.ts",
+        "exists": true,
+        "sha256": "6d89e35b7f48b38aefe9f8ec211ec409aff3c482065a3a2bbb9f17189554b301",
+        "sizeBytes": 752
+      },
+      {
+        "path": "app/api/signer/v4/receiz/enroll/route.ts",
+        "exists": true,
+        "sha256": "ce2f4d001cdd899b0e7890cd9e71ee7991587fb909258ed2cb91a835f7d1b38c",
+        "sizeBytes": 12746
+      },
+      {
+        "path": "app/lib/security/documentLimits.ts",
+        "exists": true,
+        "sha256": "9af4993fcf062b67f5b14ed95cb41e708fae9d53a7e53dc7ce68a3a72e0e8d17",
+        "sizeBytes": 4250
+      },
+      {
+        "path": "app/lib/security/ipRateLimit.ts",
+        "exists": true,
+        "sha256": "aac193b4ca306b7fbe07daaa6638183db25a11761392de2713439190f18af568",
+        "sizeBytes": 5138
+      },
+      {
+        "path": "app/lib/security/receizSignatureV4ServerConfig.ts",
+        "exists": true,
+        "sha256": "926335ae9b3c7ab9a01f545040d5b75dc9e7122f0b065d68872f39a239135f01",
+        "sizeBytes": 11722
+      }
+    ]
+  },
+  "history": {
+    "schema": "receiz-issuance-conformance-history-v1",
+    "snapshotId": "0b7414fd509c31ca0d4241ac7a88d79b16e58a703c3044ec5d4d4407a4704219",
+    "recordedAt": "2026-03-28T00:43:00.286Z",
+    "historyLength": 120,
+    "attestation": {
+      "state": "signed",
+      "schema": "receiz-issuance-conformance-attestation-v1",
+      "version": 1,
+      "alg": "Ed25519",
+      "payloadHashSha256": "e01f12c4782aefc1e4e24636f5d4777885f16e7f67719019abeb3598cdf4aba1",
+      "sig": "ohYmYgOSkdSgVnFlQ-Ygfnp-Y6zIs3eFfF3NnjAh9-AhYCqTLkGPJxsS1LxfdcbTY70i4s485uC0XBe7z2MXAQ",
+      "signedAtMs": 1774658580286,
+      "issuerKid": "receiz.v4.prod.2026-03-02",
+      "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+      "cert": {
+        "version": 1,
+        "certType": "receiz.device.v1",
+        "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+        "issuerKid": "receiz.v4.prod.2026-03-02",
+        "alg": "Ed25519",
+        "subjectPublicKeyRawB64u": "kzrn6i0ESUgOg9h9-w-uYOOIuGGEfMsQRWf94ufAwH4",
+        "issuedAtMs": 1774658236080,
+        "expiresAtMs": 1790210236080,
+        "sig": "uwPyVvYe1ymcWBUGrnSPLMaYdwcbj9rgZJBk09yfV-gbHGX9rTXZj89BQy_Z3j72caJLFWRRV1JT4ISuyFPVBQ"
+      }
+    },
+    "historyPath": "/api/issuance/conformance/history",
+    "badgePath": "/api/issuance/conformance/badge"
+  }
+}

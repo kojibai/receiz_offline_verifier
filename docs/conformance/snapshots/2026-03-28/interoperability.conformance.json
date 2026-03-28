@@ -1,0 +1,580 @@
+{
+  "ok": true,
+  "schema": "receiz-interoperability-conformance-report-v1",
+  "standardId": "receiz-interoperability-standard-v1",
+  "verificationVersion": "interoperability-runtime-v1",
+  "generatedAt": "2026-03-28T00:43:05.295Z",
+  "revision": {
+    "hash": "580b352f6100bb236d822619ba734f206a3bae8a53b9f96695c527a0c7a85f58",
+    "sourceDigestCount": 9
+  },
+  "overallStatus": "pass",
+  "summary": {
+    "requirementCount": 22,
+    "checkCount": 26,
+    "passRequirements": 22,
+    "warnRequirements": 0,
+    "failRequirements": 0,
+    "passChecks": 26,
+    "warnChecks": 0,
+    "failChecks": 0
+  },
+  "requirements": [
+    {
+      "id": "X-001",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.merchant_resolution"
+      ]
+    },
+    {
+      "id": "X-002",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.checkout.amount_bounds",
+        "source.embed.checkout.currency_lock"
+      ]
+    },
+    {
+      "id": "X-003",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.checkout.callback_allowlist"
+      ]
+    },
+    {
+      "id": "X-004",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.checkout.payload_limits"
+      ]
+    },
+    {
+      "id": "X-005",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.note_claim.token_extraction"
+      ]
+    },
+    {
+      "id": "X-006",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.note_claim.file_size_limits"
+      ]
+    },
+    {
+      "id": "X-007",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.note_claim.merchant_resolution"
+      ]
+    },
+    {
+      "id": "X-008",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.owner_resolution",
+        "runtime.calendar.embed.owner_not_found_get"
+      ]
+    },
+    {
+      "id": "X-009",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.slot_computation"
+      ]
+    },
+    {
+      "id": "X-010",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.overlap_rejection"
+      ]
+    },
+    {
+      "id": "X-011",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.booking_required_fields"
+      ]
+    },
+    {
+      "id": "X-012",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.settings_auth_gate",
+        "runtime.calendar.embed.settings_signin_required_put"
+      ]
+    },
+    {
+      "id": "X-013",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.override_contract"
+      ]
+    },
+    {
+      "id": "X-014",
+      "status": "pass",
+      "checkIds": [
+        "source.calendar.embed.no_store_on_success"
+      ]
+    },
+    {
+      "id": "X-015",
+      "status": "pass",
+      "checkIds": [
+        "runtime.embed.checkout.invalid_payload"
+      ]
+    },
+    {
+      "id": "X-016",
+      "status": "pass",
+      "checkIds": [
+        "runtime.embed.checkout.merchant_not_found"
+      ]
+    },
+    {
+      "id": "X-017",
+      "status": "pass",
+      "checkIds": [
+        "runtime.embed.note_claim.invalid_payload"
+      ]
+    },
+    {
+      "id": "X-018",
+      "status": "pass",
+      "checkIds": [
+        "runtime.embed.note_claim.merchant_not_found"
+      ]
+    },
+    {
+      "id": "X-019",
+      "status": "pass",
+      "checkIds": [
+        "runtime.calendar.embed.owner_not_found_post"
+      ]
+    },
+    {
+      "id": "X-020",
+      "status": "pass",
+      "checkIds": [
+        "runtime.embed.checkout.options_cors",
+        "runtime.embed.note_claim.options_cors"
+      ]
+    },
+    {
+      "id": "O-001",
+      "status": "pass",
+      "checkIds": [
+        "source.integrity.required_files_present"
+      ]
+    },
+    {
+      "id": "O-002",
+      "status": "pass",
+      "checkIds": [
+        "source.embed.cross_surface.contract_linkage"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "runtime.calendar.embed.owner_not_found_get",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Calendar embed GET returns owner-not-found for unknown usernames.",
+      "evidence": {
+        "status": 404,
+        "expectedStatuses": "404",
+        "error": "calendar_owner_not_found",
+        "expectedError": "calendar_owner_not_found"
+      }
+    },
+    {
+      "id": "runtime.calendar.embed.owner_not_found_post",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Calendar embed POST returns owner-not-found for unknown usernames.",
+      "evidence": {
+        "status": 404,
+        "expectedStatuses": "404",
+        "error": "calendar_owner_not_found",
+        "expectedError": "calendar_owner_not_found"
+      }
+    },
+    {
+      "id": "runtime.calendar.embed.settings_signin_required_put",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Calendar embed settings PUT requires sign-in session.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "signin_required",
+        "expectedError": "signin_required"
+      }
+    },
+    {
+      "id": "runtime.embed.checkout.invalid_payload",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed checkout rejects malformed JSON payloads.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "invalid_payload",
+        "expectedError": "invalid_payload"
+      }
+    },
+    {
+      "id": "runtime.embed.checkout.merchant_not_found",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed checkout returns merchant_not_found for unknown usernames.",
+      "evidence": {
+        "status": 404,
+        "expectedStatuses": "404",
+        "error": "merchant_not_found",
+        "expectedError": "merchant_not_found"
+      }
+    },
+    {
+      "id": "runtime.embed.checkout.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed checkout publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "runtime.embed.note_claim.invalid_payload",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed note-claim rejects malformed JSON payloads.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "wallet_invalid_payload",
+        "expectedError": "wallet_invalid_payload"
+      }
+    },
+    {
+      "id": "runtime.embed.note_claim.merchant_not_found",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed note-claim returns merchant_not_found for unknown usernames.",
+      "evidence": {
+        "status": 404,
+        "expectedStatuses": "404",
+        "error": "merchant_not_found",
+        "expectedError": "merchant_not_found"
+      }
+    },
+    {
+      "id": "runtime.embed.note_claim.options_cors",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Payments embed note-claim publishes CORS preflight policy.",
+      "evidence": {
+        "status": 204,
+        "allowOrigin": "*",
+        "allowMethods": "POST, OPTIONS"
+      }
+    },
+    {
+      "id": "source.calendar.embed.booking_required_fields",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed requires booking name, email, and slot start fields.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.no_store_on_success",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed success responses disable cache with no-store headers.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.overlap_rejection",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed rejects booking attempts that overlap existing events.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.override_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed exposes explicit schedule override contract for query/body controls.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.owner_resolution",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed resolves public owner profile and denies private or missing owners.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.settings_auth_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed settings update endpoint requires authenticated owner session.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.calendar.embed.slot_computation",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar embed computes deterministic slot windows from schedule configuration.",
+      "evidence": {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.checkout.amount_bounds",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed checkout enforces min and max USD amount bounds.",
+      "evidence": {
+        "path": "app/api/payments/embed/checkout/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.checkout.callback_allowlist",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed checkout restricts callback URLs to HTTPS or localhost HTTP.",
+      "evidence": {
+        "path": "app/api/payments/embed/checkout/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.checkout.currency_lock",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed checkout allows only USD currency contract.",
+      "evidence": {
+        "path": "app/api/payments/embed/checkout/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.checkout.payload_limits",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed checkout enforces payload length and JSON decode guards.",
+      "evidence": {
+        "path": "app/api/payments/embed/checkout/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.cross_surface.contract_linkage",
+      "status": "pass",
+      "category": "source",
+      "description": "Calendar and payment embed builders target their matching API surfaces.",
+      "evidence": {
+        "path": "app/calendar/embed/EmbedScheduler.tsx",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.merchant_resolution",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed merchant resolution enforces username normalization and public-profile checks.",
+      "evidence": {
+        "path": "app/lib/payments/embedMerchant.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.note_claim.file_size_limits",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed note claim enforces JSON and upload size limits.",
+      "evidence": {
+        "path": "app/api/payments/embed/note-claim/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.note_claim.merchant_resolution",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed note claim resolves merchant by username before settlement claim.",
+      "evidence": {
+        "path": "app/api/payments/embed/note-claim/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.embed.note_claim.token_extraction",
+      "status": "pass",
+      "category": "source",
+      "description": "Embed note claim extracts note token from payload artifacts safely.",
+      "evidence": {
+        "path": "app/api/payments/embed/note-claim/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.integrity.required_files_present",
+      "status": "pass",
+      "category": "source",
+      "description": "All referenced source files for interoperability conformance are present and hashable.",
+      "evidence": {
+        "sourceDigestCount": 9,
+        "missingFiles": "none"
+      }
+    }
+  ],
+  "evidence": {
+    "sourceDigests": [
+      {
+        "path": "app/api/payments/embed/checkout/route.ts",
+        "exists": true,
+        "sha256": "4a14bef924c5a202cbee7335ecf283192fa71d375b896b1d64821a3bd1852c91",
+        "sizeBytes": 8028
+      },
+      {
+        "path": "app/api/payments/embed/note-claim/route.ts",
+        "exists": true,
+        "sha256": "d4b2c69e6b1bec34262a7a943f1ed4eb30a4e9c3997bb0aad138260978ca773c",
+        "sizeBytes": 13048
+      },
+      {
+        "path": "app/lib/payments/embedMerchant.ts",
+        "exists": true,
+        "sha256": "7245cb498cbe3f5908eadfd91cdd5f177daa1441f2c32ac73c1e71ef4cbfecdd",
+        "sizeBytes": 1368
+      },
+      {
+        "path": "app/api/calendar/embed/[username]/route.ts",
+        "exists": true,
+        "sha256": "50bf9496060595242aada3c2c4256fa2d4ac746c40798b192837992d61bd6fe9",
+        "sizeBytes": 24539
+      },
+      {
+        "path": "app/lib/calendar/server.ts",
+        "exists": true,
+        "sha256": "b145b05aff44d2f1b0e748a5258e328f04049ce8d64a48bddd6c4cd3464f63de",
+        "sizeBytes": 22469
+      },
+      {
+        "path": "app/calendar/embed/EmbedScheduler.tsx",
+        "exists": true,
+        "sha256": "491cabb220b2e2ff7bbfeb3b5839881e21c4e3f4f012fff5a7646f134b05b1bd",
+        "sizeBytes": 44783
+      },
+      {
+        "path": "app/calendar/embed/EmbedBuilderClient.tsx",
+        "exists": true,
+        "sha256": "8edc2ed7cf3e104b95e823b9f81f935e3cfa4f85abafb30694a4ab092c99fd95",
+        "sizeBytes": 13092
+      },
+      {
+        "path": "app/payments/embed/page.tsx",
+        "exists": true,
+        "sha256": "32c2c16ef053572187196f610150734fb2de149d50fad01ac9b000405cecd4c5",
+        "sizeBytes": 2441
+      },
+      {
+        "path": "app/calendar/embed/page.tsx",
+        "exists": true,
+        "sha256": "b25d67d47f1d4ef69610a47d73bcfa2fb3bef21f5f79bc9a202e6e9f9a58fb11",
+        "sizeBytes": 2297
+      }
+    ]
+  },
+  "history": {
+    "schema": "receiz-interoperability-conformance-history-v1",
+    "snapshotId": "5c9e45c52c0f96003907e385c3276c51994fbf6ab44098fc90e84fc87051a327",
+    "recordedAt": "2026-03-28T00:43:05.296Z",
+    "historyLength": 120,
+    "attestation": {
+      "state": "signed",
+      "schema": "receiz-interoperability-conformance-attestation-v1",
+      "version": 1,
+      "alg": "Ed25519",
+      "payloadHashSha256": "ccb5bff81e4b9e6ce7dc606b15877cccc03272dc6a1885196251471d1f712b87",
+      "sig": "rJHYV-uVnfdORl_tcyv7zO1x3Wr-laj8QXBPzUpS9zYxxdUfthENX9Qa_vkr2q0Wp3Nwb8YOUjqMHWV_cxg-AA",
+      "signedAtMs": 1774658585296,
+      "issuerKid": "receiz.v4.prod.2026-03-02",
+      "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+      "cert": {
+        "version": 1,
+        "certType": "receiz.device.v1",
+        "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+        "issuerKid": "receiz.v4.prod.2026-03-02",
+        "alg": "Ed25519",
+        "subjectPublicKeyRawB64u": "kzrn6i0ESUgOg9h9-w-uYOOIuGGEfMsQRWf94ufAwH4",
+        "issuedAtMs": 1774658236080,
+        "expiresAtMs": 1790210236080,
+        "sig": "uwPyVvYe1ymcWBUGrnSPLMaYdwcbj9rgZJBk09yfV-gbHGX9rTXZj89BQy_Z3j72caJLFWRRV1JT4ISuyFPVBQ"
+      }
+    },
+    "historyPath": "/api/interoperability/conformance/history",
+    "badgePath": "/api/interoperability/conformance/badge"
+  }
+}

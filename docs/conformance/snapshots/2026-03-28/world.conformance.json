@@ -1,0 +1,508 @@
+{
+  "ok": true,
+  "schema": "receiz-world-conformance-report-v1",
+  "standardId": "receiz-world-standard-v1",
+  "verificationVersion": "world-runtime-v1",
+  "generatedAt": "2026-03-28T00:43:07.163Z",
+  "revision": {
+    "hash": "04af62bf4b1fec84ef6afc78632f0c85d8eab6a925990d23a301963e28b3bc8b",
+    "sourceDigestCount": 12
+  },
+  "overallStatus": "pass",
+  "summary": {
+    "requirementCount": 13,
+    "checkCount": 22,
+    "passRequirements": 13,
+    "warnRequirements": 0,
+    "failRequirements": 0,
+    "passChecks": 22,
+    "warnChecks": 0,
+    "failChecks": 0
+  },
+  "requirements": [
+    {
+      "id": "W-001",
+      "status": "pass",
+      "checkIds": [
+        "source.world.public_surface.world_endpoints"
+      ]
+    },
+    {
+      "id": "W-002",
+      "status": "pass",
+      "checkIds": [
+        "source.world.public.route_contract",
+        "runtime.world.public.snapshot_route"
+      ]
+    },
+    {
+      "id": "W-003",
+      "status": "pass",
+      "checkIds": [
+        "source.world.profile.route_limits_and_errors",
+        "source.world.profile.route_actions",
+        "runtime.world.profile.post.invalid_payload",
+        "runtime.world.profile.post.visitor_key_required"
+      ]
+    },
+    {
+      "id": "W-004",
+      "status": "pass",
+      "checkIds": [
+        "source.world.stream.sse_contract",
+        "source.world.stream.rate_limits",
+        "runtime.world.stream.invalid_payload",
+        "runtime.world.stream.sse_contract"
+      ]
+    },
+    {
+      "id": "W-005",
+      "status": "pass",
+      "checkIds": [
+        "source.world.public_projection.helpers"
+      ]
+    },
+    {
+      "id": "W-006",
+      "status": "pass",
+      "checkIds": [
+        "source.world.policy.runtime_permissions",
+        "source.world.runtime.prompt_and_lineage_guardrails"
+      ]
+    },
+    {
+      "id": "W-007",
+      "status": "pass",
+      "checkIds": [
+        "source.world.synthetic_reply.provenance"
+      ]
+    },
+    {
+      "id": "W-008",
+      "status": "pass",
+      "checkIds": [
+        "source.world.source_identity.continuity",
+        "source.world.runtime.prompt_and_lineage_guardrails"
+      ]
+    },
+    {
+      "id": "W-009",
+      "status": "pass",
+      "checkIds": [
+        "source.world.twin_promotion.pending_downgrade"
+      ]
+    },
+    {
+      "id": "W-010",
+      "status": "pass",
+      "checkIds": [
+        "source.world.realism.approved_public_gate"
+      ]
+    },
+    {
+      "id": "W-011",
+      "status": "pass",
+      "checkIds": [
+        "source.world.twin_promotion.manifest_history"
+      ]
+    },
+    {
+      "id": "W-012",
+      "status": "pass",
+      "checkIds": [
+        "source.world.live_publisher.auth_gate",
+        "runtime.world.live.publisher.unauthorized"
+      ]
+    },
+    {
+      "id": "W-013",
+      "status": "pass",
+      "checkIds": [
+        "source.integrity.required_files_present"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "id": "runtime.world.live.publisher.unauthorized",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Live publisher-session route denies unauthorized worker calls.",
+      "evidence": {
+        "status": 401,
+        "expectedStatuses": "401",
+        "error": "unauthorized",
+        "expectedError": "unauthorized",
+        "cacheControl": "no-store, max-age=0",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "runtime.world.profile.post.invalid_payload",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Public profile POST rejects malformed JSON bodies with a stable invalid-payload envelope.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "invalid_payload",
+        "expectedError": "invalid_payload",
+        "cacheControl": "no-store, max-age=0",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "runtime.world.profile.post.visitor_key_required",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Public profile POST requires a visitor key before welcome generation is allowed.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "world_agent_visitor_key_required",
+        "expectedError": "world_agent_visitor_key_required",
+        "cacheControl": "no-store, max-age=0",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "runtime.world.public.snapshot_route",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Public world snapshot route returns no-store JSON when the snapshot is resolved.",
+      "evidence": {
+        "status": 200,
+        "expectedStatuses": "200",
+        "error": "none",
+        "expectedError": "none",
+        "cacheControl": "no-store, max-age=0",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "runtime.world.stream.invalid_payload",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Public twin stream POST rejects malformed JSON before opening the SSE channel.",
+      "evidence": {
+        "status": 400,
+        "expectedStatuses": "400",
+        "error": "invalid_payload",
+        "expectedError": "invalid_payload",
+        "cacheControl": "no-store, max-age=0",
+        "contentType": "application/json"
+      }
+    },
+    {
+      "id": "runtime.world.stream.sse_contract",
+      "status": "pass",
+      "category": "runtime",
+      "description": "Public twin stream opens an SSE channel with reply-start and terminal event semantics for valid streaming requests.",
+      "evidence": {
+        "status": 200,
+        "cacheControl": "no-store, no-transform",
+        "contentType": "text/event-stream; charset=utf-8",
+        "hasReplyStart": true,
+        "hasResolution": true,
+        "hasDone": false,
+        "sample": "data: {\"type\":\"reply_start\",\"messageId\":\"8735e9d6-3901-4537-a5e1-8c522d8edc6e\",\"createdAt\":\"2026-03-28T00:43:07.008Z\"}\n\ndata: {\"type\":\"error\",\"error\":\"world_profile_not_found\"}\n\n"
+      }
+    },
+    {
+      "id": "source.integrity.required_files_present",
+      "status": "pass",
+      "category": "source",
+      "description": "All referenced source files for world conformance are present and hashable.",
+      "evidence": {
+        "sourceDigestCount": 12,
+        "missingFiles": "none"
+      }
+    },
+    {
+      "id": "source.world.live_publisher.auth_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Live publisher-session route requires worker authorization before issuing public twin SFU publisher sessions.",
+      "evidence": {
+        "path": "app/api/world/profile/[username]/live/publisher-session/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.policy.runtime_permissions",
+      "status": "pass",
+      "category": "source",
+      "description": "World runtime permissions and presentation labels are derived from explicit owner policy and capabilities.",
+      "evidence": {
+        "path": "app/lib/world/policy.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.profile.route_actions",
+      "status": "pass",
+      "category": "source",
+      "description": "Public profile route multiplexes welcome, message, and booking actions through explicit handlers.",
+      "evidence": {
+        "path": "app/api/world/profile/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.profile.route_limits_and_errors",
+      "status": "pass",
+      "category": "source",
+      "description": "Public profile route enforces IP and visitor rate limits with stable error envelopes.",
+      "evidence": {
+        "path": "app/api/world/profile/[username]/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.public_projection.helpers",
+      "status": "pass",
+      "category": "source",
+      "description": "Public projection helpers expose only the public world and public twin view models.",
+      "evidence": {
+        "path": "app/lib/world/publicProfile.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.public_surface.world_endpoints",
+      "status": "pass",
+      "category": "source",
+      "description": "Public surface inventory publishes world snapshot, profile, stream, and public message routes.",
+      "evidence": {
+        "path": "app/lib/publicSurface.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.public.route_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "Public world snapshot route uses no-store JSON and surfaces the schema-missing guard.",
+      "evidence": {
+        "path": "app/api/world/public/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.realism.approved_public_gate",
+      "status": "pass",
+      "category": "source",
+      "description": "Approved public twin acceptance gate blocks non-canonical or non-worker photoreal pipelines.",
+      "evidence": {
+        "path": "app/lib/world/realism.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.runtime.prompt_and_lineage_guardrails",
+      "status": "pass",
+      "category": "source",
+      "description": "Runtime preserves source and approval lineage while keeping public twin prompts inside guarded action lanes.",
+      "evidence": {
+        "path": "app/lib/world/runtime.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.source_identity.continuity",
+      "status": "pass",
+      "category": "source",
+      "description": "World source identity resolution distinguishes canonical avatar-source continuity from fallback surfaces.",
+      "evidence": {
+        "path": "app/lib/world/sourceIdentity.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.stream.rate_limits",
+      "status": "pass",
+      "category": "source",
+      "description": "Public twin stream route enforces IP and visitor rate limits before opening the stream.",
+      "evidence": {
+        "path": "app/api/world/profile/[username]/stream/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.stream.sse_contract",
+      "status": "pass",
+      "category": "source",
+      "description": "Public twin stream route emits reply lifecycle events over no-store SSE transport.",
+      "evidence": {
+        "path": "app/api/world/profile/[username]/stream/route.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.synthetic_reply.provenance",
+      "status": "pass",
+      "category": "source",
+      "description": "Synthetic public twin replies are disclosed and signed with provider, source-identity, and approval lineage provenance.",
+      "evidence": {
+        "path": "app/lib/world/syntheticReply.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.twin_promotion.manifest_history",
+      "status": "pass",
+      "category": "source",
+      "description": "Twin promotion records are persisted as versioned current, avatar, and history manifests.",
+      "evidence": {
+        "path": "app/lib/world/twinApproval.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    },
+    {
+      "id": "source.world.twin_promotion.pending_downgrade",
+      "status": "pass",
+      "category": "source",
+      "description": "Pending photoreal twin promotion downgrades public presentation away from live-video promotion.",
+      "evidence": {
+        "path": "app/lib/world/twinApproval.ts",
+        "exists": true,
+        "missingNeedles": "none",
+        "missingPatterns": "none"
+      }
+    }
+  ],
+  "evidence": {
+    "sourceDigests": [
+      {
+        "path": "app/lib/publicSurface.ts",
+        "exists": true,
+        "sha256": "a9e2e506b1388f0629b948bd0adc9b7adce30c6486aa6b983eed5f1923a0e9d2",
+        "sizeBytes": 10161
+      },
+      {
+        "path": "app/api/world/public/route.ts",
+        "exists": true,
+        "sha256": "744aea440d38df741f46a9aeccc2434228088504974a8c347d4d4a5635bc9f30",
+        "sizeBytes": 825
+      },
+      {
+        "path": "app/api/world/profile/[username]/route.ts",
+        "exists": true,
+        "sha256": "5c5fadc535fbce79e2e713b092e3088a2d95d2d98f6a5840048c6bdb35903e1e",
+        "sizeBytes": 6114
+      },
+      {
+        "path": "app/api/world/profile/[username]/stream/route.ts",
+        "exists": true,
+        "sha256": "cadede7b92fcb0bb571c6bdcf1c8cd8549830aace4f98f7c5bd602706c339a03",
+        "sizeBytes": 7608
+      },
+      {
+        "path": "app/api/world/profile/[username]/live/publisher-session/route.ts",
+        "exists": true,
+        "sha256": "606cbbc0ed84e96ca7b59c3aceaa5fa74af70bbb3fa0b1a589a9f516f6fc4825",
+        "sizeBytes": 2442
+      },
+      {
+        "path": "app/lib/world/publicProfile.ts",
+        "exists": true,
+        "sha256": "a0feb8fce16d4d0b17c42853289d96169c1d4942ecc4dbd5bba801b001eb6e63",
+        "sizeBytes": 4202
+      },
+      {
+        "path": "app/lib/world/policy.ts",
+        "exists": true,
+        "sha256": "713670a0963a9d2483ca993a547edd46a3cb8412ff76c8b8da8cee6171ac39a5",
+        "sizeBytes": 8173
+      },
+      {
+        "path": "app/lib/world/runtime.ts",
+        "exists": true,
+        "sha256": "71abbf01107273569a19dcfdafbf2b8f936fd6b1dd52ce23443de62e0c713e25",
+        "sizeBytes": 134989
+      },
+      {
+        "path": "app/lib/world/syntheticReply.ts",
+        "exists": true,
+        "sha256": "3f4b15d1365c4197c5a6cfc9b46181fa6f29602035bb9cf9d70c247bd64f7aab",
+        "sizeBytes": 9216
+      },
+      {
+        "path": "app/lib/world/sourceIdentity.ts",
+        "exists": true,
+        "sha256": "ac78ff0f1734d713e2508716c3c12f2f427947a9f557ec8969bd2ba730d39811",
+        "sizeBytes": 2543
+      },
+      {
+        "path": "app/lib/world/twinApproval.ts",
+        "exists": true,
+        "sha256": "2fef5d5192e3bbe6bb878872d5cff704c1fa579e722efac5db25599ecc6eb721",
+        "sizeBytes": 36220
+      },
+      {
+        "path": "app/lib/world/realism.ts",
+        "exists": true,
+        "sha256": "b6ffa9468a7993a979c5435b54d00bf294542bb365251dd8a1a72ddf5d3ff221",
+        "sizeBytes": 31180
+      }
+    ]
+  },
+  "history": {
+    "schema": "receiz-world-conformance-history-v1",
+    "snapshotId": "e7a886bef52a1702a1685f234ecd4627a1fad8fd0999dafd72bd3e9f1906e5da",
+    "recordedAt": "2026-03-28T00:43:07.163Z",
+    "historyLength": 35,
+    "attestation": {
+      "state": "signed",
+      "schema": "receiz-world-conformance-attestation-v1",
+      "version": 1,
+      "alg": "Ed25519",
+      "payloadHashSha256": "6d44d73c7591a3b40a4081d484da1a79e2a223a2d5996bf92caf8a1dad448a71",
+      "sig": "Yu7kqjQx2jnrqGMEyE7HKryEqN9G4mb2q9zE1EOY6MGbVj2V_UsnbzxHcOjpsMwEhDbXautxifsarnZm9g7hAw",
+      "signedAtMs": 1774658587163,
+      "issuerKid": "receiz.v4.prod.2026-03-02",
+      "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+      "cert": {
+        "version": 1,
+        "certType": "receiz.device.v1",
+        "certId": "d1d7dd9c51a1ecfa8b354552b9cd10d9",
+        "issuerKid": "receiz.v4.prod.2026-03-02",
+        "alg": "Ed25519",
+        "subjectPublicKeyRawB64u": "kzrn6i0ESUgOg9h9-w-uYOOIuGGEfMsQRWf94ufAwH4",
+        "issuedAtMs": 1774658236080,
+        "expiresAtMs": 1790210236080,
+        "sig": "uwPyVvYe1ymcWBUGrnSPLMaYdwcbj9rgZJBk09yfV-gbHGX9rTXZj89BQy_Z3j72caJLFWRRV1JT4ISuyFPVBQ"
+      }
+    },
+    "historyPath": "/api/world/conformance/history",
+    "badgePath": "/api/world/conformance/badge"
+  }
+}
