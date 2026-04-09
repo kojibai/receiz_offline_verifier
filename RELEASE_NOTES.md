@@ -1,27 +1,26 @@
 # Release Notes
 
-## v47.0.0
-Release date: 2026-04-05
+## v47.2.0
+Release date: 2026-04-09
 
-`v47.0.0` turns the broad platform expansion of `v46.0.0` into a cleaner and more governed product surface: richer original and document delivery, stronger verified-player continuity and sharing, harder-to-break media and storage behavior, more authority-aware Public Twin/world rendering, and a tighter release-freeze contract across the platform.
+`v47.2.0` is the custom-domain routing and setup-surface release. It keeps the current `v47.x` product truth intact while fixing the exact production path that matters for Business domains: the custom hostname root now resolves to the bound public profile instead of falling through to the Receiz 404 surface, and the DNS setup panel is easier to execute from because each DNS name and value can be copied directly.
 
 The core rule does not change: the file remains the authority. Deterministic manifests remain the authority for historical route truth. Public readers, verified-player surfaces, storage proxies, world embodiment, and release metadata remain transport and governance around those truths.
 
-Canonical full release note: [docs/releases/v47.0.0.md](docs/releases/v47.0.0.md)
-Product-truth freeze: [docs/releases/v47.0.0-product-truth.md](docs/releases/v47.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v47.2.0.md](docs/releases/v47.2.0.md)
+Product-truth freeze: [docs/releases/v47.2.0-product-truth.md](docs/releases/v47.2.0-product-truth.md)
 
 ## Highlights
-- Originals and documents now behave like first-class product surfaces instead of attachment passthroughs.
-- Verified-player routes are stronger destinations: better continuity, richer metadata, and clearer public sharing behavior.
-- Signed storage-object routes preserve `HEAD` and byte-range semantics, and service-worker freshness is tied more explicitly to release-version truth.
-- Public Twin and world surfaces now run under stronger authority, stage separation, freshness, and sanitization rules.
-- Release governance now moves product-surface inventory, version surfaces, freeze gates, and attestation checks together.
+- Custom-domain root traffic resolves from the effective forwarded host, not only the internal request hostname.
+- Connected Business custom domains can land visitors on the bound public profile at `/` without requiring the `/<username>` fallback path.
+- DNS setup guidance in `/account` exposes direct copy controls for each DNS record name and value.
+- Release-governed version surfaces stay locked together across package metadata, service worker defaults, public badges, and release documents.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v47.0.0`.
-- Repository release/docs surfaces now align to `v47.0.0`.
+- Current shipped verifier entrypoints are marked `v47.2.0`.
+- Repository release/docs surfaces now align to `v47.2.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v46.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v47.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -37,14 +36,15 @@ Product-truth freeze: [docs/releases/v47.0.0-product-truth.md](docs/releases/v47
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Cumulative scope since `v46.0.0`: `309` files changed, `75,572` insertions, `4,153` deletions.
-- Published release surfaces now include the canonical `v47.0.0` release note and the `v47.0.0` product-truth freeze document.
+- Platform validation for `v47.2.0` included the targeted custom-domain proxy regression test, the release-lock version-surface check, and file-level lint on the modified routing, account, and release-test files.
+- Published release surfaces now include the canonical `v47.2.0` release note and the `v47.2.0` product-truth freeze document.
+- In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Update outward release/docs references to `v47.0.0`.
+- Update outward release/docs references to `v47.2.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v47.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v47.2.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
