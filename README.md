@@ -2,13 +2,13 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v47.2.0`
+Current release: `v47.3.0`
 
 ## What changed in v47
-- Current release/docs surfaces are aligned to `v47.2.0`.
-- Published the canonical `v47.2.0` release note at [docs/releases/v47.2.0.md](docs/releases/v47.2.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v47.2.0-product-truth.md](docs/releases/v47.2.0-product-truth.md).
-- `v47.2.0` is the custom-domain root-routing and DNS setup-surface patch; verifier semantics remain unchanged from `v47.0.0`.
+- Current release/docs surfaces are aligned to `v47.3.0`.
+- Published the canonical `v47.3.0` release note at [docs/releases/v47.3.0.md](docs/releases/v47.3.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v47.3.0-product-truth.md](docs/releases/v47.3.0-product-truth.md).
+- `v47.3.0` is the custom-domain continuity and sign-in experience release; verifier semantics remain unchanged from `v47.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -50,6 +50,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v47.0.0`: release/docs alignment for the governed trust-surface release, including first-class original/document delivery, stronger verified-player continuity and sharing, stricter storage/media freshness, more authority-aware Public Twin/world behavior, and explicit version-truth governance.
 - `v47.0.1`: release/docs alignment for the profile stability patch; verifier semantics remain unchanged from `v47.0.0`.
 - `v47.2.0`: release/docs alignment for the Business custom-domain root-routing and DNS setup-surface patch; verifier semantics remain unchanged from `v47.0.0`.
+- `v47.3.0`: release/docs alignment for the custom-domain continuity and sign-in experience release, including auth-bridge continuity on verified business domains, email-first fallback in likely embedded browsers, and trusted-host first-paint hero media behavior; verifier semantics remain unchanged from `v47.0.0`.
 
 ## Supported artifact inputs (v47)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -115,13 +116,13 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v47.2.0`.
+- [docs/README.md](docs/README.md): documentation map for `v47.3.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v47.2.0.md](docs/releases/v47.2.0.md): canonical `v47.2.0` release note.
-- [docs/releases/v47.2.0-product-truth.md](docs/releases/v47.2.0-product-truth.md): `v47.2.0` product-truth freeze document.
+- [docs/releases/v47.3.0.md](docs/releases/v47.3.0.md): canonical `v47.3.0` release note.
+- [docs/releases/v47.3.0-product-truth.md](docs/releases/v47.3.0-product-truth.md): `v47.3.0` product-truth freeze document.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current snapshot results, and deep suite docs for all six public conformance suites.
