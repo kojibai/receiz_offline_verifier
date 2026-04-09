@@ -1,6 +1,6 @@
 # Governance Docs
 
-This directory contains the public governance documentation set for Receiz `v47.4.0`.
+This directory contains the public governance documentation set for Receiz `v47.5.0`.
 
 ## Contents
 
