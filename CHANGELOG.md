@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v47.7.0] - 2026-04-09
+
+### Changed
+- Advanced the current release/documentation surface from `v47.6.0` to `v47.7.0`.
+- Published the canonical `v47.7.0` release note and product-truth freeze documents:
+  - `docs/releases/v47.7.0.md`
+  - `docs/releases/v47.7.0-product-truth.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v47.7.0`.
+- Aligned public release framing around durable contacts persistence, historical relationship backfill, portable contact import/export, live per-person timelines, and locked release-version surfaces.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v47.7.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v47.6.0] - 2026-04-09
 
 ### Changed
