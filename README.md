@@ -2,15 +2,16 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v47.8.0`
+Current release: `v48.0.0`
 
-## What changed in v47
-- Current release/docs surfaces are aligned to `v47.8.0`.
-- Published the canonical `v47.8.0` release note at [docs/releases/v47.8.0.md](docs/releases/v47.8.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v47.8.0-product-truth.md](docs/releases/v47.8.0-product-truth.md).
-- `v47.8.0` is the contacts continuity hardening release; verifier semantics remain unchanged from `v47.0.0`.
-- Public-twin and guest interactions now project into the same Contacts CRM from the action ledger, with guest visitor and thread continuity keys materialized into durable contact records.
-- Contact mobile surfaces now expose guest/authenticated/direct identity context, and guest-only twin follow-up reopens the saved public-twin thread when no direct lane exists.
+## What changed in v48
+- Current release/docs surfaces are aligned to `v48.0.0`.
+- Published the canonical `v48.0.0` release note at [docs/releases/v48.0.0.md](docs/releases/v48.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v48.0.0-product-truth.md](docs/releases/v48.0.0-product-truth.md).
+- `v48.0.0` is the operator-surface release for contacts and world; verifier semantics remain unchanged from `v47.0.0`.
+- Contacts now default to an operator-first shell with best-move, continuity, latest-touch, queue-style prioritization, and compact mobile overlays.
+- Imported contact merges now persist `linked_user_id` upgrades so authenticated continuity survives unchanged-payload writes.
+- World now presents a cleaner mobile atlas with authoritative naming, separated signal layers, and differentiated lower panels.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -29,7 +30,7 @@ Current release: `v47.8.0`
 
 The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) follows the official Powered by Receiz trust-row order and includes live badge surfaces, current imported live results, and suite-by-suite requirement coverage docs.
 
-## Release train highlights (v14 -> v47)
+## Release train highlights (v14 -> v48)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -58,8 +59,9 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v47.6.0`: release/docs alignment for the world command-center and contacts-operations release, including the atlas-first `/world` shell, concierge twin-run tracking, a standalone `/contacts` CRM surface, safer outreach persistence rules, and Stripe-backed checkout completion truth; verifier semantics remain unchanged from `v47.0.0`.
 - `v47.7.0`: release/docs alignment for the durable contacts production release, including migration-backed contact persistence, historical relationship backfill, live person timelines, portable import/export, and locked release-governance surfaces; verifier semantics remain unchanged from `v47.0.0`.
 - `v47.8.0`: release/docs alignment for the contacts continuity hardening release, including guest-contact materialization, public-twin and calendar continuity, mobile identity visibility, and guest-thread follow-up continuity; verifier semantics remain unchanged from `v47.0.0`.
+- `v48.0.0`: release/docs alignment for the operator-surface release, including the operator-first contacts shell, durable `linked_user_id` merge upgrades, and a cleaner authoritative mobile world atlas; verifier semantics remain unchanged from `v47.0.0`.
 
-## Supported artifact inputs (v47)
+## Supported artifact inputs (v48)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -92,7 +94,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in signature payload shape and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v47` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v48` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -109,7 +111,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v47`:
+Required runtime assets for `v48`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
@@ -123,13 +125,13 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v47.8.0`.
+- [docs/README.md](docs/README.md): documentation map for `v48.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v47.8.0.md](docs/releases/v47.8.0.md): canonical `v47.8.0` release note.
-- [docs/releases/v47.8.0-product-truth.md](docs/releases/v47.8.0-product-truth.md): `v47.8.0` product-truth freeze document.
+- [docs/releases/v48.0.0.md](docs/releases/v48.0.0.md): canonical `v48.0.0` release note.
+- [docs/releases/v48.0.0-product-truth.md](docs/releases/v48.0.0-product-truth.md): `v48.0.0` product-truth freeze document.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current snapshot results, and deep suite docs for all six public conformance suites.
