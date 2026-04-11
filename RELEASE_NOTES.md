@@ -1,25 +1,26 @@
 # Release Notes
 
-## v48.0.0
-Release date: 2026-04-10
+## v50.0.0
+Release date: 2026-04-11
 
-`v48.0.0` is the operator-surface release for contacts and world. It upgrades contacts from a dense record viewer into a one-view operator cockpit, keeps linked-account import upgrades durable, and turns world into a cleaner mobile atlas with authoritative naming and separated signal layers.
+`v50.0.0` is the world revenue OS release and the major recap cut for everything shipped after `v40.0.0`. It takes Receiz from a strong trust-and-world foundation into a product that can actually operate: durable contacts CRM, live world command surfaces, concierge-run lead sourcing, campaign persistence, scheduled autopilot, provider-backed enrichment, truthful rail readiness, deliverability telemetry, reply handling, and closed-loop revenue attribution.
 
-The core rule does not change: the file remains the authority. Deterministic manifests remain the authority for historical route truth. Contacts operator state, linked-account continuity upgrades, world atlas layering, and release metadata remain transport and governance around those truths rather than replacements for them.
+The core rule does not change: the file remains the authority. Deterministic manifests remain the authority for route truth. Ledger-backed payment state remains the authority for settlement. The twin, campaign, outreach, and operator surfaces are execution and continuity layers around those trust boundaries, not replacements for them.
 
-Canonical full release note: [docs/releases/v48.0.0.md](docs/releases/v48.0.0.md)
-Product-truth freeze: [docs/releases/v48.0.0-product-truth.md](docs/releases/v48.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v50.0.0.md](docs/releases/v50.0.0.md)
+Product-truth freeze: [docs/releases/v50.0.0-product-truth.md](docs/releases/v50.0.0-product-truth.md)
 
 ## Highlights
-- Contacts now default to an operator-first shell with best-move, continuity, latest-touch, queue-style prioritization, and compact mobile overlays instead of a long stacked record.
-- Mobile contacts still preserve full access to overview, next-step, continuity context, recent activity, edit, invite, log, schedule, and full history.
-- Imported contact merges now persist `linked_user_id` upgrades so authenticated identity upgrades do not silently fail to write when the rest of the contact payload is unchanged.
-- World now presents an authoritative atlas surface on mobile, with cleaner HUD layers, non-overlapping signal presentation, and a differentiated return-signal panel instead of redundant lower cards.
+- Receiz now has a real revenue operating system inside `/world`, not just a conversational twin surface.
+- Contacts, campaigns, outreach, replies, bookings, and revenue attribution now move through one governed system instead of separate product islands.
+- The twin can source leads, enrich contact paths, import them into Contacts, stage and send outreach, track provider events, surface reply work, and keep campaign continuity alive across runs.
+- Rail readiness is now explicit: blocked rails, missing provider setup, missing endpoints, and delivery failures surface as blocked operator state instead of optimistic success.
+- A standalone enrichment service can run separately and feed provider-backed public contact enrichment into the main app deployment.
 - Release-governed version surfaces stay locked together across package metadata, service worker defaults, public badges, offline verifier surfaces, and release documents.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v48.0.0`.
-- Repository release/docs surfaces now align to `v48.0.0`.
+- Current shipped verifier entrypoints are marked `v50.0.0`.
+- Repository release/docs surfaces now align to `v50.0.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
 - Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v47.0.0`.
 
@@ -37,18 +38,18 @@ Product-truth freeze: [docs/releases/v48.0.0-product-truth.md](docs/releases/v48
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Platform validation for `v48.0.0` included contacts and world experience eslint checks, the contacts and world release-contract suites, the release-lock version-surface check, and the final `pnpm test:release-freeze` gate.
-- Published release surfaces now include the canonical `v48.0.0` release note and the `v48.0.0` product-truth freeze document.
+- Platform validation for `v50.0.0` included type-checking, contacts/world release-contract suites, targeted world revenue-engine tests, and the release-lock gate captured in the canonical release note.
+- Published release surfaces now include the canonical `v50.0.0` release note and the `v50.0.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260409163000_contacts_crm.sql` before routing production traffic to the compact mobile contacts surface.
-- Keep service-role Supabase access available for contact sync, historical backfill, and world action-ledger projection.
-- Manually smoke compact mobile contacts with at least one populated contact record and one populated world atlas state before tagging the release.
-- Update outward release/docs references to `v48.0.0`.
+- Apply `supabase/migrations/20260409163000_contacts_crm.sql`, `20260410113000_world_campaigns.sql`, `20260410143000_world_campaign_autopilot_scheduler.sql`, and `20260410170000_world_campaign_events.sql` before routing production traffic to the live operator surfaces.
+- Keep service-role Supabase access available for contacts sync, campaign persistence, provider event ingestion, and revenue reconciliation.
+- Configure outbound email, SMS, webhook, autopilot, and enrichment envs before expecting real autonomous outreach.
+- Update outward release/docs references to `v50.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v48.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v50.0.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
