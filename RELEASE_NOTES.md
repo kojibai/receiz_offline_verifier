@@ -1,28 +1,26 @@
 # Release Notes
 
-## v50.0.0
-Release date: 2026-04-11
+## v51.0.0
+Release date: 2026-04-12
 
-`v50.0.0` is the world revenue OS release and the major recap cut for everything shipped after `v40.0.0`. It takes Receiz from a strong trust-and-world foundation into a product that can actually operate: durable contacts CRM, live world command surfaces, concierge-run lead sourcing, campaign persistence, scheduled autopilot, provider-backed enrichment, truthful rail readiness, deliverability telemetry, reply handling, and closed-loop revenue attribution.
+`v51.0.0` is the release where product framing catches up to what the system has become. Receiz is now presented through the real public ladder: Free lets people try the surface, Authorship proves what is theirs, Business gives ownership of the surface, Automation turns Receiz into an operating system for revenue motion, and Enterprise scales that operating layer. The trust model does not change: the file remains the authority, deterministic manifests remain the authority for route truth, and ledger-backed settlement remains the authority for payment truth.
 
-The core rule does not change: the file remains the authority. Deterministic manifests remain the authority for route truth. Ledger-backed payment state remains the authority for settlement. The twin, campaign, outreach, and operator surfaces are execution and continuity layers around those trust boundaries, not replacements for them.
-
-Canonical full release note: [docs/releases/v50.0.0.md](docs/releases/v50.0.0.md)
-Product-truth freeze: [docs/releases/v50.0.0-product-truth.md](docs/releases/v50.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v51.0.0.md](docs/releases/v51.0.0.md)
+Product-truth freeze: [docs/releases/v51.0.0-product-truth.md](docs/releases/v51.0.0-product-truth.md)
 
 ## Highlights
-- Receiz now has a real revenue operating system inside `/world`, not just a conversational twin surface.
-- Contacts, campaigns, outreach, replies, bookings, and revenue attribution now move through one governed system instead of separate product islands.
-- The twin can source leads, enrich contact paths, import them into Contacts, stage and send outreach, track provider events, surface reply work, and keep campaign continuity alive across runs.
-- Rail readiness is now explicit: blocked rails, missing provider setup, missing endpoints, and delivery failures surface as blocked operator state instead of optimistic success.
-- A standalone enrichment service can run separately and feed provider-backed public contact enrichment into the main app deployment.
-- Release-governed version surfaces stay locked together across package metadata, service worker defaults, public badges, offline verifier surfaces, and release documents.
+- The pricing story now follows the real ladder from Free to Enterprise instead of centering legacy Premium/Pro naming.
+- Public plan names are now `Authorship`, `Business`, and `Automation`, while internal billing keys remain safely mapped to `premium`, `business`, and `pro`.
+- Upgrade, billing, account, FAQ, and entitlement-adjacent surfaces now explain proof, ownership, and automation in the same order.
+- Free remains usable; paid tiers open deeper operating layers instead of turning the free product into a crippled teaser.
+- Contacts/world truth hardening from `v50.0.0` remains part of the release, including fuller CRM visibility, placeholder cleanup, stronger guest/profile continuity, more user-facing history, and calmer outreach pacing.
+- Release-governed version surfaces stay locked together across current-release docs and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v50.0.0`.
-- Repository release/docs surfaces now align to `v50.0.0`.
+- Current shipped verifier entrypoints are marked `v51.0.0`.
+- Repository release/docs surfaces now align to `v51.0.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v47.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v50.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -38,18 +36,18 @@ Product-truth freeze: [docs/releases/v50.0.0-product-truth.md](docs/releases/v50
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Platform validation for `v50.0.0` included type-checking, contacts/world release-contract suites, targeted world revenue-engine tests, and the release-lock gate captured in the canonical release note.
-- Published release surfaces now include the canonical `v50.0.0` release note and the `v50.0.0` product-truth freeze document.
+- Broader platform validation for `v51.0.0` is captured in the canonical release note, including plan-mapping, Contacts release-contract, world revenue-engine, and release-lock gates.
+- Published release surfaces now include the canonical `v51.0.0` release note and the `v51.0.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260409163000_contacts_crm.sql`, `20260410113000_world_campaigns.sql`, `20260410143000_world_campaign_autopilot_scheduler.sql`, and `20260410170000_world_campaign_events.sql` before routing production traffic to the live operator surfaces.
-- Keep service-role Supabase access available for contacts sync, campaign persistence, provider event ingestion, and revenue reconciliation.
-- Configure outbound email, SMS, webhook, autopilot, and enrichment envs before expecting real autonomous outreach.
-- Update outward release/docs references to `v50.0.0`.
+- Apply `supabase/migrations/20260409163000_contacts_crm.sql`, `20260410113000_world_campaigns.sql`, `20260410143000_world_campaign_autopilot_scheduler.sql`, `20260410170000_world_campaign_events.sql`, and `20260412151000_world_guest_profiles.sql` before routing production traffic to the live operator surfaces.
+- Keep internal billable keys on `premium`, `business`, and `pro` while public plan names map to `Authorship`, `Business`, and `Automation`.
+- Confirm Stripe price IDs and checkout configuration match the public upgrade surface before tagging the release.
+- Update outward release/docs references to `v51.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v50.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v51.0.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture

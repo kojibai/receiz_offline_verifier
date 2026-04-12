@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v50.0.0`.
+This document defines the verifier-visible data contract for `v51.0.0`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
@@ -65,7 +65,7 @@ Proof bundle must resolve to a canonical verify path:
 `/v/<slug>/<CODE>/<PULSE>`
 
 ## Anchor context requirement
-Verified outcomes in `v50` require effective anchor context.
+Verified outcomes in `v51` require effective anchor context.
 
 Effective anchor context is resolved from:
 - explicit `receiz_anchor_bundle` carrier data, or
@@ -74,7 +74,7 @@ Effective anchor context is resolved from:
 If neither explicit nor derivable anchor context is available, verification fails.
 
 ## Trusted signatures (`signatureV4`)
-`v50` requires trusted Signature v4 verification for verified outcomes.
+`v51` requires trusted Signature v4 verification for verified outcomes.
 
 Trusted signature success requires:
 - `signatureV4` verifies.
@@ -83,12 +83,12 @@ Trusted signature success requires:
 - Any present invalid `signatureV4` payload causes hard failure (`Trusted signature invalid`).
 - If present `signatureV4` is unavailable, verification hard fails (`Trusted signature unavailable`).
 - If `signatureV4` is missing, verification hard fails (`Trusted signature missing` with detail `Trusted signature missing. Expected signatureV4.`).
-- `signatureV3` may be present for compatibility but does not satisfy trusted-signature success in `v50`.
+- `signatureV3` may be present for compatibility but does not satisfy trusted-signature success in `v51`.
 
 ## Receiz Signature v3 (legacy payload support)
 
 `signatureV3` payload shape is retained in schema for compatibility.
-In `v50`, Signature v3 verification and key-policy evaluation are not executed, and `signatureV3` does not satisfy trusted-signature requirements.
+In `v51`, Signature v3 verification and key-policy evaluation are not executed, and `signatureV3` does not satisfy trusted-signature requirements.
 
 ## Receiz Signature v4
 
@@ -122,8 +122,8 @@ In `v50`, Signature v3 verification and key-policy evaluation are not executed, 
 ## Signature key pin overrides
 - Signature v4 root-key override: `globalThis.__RECEIZ_SIGNATURE_V4_ROOT_PUBLIC_KEYS_PINNED__`
 
-## Groth16 requirements (`v50`)
-`v50` requires Groth16 artifact fields and accepts only real-mode proof payloads.
+## Groth16 requirements (`v51`)
+`v51` requires Groth16 artifact fields and accepts only real-mode proof payloads.
 
 Required proof bundle fields:
 - `zkPoseidonHash` (64-hex)
@@ -155,7 +155,7 @@ If a link/path value is provided by an integration, parsed path must match one o
 - `anchor.parent.viewUrl` (explicit anchor bundle or derived anchor context)
 - `bundle.wireproof.verifierPath` (if present)
 
-Note: the default `v50` UI does not prompt for a manual `/v/...` path input.
+Note: the default `v51` UI does not prompt for a manual `/v/...` path input.
 
 ## Schemas
 - [receiz-proof-bundle.schema.json](schemas/receiz-proof-bundle.schema.json)
