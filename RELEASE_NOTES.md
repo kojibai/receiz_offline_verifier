@@ -1,26 +1,27 @@
 # Release Notes
 
-## v52.0.0
+## v52.5.0
 Release date: 2026-04-13
 
-`v52.0.0` turns Receiz market execution into a governed system. Assets now trade through a deterministic quote engine with bounded spread and shift pressure, replayable quote evidence, and partial share-certificate custody, while market surfaces stay lighter under load and market now has its own conformance suite and release-attestation coverage. The authority model does not change: the file remains the authority, deterministic manifests remain the authority for route truth, and ledger-backed settlement remains the authority for payment truth.
+`v52.5.0` is the follow-on hardening release after `v52.0.0`. Assets continue trading through the governed deterministic quote engine, trade evidence is persisted as replayable quote context, share certificates support partial custody motion, market media and pill surfaces are more deliberate and lighter at runtime, and market now carries stronger conformance and official share-ready trust surfaces. The authority model does not change: the file remains the authority, deterministic manifests remain the authority for route truth, and ledger-backed settlement remains the authority for payment truth.
 
-Canonical full release note: [docs/releases/v52.0.0.md](docs/releases/v52.0.0.md)
-Product-truth freeze: [docs/releases/v52.0.0-product-truth.md](docs/releases/v52.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v52.5.0.md](docs/releases/v52.5.0.md)
+Product-truth freeze: [docs/releases/v52.5.0-product-truth.md](docs/releases/v52.5.0-product-truth.md)
 
 ## Highlights
-- Market execution now resolves through a canonical quote model instead of a separate visible runtime fee story.
+- Market execution resolves through a canonical deterministic quote engine instead of a visible additive fee layer.
 - Buys and sells persist replayable quote evidence, including reference mid, quote mid, bid, ask, spread, shift, and pressure inputs.
-- Share certificates now support partial balances, partial withdrawals, and partial redeposit flows.
-- Market now has its own conformance suite, badge/history endpoints, and release-attestation coverage.
-- Premium market pills and desk-adjacent surfaces now avoid more wasteful rerender paths.
+- Share certificates now support partial withdrawals, remaining balances, and partial redeposit flows.
+- Market now has its own conformance suite, badge/history endpoints, and release-governed documentation.
+- Premium market pills, floating desk-card treatment, contextual media playback, and inline launch surfaces now avoid more wasteful runtime work.
+- Shared market assets now resolve through a dedicated market share route with asset-specific trust metadata.
 - Release-governed version surfaces stay locked together across current-release docs and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v52.0.0`.
-- Repository release/docs surfaces now align to `v52.0.0`.
+- Current shipped verifier entrypoints are marked `v52.5.0`.
+- Repository release/docs surfaces now align to `v52.5.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v51.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v52.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -36,8 +37,8 @@ Product-truth freeze: [docs/releases/v52.0.0-product-truth.md](docs/releases/v52
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v52.0.0` is captured in the canonical release note, including quote determinism, quote evidence persistence, market conformance, runtime hardening, and release-lock gates.
-- Published release surfaces now include the canonical `v52.0.0` release note and the `v52.0.0` product-truth freeze document.
+- Broader platform validation for `v52.5.0` is captured in the canonical release note, including quote determinism, quote evidence persistence, market conformance, runtime hardening, contextual media behavior, inline launch, share surfaces, and release-lock gates.
+- Published release surfaces now include the canonical `v52.5.0` release note and the `v52.5.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
@@ -46,9 +47,9 @@ Product-truth freeze: [docs/releases/v52.0.0-product-truth.md](docs/releases/v52
 - Confirm `/market/conformance`, `/api/market/conformance`, `/api/market/conformance/badge`, `/api/market/conformance/history`, and `/api/market/conformance/history/rollups` return passing production data before tagging the release.
 - Confirm Next/Vercel output tracing includes the required market conformance source set.
 - Confirm wallet/session rails are active for signed-in buy/sell execution and that partial-balance share-certificate UI ships only after the migration is live.
-- Update outward release/docs references to `v52.0.0`.
+- Update outward release/docs references to `v52.5.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v52.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v52.5.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture

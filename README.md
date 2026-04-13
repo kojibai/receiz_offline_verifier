@@ -2,16 +2,16 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v52.0.0`
+Current release: `v52.5.0`
 
 ## What changed in v52
-- Current release/docs surfaces are aligned to `v52.0.0`.
-- Published the canonical `v52.0.0` release note at [docs/releases/v52.0.0.md](docs/releases/v52.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v52.0.0-product-truth.md](docs/releases/v52.0.0-product-truth.md).
-- `v52.0.0` turns the market into a governed execution system with a deterministic quote engine, bounded spread pressure, replayable quote evidence, and partial share-certificate custody.
-- Market conformance, badge/history surfaces, and release-attestation coverage are now first-class in the broader platform release.
-- Market pills and premium desk surfaces now do less wasteful runtime work while keeping the premium visual shell intact.
-- Verifier semantics remain unchanged relative to `v51.0.0`.
+- Current release/docs surfaces are aligned to `v52.5.0`.
+- Published the canonical `v52.5.0` release note at [docs/releases/v52.5.0.md](docs/releases/v52.5.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v52.5.0-product-truth.md](docs/releases/v52.5.0-product-truth.md).
+- `v52.5.0` hardens the governed market model with deterministic quote math, replayable quote evidence, bounded spread/pressure behavior, partial share-certificate custody, and first-class market conformance.
+- Market pills, floating desk-card surfaces, contextual media playback, and the inline launch panel are more premium while doing less wasteful runtime work.
+- Shared market assets now resolve through dedicated market share routes with asset-specific trust metadata.
+- Verifier semantics remain unchanged relative to `v52.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -28,7 +28,7 @@ Current release: `v52.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v52.0.0` market conformance release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v52.5.0` market conformance release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v52)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -63,6 +63,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v50.0.0`: release/docs alignment for the world revenue operating system release, including durable contacts CRM, live world command surfaces, concierge-run lead sourcing, campaign persistence, scheduled autopilot, provider telemetry, truthful rail readiness, reply handling, and revenue attribution; verifier semantics remain unchanged from `v47.0.0`.
 - `v51.0.0`: release/docs alignment for the product-ladder and operator-truth release, including public plan renaming to Authorship / Business / Automation, Free-to-Enterprise ordering, consistent entitlement copy, and carried-forward Contacts/world truth hardening; verifier semantics remain unchanged from `v50.0.0`.
 - `v52.0.0`: release/docs alignment for the governed market release, including deterministic quote execution, replayable quote evidence, partial share-certificate custody, first-class market conformance, and lighter premium market runtime behavior; verifier semantics remain unchanged from `v51.0.0`.
+- `v52.5.0`: release/docs alignment for the market hardening release, including deterministic quote math, persisted quote evidence, bounded spread/pressure behavior, partial share-certificate custody, first-class market conformance, lighter premium runtime, contextual market media, inline launch, and official market share surfaces; verifier semantics remain unchanged from `v52.0.0`.
 
 ## Supported artifact inputs (v52)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -128,13 +129,13 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v52.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v52.5.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v52.0.0.md](docs/releases/v52.0.0.md): canonical `v52.0.0` release note.
-- [docs/releases/v52.0.0-product-truth.md](docs/releases/v52.0.0-product-truth.md): `v52.0.0` product-truth freeze document.
+- [docs/releases/v52.5.0.md](docs/releases/v52.5.0.md): canonical `v52.5.0` release note.
+- [docs/releases/v52.5.0-product-truth.md](docs/releases/v52.5.0-product-truth.md): `v52.5.0` product-truth freeze document.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current imported snapshot results, and deep suite docs for the currently vendored conformance suites.
