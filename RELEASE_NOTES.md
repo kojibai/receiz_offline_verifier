@@ -1,25 +1,25 @@
 # Release Notes
 
-## v52.5.0
-Release date: 2026-04-13
+## v53.0.0
+Release date: 2026-04-14
 
-`v52.5.0` is the follow-on hardening release after `v52.0.0`. Assets continue trading through the governed deterministic quote engine, trade evidence is persisted as replayable quote context, share certificates support partial custody motion, market media and pill surfaces are more deliberate and lighter at runtime, and market now carries stronger conformance and official share-ready trust surfaces. The authority model does not change: the file remains the authority, deterministic manifests remain the authority for route truth, and ledger-backed settlement remains the authority for payment truth.
+`v53.0.0` carries forward the full market lineage from `v52.0.0` and `v52.5.0` into a cleaner public product system. Market stays a governed execution layer around file, manifest, and settlement truth while public market data routes, historical conformance evidence, stronger prediction resolution, touch-safe market/player flows, passkey account attachment, first-class Enterprise handling, simpler public entry surfaces, and public-key-based release attestation move forward together.
 
-Canonical full release note: [docs/releases/v52.5.0.md](docs/releases/v52.5.0.md)
-Product-truth freeze: [docs/releases/v52.5.0-product-truth.md](docs/releases/v52.5.0-product-truth.md)
+Canonical full release note: [docs/releases/v53.0.0.md](docs/releases/v53.0.0.md)
+Product-truth freeze: [docs/releases/v53.0.0-product-truth.md](docs/releases/v53.0.0-product-truth.md)
 
 ## Highlights
-- Market execution resolves through a canonical deterministic quote engine instead of a visible additive fee layer.
-- Buys and sells persist replayable quote evidence, including reference mid, quote mid, bid, ask, spread, shift, and pressure inputs.
-- Share certificates now support partial withdrawals, remaining balances, and partial redeposit flows.
-- Market now has its own conformance suite, badge/history endpoints, and release-governed documentation.
-- Premium market pills, floating desk-card treatment, contextual media playback, and inline launch surfaces now avoid more wasteful runtime work.
-- Shared market assets now resolve through a dedicated market share route with asset-specific trust metadata.
+- The full governed market system now carries forward with public market data routes, indexed asset surfaces, persisted conformance history, and stricter prediction resolution.
+- Market desk, value-pill, and player surfaces are more touch-safe and open more cleanly into viewer and playback flows.
+- Public proof and market surfaces now emit stronger machine-readable metadata, structured data, sitemap coverage, and Open Graph treatment.
+- Existing email accounts attach passkeys from signed-in account surfaces while public passkey registration refuses silent account-claim behavior.
+- Enterprise is first-class across shared plan/session/world logic, and the public front door is simplified around Verify, Seal, Record, and Public Twin.
+- Release attestation now uses `Ed25519` signatures verified against the published governance keyring, with legacy HMAC retained only for older artifacts.
 - Release-governed version surfaces stay locked together across current-release docs and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v52.5.0`.
-- Repository release/docs surfaces now align to `v52.5.0`.
+- Current shipped verifier entrypoints are marked `v53.0.0`.
+- Repository release/docs surfaces now align to `v53.0.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
 - Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v52.0.0`.
 
@@ -37,19 +37,22 @@ Product-truth freeze: [docs/releases/v52.5.0-product-truth.md](docs/releases/v52
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v52.5.0` is captured in the canonical release note, including quote determinism, quote evidence persistence, market conformance, runtime hardening, contextual media behavior, inline launch, share surfaces, and release-lock gates.
-- Published release surfaces now include the canonical `v52.5.0` release note and the `v52.5.0` product-truth freeze document.
+- Broader platform validation for `v53.0.0` is captured in the canonical release note, including public market data routes, conformance history, prediction hardening, metadata discipline, passkey ownership, entitlement handling, product framing, and release-lock gates.
+- Published release surfaces now include the canonical `v53.0.0` release note and the `v53.0.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260413041500_market_share_positions.sql`, `20260413070500_market_prediction_books.sql`, `20260413102000_market_execution_guards.sql`, `20260413134500_market_share_certificates_partial_balance.sql`, `20260413153000_market_share_trade_fees.sql`, and `20260413174500_market_quote_engine_snapshot.sql` before routing production traffic to the live market surfaces.
-- Confirm `/market/conformance`, `/api/market/conformance`, `/api/market/conformance/badge`, `/api/market/conformance/history`, and `/api/market/conformance/history/rollups` return passing production data before tagging the release.
-- Confirm Next/Vercel output tracing includes the required market conformance source set.
-- Confirm wallet/session rails are active for signed-in buy/sell execution and that partial-balance share-certificate UI ships only after the migration is live.
-- Update outward release/docs references to `v52.5.0`.
+- Apply `supabase/migrations/20260414004000_market_prediction_finalize_ambiguity_fix.sql` and `20260414012000_market_conformance_history.sql` before routing production traffic to the live market and prediction surfaces.
+- Confirm `GET /api/market/public-snapshot` and `GET /api/market/assets/[receizId]` return public machine-readable market data for public assets.
+- Confirm `GET /api/market/conformance/history` and `GET /api/market/conformance/history/rollups` hydrate after the live conformance route runs.
+- Confirm prediction contracts reject expired wagers and resolve borderline comparisons with micro-dollar precision and ambiguity-fix logic.
+- Confirm signed-in account surfaces can attach Face ID / passkeys for existing email users and that public passkey registration returns the ownership-preserving error for already-claimed emails.
+- Confirm `/login` remains a noindex developer-login embed, `/signin` remains the normal user path, and `/receiz-world` redirects to `/public-twin#world`.
+- Set `RELEASE_ATTESTATION_SIGNING_KEY` to an `Ed25519` PKCS#8 PEM or base64-encoded PEM and `RELEASE_ATTESTATION_SIGNING_KEY_ID` to an active key in `public/governance/governance-keyring.v1.json`.
+- Update outward release/docs references to `v53.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v52.5.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v53.0.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
