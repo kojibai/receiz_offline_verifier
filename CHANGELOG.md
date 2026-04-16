@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v55.0.0] - 2026-04-15
+
+### Changed
+- Advanced the current release/documentation surface from `v54.0.0` to `v55.0.0`.
+- Published the canonical `v55.0.0` release note and product-truth freeze documents:
+  - `docs/releases/v55.0.0.md`
+  - `docs/releases/v55.0.0-product-truth.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v55.0.0`.
+- Aligned public release framing around guided owner setup in `/profile`, sealed profile avatar and cover media, explicit world-twin freshness across route handoffs, shared stable-route market and live-player continuity, bounded prediction-book hydration, and canonical performance route grouping.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v55.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v54.0.0] - 2026-04-15
 
 ### Changed

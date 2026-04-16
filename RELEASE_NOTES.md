@@ -1,28 +1,27 @@
 # Release Notes
 
-## v54.0.0
+## v55.0.0
 Release date: 2026-04-15
 
-`v54.0.0` broadens the first `v53.0.0` public-market baseline into a more complete operating release. The public product map is broader, Business is a first-class public surface, admin is now a command deck, Stripe-funded wallet behavior is more transparently ledger-backed, signed-in routes prefer shared session bootstrap over cold identity probes, market value surfaces render deterministic preview state before live hydration, world-twin continuity persists across the profile/artifact/player journey, and Kai sigil SVG output is now serialization-stable across server and client.
+`v55.0.0` turns the `v54.0.0` operating baseline into a fuller production release. `/profile` is now a guided, sticky owner-setup workspace, profile avatar and cover uploads mint sealed Receiz originals, world-twin freshness is enforced across route handoffs, market navigation and live-player entry share a stable-route continuity contract, and performance analytics now canonicalize route groups for ingestion, admin reporting, and backfill.
 
-Canonical full release note: [docs/releases/v54.0.0.md](docs/releases/v54.0.0.md)
-Product-truth freeze: [docs/releases/v54.0.0-product-truth.md](docs/releases/v54.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v55.0.0.md](docs/releases/v55.0.0.md)
+Product-truth freeze: [docs/releases/v55.0.0-product-truth.md](docs/releases/v55.0.0-product-truth.md)
 
 ## Highlights
-- The public product system is broader and clearer, with dedicated Business, outcomes-map, ladder, explainer, and start-here surfaces.
-- Admin is now an operational command deck with one-view access to payments, users, wallet operations, growth, integrity, and backfill controls.
-- Stripe-funded wallet deposits, embed payments, and profile purchase flows now align more transparently with ledger-backed wallet truth and admin visibility.
-- Signed-in routes now prefer one shared session/bootstrap graph over repeated mount-time identity probing.
-- Profile, artifact viewer, live player, and market surfaces now share deterministic `marketPreview` state so value pills render immediately and hydrate live afterward.
-- World twin continuity now persists as a runtime contract across profile, artifact viewer, and live player handoffs.
-- Kai sigil SVG output is now serialization-stable, eliminating a real hydration mismatch caused by tiny floating-point drift.
-- Release-governed version surfaces stay locked together across current-release docs and offline verifier HTML entrypoints.
+- `/profile` is now the guided owner setup lane, with sticky completion, inline username claim/editing, twin-photo handoff into World forge, and a fast-entry seed path.
+- Profile avatar and cover updates now process into canonical images, land in public profile-media storage, and mint sealed Receiz originals with verify paths.
+- World twin freshness is enforced across profile, public twin, world embed, and forged-avatar handoffs, with compact touch devices kept on on-demand hydration.
+- Market and bottom-bar navigation now use shared stable-route helpers, while live-player entry can begin from seeded local payload before authoritative fetches settle.
+- Prediction-book hydration for large market snapshots now runs in bounded batches instead of one oversized query.
+- Performance analytics now share one canonical route-group map across ingestion, admin reporting, and historical backfill.
+- Release-governed version surfaces stay locked together across current-release docs, verifier-contract docs, and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v54.0.0`.
-- Repository release/docs surfaces now align to `v54.0.0`.
+- Current shipped verifier entrypoints are marked `v55.0.0`.
+- Repository release/docs surfaces now align to `v55.0.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v53.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v54.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -38,23 +37,25 @@ Product-truth freeze: [docs/releases/v54.0.0-product-truth.md](docs/releases/v54
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v54.0.0` is captured in the canonical release note, including the public product-map expansion, admin command deck, wallet-ledger transparency, session-bootstrap reuse, deterministic market-preview behavior, twin continuity, and hydration-stability gates.
-- Published release surfaces now include the canonical `v54.0.0` release note and the `v54.0.0` product-truth freeze document.
+- Broader platform validation for `v55.0.0` is captured in the canonical release note, including guided `/profile` activation, sealed profile media, explicit twin freshness, stable market/player continuity, bounded prediction-book hydration, and canonical route-group analytics.
+- Published release surfaces now include the canonical `v55.0.0` release note and the `v55.0.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260319153000_wallet_stripe_credit_rollups.sql` and `supabase/migrations/20260319170000_wallet_admin_post_adjustment.sql` in environments that have not already taken the admin wallet/Stripe transparency changes.
-- Confirm `/admin` opens as the command-deck shell and exposes the payment action center correctly.
-- Confirm admin wallet adjustments produce ledger entries instead of silent balance overwrites.
-- Confirm profile price pills show deterministic value before any click and upgrade live after settle.
-- Confirm profile, artifact viewer, and live player reuse the loaded twin instead of replaying the twin load sequence on each handoff.
-- Confirm the dock never leaks the square fallback image before the rigged twin is ready.
-- Confirm calendar, contacts, account, upgrade, and related signed-in surfaces open from existing signed-in bootstrap state instead of cold identity fetches.
-- Confirm no Kai sigil hydration mismatch appears on profile or asset surfaces.
-- Update outward release/docs references to `v54.0.0`.
+- Apply `supabase/migrations/20260415120000_profile_guided_setup_completion.sql` in environments that have not already taken the guided owner-setup completion persistence path.
+- Confirm `/profile` opens from a primed fast-entry seed without dropping the signed-in workspace shell.
+- Confirm the five-step owner setup checklist stays complete after refresh once all setup steps are done.
+- Confirm inline username claim/edit inside `/profile` updates the route cleanly.
+- Confirm twin-photo capture/upload from `/profile` opens World directly in the avatar forge.
+- Confirm avatar and cover uploads update the live profile while minting a sealed original in the background.
+- Confirm world, profile, and public-twin surfaces all prefer the freshest saved avatar render.
+- Confirm compact touch devices avoid background world-module hydration until explicit intent.
+- Confirm market bottom-bar navigation stays on app navigation paths and Viewer opens from market without waiting for the full network round trip.
+- Confirm admin performance views aggregate stable canonical routes instead of raw user-specific URLs.
+- Update outward release/docs references to `v55.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v54.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v55.0.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
