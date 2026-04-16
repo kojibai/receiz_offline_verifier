@@ -1,27 +1,28 @@
 # Release Notes
 
-## v53.0.0
-Release date: 2026-04-14
+## v54.0.0
+Release date: 2026-04-15
 
-`v53.0.0` carries forward the full market lineage from `v52.0.0` and `v52.5.0` into a cleaner public product system. Market stays a governed execution layer around file, manifest, and settlement truth while public market data routes, historical conformance evidence, stronger prediction resolution, touch-safe market/player flows, passkey account attachment, first-class Enterprise handling, simpler public entry surfaces, and public-key-based release attestation move forward together.
+`v54.0.0` broadens the first `v53.0.0` public-market baseline into a more complete operating release. The public product map is broader, Business is a first-class public surface, admin is now a command deck, Stripe-funded wallet behavior is more transparently ledger-backed, signed-in routes prefer shared session bootstrap over cold identity probes, market value surfaces render deterministic preview state before live hydration, world-twin continuity persists across the profile/artifact/player journey, and Kai sigil SVG output is now serialization-stable across server and client.
 
-Canonical full release note: [docs/releases/v53.0.0.md](docs/releases/v53.0.0.md)
-Product-truth freeze: [docs/releases/v53.0.0-product-truth.md](docs/releases/v53.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v54.0.0.md](docs/releases/v54.0.0.md)
+Product-truth freeze: [docs/releases/v54.0.0-product-truth.md](docs/releases/v54.0.0-product-truth.md)
 
 ## Highlights
-- The full governed market system now carries forward with public market data routes, indexed asset surfaces, persisted conformance history, and stricter prediction resolution.
-- Market desk, value-pill, and player surfaces are more touch-safe and open more cleanly into viewer and playback flows.
-- Public proof and market surfaces now emit stronger machine-readable metadata, structured data, sitemap coverage, and Open Graph treatment.
-- Existing email accounts attach passkeys from signed-in account surfaces while public passkey registration refuses silent account-claim behavior.
-- Enterprise is first-class across shared plan/session/world logic, and the public front door is simplified around Verify, Seal, Record, and Public Twin.
-- Release attestation now uses `Ed25519` signatures verified against the published governance keyring, with legacy HMAC retained only for older artifacts.
+- The public product system is broader and clearer, with dedicated Business, outcomes-map, ladder, explainer, and start-here surfaces.
+- Admin is now an operational command deck with one-view access to payments, users, wallet operations, growth, integrity, and backfill controls.
+- Stripe-funded wallet deposits, embed payments, and profile purchase flows now align more transparently with ledger-backed wallet truth and admin visibility.
+- Signed-in routes now prefer one shared session/bootstrap graph over repeated mount-time identity probing.
+- Profile, artifact viewer, live player, and market surfaces now share deterministic `marketPreview` state so value pills render immediately and hydrate live afterward.
+- World twin continuity now persists as a runtime contract across profile, artifact viewer, and live player handoffs.
+- Kai sigil SVG output is now serialization-stable, eliminating a real hydration mismatch caused by tiny floating-point drift.
 - Release-governed version surfaces stay locked together across current-release docs and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v53.0.0`.
-- Repository release/docs surfaces now align to `v53.0.0`.
+- Current shipped verifier entrypoints are marked `v54.0.0`.
+- Repository release/docs surfaces now align to `v54.0.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v52.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v53.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -37,22 +38,23 @@ Product-truth freeze: [docs/releases/v53.0.0-product-truth.md](docs/releases/v53
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v53.0.0` is captured in the canonical release note, including public market data routes, conformance history, prediction hardening, metadata discipline, passkey ownership, entitlement handling, product framing, and release-lock gates.
-- Published release surfaces now include the canonical `v53.0.0` release note and the `v53.0.0` product-truth freeze document.
+- Broader platform validation for `v54.0.0` is captured in the canonical release note, including the public product-map expansion, admin command deck, wallet-ledger transparency, session-bootstrap reuse, deterministic market-preview behavior, twin continuity, and hydration-stability gates.
+- Published release surfaces now include the canonical `v54.0.0` release note and the `v54.0.0` product-truth freeze document.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260414004000_market_prediction_finalize_ambiguity_fix.sql` and `20260414012000_market_conformance_history.sql` before routing production traffic to the live market and prediction surfaces.
-- Confirm `GET /api/market/public-snapshot` and `GET /api/market/assets/[receizId]` return public machine-readable market data for public assets.
-- Confirm `GET /api/market/conformance/history` and `GET /api/market/conformance/history/rollups` hydrate after the live conformance route runs.
-- Confirm prediction contracts reject expired wagers and resolve borderline comparisons with micro-dollar precision and ambiguity-fix logic.
-- Confirm signed-in account surfaces can attach Face ID / passkeys for existing email users and that public passkey registration returns the ownership-preserving error for already-claimed emails.
-- Confirm `/login` remains a noindex developer-login embed, `/signin` remains the normal user path, and `/receiz-world` redirects to `/public-twin#world`.
-- Set `RELEASE_ATTESTATION_SIGNING_KEY` to an `Ed25519` PKCS#8 PEM or base64-encoded PEM and `RELEASE_ATTESTATION_SIGNING_KEY_ID` to an active key in `public/governance/governance-keyring.v1.json`.
-- Update outward release/docs references to `v53.0.0`.
+- Apply `supabase/migrations/20260319153000_wallet_stripe_credit_rollups.sql` and `supabase/migrations/20260319170000_wallet_admin_post_adjustment.sql` in environments that have not already taken the admin wallet/Stripe transparency changes.
+- Confirm `/admin` opens as the command-deck shell and exposes the payment action center correctly.
+- Confirm admin wallet adjustments produce ledger entries instead of silent balance overwrites.
+- Confirm profile price pills show deterministic value before any click and upgrade live after settle.
+- Confirm profile, artifact viewer, and live player reuse the loaded twin instead of replaying the twin load sequence on each handoff.
+- Confirm the dock never leaks the square fallback image before the rigged twin is ready.
+- Confirm calendar, contacts, account, upgrade, and related signed-in surfaces open from existing signed-in bootstrap state instead of cold identity fetches.
+- Confirm no Kai sigil hydration mismatch appears on profile or asset surfaces.
+- Update outward release/docs references to `v54.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v53.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v54.0.0` release note, product-truth freeze document, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture

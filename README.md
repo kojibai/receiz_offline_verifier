@@ -2,17 +2,15 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v53.0.0`
+Current release: `v54.0.0`
 
-## What changed in v53
-- Current release/docs surfaces are aligned to `v53.0.0`.
-- Published the canonical `v53.0.0` release note at [docs/releases/v53.0.0.md](docs/releases/v53.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v53.0.0-product-truth.md](docs/releases/v53.0.0-product-truth.md).
-- `v53.0.0` carries forward the governed market system into public market data routes, persisted conformance history, stronger prediction resolution, and touch-safer market/viewer/playback flows.
-- Public proof and market surfaces now ship stronger machine-readable metadata, sitemap coverage, and Open Graph treatment.
-- Passkey attachment now follows signed-in account ownership, Enterprise entitlement handling is first-class, and the public front door is simpler around Verify, Seal, Record, and Public Twin.
-- Release attestation now centers public-key verification from the published governance keyring.
-- Verifier semantics remain unchanged relative to `v52.0.0`.
+## What changed in v54
+- Current release/docs surfaces are aligned to `v54.0.0`.
+- Published the canonical `v54.0.0` release note at [docs/releases/v54.0.0.md](docs/releases/v54.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v54.0.0-product-truth.md](docs/releases/v54.0.0-product-truth.md).
+- `v54.0.0` broadens the public-market baseline into a broader operating release with a clearer public product map, a dedicated Business surface, an admin command deck, transparent Stripe-to-ledger wallet behavior, shared session bootstrap, deterministic market-preview first paint, persistent twin continuity, and deterministic Kai sigil SVG rendering.
+- Current shipped verifier, studio, and settlement entrypoints now display `v54.0.0`.
+- Verifier semantics remain unchanged relative to `v53.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -29,9 +27,9 @@ Current release: `v53.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v53.0.0` market conformance release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v54.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v53)
+## Release train highlights (v14 -> v54)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -66,8 +64,9 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v52.0.0`: release/docs alignment for the governed market release, including deterministic quote execution, replayable quote evidence, partial share-certificate custody, first-class market conformance, and lighter premium market runtime behavior; verifier semantics remain unchanged from `v51.0.0`.
 - `v52.5.0`: release/docs alignment for the market hardening release, including deterministic quote math, persisted quote evidence, bounded spread/pressure behavior, partial share-certificate custody, first-class market conformance, lighter premium runtime, contextual market media, inline launch, and official market share surfaces; verifier semantics remain unchanged from `v52.0.0`.
 - `v53.0.0`: release/docs alignment for the public market product-system release, including public market data routes, persisted conformance history, stricter prediction resolution, touch-safe market/player flows, stronger proof metadata, proper passkey account attachment, first-class Enterprise handling, simpler public entry surfaces, and `Ed25519` release attestation; verifier semantics remain unchanged from `v52.0.0`.
+- `v54.0.0`: release/docs alignment for the broader operating-system release, including the expanded public product map, the dedicated Business surface, the admin command deck, Stripe-to-ledger wallet transparency, shared session bootstrap, deterministic market-preview pricing, twin continuity across profile/artifact/player handoffs, and deterministic Kai sigil rendering; verifier semantics remain unchanged from `v53.0.0`.
 
-## Supported artifact inputs (v53)
+## Supported artifact inputs (v54)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -100,7 +99,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in signature payload shape and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v53` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v54` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -117,7 +116,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v53`:
+Required runtime assets for `v54`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
@@ -131,13 +130,13 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v53.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v54.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v53.0.0.md](docs/releases/v53.0.0.md): canonical `v53.0.0` release note.
-- [docs/releases/v53.0.0-product-truth.md](docs/releases/v53.0.0-product-truth.md): `v53.0.0` product-truth freeze document.
+- [docs/releases/v54.0.0.md](docs/releases/v54.0.0.md): canonical `v54.0.0` release note.
+- [docs/releases/v54.0.0-product-truth.md](docs/releases/v54.0.0-product-truth.md): `v54.0.0` product-truth freeze document.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current imported snapshot results, and deep suite docs for the currently vendored conformance suites.
