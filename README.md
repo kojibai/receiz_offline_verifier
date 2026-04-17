@@ -2,15 +2,17 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v55.0.0`
+Current release: `v55.1.0`
 
-## What changed in v55
-- Current release/docs surfaces are aligned to `v55.0.0`.
-- Published the canonical `v55.0.0` release note at [docs/releases/v55.0.0.md](docs/releases/v55.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v55.0.0-product-truth.md](docs/releases/v55.0.0-product-truth.md).
-- `v55.0.0` turns the `v54.0.0` operating baseline into a fuller production release with guided owner setup in `/profile`, sealed profile media minting, explicit world-twin freshness across route handoffs, shared stable-route market and live-player continuity, and canonical performance route grouping.
-- Current shipped verifier, studio, and settlement entrypoints now display `v55.0.0`.
-- Verifier semantics remain unchanged relative to `v54.0.0`.
+## What changed in v55.1
+- Current release/docs surfaces are aligned to `v55.1.0`.
+- Published the canonical `v55.1.0` release note at [docs/releases/v55.1.0.md](docs/releases/v55.1.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v55.1.0-product-truth.md](docs/releases/v55.1.0-product-truth.md).
+- Published the release checklist at [docs/releases/v55.1.0-checklist.md](docs/releases/v55.1.0-checklist.md).
+- `v55.1.0` turns continuity into a hard product rule: profile/public/search/composer flows reuse already-loaded truth, market routes and live-player handoff reuse warmed snapshots, buy is one passkey-first continuation with exact-shortfall funding, sell is USD-intent and position-aware, non-entitled execution and settlement are USD-authoritative, and live-player presentation is more deterministic.
+- This release record rolls up the full post-`v55.0.0` delta; there is no dedicated `v55.0.1` release note or tag.
+- Current shipped verifier, studio, and settlement entrypoints now display `v55.1.0`.
+- Verifier semantics remain unchanged relative to `v55.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -27,7 +29,7 @@ Current release: `v55.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v55.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v55.1.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v55)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -66,6 +68,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v53.0.0`: release/docs alignment for the public market product-system release, including public market data routes, persisted conformance history, stricter prediction resolution, touch-safe market/player flows, stronger proof metadata, proper passkey account attachment, first-class Enterprise handling, simpler public entry surfaces, and `Ed25519` release attestation; verifier semantics remain unchanged from `v52.0.0`.
 - `v54.0.0`: release/docs alignment for the broader operating-system release, including the expanded public product map, the dedicated Business surface, the admin command deck, Stripe-to-ledger wallet transparency, shared session bootstrap, deterministic market-preview pricing, twin continuity across profile/artifact/player handoffs, and deterministic Kai sigil rendering; verifier semantics remain unchanged from `v53.0.0`.
 - `v55.0.0`: release/docs alignment for the guided owner-setup release, including sticky `/profile` activation, sealed profile media, explicit world-avatar freshness, shared stable-route market/player continuity, and canonical performance route grouping; verifier semantics remain unchanged from `v54.0.0`.
+- `v55.1.0`: release/docs alignment for the continuity-and-execution release, including reusable profile truth, deterministic route handoff, passkey-first buy continuation, exact-USD non-entitled settlement, position-aware sell presentation, and tighter live-player continuity; verifier semantics remain unchanged from `v55.0.0`.
 
 ## Supported artifact inputs (v55)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -131,13 +134,14 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v55.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v55.1.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v55.0.0.md](docs/releases/v55.0.0.md): canonical `v55.0.0` release note.
-- [docs/releases/v55.0.0-product-truth.md](docs/releases/v55.0.0-product-truth.md): `v55.0.0` product-truth freeze document.
+- [docs/releases/v55.1.0.md](docs/releases/v55.1.0.md): canonical `v55.1.0` release note.
+- [docs/releases/v55.1.0-product-truth.md](docs/releases/v55.1.0-product-truth.md): `v55.1.0` product-truth freeze document.
+- [docs/releases/v55.1.0-checklist.md](docs/releases/v55.1.0-checklist.md): release-prep checklist and additional gates for `v55.1.0`.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current imported snapshot results, and deep suite docs for the currently vendored conformance suites.

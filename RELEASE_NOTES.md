@@ -1,27 +1,28 @@
 # Release Notes
 
-## v55.0.0
-Release date: 2026-04-15
+## v55.1.0
+Release date: 2026-04-16
 
-`v55.0.0` turns the `v54.0.0` operating baseline into a fuller production release. `/profile` is now a guided, sticky owner-setup workspace, profile avatar and cover uploads mint sealed Receiz originals, world-twin freshness is enforced across route handoffs, market navigation and live-player entry share a stable-route continuity contract, and performance analytics now canonicalize route groups for ingestion, admin reporting, and backfill.
+`v55.1.0` is the continuity-and-execution release on top of the `v55.0.0` profile/world/market baseline. Once Receiz already knows the truth for a surface, the product now carries that truth forward: `/profile`, public profiles, search handoff, composer host, and profile navigation reuse the same live graph; market and chart entry reuse warmed route snapshots; buy becomes one passkey-first continuation with exact-shortfall funding and automatic resume; sell becomes USD-intent and held-position aware; non-entitled execution and settlement become exact-USD authoritative; and live-player/card presentation is more deterministic.
 
-Canonical full release note: [docs/releases/v55.0.0.md](docs/releases/v55.0.0.md)
-Product-truth freeze: [docs/releases/v55.0.0-product-truth.md](docs/releases/v55.0.0-product-truth.md)
+Canonical full release note: [docs/releases/v55.1.0.md](docs/releases/v55.1.0.md)
+Product-truth freeze: [docs/releases/v55.1.0-product-truth.md](docs/releases/v55.1.0-product-truth.md)
+Release checklist: [docs/releases/v55.1.0-checklist.md](docs/releases/v55.1.0-checklist.md)
 
 ## Highlights
-- `/profile` is now the guided owner setup lane, with sticky completion, inline username claim/editing, twin-photo handoff into World forge, and a fast-entry seed path.
-- Profile avatar and cover updates now process into canonical images, land in public profile-media storage, and mint sealed Receiz originals with verify paths.
-- World twin freshness is enforced across profile, public twin, world embed, and forged-avatar handoffs, with compact touch devices kept on on-demand hydration.
-- Market and bottom-bar navigation now use shared stable-route helpers, while live-player entry can begin from seeded local payload before authoritative fetches settle.
-- Prediction-book hydration for large market snapshots now runs in bounded batches instead of one oversized query.
-- Performance analytics now share one canonical route-group map across ingestion, admin reporting, and historical backfill.
+- Profile truth is now treated as reusable live graph across `/profile`, public profiles, people search, the composer host, and profile navigation instead of being rediscovered through extra shells.
+- Public profile navigation now lands on the same authoritative page truth whether it comes from direct load, signed-in navigation, or floating people search.
+- Profile artifact/live-player actions, bottom-bar routes, account-to-dashboard, market entry, and chart-to-market `Full` transitions now reuse the richest warmed route snapshot instead of forcing second-click or second-settle behavior.
+- Buy now behaves like one continuation system: `Buy` starts the ceremony, passkey resolves in place, funding covers only the exact shortfall, and the pending order resumes automatically on the same surface.
+- Sell is budget-first on chart and desk, only appears when the viewer holds shares, and non-entitled share/prediction execution is now USD-authoritative at the database layer.
+- Live-player entry, back-card fit, public twin preview precedence, and market/chart presentation are tighter and more deterministic.
 - Release-governed version surfaces stay locked together across current-release docs, verifier-contract docs, and offline verifier HTML entrypoints.
 
 ## Verifier impact
-- Current shipped verifier entrypoints are marked `v55.0.0`.
-- Repository release/docs surfaces now align to `v55.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v55.1.0`.
+- Repository release/docs surfaces now align to `v55.1.0`.
 - Verifier trust semantics remain file-authoritative, deterministic, and fail-closed.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v54.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v55.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -37,25 +38,24 @@ Product-truth freeze: [docs/releases/v55.0.0-product-truth.md](docs/releases/v55
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v55.0.0` is captured in the canonical release note, including guided `/profile` activation, sealed profile media, explicit twin freshness, stable market/player continuity, bounded prediction-book hydration, and canonical route-group analytics.
-- Published release surfaces now include the canonical `v55.0.0` release note and the `v55.0.0` product-truth freeze document.
+- There is no dedicated `v55.0.1` release note or tag; `v55.1.0` intentionally rolls up the full repository delta after `v55.0.0`.
+- Broader platform validation for `v55.1.0` is captured in the canonical release note and checklist, including profile truth reuse, route continuity, passkey-first trade continuation, exact-USD wallet settlement, and live-player/twin determinism.
+- Published release surfaces now include the canonical `v55.1.0` release note, the `v55.1.0` product-truth freeze, and the `v55.1.0` checklist.
 - In this offline verifier repository, the release work is documentation and version-surface alignment only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260415120000_profile_guided_setup_completion.sql` in environments that have not already taken the guided owner-setup completion persistence path.
-- Confirm `/profile` opens from a primed fast-entry seed without dropping the signed-in workspace shell.
-- Confirm the five-step owner setup checklist stays complete after refresh once all setup steps are done.
-- Confirm inline username claim/edit inside `/profile` updates the route cleanly.
-- Confirm twin-photo capture/upload from `/profile` opens World directly in the avatar forge.
-- Confirm avatar and cover uploads update the live profile while minting a sealed original in the background.
-- Confirm world, profile, and public-twin surfaces all prefer the freshest saved avatar render.
-- Confirm compact touch devices avoid background world-module hydration until explicit intent.
-- Confirm market bottom-bar navigation stays on app navigation paths and Viewer opens from market without waiting for the full network round trip.
-- Confirm admin performance views aggregate stable canonical routes instead of raw user-specific URLs.
-- Update outward release/docs references to `v55.0.0`.
+- Apply `supabase/migrations/20260416025923_market_nonentitled_usd_execution.sql`.
+- Apply `supabase/migrations/20260416041200_market_prediction_nonentitled_usd_execution.sql`.
+- Confirm passkey auth, session bootstrap propagation, and magic-link fallback all operate on the same market/chart continuation path.
+- Confirm Stripe embedded checkout returns through the exact pending trade continuation path for both chart and desk funding.
+- Confirm `/profile` direct load, search navigation, logged-in navigation, and publish flows stay fully hydrated without shell fallback or second settle.
+- Confirm chart and market `Buy` resume the exact order after funding, and closing funding after passkey still leaves the new account signed in.
+- Confirm chart `Sell` only appears when the viewer has a real held position in that asset and uses USD receive input instead of raw share input.
+- Confirm live-player back-card copy fits in frame and public twin presence is deterministic when the route conditions are valid.
+- Update outward release/docs references to `v55.1.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v55.0.0` release note, product-truth freeze document, and updated docs indexes.
+- Publish the `v55.1.0` release note, product-truth freeze, checklist, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
