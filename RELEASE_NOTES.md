@@ -1,27 +1,28 @@
 # Release Notes
 
-## v56.0.0
+## v57.0.0
 Release date: 2026-04-17
 
-`v56.0.0` is the canonical release cut on top of the `v55.1.0` continuity baseline. Version-governed surfaces now move together to one release number, logged-in world hydration stops trusting malformed cached snapshots, concierge task polling becomes Automation-entitlement aware, and fresh-account profile analytics no longer break first login when the database schema is briefly behind the app event model.
+`v57.0.0` is the route-coherence, certificate-custody, and market-conformance release on top of the `v56.0.0` version-surface baseline. If Receiz already knows the route truth, custody truth, or certificate truth, runtime should reuse that truth instead of rediscovering it after navigation, login, or trade.
 
-Canonical full release note: [docs/releases/v56.0.0.md](docs/releases/v56.0.0.md)
-Product-truth freeze: [docs/releases/v56.0.0-product-truth.md](docs/releases/v56.0.0-product-truth.md)
-Release checklist: [docs/releases/v56.0.0-checklist.md](docs/releases/v56.0.0-checklist.md)
+Canonical full release note: [docs/releases/v57.0.0.md](docs/releases/v57.0.0.md)
+Product-truth freeze: [docs/releases/v57.0.0-product-truth.md](docs/releases/v57.0.0-product-truth.md)
+Release checklist: [docs/releases/v57.0.0-checklist.md](docs/releases/v57.0.0-checklist.md)
 
 ## Highlights
-- Release-governed version surfaces now move together to `v56.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
-- Logged-in world hydration now rejects malformed or stale cached route snapshots before the client can adopt incomplete route truth.
-- World concierge polling now checks the real Automation entitlement, so signed-in users without access no longer hammer `/api/world/concierge/tasks` with repeating `403 world_automation_required` responses.
-- Fresh-account profile analytics now degrade cleanly to `tracked: false` when the database is still on the older analytics event-name constraint, while the release migration brings the schema back into sync.
-- The `v55.1.0` continuity baseline remains the product floor: reusable profile truth, deterministic route handoff, passkey-first trade continuation, USD-authoritative settlement, deterministic player presentation, and button-local route feedback all remain release requirements.
+- Runtime profile entry now resolves through canonical managed owner routes instead of the weak `/profile` fallback when owner truth is already knowable.
+- World and market now reuse prepared route truth and light entry snapshots before heavier background enrichment.
+- Share certificates now behave as first-class live custody surfaces with passkey-first auth, USD-first trading, certificate-native history, and basis semantics.
+- Certificate mint, import, and sell flows keep market balances, certificate balances, and note history coherent without reload.
+- Market conformance now locks the runtime boundary around certificate note-event ledgers, authoritative import-delta recovery, exact sell quantity, fast-entry continuity, and trace coverage.
+- Release-governed version surfaces now move together to `v57.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
 
 ## Verifier impact
-- Current shipped verifier, studio, and settlement entrypoints are marked `v56.0.0`.
-- Repository release/docs surfaces now align to `v56.0.0`.
-- Root package metadata now resolves cleanly at `v56.0.0`.
-- Verifier trust semantics remain unchanged relative to `v55.1.0`.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v55.1.0`.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v57.0.0`.
+- Repository release/docs surfaces now align to `v57.0.0`.
+- Root package metadata now resolves cleanly at `v57.0.0`.
+- Verifier trust semantics remain unchanged relative to `v56.0.0`.
+- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v56.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -37,20 +38,22 @@ Release checklist: [docs/releases/v56.0.0-checklist.md](docs/releases/v56.0.0-ch
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v56.0.0` is captured in the canonical release note and checklist, including logged-in world cache hardening, concierge entitlement gating, and fresh-account analytics schema-drift tolerance.
-- Published release surfaces now include the canonical `v56.0.0` release note, the `v56.0.0` product-truth freeze, and the `v56.0.0` checklist.
+- Broader platform validation for `v57.0.0` is captured in the canonical release note and checklist, including canonical managed-route continuity, world/market fast entry, certificate custody/history, market balance and inventory coherence, and expanded market conformance coverage.
+- Published release surfaces now include the canonical `v57.0.0` release note, the `v57.0.0` product-truth freeze, and the `v57.0.0` checklist.
 - In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
+- This release record intentionally rolls up the full repository delta after `v56.0.0` because there is no dedicated public `v56.1.0` through `v56.95` note in the repository.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260417094500_profile_analytics_activation_event_support.sql`.
-- Confirm fresh-account login no longer produces `500` responses from `/api/profile/analytics/track`.
-- Confirm owner-side activation analytics insert successfully once the new constraint migration is applied.
-- Confirm logged-in non-Automation users do not poll `/api/world/concierge/tasks`.
-- Confirm logged-in world hydration does not adopt malformed cached route snapshots.
-- Update outward release/docs references to `v56.0.0`.
+- Apply `supabase/migrations/20260417123000_market_share_note_events.sql`.
+- Confirm runtime profile entry no longer falls back through `/profile` when canonical owner-route truth is already available.
+- Confirm world and market app-runtime entry points settle through fast-entry route truth instead of a blank or second-settle shell.
+- Confirm certificate mint, import, and sell flows keep market balance and certificate balance coherent without requiring a refresh.
+- Confirm certificate shared links, OG surfaces, and live route metadata show canonical production URLs and live certificate summary data.
+- Confirm public market inventory follows profile visibility/archive state quickly and deterministically.
+- Update outward release/docs references to `v57.0.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v56.0.0` release note, product-truth freeze, checklist, and updated docs indexes.
+- Publish the `v57.0.0` release note, product-truth freeze, checklist, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
