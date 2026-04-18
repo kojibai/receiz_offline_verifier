@@ -1,28 +1,28 @@
 # Release Notes
 
-## v60.0.0
+## v60.1.0
 Release date: 2026-04-18
 
-`v60.0.0` is the major stable release that locks the full `v50.0.0` through `v58.0.0` buildout into one canonical product cut and rolls the complete repository delta after `v58.0.0` into the next governed release.
+`v60.1.0` is the continuity-and-market-proof release on top of `v60.0.0`. In this offline verifier repository, the release work is publication of the canonical `v60.1.0` artifacts plus outward version-surface alignment only.
 
-Canonical full release note: [docs/releases/v60.0.0.md](docs/releases/v60.0.0.md)
-Product-truth freeze: [docs/releases/v60.0.0-product-truth.md](docs/releases/v60.0.0-product-truth.md)
-Release checklist: [docs/releases/v60.0.0-checklist.md](docs/releases/v60.0.0-checklist.md)
+Canonical full release note: [docs/releases/v60.1.0.md](docs/releases/v60.1.0.md)
+Product-truth freeze: [docs/releases/v60.1.0-product-truth.md](docs/releases/v60.1.0-product-truth.md)
+Release checklist: [docs/releases/v60.1.0-checklist.md](docs/releases/v60.1.0-checklist.md)
 
 ## Highlights
-- The homepage now shows live proof playback, a live twin dock, and direct market action instead of a static-only marketing shell.
-- Profile uploads and profile-original downloads now preserve or restore canonical Receiz verification more aggressively, including on-demand reseal and backfill paths for legacy streamed originals.
-- Twin portrait generation now produces a distinct profile-ready artifact with its own verify path and an explicit apply-to-profile step instead of silently overwriting the public profile picture.
-- Market buy continuation, wallet presentation, and certificate framing are tighter in real compact-device flows.
-- Production schema hardening for this release includes market conformance history RLS, auth init-plan policy repair, and high-value foreign-key indexes.
-- Release-governed version surfaces now move together to `v60.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
+- Public profile asset markets now derive holder count and latest witness timing from live public positions and buy activity.
+- The market desk, chart dock, and public market metadata surfaces are tighter and more legible on compact devices, especially in public and signed-out flows.
+- Home and profile twin shells keep background preload hidden until explicit open intent, preventing late visible promotion after settlement.
+- Public profile route assembly is lighter, and `MarketValuePill` sigils now use deterministic surface-scoped IDs to avoid hydration drift.
+- No new database migrations are added beyond the `v60.0.0` baseline.
+- Release-governed version surfaces now move together to `v60.1.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
 
 ## Verifier impact
-- Current shipped verifier, studio, and settlement entrypoints are marked `v60.0.0`.
-- Repository release/docs surfaces now align to `v60.0.0`.
-- Root package metadata now resolves cleanly at `v60.0.0`.
-- Verifier trust semantics remain unchanged relative to `v58.0.0`.
-- Trusted-signature, anchor, and Groth16 requirements remain unchanged relative to `v58.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v60.1.0`.
+- Repository release/docs surfaces now align to `v60.1.0`.
+- Root package metadata now resolves cleanly at `v60.1.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
 
 ## Preserved verifier contract
 - Trusted-signature success still requires verified `signatureV4`.
@@ -38,23 +38,22 @@ Release checklist: [docs/releases/v60.0.0-checklist.md](docs/releases/v60.0.0-ch
 - Fail-closed verification semantics.
 
 ## Operational notes
-- Broader platform validation for `v60.0.0` is captured in the canonical release note and checklist, including live front-door proof/twin behavior, canonical original upload/download recovery, explicit twin portrait publishing, compact wallet/certificate presentation, schema hardening, and release-surface lockstep.
-- Published release surfaces now include the canonical `v60.0.0` release note, the `v60.0.0` product-truth freeze, and the `v60.0.0` checklist.
+- Broader platform validation for `v60.1.0` is captured in the canonical release note and checklist, including holder-aware public market witness truth, compact market-desk polish, hidden-only twin preload, profile-route continuity, deterministic sigil hydration, and release-surface lockstep.
+- Published release surfaces now include the canonical `v60.1.0` release note, the `v60.1.0` product-truth freeze, and the `v60.1.0` checklist.
 - In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
 - No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
-- This release record intentionally rolls up the full repository delta after `v58.0.0`, including the absent `v59.x` interval, because there is no dedicated public `v58.1.0` through `v59.99` note in the repository.
+- There is no dedicated `v60.0.1` release note or tag in the repository, so the canonical `v60.1.0` note records the full post-`v60.0.0` product delta in one governed release record.
 
 ## Migration checklist
-- Apply `supabase/migrations/20260418001500_market_conformance_history_rls.sql`.
-- Apply `supabase/migrations/20260418003000_auth_rls_initplan_policy_fix.sql`.
-- Apply `supabase/migrations/20260418004500_high_value_fk_indexes.sql`.
-- Confirm the homepage hero loads live proof, twin, and direct market action instead of a static-only marketing shell.
-- Confirm market buy continues cleanly through passkey and Stripe funding fallback rather than dying on missing wallet bootstrap state.
-- Confirm profile uploads still seal through the canonical path and legacy streamed originals download as verifiable Receiz artifacts.
-- Confirm forged twin portraits expose their own verify file and only become the profile picture after explicit operator action.
-- Update outward release/docs references to `v60.0.0`.
+- No new database migrations beyond the `v60.0.0` baseline.
+- Confirm public profile asset markets show holder count and latest witness timing from real public holder activity.
+- Confirm market buy continuation still survives passkey and funding fallback, and sell stays hidden when the viewer has no position.
+- Confirm home and profile twin shells do not visually remount or upgrade after the page has already settled.
+- Confirm opening the twin explicitly still promotes the full twin module cleanly.
+- Confirm profile, player, artifact, and home market pills render without hydration ID drift.
+- Update outward release/docs references to `v60.1.0`.
 - Deploy updated `site/` artifacts.
-- Publish the `v60.0.0` release note, product-truth freeze, checklist, and updated docs indexes.
+- Publish the `v60.1.0` release note, product-truth freeze, checklist, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
 
 ## Security posture
