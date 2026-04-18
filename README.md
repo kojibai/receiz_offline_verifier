@@ -2,18 +2,18 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v58.0.0`
+Current release: `v60.0.0`
 
-## What changed in v58.0.0
-- Current release/docs surfaces are aligned to `v58.0.0`.
-- Published the canonical `v58.0.0` release note at [docs/releases/v58.0.0.md](docs/releases/v58.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v58.0.0-product-truth.md](docs/releases/v58.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v58.0.0-checklist.md](docs/releases/v58.0.0-checklist.md).
-- `v58.0.0` is the authoritative-market and release-surface coherence cut on top of the `v57.0.0` baseline: signed-in market entry is authoritative on first paint, wallet and chart-buy hydration share one coherent live-snapshot path, market transport is lean and deterministic, and tracked positions count only live shares plus still-open contracts.
-- The `v57.0.0` baseline remains the product floor for route-coherence, certificate-custody, market-conformance, and release-surface lockstep behavior.
-- Current shipped verifier, studio, and settlement entrypoints now display `v58.0.0`.
-- Root package metadata now resolves cleanly to `v58.0.0`.
-- Verifier semantics remain unchanged relative to `v57.0.0`.
+## What changed in v60.0.0
+- Current release/docs surfaces are aligned to `v60.0.0`.
+- Published the canonical `v60.0.0` release note at [docs/releases/v60.0.0.md](docs/releases/v60.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v60.0.0-product-truth.md](docs/releases/v60.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v60.0.0-checklist.md](docs/releases/v60.0.0-checklist.md).
+- `v60.0.0` is the major stable recap cut across `v50.0.0` through `v60.0.0`: the front door now shows live proof, live twin, and direct market action; profile-original handling is more canonically verifiable; twin portraits are explicit minted assets instead of silent side effects; certificate and wallet surfaces are tighter on compact devices; and release-governed version surfaces now move together at `v60.0.0`.
+- The `v58.0.0` baseline remains the product floor for authoritative market continuity, certificate custody, release-surface lockstep, and deterministic verifier truth.
+- Current shipped verifier, studio, and settlement entrypoints now display `v60.0.0`.
+- Root package metadata now resolves cleanly to `v60.0.0`.
+- Verifier semantics remain unchanged relative to `v58.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -30,9 +30,9 @@ Current release: `v58.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v58.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v60.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v58)
+## Release train highlights (v14 -> v60)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -73,8 +73,9 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v56.0.0`: release/docs alignment for the canonical continuity release cut, including lockstep version surfaces, guarded logged-in world hydration, entitlement-aware concierge polling, and fresh-account analytics schema-drift hardening; verifier semantics remain unchanged from `v55.1.0`.
 - `v57.0.0`: release/docs alignment for the route-coherence, certificate-custody, and market-conformance release, including canonical managed-owner routing, world/market fast-entry truth reuse, certificate-native custody/history, and coherent market balances and inventory across certificate and profile-visibility mutations; verifier semantics remain unchanged from `v56.0.0`.
 - `v58.0.0`: release/docs alignment for the authoritative-market and release-surface coherence cut, including authoritative signed-in market first paint, shared wallet/chart-buy live hydration, lean deterministic market transport, live tracked-position semantics, and unified release-surface version truth; verifier semantics remain unchanged from `v57.0.0`.
+- `v60.0.0`: release/docs alignment for the major stable recap cut across `v50.0.0` through `v60.0.0`, including live proof and twin at the front door, stronger canonical original upload/download recovery, explicit profile-ready twin portrait publishing, tighter compact-device wallet and certificate framing, and unified `v60.0.0` release truth; verifier semantics remain unchanged from `v58.0.0`.
 
-## Supported artifact inputs (v58)
+## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
 2. PDF artifact containing exactly one embedded Receiz proof object (`/Type /ReceizProof` + `/ProofBundle`).
 3. SVG artifact with exactly one embedded Receiz proof metadata attribute (with trailer-proof fallback).
@@ -107,7 +108,7 @@ A file is verified only if the verifier can prove integrity from bytes (plus opt
 - `signedAtMs` remains required in signature payload shape and v4 enforces certificate issuance/expiry bounds against `signedAtMs`.
 - Groth16 checks require `zkPoseidonHash`, `groth16Proof`, and `groth16ProofDigest`.
 - Only real `g16:` Groth16 payloads are accepted.
-- The default `v58` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
+- The default `v60` UI does not prompt for manual `/v/...` path input; integrations can still supply it.
 
 ## Quick start (local)
 
@@ -124,7 +125,7 @@ python3 -m http.server 8080
 ## Deploy
 Deploy the `site/` directory to any static host.
 
-Required runtime assets for `v58`:
+Required runtime assets for `v60`:
 - `index.html`
 - `offline-verifier.html` (if served as an alternate entry path)
 - `sw.js` (optional, for service worker warm behavior)
@@ -138,14 +139,14 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v58.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v60.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v58.0.0.md](docs/releases/v58.0.0.md): canonical `v58.0.0` release note.
-- [docs/releases/v58.0.0-product-truth.md](docs/releases/v58.0.0-product-truth.md): `v58.0.0` product-truth freeze document.
-- [docs/releases/v58.0.0-checklist.md](docs/releases/v58.0.0-checklist.md): release-prep checklist and additional gates for `v58.0.0`.
+- [docs/releases/v60.0.0.md](docs/releases/v60.0.0.md): canonical `v60.0.0` release note.
+- [docs/releases/v60.0.0-product-truth.md](docs/releases/v60.0.0-product-truth.md): `v60.0.0` product-truth freeze document.
+- [docs/releases/v60.0.0-checklist.md](docs/releases/v60.0.0-checklist.md): release-prep checklist and additional gates for `v60.0.0`.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current imported snapshot results, and deep suite docs for the currently vendored conformance suites.

@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v60.0.0] - 2026-04-18
+
+### Changed
+- Advanced the current release/documentation surface from `v58.0.0` to `v60.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v60.0.0`.
+- Published the canonical `v60.0.0` release note, product-truth freeze, and checklist documents:
+  - `docs/releases/v60.0.0.md`
+  - `docs/releases/v60.0.0-product-truth.md`
+  - `docs/releases/v60.0.0-checklist.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v60.0.0`.
+- Aligned public release framing around live front-door proof and twin presentation, canonical original upload/download authority, explicit twin-portrait publishing, compact wallet/certificate framing, schema hardening, and release-surface lockstep.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v60.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+
 ## [v58.0.0] - 2026-04-17
 
 ### Changed
