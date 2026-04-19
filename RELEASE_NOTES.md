@@ -1,5 +1,65 @@
 # Release Notes
 
+## v61.0.0
+Release date: 2026-04-19
+
+`v61.0.0` is the governed historical-continuity and runtime-discipline release on top of `v60.0.0`. In this offline verifier repository, the release work is publication of the canonical `v61.0.0` artifacts plus outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v61.0.0.md](docs/releases/v61.0.0.md)
+Product-truth freeze: [docs/releases/v61.0.0-product-truth.md](docs/releases/v61.0.0-product-truth.md)
+Release checklist: [docs/releases/v61.0.0-checklist.md](docs/releases/v61.0.0-checklist.md)
+
+## Highlights
+- Pre-v4 receiz now sits under governed historical continuity: frozen cohort membership, sealed governance artifact support, explicit `Historical` trust presentation, and historical package delivery that preserves original bytes.
+- Holder-aware public market witness truth from `v60.1.0` remains the floor, and market exits now stay on deterministic internal routes through the shared stable client-navigation path.
+- Settled home and profile twin shells keep hidden warming hidden and defer richer runtime promotion until explicit activation, including on compact touch devices.
+- The release line now publishes its operating standards around experience-first engineering, expensive truth, fast entry, and governed historical continuity as part of repository truth.
+- No new database migrations are added beyond the `v60.0.0` baseline.
+- Release-governed version surfaces now move together to `v61.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v61.0.0`.
+- Repository release/docs surfaces now align to `v61.0.0`.
+- Root package metadata now resolves cleanly at `v61.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Preserved verifier contract
+- Trusted-signature success still requires verified `signatureV4`.
+- Trusted-signature failure semantics remain fail-closed:
+  - invalid present `signatureV4` -> `Trusted signature invalid`
+  - unavailable present `signatureV4` -> `Trusted signature unavailable`
+  - missing `signatureV4` -> `Trusted signature missing. Expected signatureV4.`
+- Effective anchor context remains required (explicit or derivable).
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction/normalization for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical identity derivation and artifact-binding checks.
+- Fail-closed verification semantics.
+
+## Operational notes
+- Broader platform validation for `v61.0.0` is captured in the canonical release note and checklist, including historical cohort governance, deterministic market exit continuity, settled-shell runtime discipline, compact verified-player control tightening, and release-surface lockstep.
+- Published release surfaces now include the canonical `v61.0.0` release note, the `v61.0.0` product-truth freeze, and the `v61.0.0` checklist.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+- No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
+- `v60.1.0` has a dedicated release note in the repository, but there is no dedicated `v60.2.0` through `v60.4.x` public release note or matching repository tag, so the canonical `v61.0.0` note records the full post-`v60.0.0` product delta in one governed release record.
+
+## Migration checklist
+- No new database migrations beyond the `v60.0.0` baseline.
+- Confirm public market witness timing and holder count still derive from real holder activity, and deterministic market exits stay on the stable client-navigation path for Receiz routes.
+- Confirm home and profile twin shells do not visually remount or upgrade after settlement, compact touch devices keep full twin hydration on-demand, and the home dock only promotes the full runtime after explicit interaction.
+- Confirm the verified-player audio control glass stays compact and legible on small layouts.
+- Confirm historical pre-v4 records render as `Historical` rather than being silently treated as current `Verified` or generic warnings.
+- Confirm historical downloads preserve raw bytes and include the sealed governance bundle instead of rewriting the original artifact identity.
+- Confirm the pinned historical cohort artifact and payload stay byte-stable, and no public/private cohort boundary drift has occurred.
+- Update outward release/docs references to `v61.0.0`.
+- Deploy updated `site/` artifacts.
+- Publish the `v61.0.0` release note, product-truth freeze, checklist, and updated docs indexes.
+- No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v60.1.0
 Release date: 2026-04-18
 
@@ -55,6 +115,3 @@ Release checklist: [docs/releases/v60.1.0-checklist.md](docs/releases/v60.1.0-ch
 - Deploy updated `site/` artifacts.
 - Publish the `v60.1.0` release note, product-truth freeze, checklist, and updated docs indexes.
 - No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
-
-## Security posture
-Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.

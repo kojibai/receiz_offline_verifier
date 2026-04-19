@@ -1,12 +1,12 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v60.1.0`.
+This directory is the public documentation set for Receiz `v61.0.0`.
 
 ## Start Here
 
-- [releases/v60.1.0.md](releases/v60.1.0.md): canonical public release note for `v60.1.0`.
-- [releases/v60.1.0-product-truth.md](releases/v60.1.0-product-truth.md): release-scoped product-truth freeze for `v60.1.0`.
-- [releases/v60.1.0-checklist.md](releases/v60.1.0-checklist.md): release-prep checklist and additional gates for `v60.1.0`.
+- [releases/v61.0.0.md](releases/v61.0.0.md): canonical public release note for `v61.0.0`.
+- [releases/v61.0.0-product-truth.md](releases/v61.0.0-product-truth.md): release-scoped product-truth freeze for `v61.0.0`.
+- [releases/v61.0.0-checklist.md](releases/v61.0.0-checklist.md): release-prep checklist and additional gates for `v61.0.0`.
 - [receiz-standard-v1.md](receiz-standard-v1.md): high-level standard framing for canonical proof and settlement surfaces.
 - [FORMAT.md](FORMAT.md): verifier-visible artifact contract.
 - [ARCHITECTURE.md](ARCHITECTURE.md): runtime pipeline and verification flow.
