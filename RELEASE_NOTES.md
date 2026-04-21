@@ -1,5 +1,73 @@
 # Release Notes
 
+## v66.0.0
+Release date: 2026-04-21
+
+`v66.0.0` is the local proof continuity release. In this offline verifier repository, the release work is publication of the canonical `v66.0.0` artifacts, local-proof reference documents, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v66.0.0.md](docs/releases/v66.0.0.md)
+Product-truth freeze: [docs/releases/v66.0.0-product-truth.md](docs/releases/v66.0.0-product-truth.md)
+Release checklist: [docs/releases/v66.0.0-checklist.md](docs/releases/v66.0.0-checklist.md)
+Release process: [docs/releases/v66.0.0-process.md](docs/releases/v66.0.0-process.md)
+Experience-first engineering: [docs/experience-first-engineering.md](docs/experience-first-engineering.md)
+Verified history first principles: [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md)
+Offline verified register: [docs/offline-verified-register.md](docs/offline-verified-register.md)
+
+## Highlights
+- Local proof is now frozen as the default authority when the node already holds stronger verified truth.
+- Verified-register-backed proof outranks weaker legacy offline evidence.
+- Account surfaces preserve valid local identity roots when the session API is unavailable, anonymous, or weaker.
+- Public Twin projection can come from the local twin mind register and local model rail before online streaming is needed.
+- Twin mind PNG import requires portable public-key verification instead of server-secret HMAC authority for canonical import.
+- World, Explore, Wallet, Market, and tracked-position surfaces preserve known deterministic state unless a transport payload proves a stronger state.
+- Service-worker offline persistence is explicit through `x-receiz-offline-persist` response headers for verified snapshots.
+- No new database migration is required by the release docs themselves.
+- Release-governed version surfaces now move together to `v66.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v66.0.0`.
+- Repository release/docs surfaces now align to `v66.0.0`.
+- Root package metadata now resolves cleanly at `v66.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Preserved verifier contract
+- Trusted-signature success still requires verified `signatureV4`.
+- Trusted-signature failure semantics remain fail-closed:
+  - invalid present `signatureV4` -> `Trusted signature invalid`
+  - unavailable present `signatureV4` -> `Trusted signature unavailable`
+  - missing `signatureV4` -> `Trusted signature missing. Expected signatureV4.`
+- Effective anchor context remains required (explicit or derivable).
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction/normalization for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical identity derivation and artifact-binding checks.
+- Fail-closed verification semantics.
+
+## Operational notes
+- Broader platform validation for `v66.0.0` is captured in the canonical release note, process, and checklist, including local proof authority classification, verified-register precedence, offline identity continuity, deterministic ledger proof bundles, local twin register projection, twin mind public-key import, verified-snapshot persistence, and market/tracked-position local truth preservation.
+- Published release surfaces now include the canonical `v66.0.0` release note, the `v66.0.0` product-truth freeze, the `v66.0.0` checklist, the `v66.0.0` process document, and the local-proof reference docs.
+- The `v64.0.0` value-loop invariants remain in force.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+- No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
+
+## Migration checklist
+- No new database migrations are introduced by this documentation cut.
+- Confirm local verified-register proof outranks weaker offline or legacy evidence.
+- Confirm wallet transaction receipts verify deterministic ledger proof bundles before treating ledger claims as truth.
+- Confirm anonymous or missing network session payloads do not erase locally held identity proof.
+- Confirm local twin register projection wins for the visible reply when present.
+- Confirm twin mind portable import/export production keys are configured.
+- Confirm deterministic public snapshots and private account snapshots opt into explicit offline persistence.
+- Confirm wallet, market, tracked-position, World, and Explore surfaces preserve known state until stronger state is proven.
+- Update outward release/docs references to `v66.0.0`.
+- Deploy updated `site/` artifacts.
+- Publish the `v66.0.0` release note, product-truth freeze, checklist, process, local-proof reference docs, and updated docs indexes.
+- No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v64.0.0
 Release date: 2026-04-21
 

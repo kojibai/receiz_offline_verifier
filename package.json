@@ -1,7 +1,7 @@
 {
   "name": "receiz-offline-verifier",
   "private": true,
-  "version": "64.0.0",
+  "version": "66.0.0",
   "description": "Receiz offline verifier static app and public release surfaces",
   "license": "MIT"
 }

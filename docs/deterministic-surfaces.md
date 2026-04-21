@@ -1,5 +1,7 @@
 # Deterministic Surface Contract
 
+Status: Canonical reference for `v66.0.0`
+
 Receiz trust surfaces must never use fake loaders.
 
 ## Rule
@@ -47,6 +49,12 @@ Snapshots are allowed because they are deterministic route state, not fake UI.
 - Snapshots must be written before navigation.
 - Snapshots must never become the only source of truth.
 - Cold loads, pasted links, reloads, and new tabs must still resolve correctly from the route itself.
+
+For `v66.0.0`, deterministic public snapshots and private account snapshots may also be explicit offline truth carriers when the response opts into persistence with `x-receiz-offline-persist`.
+
+- Offline persisted snapshots must represent verified or deterministic route truth.
+- Offline persisted snapshots must not be treated as generic cache guesses.
+- A later transport payload must prove a stronger state before it can remove useful already-visible local truth.
 
 ## Enforcement
 
