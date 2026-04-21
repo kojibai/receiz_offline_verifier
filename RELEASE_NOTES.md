@@ -1,5 +1,74 @@
 # Release Notes
 
+## v64.0.0
+Release date: 2026-04-21
+
+`v64.0.0` is the complete value-loop release. In this offline verifier repository, the release work is publication of the canonical `v64.0.0` artifacts plus outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v64.0.0.md](docs/releases/v64.0.0.md)
+Product-truth freeze: [docs/releases/v64.0.0-product-truth.md](docs/releases/v64.0.0-product-truth.md)
+Release checklist: [docs/releases/v64.0.0-checklist.md](docs/releases/v64.0.0-checklist.md)
+Release process: [docs/releases/v64.0.0-process.md](docs/releases/v64.0.0-process.md)
+Value-loop invariants: [docs/value-loop-invariants.md](docs/value-loop-invariants.md)
+
+## Highlights
+- Receiz now documents one closed value loop: create value, hold Settlement, send proof-native value, use Reserve for notes and wire transfers, issue shares into certificates, let buyers fund certificates, and credit sellers only when value is actually funded.
+- Settlement is the primary proof-native liquid value lane.
+- Reserve is the funded external-conversion lane for notes, sends, positions, and wire transfers.
+- Sends and buys deploy funded Reserve first, then Settlement covers the remainder.
+- Market sells split into funded Reserve and unfunded Settlement.
+- Settlement shares and certificates bridge Settlement to buyer-funded Reserve.
+- Certificate issue locks value, and funded certificate sale credits the seller.
+- No new value state or database migration is added by this documentation cut.
+- Release-governed version surfaces now move together to `v64.0.0` across package metadata, public verifier artifacts, shipped release badges, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v64.0.0`.
+- Repository release/docs surfaces now align to `v64.0.0`.
+- Root package metadata now resolves cleanly at `v64.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Preserved verifier contract
+- Trusted-signature success still requires verified `signatureV4`.
+- Trusted-signature failure semantics remain fail-closed:
+  - invalid present `signatureV4` -> `Trusted signature invalid`
+  - unavailable present `signatureV4` -> `Trusted signature unavailable`
+  - missing `signatureV4` -> `Trusted signature missing. Expected signatureV4.`
+- Effective anchor context remains required (explicit or derivable).
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction/normalization for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical identity derivation and artifact-binding checks.
+- Fail-closed verification semantics.
+
+## Operational notes
+- Broader platform validation for `v64.0.0` is captured in the canonical release note, process, and checklist, including wallet account-lane truth, account quote math, Reserve-first send/buy execution, market funded/unfunded sale splits, certificate funding causality, Reserve-only note issuance, Reserve-funded wire transfer, and value-state metadata preservation.
+- Published release surfaces now include the canonical `v64.0.0` release note, the `v64.0.0` product-truth freeze, the `v64.0.0` checklist, the `v64.0.0` process document, and the canonical value-loop invariants.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+- No verifier proof-format or producer payload migration is implied by these repository release/documentation updates alone.
+- The broader product baseline referenced by this release is the `v63.2.0` value-state release; this repository advances its public release surface from `v61.0.0` to `v64.0.0`.
+
+## Migration checklist
+- No new database migrations are introduced by this documentation cut.
+- No new value state is added by `v64.0.0`.
+- Confirm wallet leads with Settlement balance, USD first, with phi equivalent underneath where phi context is shown.
+- Confirm Reserve appears beneath Settlement as the funded external-conversion lane.
+- Confirm Settlement and Reserve popover charts use account-lane truth and account quote math.
+- Confirm Market wallet panel and portfolio chart use real phi conversion math through the wallet account quote.
+- Confirm notes stay Reserve-only.
+- Confirm wire transfer draws from Reserve.
+- Confirm sends and buys deploy Reserve before Settlement remainder.
+- Confirm market sells split funded Reserve and unfunded Settlement.
+- Confirm certificate issue locks value and funded certificate sale credits the seller only when funded.
+- Update outward release/docs references to `v64.0.0`.
+- Deploy updated `site/` artifacts.
+- Publish the `v64.0.0` release note, product-truth freeze, checklist, process, invariants, and updated docs indexes.
+- No producer payload or proof-format migration is implied by these verifier-repo documentation updates alone.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v61.0.0
 Release date: 2026-04-19
 

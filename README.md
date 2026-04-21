@@ -2,17 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v61.0.0`
+Current release: `v64.0.0`
 
-## What changed in v61.0.0
-- Current release/docs surfaces are aligned to `v61.0.0`.
-- Published the canonical `v61.0.0` release note at [docs/releases/v61.0.0.md](docs/releases/v61.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v61.0.0-product-truth.md](docs/releases/v61.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v61.0.0-checklist.md](docs/releases/v61.0.0-checklist.md).
-- `v61.0.0` is the historical-continuity and runtime-discipline release on top of `v60.0.0`: pre-v4 receiz now lives under a governed historical cohort, settled twin shells stay visually immutable until explicit activation, public market witness truth remains holder-aware, and market exits stay on deterministic internal routes.
-- No new database migrations are added beyond the `v60.0.0` baseline.
-- Current shipped verifier, studio, and settlement entrypoints now display `v61.0.0`.
-- Root package metadata now resolves cleanly to `v61.0.0`.
+## What changed in v64.0.0
+- Current release/docs surfaces are aligned to `v64.0.0`.
+- Published the canonical `v64.0.0` release note at [docs/releases/v64.0.0.md](docs/releases/v64.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v64.0.0-product-truth.md](docs/releases/v64.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v64.0.0-checklist.md](docs/releases/v64.0.0-checklist.md).
+- Published the release process at [docs/releases/v64.0.0-process.md](docs/releases/v64.0.0-process.md).
+- Published the canonical value-loop invariants at [docs/value-loop-invariants.md](docs/value-loop-invariants.md).
+- `v64.0.0` is the complete value-loop release: Settlement is proof-native liquid value, Reserve is the funded external-conversion lane, notes and wire transfer stay Reserve-funded, sends and buys deploy Reserve first, and certificates bridge Settlement to buyer-funded Reserve.
+- No new value state or database migration is added by this documentation cut.
+- Current shipped verifier, studio, and settlement entrypoints now display `v64.0.0`.
+- Root package metadata now resolves cleanly to `v64.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -30,9 +32,9 @@ Current release: `v61.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v61.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v64.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v61)
+## Release train highlights (v14 -> v64)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -76,6 +78,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v60.0.0`: release/docs alignment for the major stable recap cut across `v50.0.0` through `v60.0.0`, including live proof and twin at the front door, stronger canonical original upload/download recovery, explicit profile-ready twin portrait publishing, tighter compact-device wallet and certificate framing, and unified `v60.0.0` release truth; verifier semantics remain unchanged from `v58.0.0`.
 - `v60.1.0`: release/docs alignment for the continuity-and-market-proof cut on top of `v60.0.0`, including holder-aware public market witness truth, compact market-desk polish, twin shell continuity without late visible promotion, lighter public-profile route assembly, and deterministic market sigil hydration; verifier semantics remain unchanged from `v60.0.0`.
 - `v61.0.0`: release/docs alignment for the governed historical-continuity and runtime-discipline cut on top of `v60.0.0`, including the governed pre-v4 historical cohort, deterministic market exits, stricter settled-shell runtime boundaries, published operating standards, and unified `v61.0.0` release truth; verifier semantics remain unchanged from `v60.0.0`.
+- `v64.0.0`: release/docs alignment for the complete value-loop cut, including Settlement as proof-native liquid value, funded Reserve as the external-conversion lane, Reserve-only notes and wire transfer, Reserve-first sends and buys, funded/unfunded market sale splits, buyer-funded certificates, and canonical value-loop invariants; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -141,14 +144,16 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v61.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v64.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v61.0.0.md](docs/releases/v61.0.0.md): canonical `v61.0.0` release note.
-- [docs/releases/v61.0.0-product-truth.md](docs/releases/v61.0.0-product-truth.md): `v61.0.0` product-truth freeze document.
-- [docs/releases/v61.0.0-checklist.md](docs/releases/v61.0.0-checklist.md): release-prep checklist and additional gates for `v61.0.0`.
+- [docs/releases/v64.0.0.md](docs/releases/v64.0.0.md): canonical `v64.0.0` release note.
+- [docs/releases/v64.0.0-product-truth.md](docs/releases/v64.0.0-product-truth.md): `v64.0.0` product-truth freeze document.
+- [docs/releases/v64.0.0-checklist.md](docs/releases/v64.0.0-checklist.md): release-prep checklist and additional gates for `v64.0.0`.
+- [docs/releases/v64.0.0-process.md](docs/releases/v64.0.0-process.md): release-prep process for `v64.0.0`.
+- [docs/value-loop-invariants.md](docs/value-loop-invariants.md): canonical Settlement, Reserve, certificate, note, and wire-transfer value-loop invariants.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
 - [docs/conformance/README.md](docs/conformance/README.md): styled conformance hub with live badge surfaces, current imported snapshot results, and deep suite docs for the currently vendored conformance suites.
