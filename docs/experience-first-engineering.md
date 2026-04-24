@@ -1,6 +1,6 @@
 # Experience-First Engineering
 
-Status: Canonical reference for `v66.0.0`
+Status: Canonical reference for `v70.0.0`
 
 Receiz engineering starts from the user's already-held truth. A surface that can render from local proof should render from local proof. A surface that already has deterministic state should not perform visible loading theater while it asks a weaker transport to repeat what the node already knows.
 
@@ -15,6 +15,7 @@ This is not a preference for offline mode over online capability. It is an autho
 ## Experience Rules
 
 - Prefer verified local proof over later weaker payloads.
+- Prefer local Receiz ID truth over stale, missing, or anonymous session payloads.
 - Prefer deterministic snapshots over placeholder frames.
 - Prefer compact local memory over full-background hydration when the visible state is already settled.
 - Keep expensive runtime work hidden until explicit intent requires it.
@@ -52,3 +53,4 @@ A change regresses this standard if it:
 - replaces a verified local block with a weaker remote payload
 - hides local state behind a placeholder frame
 - treats an unavailable session as permission to erase a valid local identity root
+- turns a pass-through identity route into a destination that blocks local continuation

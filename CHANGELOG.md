@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v70.0.0] - 2026-04-24
+
+### Changed
+- Advanced the current release/documentation surface from `v66.0.0` to `v70.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v70.0.0`.
+- Published the canonical `v70.0.0` public alpha release artifacts:
+  - `docs/releases/v70.0.0.md`
+  - `docs/releases/v70.0.0-product-truth.md`
+  - `docs/releases/v70.0.0-checklist.md`
+  - `docs/releases/v70.0.0-process.md`
+  - `docs/releases/v70.0.0-growth-from-v60.md`
+  - `docs/releases/v70.0.0-invariant-register.md`
+  - `docs/releases/v70.0.0-docs-manifest.md`
+- Published product-truth reference documents:
+  - `docs/literal-product-law.md`
+  - `docs/pbi-recovery-receiz-id-binding.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v70.0.0`.
+- Aligned public release framing around one-click Receiz ID entry, canonical `/<username>` profile truth, complete Settlement/Reserve value-loop causality, local-first/server-always recovery, route-preserving stale-runtime recovery, proof-sealed world trail bundles, live twin identity locking, and the `v70.0.0` invariant register.
+- No new database migration is introduced by this documentation cut.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v70.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v64.0.0` value-loop invariants remain in force.
+
 ## [v66.0.0] - 2026-04-21
 
 ### Changed

@@ -2,20 +2,23 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v66.0.0`
+Current release: `v70.0.0`
 
-## What changed in v66.0.0
-- Current release/docs surfaces are aligned to `v66.0.0`.
-- Published the canonical `v66.0.0` release note at [docs/releases/v66.0.0.md](docs/releases/v66.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v66.0.0-product-truth.md](docs/releases/v66.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v66.0.0-checklist.md](docs/releases/v66.0.0-checklist.md).
-- Published the release process at [docs/releases/v66.0.0-process.md](docs/releases/v66.0.0-process.md).
-- Published local-proof reference docs at [docs/experience-first-engineering.md](docs/experience-first-engineering.md), [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md), and [docs/offline-verified-register.md](docs/offline-verified-register.md).
-- `v66.0.0` is the local proof continuity release: identity is local, proof is local, state is deterministic, history is append-only, memory is compact, and sync is propagation.
+## What changed in v70.0.0
+- Current release/docs surfaces are aligned to `v70.0.0`.
+- Published the canonical `v70.0.0` public alpha release note at [docs/releases/v70.0.0.md](docs/releases/v70.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v70.0.0-product-truth.md](docs/releases/v70.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v70.0.0-checklist.md](docs/releases/v70.0.0-checklist.md).
+- Published the release process at [docs/releases/v70.0.0-process.md](docs/releases/v70.0.0-process.md).
+- Published the growth record from `v60.0.0` at [docs/releases/v70.0.0-growth-from-v60.md](docs/releases/v70.0.0-growth-from-v60.md).
+- Published the invariant register at [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md).
+- Published the full public docs manifest at [docs/releases/v70.0.0-docs-manifest.md](docs/releases/v70.0.0-docs-manifest.md).
+- Published product-truth reference docs at [docs/literal-product-law.md](docs/literal-product-law.md), [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md), [docs/experience-first-engineering.md](docs/experience-first-engineering.md), [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md), and [docs/offline-verified-register.md](docs/offline-verified-register.md).
+- `v70.0.0` is the public alpha release: identity is local, proof is in the file, verified truth is append-only, `/<username>` is canonical profile truth, Settlement and Reserve preserve funded causality, and the network propagates/appends instead of downgrading stronger device-held proof.
 - The `v64.0.0` value-loop invariants remain in force.
 - No new database migration is required by this documentation cut.
-- Current shipped verifier, studio, and settlement entrypoints now display `v66.0.0`.
-- Root package metadata now resolves cleanly to `v66.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints now display `v70.0.0`.
+- Root package metadata now resolves cleanly to `v70.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -33,9 +36,9 @@ Current release: `v66.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v66.0.0` operating release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v70.0.0` public alpha release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v66)
+## Release train highlights (v14 -> v70)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -81,6 +84,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v61.0.0`: release/docs alignment for the governed historical-continuity and runtime-discipline cut on top of `v60.0.0`, including the governed pre-v4 historical cohort, deterministic market exits, stricter settled-shell runtime boundaries, published operating standards, and unified `v61.0.0` release truth; verifier semantics remain unchanged from `v60.0.0`.
 - `v64.0.0`: release/docs alignment for the complete value-loop cut, including Settlement as proof-native liquid value, funded Reserve as the external-conversion lane, Reserve-only notes and wire transfer, Reserve-first sends and buys, funded/unfunded market sale splits, buyer-funded certificates, and canonical value-loop invariants; verifier semantics remain unchanged from `v60.0.0`.
 - `v66.0.0`: release/docs alignment for the local proof continuity cut, including local identity roots, verified-register-backed proof authority, deterministic state preservation, append-only history, compact local memory, sync as propagation, explicit verified-snapshot persistence, and local twin register projection; verifier semantics remain unchanged from `v60.0.0`.
+- `v70.0.0`: release/docs alignment for the public alpha cut, including one-click Receiz ID entry, canonical `/<username>` profile truth, complete Settlement/Reserve value-loop causality, local-first/server-always recovery, route-preserving stale-runtime recovery, live twin identity locking, proof-sealed world trail bundles, and the `v70.0.0` invariant register; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -146,18 +150,23 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v66.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v70.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v66.0.0.md](docs/releases/v66.0.0.md): canonical `v66.0.0` release note.
-- [docs/releases/v66.0.0-product-truth.md](docs/releases/v66.0.0-product-truth.md): `v66.0.0` product-truth freeze document.
-- [docs/releases/v66.0.0-checklist.md](docs/releases/v66.0.0-checklist.md): release-prep checklist and additional gates for `v66.0.0`.
-- [docs/releases/v66.0.0-process.md](docs/releases/v66.0.0-process.md): release-prep process for `v66.0.0`.
+- [docs/releases/v70.0.0.md](docs/releases/v70.0.0.md): canonical `v70.0.0` public alpha release note.
+- [docs/releases/v70.0.0-product-truth.md](docs/releases/v70.0.0-product-truth.md): `v70.0.0` product-truth freeze document.
+- [docs/releases/v70.0.0-checklist.md](docs/releases/v70.0.0-checklist.md): release-prep checklist and additional gates for `v70.0.0`.
+- [docs/releases/v70.0.0-process.md](docs/releases/v70.0.0-process.md): release-prep process for `v70.0.0`.
+- [docs/releases/v70.0.0-growth-from-v60.md](docs/releases/v70.0.0-growth-from-v60.md): growth record from `v60.0.0` through the final `v69.9.x` stabilization line.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register.
+- [docs/releases/v70.0.0-docs-manifest.md](docs/releases/v70.0.0-docs-manifest.md): full public docs manifest for the `v70.0.0` release surface.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law for `v70.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
+- [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
 - [docs/value-loop-invariants.md](docs/value-loop-invariants.md): canonical Settlement, Reserve, certificate, note, and wire-transfer value-loop invariants.
 - [docs/receiz-standard-v1.md](docs/receiz-standard-v1.md): public Receiz artifact and settlement standard framing.
 - [docs/deterministic-surfaces.md](docs/deterministic-surfaces.md): deterministic route contract for public truth surfaces.
