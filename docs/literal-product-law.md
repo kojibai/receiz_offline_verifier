@@ -1,6 +1,6 @@
 # Literal Product Law
 
-Status: Canonical reference for `v70.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v73.0.0`
 Release date: April 24, 2026
 
 Receiz release truth is literal. A product surface must tell the same story as the proof, local register, deterministic route state, and value-causality record that already exist.

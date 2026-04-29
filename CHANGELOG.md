@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v73.0.0] - 2026-04-29
+
+### Changed
+- Advanced the current release/documentation surface from `v70.0.0` to `v73.0.0` while adding the missing `v72.0.0` release archive.
+- Updated canonical root package metadata and set `package.json` to `v73.0.0`.
+- Published the canonical `v73.0.0` ownership, vault, and continuity release artifacts:
+  - `docs/releases/v73.0.0.md`
+  - `docs/releases/v73.0.0-product-truth.md`
+  - `docs/releases/v73.0.0-checklist.md`
+  - `docs/releases/v73.0.0-process.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v73.0.0`.
+- Aligned public release framing around business account ownership, receipt provenance, vault portability, account brain proof detail, Offline Verifier authority navigation, profile/account continuity, and bounded world twin fit contracts.
+- No new database migration is introduced by this documentation cut.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v73.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v70.0.0` public alpha law, `v72.0.0` stable continuity locks, and `v64.0.0` value-loop invariants remain in force.
+
+## [v72.0.0] - 2026-04-28
+
+### Changed
+- Added the canonical `v72.0.0` stable continuity release archive:
+  - `docs/releases/v72.0.0.md`
+  - `docs/releases/v72.0.0-product-truth.md`
+  - `docs/releases/v72.0.0-checklist.md`
+  - `docs/releases/v72.0.0-process.md`
+- Aligned release framing around actor-scoped route warmth clearing on account switch, viewer-user-id preservation for market/private wallet state, signed-in profile first-paint parity, useful hydration repair, and compact mobile Live Twin face-lock overlay fit.
+- Recorded that package metadata, service-worker defaults, public version badges, verifier surfaces, and release docs moved together to `v72.0.0` at the stable continuity cut.
+- No verifier proof-format or producer payload migration is implied by this release archive.
+
+### Kept
+- The `v70.0.0` public alpha law remains intact.
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Fail-closed verification model.
+- The `v64.0.0` value-loop invariants remain in force.
+
 ## [v70.0.0] - 2026-04-24
 
 ### Changed

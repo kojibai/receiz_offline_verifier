@@ -1,5 +1,82 @@
 # Release Notes
 
+## v73.0.0
+Release date: 2026-04-29
+
+`v73.0.0` is the ownership, vault, and continuity release. In this offline verifier repository, the release work is publication of the `v72.0.0` archive, canonical `v73.0.0` artifacts, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v73.0.0.md](docs/releases/v73.0.0.md)
+Product-truth freeze: [docs/releases/v73.0.0-product-truth.md](docs/releases/v73.0.0-product-truth.md)
+Release checklist: [docs/releases/v73.0.0-checklist.md](docs/releases/v73.0.0-checklist.md)
+Release process: [docs/releases/v73.0.0-process.md](docs/releases/v73.0.0-process.md)
+Included v72 archive: [docs/releases/v72.0.0.md](docs/releases/v72.0.0.md)
+
+## Highlights
+- Business account entity ownership and certificates now have first-class API, server, and contract coverage.
+- Receipt ownership provenance and transfer flows now carry stronger proof bundles and route-level continuity.
+- Vault and original-download paths preserve portable verified records instead of treating recovered artifact state as disposable UI state.
+- Account brain selections expose compact proof-bundle data in a dismissible mobile-friendly popover, with Open shown only for nodes that have a real route target.
+- Account authority navigation names the offline surface as Offline Verifier and consolidates Privacy/Terms into Legal while keeping Security one tap away.
+- Account, profile, composer, chat, discovery, and world twin surfaces keep post-v72 UI improvements under explicit continuity and fit contracts.
+- Release-governed version surfaces now move together to `v73.0.0` across package metadata, public verifier artifacts, shipped release badges, README pointers, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v73.0.0`.
+- Repository release/docs surfaces now align to `v73.0.0`.
+- Root package metadata now resolves cleanly at `v73.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- The broader release brief records `61ae0ef2b` as the `v72.0.0` baseline, but this offline verifier checkout does not contain that commit object or a `v72.0.0` tag locally.
+- Published release surfaces now include the canonical `v72.0.0` archive and the `v73.0.0` release note, product-truth freeze, checklist, process, and updated docs indexes.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v72.0.0` stable continuity locks, and `v64.0.0` value-loop invariants remain in force.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+
+## Migration checklist
+- No new database migrations are introduced by this documentation cut.
+- Confirm business ownership APIs, certificate generation, and holdings reads have contract coverage.
+- Confirm receipt provenance and transfer proof do not rewrite artifact identity or canonical receipt truth.
+- Confirm vault decode, verifier, and original-download state preserve portable verified record truth.
+- Confirm account brain selected-node proof data and route-target-only Open actions.
+- Confirm account authority navigation names Offline Verifier, consolidates Privacy/Terms into Legal, and keeps Security one tap away.
+- Confirm world twin face authority and photoreal shell fit remain bounded by contracts.
+- Update outward release/docs references to `v73.0.0`.
+- Deploy updated `site/` artifacts.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
+## v72.0.0
+Release date: 2026-04-28
+
+`v72.0.0` is the stable continuity release. In this offline verifier repository, the release work is publication of the canonical `v72.0.0` artifacts and release-governed version-surface expectations only.
+
+Canonical full release note: [docs/releases/v72.0.0.md](docs/releases/v72.0.0.md)
+Product-truth freeze: [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md)
+Release checklist: [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md)
+Release process: [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md)
+
+## Highlights
+- Account switching clears actor-scoped route warmth and refuses to preserve market/private wallet state unless the viewer user id matches.
+- Compact mobile Live Twin rendered-portrait overlays apply a bounded lower-left face-lock correction so eyes and mouth stay on the person's face without restoring the old oversized mobile downshift.
+- `/<username>` remains canonical profile truth; `?manage=1` remains owner permissions only.
+- Owner/private enrichment must not make signed-in profile first paint slower than public profile truth.
+- Useful hydration repairs stay: stale app-open state can refresh in the background without replacing a settled visible shell.
+- Release-governed version surfaces moved together to `v72.0.0` at the stable continuity cut.
+
+## Verifier impact
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- The `v70.0.0` public alpha law remains intact.
+- The `v64.0.0` value-loop invariants remain in force.
+- In this offline verifier repository, `v72.0.0` is now retained as historical release truth while current-release pointers move to `v73.0.0`.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v70.0.0
 Release date: 2026-04-24
 
