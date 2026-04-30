@@ -2,20 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v73.0.0`
+Current release: `v74.0.0`
 
-## What changed in v73.0.0
-- Current release/docs surfaces are aligned to `v73.0.0`.
-- Added the `v72.0.0` stable continuity release archive at [docs/releases/v72.0.0.md](docs/releases/v72.0.0.md).
-- Published the canonical `v73.0.0` ownership, vault, and continuity release note at [docs/releases/v73.0.0.md](docs/releases/v73.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v73.0.0-product-truth.md](docs/releases/v73.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v73.0.0-checklist.md](docs/releases/v73.0.0-checklist.md).
-- Published the release process at [docs/releases/v73.0.0-process.md](docs/releases/v73.0.0-process.md).
-- `v73.0.0` carries forward the `v70.0.0` public alpha law and the `v72.0.0` stable continuity locks while adding business account ownership, receipt provenance, vault portability, account brain proof detail, Offline Verifier authority navigation, and bounded world twin fit contracts.
+## What changed in v74.0.0
+- Current release/docs surfaces are aligned to `v74.0.0`.
+- Published the canonical `v74.0.0` Receiz Key, identity artwork, and profile media release note at [docs/releases/v74.0.0.md](docs/releases/v74.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v74.0.0-product-truth.md](docs/releases/v74.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v74.0.0-checklist.md](docs/releases/v74.0.0-checklist.md).
+- Published the release process at [docs/releases/v74.0.0-process.md](docs/releases/v74.0.0-process.md).
+- `v74.0.0` carries forward the `v70.0.0` public alpha law and the `v73.0.0` ownership/vault continuity baseline while adding Receiz Key restore and revocation, deterministic profile identity artwork, PBI-signed identity artifacts, stable profile creation truth, long-form profile originals, exact attached-link preservation, video playback derivatives, sold-position continuity, and portable profile state import.
 - The `v64.0.0` value-loop invariants remain in force.
 - No new database migration is required by this documentation cut.
-- Current shipped verifier, studio, and settlement entrypoints now display `v73.0.0`.
-- Root package metadata now resolves cleanly to `v73.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints now display `v74.0.0`.
+- Root package metadata now resolves cleanly to `v74.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -33,9 +32,9 @@ Current release: `v73.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v73.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v74.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v73)
+## Release train highlights (v14 -> v74)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -84,6 +83,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v70.0.0`: release/docs alignment for the public alpha cut, including one-click Receiz ID entry, canonical `/<username>` profile truth, complete Settlement/Reserve value-loop causality, local-first/server-always recovery, route-preserving stale-runtime recovery, live twin identity locking, proof-sealed world trail bundles, and the `v70.0.0` invariant register; verifier semantics remain unchanged from `v60.0.0`.
 - `v72.0.0`: release/docs archive for the stable continuity cut, including actor-scoped route warmth clearing on account switch and compact mobile Live Twin face-lock overlay fit; verifier semantics remain unchanged from `v60.0.0`.
 - `v73.0.0`: release/docs alignment for the ownership, vault, and continuity cut, including business account ownership, receipt provenance, vault portability, account brain proof detail, Offline Verifier authority navigation, and bounded world twin fit contracts; verifier semantics remain unchanged from `v60.0.0`.
+- `v74.0.0`: release/docs alignment for the Receiz Key, identity artwork, and profile media cut, including sovereign Receiz Key restore, deterministic profile identity artwork, PBI-signed identity artifacts, stable profile creation truth, long-form originals, attached-link preservation, video derivatives, sold-position continuity, and portable profile state import; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -149,12 +149,16 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v73.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v74.0.0`.
 - [site/index.html](site/index.html): published verifier entrypoint.
 - [apps/offline-verifier.html](apps/offline-verifier.html): mirrored app entrypoint.
 - [apps/offline-record-seal.html](apps/offline-record-seal.html): offline record, seal, and verify studio surface.
 - [apps/offline-settlement.html](apps/offline-settlement.html): offline settlement bundle builder.
-- [docs/releases/v73.0.0.md](docs/releases/v73.0.0.md): canonical `v73.0.0` ownership, vault, and continuity release note.
+- [docs/releases/v74.0.0.md](docs/releases/v74.0.0.md): canonical `v74.0.0` Receiz Key, identity artwork, and profile media release note.
+- [docs/releases/v74.0.0-product-truth.md](docs/releases/v74.0.0-product-truth.md): `v74.0.0` product-truth freeze document.
+- [docs/releases/v74.0.0-checklist.md](docs/releases/v74.0.0-checklist.md): release-prep checklist and additional gates for `v74.0.0`.
+- [docs/releases/v74.0.0-process.md](docs/releases/v74.0.0-process.md): release-prep process for `v74.0.0`.
+- [docs/releases/v73.0.0.md](docs/releases/v73.0.0.md): canonical `v73.0.0` ownership, vault, and continuity release archive.
 - [docs/releases/v73.0.0-product-truth.md](docs/releases/v73.0.0-product-truth.md): `v73.0.0` product-truth freeze document.
 - [docs/releases/v73.0.0-checklist.md](docs/releases/v73.0.0-checklist.md): release-prep checklist and additional gates for `v73.0.0`.
 - [docs/releases/v73.0.0-process.md](docs/releases/v73.0.0-process.md): release-prep process for `v73.0.0`.
@@ -162,8 +166,8 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v73.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v73.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v74.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v74.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.

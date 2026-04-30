@@ -1,6 +1,6 @@
 # Verified History First Principles
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v73.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v74.0.0`
 
 Receiz history is append-only. Current truth may become stronger, more complete, or better explained, but prior proof is not rewritten to make a later surface easier to render.
 

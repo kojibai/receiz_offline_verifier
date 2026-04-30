@@ -1,6 +1,6 @@
 # Offline Verified Register
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v73.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v74.0.0`
 
 The offline verified register is the local append-only memory of verified Receiz truth. It lets a node keep identity, proof, deterministic snapshots, and ledger-relevant facts available even when the server, database, or network path is unavailable or weaker than local proof.
 

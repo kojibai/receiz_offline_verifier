@@ -1,5 +1,53 @@
 # Release Notes
 
+## v74.0.0
+Release date: 2026-04-30
+
+`v74.0.0` is the Receiz Key, identity artwork, and profile media release. In this offline verifier repository, the release work is publication of canonical `v74.0.0` artifacts and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v74.0.0.md](docs/releases/v74.0.0.md)
+Product-truth freeze: [docs/releases/v74.0.0-product-truth.md](docs/releases/v74.0.0-product-truth.md)
+Release checklist: [docs/releases/v74.0.0-checklist.md](docs/releases/v74.0.0-checklist.md)
+Release process: [docs/releases/v74.0.0-process.md](docs/releases/v74.0.0-process.md)
+Prior v73 archive: [docs/releases/v73.0.0.md](docs/releases/v73.0.0.md)
+
+## Highlights
+- Receiz Key restore is locked as a sovereign key-file recovery path proven by fresh key signatures and active key registration; PBI may attest new key export but is not required for already-held keys.
+- Account now owns Receiz Key controls for private Identity Record PNG export, optional file-password protection, Identity Record PNG or legacy key JSON import, active/revoked key listing, refresh, and two-step revocation.
+- Offline Receiz Key projection preserves verified portable state and admitted local identity proof even when the server misses later.
+- Profile identity artwork derives deterministically from account creation Kai truth, with KaiSigil glyph geometry and size math kept canonical.
+- PBI-signed identity seal and identity record artifacts append verified authorship state without replacing the base profile shell.
+- Long-form profile originals preserve full text, title, hash, word count, and a compact Read affordance; attached Receiz URLs preserve exact href values.
+- Profile video originals may use playback derivatives and range-aware proxying while original proof downloads stay canonical.
+- Sold share positions remain local truth across market snapshots and route hydration, and portable state import preserves profile media/state fields with visible integrity failures.
+- Release-governed version surfaces now move together to `v74.0.0` across package metadata, public verifier artifacts, shipped release badges, README pointers, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v74.0.0`.
+- Repository release/docs surfaces now align to `v74.0.0`.
+- Root package metadata now resolves cleanly at `v74.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- The broader release brief records tag `v73.0.0` at commit `fb2d82142` as the baseline and 44 commits plus release-candidate working-tree updates in scope.
+- Published release surfaces now include the canonical `v74.0.0` release note, product-truth freeze, checklist, process, and updated docs indexes.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v73.0.0` ownership/vault continuity baseline, and `v64.0.0` value-loop invariants remain in force.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+
+## Migration checklist
+- No new database migrations are introduced by this documentation cut.
+- Confirm Receiz Key restore, registration, export/import, active/revoked key listing, refresh, and two-step revocation gates.
+- Confirm offline Receiz Key projection keeps admitted local identity proof when later server fetches miss.
+- Confirm deterministic profile identity artwork, KaiSigil geometry, PBI-signed identity artifacts, and stable profile creation timestamps.
+- Confirm long-form profile originals, attached-link preservation, and profile video derivative playback preserve canonical original proof.
+- Confirm sold-position continuity and portable profile state import keep local truth and visible integrity failures.
+- Update outward release/docs references to `v74.0.0`.
+- Deploy updated `site/` artifacts.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v73.0.0
 Release date: 2026-04-29
 

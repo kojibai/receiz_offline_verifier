@@ -1,6 +1,6 @@
 # Experience-First Engineering
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v73.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v74.0.0`
 
 Receiz engineering starts from the user's already-held truth. A surface that can render from local proof should render from local proof. A surface that already has deterministic state should not perform visible loading theater while it asks a weaker transport to repeat what the node already knows.
 
