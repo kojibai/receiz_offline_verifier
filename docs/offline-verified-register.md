@@ -1,6 +1,6 @@
 # Offline Verified Register
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v74.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v75.0.0`
 
 The offline verified register is the local append-only memory of verified Receiz truth. It lets a node keep identity, proof, deterministic snapshots, and ledger-relevant facts available even when the server, database, or network path is unavailable or weaker than local proof.
 
@@ -17,7 +17,7 @@ The register exists to preserve local continuity:
 
 ## Register Semantics
 
-The register stores compact verified blocks. A block may represent Receiz ID identity, identity bootstrap, PBI/keyfile proof, artifact proof, deterministic ledger evidence, route snapshot truth, twin mind projection, wallet graph state, market position truth, or account continuity evidence.
+The register stores compact verified blocks. A block may represent Receiz ID identity, identity bootstrap, PBI proof, Identity Record proof, Identity Seal proof, Receiz Key proof, artifact proof, deterministic ledger evidence, route snapshot truth, twin mind projection, wallet graph state, market position truth, or account continuity evidence.
 
 Every register block should be:
 
@@ -33,7 +33,7 @@ Every register block should be:
 - Verified-register-backed proof outranks legacy offline evidence.
 - A stronger verified local block must not be replaced by a weaker remote payload.
 - A remote payload may append, enrich, or supersede local truth only when it proves stronger or additive state.
-- A missing or anonymous network session must not erase a valid local Receiz ID, PBI, keyfile, or identity bootstrap block.
+- A missing or anonymous network session must not erase a valid local Receiz ID, PBI, Identity Record, Identity Seal, Receiz Key, or identity bootstrap block.
 - A lagging market or tracked-position payload must not remove a known local position.
 
 ## Snapshot Rules
@@ -52,7 +52,7 @@ Portable imports must be verifiable without server-secret authority.
 - Twin mind PNG import requires portable public-key verification.
 - Server-secret HMAC authority is not canonical import authority for portable local truth.
 - Public-key identity for portable imports must identify the signing key through a stable key ID.
-- PBI/keyfile recovery must bind to the local Receiz ID identity root when proof verifies the same identity.
+- PBI, Identity Record, Identity Seal, and Receiz Key recovery must bind to the local Receiz ID identity root when proof verifies the same identity.
 
 ## Non-Regression Rule
 

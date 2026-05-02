@@ -1,6 +1,6 @@
 # Verified History First Principles
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v74.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v75.0.0`
 
 Receiz history is append-only. Current truth may become stronger, more complete, or better explained, but prior proof is not rewritten to make a later surface easier to render.
 
@@ -20,7 +20,7 @@ Receiz distinguishes between proof classes instead of treating all evidence as e
 - Verified-register-backed proof is strongest for local continuity.
 - Current file-backed proof remains authoritative for artifact truth.
 - Local Receiz ID truth remains authoritative for everyday identity when present.
-- PBI/keyfile proof may recover and bind identity, but it does not create a competing identity when it verifies the existing root.
+- PBI, Identity Record, Identity Seal, and Receiz Key proof may recover and bind identity, but they do not create a competing identity when they verify the existing root.
 - Governed historical proof remains authentic history but must not be recast as current verified proof.
 - Legacy offline evidence may help explain provenance but must not outrank verified-register-backed proof.
 - Anonymous, missing, or stale transport payloads do not erase local proof.

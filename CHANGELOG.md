@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v75.0.0] - 2026-05-02
+
+### Changed
+- Advanced the current release/documentation surface from `v74.0.0` to `v75.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v75.0.0`.
+- Published the canonical `v75.0.0` local proof, backup sign-in, market continuity, and Explore release artifacts:
+  - `docs/releases/v75.0.0.md`
+  - `docs/releases/v75.0.0-product-truth.md`
+  - `docs/releases/v75.0.0-checklist.md`
+  - `docs/releases/v75.0.0-process.md`
+  - `docs/releases/v75.0.0-hpl-continuity-review.md`
+  - `docs/releases/v75.0.0-receiz-identity-continuity-one-pager.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v75.0.0`.
+- Aligned public release framing around local-first Receiz ID proof, durable account bindings, Identity Record / Identity Seal / Receiz Key restore parity, old-browser backup sign-in, restored-account account / wallet / upgrade authority, deterministic profile identity downloads, Plans / Upgrade parity, market snapshot continuity, stable market navigation, and Explore mobile packaging.
+- No new database migration is introduced by this documentation cut.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v75.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v70.0.0` public alpha law, `v74.0.0` Receiz Key / identity-artwork baseline, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v74.0.0] - 2026-04-30
 
 ### Changed

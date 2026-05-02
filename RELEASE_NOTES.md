@@ -1,5 +1,59 @@
 # Release Notes
 
+## v75.0.0
+Release date: 2026-05-02
+
+`v75.0.0` is the local proof, backup sign-in, market continuity, and Explore release. In this offline verifier repository, the release work is publication of canonical `v75.0.0` artifacts and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v75.0.0.md](docs/releases/v75.0.0.md)
+Product-truth freeze: [docs/releases/v75.0.0-product-truth.md](docs/releases/v75.0.0-product-truth.md)
+Release checklist: [docs/releases/v75.0.0-checklist.md](docs/releases/v75.0.0-checklist.md)
+Release process: [docs/releases/v75.0.0-process.md](docs/releases/v75.0.0-process.md)
+HPL continuity review: [docs/releases/v75.0.0-hpl-continuity-review.md](docs/releases/v75.0.0-hpl-continuity-review.md)
+Identity continuity one-pager: [docs/releases/v75.0.0-receiz-identity-continuity-one-pager.md](docs/releases/v75.0.0-receiz-identity-continuity-one-pager.md)
+Prior v74 archive: [docs/releases/v74.0.0.md](docs/releases/v74.0.0.md)
+
+## Highlights
+- Receiz ID login is locked as local-first: the device-held key admits local identity truth, projects the signed-in shell, seeds profile and wallet route truth, and starts server propagation in the background.
+- Server continuation may publish, bind, mint cookies, and append stronger additions, but it cannot replace a stronger local account binding with a weaker or stale payload for another account.
+- Local account bindings persist as durable register truth across Receiz device, Receiz Key, PBI, email, and server-switch sources.
+- Identity Record, Identity Seal, and Receiz Key restore now project verified file sessions directly, admit restored accounts locally, and seed profile, wallet, and upgrade truth.
+- Unsupported browsers use `/signin/receiz-id-fallback` with sanitized return paths while primary sign-in surfaces remain Receiz ID pass-through.
+- Account, managed profile, wallet, and upgrade surfaces recognize locally restored account authority before stale old-cookie echoes.
+- Profile identity artwork and signed original downloads preserve deterministic profile truth, owner proof, purchase context, and PBI authorization without redefining the base profile shell.
+- Plans and Upgrade keep parity for immediate payment / upgrade actions and old-browser fallback affordances.
+- Market snapshots preserve stronger signed-in wallet, owned-item, prediction-history, and share-trade truth across lagging or anonymous payloads while refusing private-state preservation across viewer changes.
+- Sold share positions remain closed when local sell history is newer than incoming market payloads.
+- Explore opens as a card-first, dock-safe mobile surface with bounded swipe rendering, deterministic preview fallbacks, in-card actions, and local-first route entry.
+- Release-governed version surfaces now move together to `v75.0.0` across package metadata, public verifier artifacts, shipped release badges, README pointers, and current-release documentation.
+
+## Verifier impact
+- Current shipped verifier, studio, and settlement entrypoints are marked `v75.0.0`.
+- Repository release/docs surfaces now align to `v75.0.0`.
+- Root package metadata now resolves cleanly at `v75.0.0`.
+- No verifier proof-format or producer payload migration is implied by this release update.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- The broader release brief records tag `v74.0.0` at commit `7547ebf43` as the baseline and commit `ae5491c82` as the pre-bump v75 candidate.
+- Published release surfaces now include the canonical `v75.0.0` release note, product-truth freeze, checklist, process, HPL continuity review, Receiz identity continuity one-pager, and updated docs indexes.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v74.0.0` Receiz Key / identity-artwork baseline, and `v64.0.0` value-loop invariants remain in force.
+- In this offline verifier repository, the release work is documentation, visible version-surface alignment, and package-metadata normalization only.
+
+## Migration checklist
+- No new database migrations are introduced by this documentation cut.
+- Confirm Receiz ID local-proof login and server-continuation downgrade gates.
+- Confirm account binding register and account-switch continuity gates.
+- Confirm Identity Record, Identity Seal, and Receiz Key restore projection gates.
+- Confirm old-browser backup sign-in and sanitized return-path gates.
+- Confirm restored-account account, managed profile, wallet, and upgrade authority gates.
+- Confirm profile identity artwork, signed original downloads, Plans / Upgrade parity, market continuity, and Explore local-first packaging gates.
+- Update outward release/docs references to `v75.0.0`.
+- Deploy updated `site/` artifacts.
+
+## Security posture
+Security posture remains fail-closed: verification still requires byte-level integrity, trusted signature evidence, anchor context, and real Groth16 proof validation.
+
 ## v74.0.0
 Release date: 2026-04-30
 
