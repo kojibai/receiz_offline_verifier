@@ -1,5 +1,44 @@
 # Release Notes
 
+## v76.0.0
+Release date: 2026-05-06
+
+`v76.0.0` is the world-agent revenue-loop, public proof registry, market twin mandate, wallet settlement correction, and status-surface release. In this offline verifier repository, the release work is publication of canonical `v76.0.0` artifacts and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v76.0.0.md](docs/releases/v76.0.0.md)  
+Product-truth freeze: [docs/releases/v76.0.0-product-truth.md](docs/releases/v76.0.0-product-truth.md)  
+Release checklist: [docs/releases/v76.0.0-checklist.md](docs/releases/v76.0.0-checklist.md)  
+Release process: [docs/releases/v76.0.0-process.md](docs/releases/v76.0.0-process.md)  
+Prior v75 archive: [docs/releases/v75.0.0.md](docs/releases/v75.0.0.md)
+
+## Highlights
+- World keeps concierge streaming continuity while moving agentic work to the Agents SDK, including task-level trace summaries that stay public-safe.
+- Revenue loops now include protected follow-up campaign continuity, Sales Brain, autopilot briefs, and mission outcomes with value attribution.
+- Market Twin receives mandate-safe persistence, replay labeling, win-rate math corrections, and stronger authority handling for saved account settings.
+- Public Proof is promoted as a first-class registry surface with observe/claim/verify/seal/dispute flows.
+- Wallet settlement now correctly handles running reserve balances and non-subscription payment-credit movement.
+- Public and developer Status coverage now includes expanded, non-privileged surface inventory for profile/world/public proof/market/wallet/payment/discovery.
+- No new database migration is introduced by this documentation cut.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v76.0.0`.
+- Root package metadata now resolves to `v76.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Baseline: tag `v75.0.0` at commit `bae14f0cd`.
+- Candidate scope: 46 commits in the pre-bump window (`876f70c7b` as the candidate anchor), including Agents SDK migration, protected trace UX, public proof registry, wallet, market, and status behavior updates plus release evidence.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v74.0.0` Receiz Key / identity-artwork baseline, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment only.
+
+## Migration checklist
+- Confirm world concierge can continue direct responses while using Agents SDK for tool orchestration and handoffs.
+- Confirm campaign follow-up and marketing email defaults prefer email unless a valid connected webhook destination exists.
+- Confirm Market Twin authority persistence, mandate checks, replay label accuracy, and win-rate math corrections.
+- Confirm Public Proof observe/claim/verify/seal/dispute and rights flows remain readably safe.
+- Confirm wallet running-balance, reserve settlement, and ledger framing remain correct for non-subscription flows.
+- Confirm public/developer Status endpoint inventory excludes privileged/private admin routes.
+- Update release and entrypoint version markers to `v76.0.0`.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v75.0.0
 Release date: 2026-05-02
 

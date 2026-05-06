@@ -1,9 +1,13 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v75.0.0`.
+This directory is the public documentation set for Receiz `v76.0.0`.
 
 ## Start Here
 
+- [releases/v76.0.0.md](releases/v76.0.0.md): canonical World Agent revenue loop, Public Proof, Market Twin, and status release note for `v76.0.0`.
+- [releases/v76.0.0-product-truth.md](releases/v76.0.0-product-truth.md): release-scoped product-truth freeze for `v76.0.0`.
+- [releases/v76.0.0-checklist.md](releases/v76.0.0-checklist.md): release-prep checklist and additional gates for `v76.0.0`.
+- [releases/v76.0.0-process.md](releases/v76.0.0-process.md): release-prep process for `v76.0.0`.
 - [releases/v75.0.0.md](releases/v75.0.0.md): canonical local proof, backup sign-in, market continuity, and Explore release note for `v75.0.0`.
 - [releases/v75.0.0-product-truth.md](releases/v75.0.0-product-truth.md): release-scoped product-truth freeze for `v75.0.0`.
 - [releases/v75.0.0-checklist.md](releases/v75.0.0-checklist.md): release-prep checklist and additional gates for `v75.0.0`.
@@ -22,7 +26,7 @@ This directory is the public documentation set for Receiz `v75.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v75.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v76.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.
