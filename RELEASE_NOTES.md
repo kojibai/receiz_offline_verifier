@@ -1,5 +1,50 @@
 # Release Notes
 
+## v77.0.0
+Release date: 2026-05-08
+
+`v77.0.0` is the Signal Circuit, Creator OS, Vault Settlement, and Runtime Trust release. In this offline verifier repository, the release work is publication of canonical `v77.0.0` artifacts and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v77.0.0.md](docs/releases/v77.0.0.md)
+Product-truth freeze: [docs/releases/v77.0.0-product-truth.md](docs/releases/v77.0.0-product-truth.md)
+Release checklist: [docs/releases/v77.0.0-checklist.md](docs/releases/v77.0.0-checklist.md)
+Release process: [docs/releases/v77.0.0-process.md](docs/releases/v77.0.0-process.md)
+Prior v76 archive: [docs/releases/v76.0.0.md](docs/releases/v76.0.0.md)
+
+## Highlights
+- Signal Circuit is locked as a dedicated `/game` product surface with deterministic local logic, mobile game chrome, and Signal Card issue paths that use existing Receiz proof primitives.
+- Signal Cards become portable verified collectibles with sealed claims, durable artwork, deterministic rarity, battle profiles, lineage, visual profile, and standard verification paths.
+- Signal Pack purchases and reveals are wallet-aware, exact-rate, resumable, settlement-safe, and incomplete until sealed cards are issued, stored, and recoverable.
+- Signal Vault is account-scoped, paginated, retryable, batch-hydrated, and protected from account bleed across transfer, listing, market, audit, and navigation flows.
+- Card public/share/proof/listing/auction/purchase/battle surfaces render from sealed card truth without fake loader or placeholder replacement paths.
+- Signal Pack Foundry and Signal Circuit conformance add brand pack campaigns, visible odds, supply caps, manifest seals, source digests, bounded simulation, badges, history, and status rollups.
+- Creator Workspace is a first-class `/creator` route with settled local first paint, Streamdown output, durable Creator OS records, wallet-metered production, and managed launch jobs.
+- Verified Data Vault seals linked bytes, exports verifiable ZIP/vault packages, restores original files, and previews restored bytes.
+- Old Safari document sealing uses Signature V4 online and fails closed offline with Safari 17+ or online guidance instead of legacy V3 fallback.
+- Runtime stale recovery clears stale runtime state silently and returns to stable paths without automatic root interstitials or stale-guard redirects.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v77.0.0`.
+- Root package metadata now resolves to `v77.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Baseline: tag `v76.0.0` at commit `10e335eb2`.
+- Candidate scope: 128 commits in the pre-bump window (`6a7b79993` as the candidate anchor), including Signal Circuit, verified Signal Cards, Signal Vault and packs, Creator OS, Creator Wallet metering, managed launch, Vault restore, old-Safari sealing, status, runtime, market, wallet, profile, and release-contract updates.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v74.0.0` Receiz Key / identity-artwork baseline, `v75.0.0` local proof/file restore law, `v76.0.0` World / Market / Public Proof law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment only.
+
+## Migration checklist
+- Confirm Signal Circuit first paint, local deterministic game logic, mobile chrome, and card issue flow.
+- Confirm Signal Card sealed claims, art replay/export, share proof, transfer, listing, auction, purchase, and battle behavior.
+- Confirm Signal Pack wallet settlement, exact-rate reveal continuity, durable opening records, and recovery.
+- Confirm Signal Vault account scoping, pagination, partial retry, transfer/listing/audit rows, ZIP restore, and restored-byte preview.
+- Confirm Signal Pack Foundry campaign odds, caps, manifest seals, and primitive isolation.
+- Confirm Signal Circuit conformance source digests, scarcity proof, bounded simulation, badge/history/rollup, and public Status inventory.
+- Confirm Creator Workspace first paint, Streamdown output, durable queues, wallet metering, paid asset/publish jobs, safety reviews, and managed launch provider proof.
+- Confirm old-Safari Signature V4 document sealing and offline guidance.
+- Confirm runtime stale recovery removal, market quote batching, wallet value-state, and profile/original continuity.
+- Update release and entrypoint version markers to `v77.0.0`.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v76.0.0
 Release date: 2026-05-06
 
