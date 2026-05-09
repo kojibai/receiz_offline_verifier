@@ -1,5 +1,44 @@
 # Release Notes
 
+## v80.0.0
+Release date: 2026-05-09
+
+`v80.0.0` is the Major Stable Release. It turns the `v70.0.0` public alpha law into one operating platform across identity, proof, profile, wallet, market, world, creator production, public proof, Signal Circuit, vault export, conformance, and runtime continuity. In this offline verifier repository, the release work is publication of canonical `v80.0.0` artifacts, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v80.0.0.md](docs/releases/v80.0.0.md)
+Product-truth freeze: [docs/releases/v80.0.0-product-truth.md](docs/releases/v80.0.0-product-truth.md)
+Release checklist: [docs/releases/v80.0.0-checklist.md](docs/releases/v80.0.0-checklist.md)
+Release process: [docs/releases/v80.0.0-process.md](docs/releases/v80.0.0-process.md)
+Prior v78 archive: [docs/releases/v78.0.0.md](docs/releases/v78.0.0.md)
+
+## Highlights
+- Local identity proof, file restore, profile truth, market/wallet state, card ownership, vault export, and creator production are locked under one verified-truth-first law.
+- `/<username>` remains canonical profile truth, and `?manage=1` remains an owner permission overlay only.
+- Identity Record, Identity Seal, Receiz Key, PBI, email, server session, and Receiz ID continuity converge into the same signed-in product experience after proof acceptance.
+- Wallet, Settlement, Reserve, market shares, cards, auctions, packs, transfers, and battle stakes preserve funded causality and append-only value truth.
+- Signal Cards are locked as owned Receiz assets across game, world, vault, discovery, transfer, auction, battle, market, export, share, and conformance surfaces.
+- Vault export remains portable proof with explicit user intent, archive bytes, manifest, archive hash, chunking, Merkle integrity, KAI timing, and restore rules.
+- World revenue loops, Public Proof, Creator OS, Signal Circuit, Exchange, Status, and conformance are locked as inspectable product surfaces without exposing private/admin/worker paths.
+- Runtime, service-worker, PWA, stale header, stale chunk, and stale session coherence are release surfaces, not incidental implementation details.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v80.0.0`.
+- Root package metadata now resolves to `v80.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Full trail from `v70.0.0` to this candidate: 460 commits and 755 changed files, as supplied by the release brief.
+- Immediate post-`v78.0.0` stabilization candidate: `997418abb`, 17 commits after tag `v78.0.0`, with 28 changed files, 3,439 insertions, and 1,334 deletions before the governed `v80.0.0` release bump.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v74.0.0` Receiz Key / identity-artwork baseline, `v75.0.0` local proof/file restore law, `v76.0.0` World / Market / Public Proof law, `v77.0.0` Signal Circuit / Creator OS / Vault law, `v78.0.0` Signal Card World / Vault Export / Battle Arena / Exchange / PWA law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm accepted proof projects the correct account now and background work only imports, binds, mirrors, syncs, refreshes, or enriches.
+- Confirm stale echoes cannot downgrade stronger local account, profile, wallet, market, card, vault, or creator truth.
+- Confirm Signal Card World, Vault Card export/restore, transfer packages, Arena append manifests, card flip gestures, and mobile/PWA download intent.
+- Confirm World revenue loops, Public Proof registry, Creator OS production, `/signal-circuit`, `/exchange`, Status, conformance, runtime, service-worker, and release-worker marker coherence.
+- Update release and entrypoint version markers to `v80.0.0`.
+- Run `pnpm lint` and `pnpm build`.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v78.0.0
 Release date: 2026-05-09
 
