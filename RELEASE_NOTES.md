@@ -1,5 +1,48 @@
 # Release Notes
 
+## v78.0.0
+Release date: 2026-05-09
+
+`v78.0.0` is the Signal Card World, Vault Export, Battle Arena, Exchange, and PWA Continuity release. In this offline verifier repository, the release work is publication of canonical `v78.0.0` artifacts and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v78.0.0.md](docs/releases/v78.0.0.md)
+Product-truth freeze: [docs/releases/v78.0.0-product-truth.md](docs/releases/v78.0.0-product-truth.md)
+Release checklist: [docs/releases/v78.0.0-checklist.md](docs/releases/v78.0.0-checklist.md)
+Release process: [docs/releases/v78.0.0-process.md](docs/releases/v78.0.0-process.md)
+Prior v77 archive: [docs/releases/v77.0.0.md](docs/releases/v77.0.0.md)
+
+## Highlights
+- Signal Card World at `/game/cards` is locked as an owned-asset network that can merge synced Vault ownership, local card storage, discovery, sale, auction, challenge, and proof state without rewriting card truth.
+- Signal Card fronts, share pages, QR payloads, external share actions, and OG/Twitter images carry sealed card proof and ownership more directly.
+- Signal Vault Card export becomes a receized PNG archive carrier with manifest, archive hash, chunked payload, Merkle integrity, KAI timing, roster counts, card claim paths, art paths, and restore rules.
+- Vault restore and download behavior is explicit user intent only; opening a panel must not silently start sealing, background export, timers, or hidden-frame navigation.
+- Mobile Safari, installed PWA, and in-app-browser card downloads are hardened against visible navigation, refresh, and header collisions.
+- Transfer-download packages, Signal Arena battles, and card auctions append ownership/value truth without mutating original card claims.
+- `/signal-circuit` and `/exchange` become public ownership/value routes that connect cards, Market, settlement, wallet, transfers, offline notes, discovery, and conformance.
+- Signal Circuit conformance sources, badges, route inventory, and public status entries are repaired around real files and public/private boundary exclusions.
+- Dashboard first paint, service-worker registration, PWA header behavior, runtime versioning, value-loop copy, and release-worker markers are aligned to `v78.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v78.0.0`.
+- Root package metadata now resolves to `v78.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Baseline: tag `v77.0.0` at commit `b44c2c863`.
+- Candidate scope: 57 commits in the pre-bump window (`1793af926` as the candidate anchor), including Signal Card World, Vault global sync, sealed Vault Card export, mobile/PWA downloads, transfer packages, external sharing, Battle Arena, card auctions, Signal Circuit conformance, public Exchange, Dashboard first paint, service-worker registration, public status inventory, value-loop copy, and release worker coherence.
+- The `v70.0.0` public alpha law, `v70.0.0` invariant register, `v74.0.0` Receiz Key / identity-artwork baseline, `v75.0.0` local proof/file restore law, `v76.0.0` World / Market / Public Proof law, `v77.0.0` Signal Circuit / Creator OS / Vault law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment only.
+
+## Migration checklist
+- Confirm Signal Card front, download, QR, share, public proof, OG image, and Twitter image behavior.
+- Confirm Signal Card World global sync, owner-scope, local merge, discovery, sale, auction, challenge, and proof-state behavior.
+- Confirm Signal Vault Card export, archive manifest, chunking, Merkle integrity, restore rules, and user-intent-only download behavior.
+- Confirm mobile Safari, installed PWA, in-app browser, header, service-worker, and stale runtime continuity.
+- Confirm transfer-download packages prevent ambiguous duplicate ownership.
+- Confirm Signal Arena requests, loadouts, AI twin authorization, stake settlement, action ledger, and transfer integration.
+- Confirm card auction wallet holds and reserve/account settlement.
+- Confirm `/signal-circuit`, `/exchange`, conformance source repair, public status inventory, dashboard first paint, value-loop copy, and release-worker marker coherence.
+- Update release and entrypoint version markers to `v78.0.0`.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v77.0.0
 Release date: 2026-05-08
 

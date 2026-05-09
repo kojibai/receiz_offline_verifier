@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v77.0.0`
+Current release: `v78.0.0`
 
-## What changed in v77.0.0
-- Current release/docs surfaces are aligned to `v77.0.0`.
-- Published the canonical `v77.0.0` Signal Circuit, Creator OS, Vault Settlement, and Runtime Trust release note at [docs/releases/v77.0.0.md](docs/releases/v77.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v77.0.0-product-truth.md](docs/releases/v77.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v77.0.0-checklist.md](docs/releases/v77.0.0-checklist.md).
-- Published the release process at [docs/releases/v77.0.0-process.md](docs/releases/v77.0.0-process.md).
-- `v77.0.0` preserves `v70.0.0`, `v74.0.0`, `v75.0.0`, and `v76.0.0` baseline law while adding Signal Circuit gameplay, verified Signal Cards, sealed pack and Vault continuity, Creator OS production queues, paid creator jobs, Vault ZIP restore, old-Safari Signature V4 document sealing, public conformance assurance, and runtime-stale recovery discipline.
+## What changed in v78.0.0
+- Current release/docs surfaces are aligned to `v78.0.0`.
+- Published the canonical `v78.0.0` Signal Card World, Vault Export, Battle Arena, Exchange, and PWA Continuity release note at [docs/releases/v78.0.0.md](docs/releases/v78.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v78.0.0-product-truth.md](docs/releases/v78.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v78.0.0-checklist.md](docs/releases/v78.0.0-checklist.md).
+- Published the release process at [docs/releases/v78.0.0-process.md](docs/releases/v78.0.0-process.md).
+- `v78.0.0` preserves `v70.0.0`, `v74.0.0`, `v75.0.0`, `v76.0.0`, and `v77.0.0` baseline law while hardening Signal Card World ownership, sealed Vault Card export, mobile/PWA download intent, transfer packages, Signal Arena, auction wallet holds, public `/signal-circuit` and `/exchange` routes, conformance sources, dashboard first paint, service-worker/PWA continuity, value-loop copy, and release-worker coherence.
 - The `v64.0.0` value-loop invariants remain in force.
 - No new database migration is required by this documentation cut.
-- Current shipped verifier, studio, and settlement entrypoints now display `v77.0.0`.
-- Root package metadata now resolves cleanly to `v77.0.0`.
+- Current shipped verifier, studio, and settlement entrypoints now display `v78.0.0`.
+- Root package metadata now resolves cleanly to `v78.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -32,9 +32,9 @@ Current release: `v77.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v77.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v78.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v77)
+## Release train highlights (v14 -> v78)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -87,6 +87,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v75.0.0`: release/docs alignment for the local proof, backup sign-in, market continuity, and Explore cut, including local-first Receiz ID proof, durable account bindings, Identity Record / Seal / Receiz Key restore parity, old-browser backup sign-in, restored-account route authority, profile identity downloads, Plans / Upgrade parity, market snapshot continuity, stable market navigation, and Explore mobile packaging; verifier semantics remain unchanged from `v60.0.0`.
 - `v76.0.0`: release/docs alignment for the World Agent revenue loop, Public Proof registry, Market Twin mandate safety, wallet settlement correctness, and expanded public/developer status inventory; verifier semantics remain unchanged from `v60.0.0`.
 - `v77.0.0`: release/docs alignment for Signal Circuit, verified Signal Cards, Signal Vault and packs, Signal Pack Foundry, public conformance assurance, Creator OS, creator wallet metering, managed launch, Vault sealed downloads, old-Safari Signature V4 document sealing, runtime recovery, market quote batching, and wallet/profile continuity; verifier semantics remain unchanged from `v60.0.0`.
+- `v78.0.0`: release/docs alignment for Signal Card World ownership, synced Vault discovery, sealed Vault Card export, explicit mobile/PWA download intent, transfer packages, Signal Arena, auction wallet holds, public Signal Circuit and Exchange routes, conformance source repair, dashboard first paint, service-worker/PWA continuity, value-loop copy, and release-worker coherence; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -152,8 +153,12 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v77.0.0`.
-- [docs/releases/v77.0.0.md](docs/releases/v77.0.0.md): canonical Signal Circuit, Creator OS, Vault Settlement, and Runtime Trust release note for `v77.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v78.0.0`.
+- [docs/releases/v78.0.0.md](docs/releases/v78.0.0.md): canonical Signal Card World, Vault Export, Battle Arena, Exchange, and PWA Continuity release note for `v78.0.0`.
+- [docs/releases/v78.0.0-product-truth.md](docs/releases/v78.0.0-product-truth.md): `v78.0.0` product-truth freeze document.
+- [docs/releases/v78.0.0-checklist.md](docs/releases/v78.0.0-checklist.md): release-prep checklist and additional gates for `v78.0.0`.
+- [docs/releases/v78.0.0-process.md](docs/releases/v78.0.0-process.md): release-prep process for `v78.0.0`.
+- [docs/releases/v77.0.0.md](docs/releases/v77.0.0.md): canonical `v77.0.0` Signal Circuit, Creator OS, Vault Settlement, and Runtime Trust release archive.
 - [docs/releases/v77.0.0-product-truth.md](docs/releases/v77.0.0-product-truth.md): `v77.0.0` product-truth freeze document.
 - [docs/releases/v77.0.0-checklist.md](docs/releases/v77.0.0-checklist.md): release-prep checklist and additional gates for `v77.0.0`.
 - [docs/releases/v77.0.0-process.md](docs/releases/v77.0.0-process.md): release-prep process for `v77.0.0`.
@@ -183,8 +188,8 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v77.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v77.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v78.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v78.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
