@@ -5,6 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
+const releaseDate = "2026-05-10";
 
 const requiredFiles = [
   "README.md",
@@ -50,7 +51,7 @@ const currentReleasePointers = [
   ["README.md", `docs/releases/${releaseVersion}-checklist.md`],
   ["README.md", `docs/releases/${releaseVersion}-process.md`],
   ["RELEASE_NOTES.md", `## ${releaseVersion}`],
-  ["CHANGELOG.md", `## [${releaseVersion}] - 2026-05-09`],
+  ["CHANGELOG.md", `## [${releaseVersion}] - ${releaseDate}`],
   ["docs/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/README.md", `releases/${releaseVersion}.md`],
   ["docs/FORMAT.md", `for \`${releaseVersion}\``],

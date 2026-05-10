@@ -1,5 +1,51 @@
 # Release Notes
 
+## v81.0.0
+Release date: 2026-05-10
+
+`v81.0.0` is the Signal Circuit Provenance Release. It locks the first stable major release after `v80.0.0` by making Signal Cards easier to discover, inspect, fund, seal, track, transfer, and understand as durable Receiz assets. In this offline verifier repository, the release work is publication of canonical `v81.0.0` artifacts, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v81.0.0.md](docs/releases/v81.0.0.md)
+Product-truth freeze: [docs/releases/v81.0.0-product-truth.md](docs/releases/v81.0.0-product-truth.md)
+Release checklist: [docs/releases/v81.0.0-checklist.md](docs/releases/v81.0.0-checklist.md)
+Release process: [docs/releases/v81.0.0-process.md](docs/releases/v81.0.0-process.md)
+Prior v80 archive: [docs/releases/v80.0.0.md](docs/releases/v80.0.0.md)
+
+## Highlights
+- Signal Card DNA at `/game/cards/history` makes cards inspectable through origin, holder context, listing state, auctions, bids, sales, verified arena appends, and price points.
+- Card pages, World cards, and share-card surfaces expose explicit paths to share, card-world, DNA/history, and Find Cards routes.
+- Rewarded-card seal payment now verifies the submitted claim before charge, spends eligible wallet lanes first, preserves compact idempotency, reports exact shortfall, and appends wallet activity.
+- Wallet and calendar activity now surface purchased packs, rewarded card purchases, rewarded-card seals, card transfers, and card receives as account history.
+- Card receive activity deduplicates repeated receive rows.
+- Card history reads across all discoverable cards, while Card World remembers explicit same-session "More cards" expansion.
+- Explorer, discovery, card backs, proof manifests, popovers, and Find Cards entry paths get fit and density polish.
+- Mobile game chrome, white-route isolation, nav hit targets, card-share animation, liquid loaders, and rewarded-card stage sizing are stabilized.
+- Signal Card art, orb realism, rim treatment, and card-back proof manifest layout are tightened.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v81.0.0`.
+- Root package metadata now resolves to `v81.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Release candidate: `23eec6d23`, 35 commits after tag `v80.0.0`, with 52 changed files, 8,289 insertions, and 385 deletions, as supplied by the release brief.
+- The `v80.1.0` through `v80.3.0` stabilization line is folded into one major lock for card DNA, rewarded-card payment, card activity, mobile stability, and release-surface coherence.
+- The `v70.0.0` public alpha law, `v80.0.0` stable platform law, and `v64.0.0` value-loop invariants remain in force.
+- Broader platform target environments must include the rewarded-card seal wallet migrations:
+  - `supabase/migrations/20260509170000_signal_run_rewarded_card_seal_wallet_charge.sql`
+  - `supabase/migrations/20260509193000_signal_run_rewarded_card_seal_compact_idempotency.sql`
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm Signal Card DNA route, filters, search, event rows, price charting, owner context, focus URLs, and progressive hydration.
+- Confirm rewarded-card seal claim verification, 99 USD-cent wallet charge, funding shortfall behavior, compact idempotency, Stripe minimum handling, and wallet action-ledger emission.
+- Confirm wallet and calendar activity for pack purchases, rewarded card purchases, rewarded-card seals, card transfers, and card receives.
+- Confirm transfer receive deduplication and all-card history coverage.
+- Confirm card-world same-session discovery memory preserves explicit user expansion.
+- Confirm mobile game chrome, route coloring, card-share animation, loaders, stage sizing, and PWA continuity.
+- Update release and entrypoint version markers to `v81.0.0`.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v80.0.0
 Release date: 2026-05-09
 
