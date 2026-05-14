@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v81.0.0`
+Current release: `v82.0.0`
 
-## What changed in v81.0.0
-- Current release/docs surfaces are aligned to `v81.0.0`.
-- Published the canonical `v81.0.0` Signal Circuit Provenance Release note at [docs/releases/v81.0.0.md](docs/releases/v81.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v81.0.0-product-truth.md](docs/releases/v81.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v81.0.0-checklist.md](docs/releases/v81.0.0-checklist.md).
-- Published the release process at [docs/releases/v81.0.0-process.md](docs/releases/v81.0.0-process.md).
-- `v81.0.0` preserves `v80.0.0` stable platform law while locking Signal Card DNA, rewarded-card payment before reveal, wallet/calendar card activity, card transfer deduplication, all-card history, discovery memory, mobile/PWA chrome stability, and release-surface coherence.
+## What changed in v82.0.0
+- Current release/docs surfaces are aligned to `v82.0.0`.
+- Published the canonical `v82.0.0` Sports Arena World-Class Gameplay Release note at [docs/releases/v82.0.0.md](docs/releases/v82.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v82.0.0-product-truth.md](docs/releases/v82.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v82.0.0-checklist.md](docs/releases/v82.0.0-checklist.md).
+- Published the release process at [docs/releases/v82.0.0-process.md](docs/releases/v82.0.0-process.md).
+- `v82.0.0` preserves `v80.0.0` stable platform law and `v81.0.0` Signal Card asset law while locking Sports Arena, live MLB games, owned Sports cards, auditable pack odds, Pick 5, daily tournaments, live scoring, card careers, market depth, trading, conformance, scale hardening, and first-paint/PWA stability.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the rewarded-card seal wallet migrations named in [docs/releases/v81.0.0-checklist.md](docs/releases/v81.0.0-checklist.md).
-- Current shipped verifier, studio, and settlement entrypoints now display `v81.0.0`.
-- Root package metadata now resolves cleanly to `v81.0.0`.
+- Broader platform target environments require the Sports Arena and Signal Card migrations named in [docs/releases/v82.0.0-checklist.md](docs/releases/v82.0.0-checklist.md).
+- Current shipped verifier, studio, and settlement entrypoints now display `v82.0.0`.
+- Root package metadata now resolves cleanly to `v82.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -32,7 +32,7 @@ Current release: `v81.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v81.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v82.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v81)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -90,6 +90,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v78.0.0`: release/docs alignment for Signal Card World ownership, synced Vault discovery, sealed Vault Card export, explicit mobile/PWA download intent, transfer packages, Signal Arena, auction wallet holds, public Signal Circuit and Exchange routes, conformance source repair, dashboard first paint, service-worker/PWA continuity, value-loop copy, and release-worker coherence; verifier semantics remain unchanged from `v60.0.0`.
 - `v80.0.0`: release/docs alignment for the major stable release, including verified-truth-first identity, canonical profile truth, wallet/market funded causality, World revenue loops, Public Proof registry behavior, Creator OS production, Signal Cards as owned Receiz assets, Vault export portability, public conformance/status visibility, and runtime/PWA continuity; verifier semantics remain unchanged from `v60.0.0`.
 - `v81.0.0`: release/docs alignment for the Signal Circuit Provenance Release, including Signal Card DNA, rewarded-card payment before reveal, wallet/calendar card activity, transfer deduplication, all-card history, explicit discovery memory, mobile/PWA chrome stability, and card proof/art polish; verifier semantics remain unchanged from `v60.0.0`.
+- `v82.0.0`: release/docs alignment for the Sports Arena World-Class Gameplay Release, including live MLB Sports Arena, owned Sports cards, pack issuance, auditable rarity odds, Pick 5, daily tournaments, live scoring, card careers, Sports market depth, trading, conformance, scale hardening, and PWA first-paint stability; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -155,7 +156,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v81.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v82.0.0`.
+- [docs/releases/v82.0.0.md](docs/releases/v82.0.0.md): canonical Sports Arena World-Class Gameplay Release note for `v82.0.0`.
+- [docs/releases/v82.0.0-product-truth.md](docs/releases/v82.0.0-product-truth.md): `v82.0.0` product-truth freeze document.
+- [docs/releases/v82.0.0-checklist.md](docs/releases/v82.0.0-checklist.md): release-prep checklist and additional gates for `v82.0.0`.
+- [docs/releases/v82.0.0-process.md](docs/releases/v82.0.0-process.md): release-prep process for `v82.0.0`.
 - [docs/releases/v81.0.0.md](docs/releases/v81.0.0.md): canonical Signal Circuit Provenance Release note for `v81.0.0`.
 - [docs/releases/v81.0.0-product-truth.md](docs/releases/v81.0.0-product-truth.md): `v81.0.0` product-truth freeze document.
 - [docs/releases/v81.0.0-checklist.md](docs/releases/v81.0.0-checklist.md): release-prep checklist and additional gates for `v81.0.0`.
@@ -198,8 +203,8 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v81.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v81.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v82.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v82.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.

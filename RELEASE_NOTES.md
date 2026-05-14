@@ -1,5 +1,50 @@
 # Release Notes
 
+## v82.0.0
+Release date: 2026-05-14
+
+`v82.0.0` is the Sports Arena World-Class Gameplay Release. It moves Receiz from proof-native platform plus Signal Circuit into a full live sports game economy where owned cards, live MLB games, scoring, rank, proof, reward, memory, market value, and repeat play move through one governed loop. In this offline verifier repository, the release work is publication of canonical `v82.0.0` artifacts, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v82.0.0.md](docs/releases/v82.0.0.md)
+Product-truth freeze: [docs/releases/v82.0.0-product-truth.md](docs/releases/v82.0.0-product-truth.md)
+Release checklist: [docs/releases/v82.0.0-checklist.md](docs/releases/v82.0.0-checklist.md)
+Release process: [docs/releases/v82.0.0-process.md](docs/releases/v82.0.0-process.md)
+Prior v81 archive: [docs/releases/v81.0.0.md](docs/releases/v81.0.0.md)
+
+## Highlights
+- Sports becomes a first-class Receiz destination with `/game/sports`, `/game/sports/baseball`, live MLB rows, Pick 5, live field, cockpit, leaders, proofs, cards, profile access, and mobile chrome.
+- MLB cards become owned, issued, playable inventory with deterministic issue numbers, pack origin, rarity variants, card career memory, market paths, and premium downloads.
+- Player strength and card rarity are locked as separate scarcity gates, and pack odds become auditable through published odds, observed simulations, health checks, and registry basis hashes.
+- Pick 5 separates per-game play from Main Event selection, while live cockpit, pregame, scoring story, rank, and payout proximity become watchable daily-game surfaces.
+- Daily tournaments gain funded entry, Stripe delta recovery, minimum-participant refunds, top-percent payout, finality, reward packs, settlement payout, result sharing, and play-again reset.
+- Sports market and trading gain sales, wallet-first purchase, provenance, bids, asks, floors, value movement, guarded trade actions, and stale-state protections.
+- Sports conformance becomes official under Game with badge, history, rollups, odds, source checks, hot fanout, checkout recovery, and signed history coverage.
+- Scale hardening starts with hot public snapshots, Vercel Cron warming, runtime cache, warmed stream reads, account overlay throttling, route backpressure, worker jobs, observability, and build-cost controls.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v82.0.0`.
+- Root package metadata now resolves to `v82.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Release candidate: `edb39fa11a`, 174 commits after tag `v80.0.0` and 138 commits after tag `v81.0.0`, as supplied by the release brief.
+- The full `v80.0.0` to `v82.0.0` arc spans 241 changed files, 125,524 insertions, and 506 deletions including QA evidence; excluding Playwright and screenshot evidence, it spans 184 changed files, 56,474 insertions, and 506 deletions.
+- The post-`v81.0.0` Sports line spans 124 code and documentation files, 47,737 insertions, and 113 deletions.
+- The `v70.0.0` public alpha law, `v80.0.0` stable platform law, `v81.0.0` Signal Card asset law, and `v64.0.0` value-loop invariants remain in force.
+- Broader platform target environments must include the Sports Arena and Signal Card migrations named in [docs/releases/v82.0.0-checklist.md](docs/releases/v82.0.0-checklist.md).
+- Worker coverage must be live for append drain, entry finality, tournament settlement, hot snapshot warming, and conformance history rollups.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm Sports Arena, baseball route, MLB live rows, Pick 5, live field, cockpit, leaders, proofs, cards, profile access, and mobile chrome.
+- Confirm MLB registry, player images, rookie registry, owned-card ordering, issue assignment, rarity/player-scarcity separation, pack origin, premium card export, and downloaded metadata.
+- Confirm pack purchase, reveal, reward packs, pack sync, published odds, observed simulation, pack health, and registry basis hashes.
+- Confirm per-game and Main Event Pick 5 selection, live-game blocking, selected-game field truth, live cockpit, pregame, finality, reward claim, and claimed-final clearing.
+- Confirm tournament entry, wallet funding, Stripe delta recovery, minimum participant refunds, top-percent payout, settlement payout, result sharing, and play-again reset.
+- Confirm Sports market, purchase, provenance, value panels, bids, asks, floors, sale history, trading, stale trade status, conformance, scale hardening, and first-paint/PWA continuity.
+- Update release and entrypoint version markers to `v82.0.0`.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v81.0.0
 Release date: 2026-05-10
 

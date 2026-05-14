@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v82.0.0] - 2026-05-14
+
+### Changed
+- Advanced the current release/documentation surface from `v81.0.0` to `v82.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v82.0.0`.
+- Published the canonical `v82.0.0` release artifacts:
+  - `docs/releases/v82.0.0.md`
+  - `docs/releases/v82.0.0-product-truth.md`
+  - `docs/releases/v82.0.0-checklist.md`
+  - `docs/releases/v82.0.0-process.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v82.0.0`.
+- Aligned release framing around Sports Arena, live MLB games, owned Sports cards, pack issuance, auditable rarity odds, Pick 5, daily tournaments, per-game play, live scoring, card careers, Sports market depth, trading, conformance, scale hardening, and first-paint/PWA stability.
+- Documented the broader platform Sports Arena and Signal Card migration requirements for `v82.0.0`.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v82.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v70.0.0` public alpha law, `v80.0.0` stable platform law, `v81.0.0` Signal Card asset law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v81.0.0] - 2026-05-10
 
 ### Changed
