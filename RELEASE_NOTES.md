@@ -1,5 +1,47 @@
 # Release Notes
 
+## v83.0.0
+Release date: 2026-05-17
+
+`v83.0.0` is the Stable Live Proof Release. It hardens the Sports Arena, profile live-player route, Explore, Market, OTC proof objects, interoperability policy, and conformance system into one stable public build. In this offline verifier repository, the release work is publication of canonical `v83.0.0` artifacts, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v83.0.0.md](docs/releases/v83.0.0.md)
+Product-truth freeze: [docs/releases/v83.0.0-product-truth.md](docs/releases/v83.0.0-product-truth.md)
+Release checklist: [docs/releases/v83.0.0-checklist.md](docs/releases/v83.0.0-checklist.md)
+Release process: [docs/releases/v83.0.0-process.md](docs/releases/v83.0.0-process.md)
+Prior v82 archive: [docs/releases/v82.0.0.md](docs/releases/v82.0.0.md)
+
+## Highlights
+- Sports first paint is locked around truthful shell projection, known game state before hydration, scoped score/lock truth, and legitimate zero-score display.
+- Main Event and single-game play share the same scoreboard selection path without letting active entry lock state rewrite unrelated field or scoreboard state.
+- Card reveal behavior is stabilized across click, popover, drag, drop, selection, deselection, reward-card, and multi-card paths.
+- Saved Sports cards preserve issue number, pack origin, card identity, proof object, owner, and appendable card memory through viewer, vault, and market surfaces.
+- Pick 5 player availability becomes release truth for starters, bench/role players, backups, injured players, Main Event, and single-game cards.
+- Profile live-player sharing from iMessage is restored while canonical public profile truth remains the first-paint source.
+- Explore avoids white-screen races and Market keeps its fast entry path while conformance checks transport proof truth instead of stale hot-path JSON-LD assumptions.
+- Interoperability callback policy is centralized, and OTC wallet/Cash Image work becomes an offline-verifiable Receiz proof-object upgrade path.
+- Current shipped verifier, studio, and settlement entrypoints are marked `v83.0.0`.
+- Root package metadata now resolves to `v83.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Release base before final `v83.0.0` lock edits: `223b2ddbbd`, 123 commits after tag `v82.0.0`, as supplied by the release brief.
+- The pre-lock arc from `v82.0.0` to `82.9.4` spans 188 files, 28,716 insertions, and 3,485 deletions.
+- The `v70.0.0` public alpha law, `v80.0.0` stable platform law, `v81.0.0` Signal Card asset law, `v82.0.0` Sports game economy law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm Sports first paint, Main Event, single-game selection, scoped live score, scoped lock state, legitimate zero-score display, and next-game hydration.
+- Confirm card reveal, reward reveal, saved-card issuance truth, proof object, owner, vault, market, and card-memory continuity.
+- Confirm Pick 5 availability language for starters, bench/role, backup, injured/out players across Main Event and single-game play.
+- Confirm iMessage live-player opens, canonical public profile first paint, public profile route truth, and owner/manage hydration behavior.
+- Confirm Explore immediate shell behavior, Market fast entry, market transport proof conformance, centralized callback allowlist, and Vercel trace inclusion.
+- Confirm OTC wallet proof creation, private-key import, connected-wallet add, wallet bundle sealing, Cash Image proof objects, offline pulse transfer, proof export/import, and wallet-panel UI placement.
+- Update release and entrypoint version markers to `v83.0.0`.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v82.0.0
 Release date: 2026-05-14
 
