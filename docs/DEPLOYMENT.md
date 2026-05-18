@@ -7,7 +7,7 @@ Deploy `site/` to any static host.
 
 ## Optional by route/runtime behavior
 - `/offline-verifier.html` (alternate route + footer download target)
-- `/sw.js` (optional; enables service worker warm behavior)
+- `/sw.js` (optional; enables versioned service worker warm behavior)
 
 ## Embedded verification runtime notes
 - Default shipped entrypoints embed the Groth16 verifier runtime and verification key material.

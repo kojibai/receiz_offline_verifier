@@ -1,5 +1,44 @@
 # Release Notes
 
+## v84.0.0
+Release date: 2026-05-18
+
+`v84.0.0` is the Proof-Native Artifact System Stable Release. It names Receiz as a proof-native artifact system and locks the stronger/weaker truth hierarchy, primitive naming rules, forbidden downgrade boundary, deterministic first-paint protection, service-worker version truth, and release-law surfaces into one governed public cut. In this offline verifier repository, the release work is publication of canonical `v84.0.0` artifacts, local release-surface gates, primitive repo law, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v84.0.0.md](docs/releases/v84.0.0.md)
+Product-truth freeze: [docs/releases/v84.0.0-product-truth.md](docs/releases/v84.0.0-product-truth.md)
+Release checklist: [docs/releases/v84.0.0-checklist.md](docs/releases/v84.0.0-checklist.md)
+Release process: [docs/releases/v84.0.0-process.md](docs/releases/v84.0.0-process.md)
+Prior v83 archive: [docs/releases/v83.0.0.md](docs/releases/v83.0.0.md)
+
+## Highlights
+- Receiz is named directly as a proof-native artifact system.
+- Files, identities, vault objects, ownership states, settlement states, public witness surfaces, and verification routes are documented as product-truth carriers.
+- Stronger implemented truth remains above weaker inherited truth.
+- Deterministic first paint remains protected from SEO, analytics, session checks, hydration, lazy imports, dynamic JSON, global sync, server reconciliation, tracking, marketing surfaces, and generic framework convention.
+- Primitive acceptance criteria and the primitive decision procedure are written into `AGENTS.md` and `docs/literal-product-law.md`.
+- Forbidden downgrades are named directly for proof objects, artifact-system objects, public proof surfaces, settlement primitives, ownership state, identity primitives, deterministic first paint, verified history, route truth, and service-worker release truth.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v84.0.0`.
+- Root package metadata now resolves to `v84.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Release candidate: current `main` at `d9490705d7` plus the `v84.0.0` release-lock worktree, as supplied by the release brief.
+- The committed arc from tag `v83.0.0` to `d9490705d7` spans 17 commits, 48 changed files, 3,122 insertions, and 416 deletions before final `v84.0.0` lock edits.
+- The `v70.0.0` public alpha law, `v80.0.0` stable platform law, `v81.0.0` Signal Card asset law, `v82.0.0` Sports game economy law, `v83.0.0` stable live-proof law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm primitive acceptance criteria and primitive decision procedure are present in `AGENTS.md` and `docs/literal-product-law.md`.
+- Confirm proof, vault, ownership, settlement, identity, public proof, deterministic first-paint, route truth, verified-history, and service-worker truth surfaces are not generically renamed or downgraded.
+- Confirm Sports refunded tournament entry cleanup, Sports lock-state display, live-player first-paint/share/OG, Signal Run vault, and profile/public asset contracts in the broader platform workspace.
+- Confirm production DB migrations for Sports, Signal Run vault, profile/public assets, and refunded tournament entry cleanup are applied in the target environment before production promotion.
+- Update release and entrypoint version markers to `v84.0.0`.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v83.0.0
 Release date: 2026-05-17
 

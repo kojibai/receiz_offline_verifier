@@ -701,7 +701,7 @@
 
     <p class="footer">
       <span>Receiz Offline Studio · record, seal, and verify from artifact bytes.</span>
-      <span class="footer-version">v83.0.0</span>
+      <span class="footer-version">v84.0.0</span>
     </p>
 
     <section class="offline-tools" aria-label="Offline HTML downloads">
@@ -4065,7 +4065,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       window.addEventListener("load", () => {
         navigator.serviceWorker
-          .register("/sw.js", { scope: "/" })
+          .register("/sw.js?v=84.0.0", { scope: "/" })
           .then((reg) => {
             postWarm(reg);
             return navigator.serviceWorker.ready;

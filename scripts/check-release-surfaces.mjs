@@ -5,10 +5,11 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-05-17";
+const releaseDate = "2026-05-18";
 
 const requiredFiles = [
   "README.md",
+  "AGENTS.md",
   "RELEASE_NOTES.md",
   "CHANGELOG.md",
   "docs/README.md",
@@ -21,11 +22,13 @@ const requiredFiles = [
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
-  "apps/offline-settlement.html"
+  "apps/offline-settlement.html",
+  "site/sw.js"
 ];
 
 const versionedFiles = [
   "README.md",
+  "AGENTS.md",
   "RELEASE_NOTES.md",
   "CHANGELOG.md",
   "docs/README.md",
@@ -41,11 +44,13 @@ const versionedFiles = [
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
-  "apps/offline-settlement.html"
+  "apps/offline-settlement.html",
+  "site/sw.js"
 ];
 
 const currentReleasePointers = [
   ["README.md", `Current release: \`${releaseVersion}\``],
+  ["AGENTS.md", `Release law: \`${releaseVersion}\``],
   ["README.md", `docs/releases/${releaseVersion}.md`],
   ["README.md", `docs/releases/${releaseVersion}-product-truth.md`],
   ["README.md", `docs/releases/${releaseVersion}-checklist.md`],
@@ -66,7 +71,8 @@ const currentReleasePointers = [
   ["site/index.html", releaseVersion],
   ["apps/offline-verifier.html", releaseVersion],
   ["apps/offline-record-seal.html", releaseVersion],
-  ["apps/offline-settlement.html", releaseVersion]
+  ["apps/offline-settlement.html", releaseVersion],
+  ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`]
 ];
 
 const errors = [];
