@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-05-18";
+const releaseDate = "2026-05-19";
 
 const requiredFiles = [
   "README.md",
@@ -15,6 +15,7 @@ const requiredFiles = [
   "docs/README.md",
   "docs/FORMAT.md",
   "docs/governance/README.md",
+  "docs/truthful-speed-invariants.md",
   `docs/releases/${releaseVersion}.md`,
   `docs/releases/${releaseVersion}-product-truth.md`,
   `docs/releases/${releaseVersion}-checklist.md`,
@@ -36,6 +37,7 @@ const versionedFiles = [
   "docs/governance/README.md",
   "docs/literal-product-law.md",
   "docs/experience-first-engineering.md",
+  "docs/truthful-speed-invariants.md",
   "docs/deterministic-surfaces.md",
   "docs/verified-history-first-principles.md",
   "docs/offline-verified-register.md",
@@ -63,6 +65,7 @@ const currentReleasePointers = [
   ["docs/governance/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/literal-product-law.md", `carried forward for \`${releaseVersion}\``],
   ["docs/experience-first-engineering.md", `carried forward for \`${releaseVersion}\``],
+  ["docs/truthful-speed-invariants.md", `carried forward for \`${releaseVersion}\``],
   ["docs/deterministic-surfaces.md", `carried forward for \`${releaseVersion}\``],
   ["docs/verified-history-first-principles.md", `carried forward for \`${releaseVersion}\``],
   ["docs/offline-verified-register.md", `carried forward for \`${releaseVersion}\``],

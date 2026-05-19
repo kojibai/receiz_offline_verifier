@@ -1,11 +1,11 @@
 # Literal Product Law
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v84.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v85.0.0`
 Release date: April 24, 2026
 
 Receiz release truth is literal. A product surface must tell the same story as the proof, local register, deterministic route state, and value-causality record that already exist.
 
-`v84.0.0` makes the artifact-system law explicit: Receiz is a proof-native artifact system. Files, identities, vault objects, ownership states, settlement states, public witness surfaces, and verification routes carry product truth.
+`v85.0.0` carries the artifact-system law forward: Receiz is a proof-native artifact system. Files, identities, vault objects, ownership states, settlement states, public witness surfaces, and verification routes carry product truth.
 
 ## Core Law
 

@@ -1,5 +1,47 @@
 # Release Notes
 
+## v85.0.0
+Release date: 2026-05-19
+
+`v85.0.0` is the Official Proof-Native Sports, Market, Passport, and Speed Release. It closes the v80-to-v85 arc: Signal cards became provenance objects, Sports became a live proof game economy, Main Event became a settlement primitive, Market and wallet returned to immediate deterministic ownership and settlement projection, Series Passport became a proof object that gates the annual skill final, affiliate sharing uses the implemented referral system, and release law, service-worker identity, public labels, and product truth move together. In this offline verifier repository, the release work is publication of canonical `v85.0.0` artifacts, truthful speed doctrine, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v85.0.0.md](docs/releases/v85.0.0.md)
+Product-truth freeze: [docs/releases/v85.0.0-product-truth.md](docs/releases/v85.0.0-product-truth.md)
+Release checklist: [docs/releases/v85.0.0-checklist.md](docs/releases/v85.0.0-checklist.md)
+Release process: [docs/releases/v85.0.0-process.md](docs/releases/v85.0.0-process.md)
+Prior v84 archive: [docs/releases/v84.0.0.md](docs/releases/v84.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Signal Card provenance, proof history, ownership activity, and card memory remain part of product truth.
+- Sports remains a live proof economy with owned Sports cards, lineups, proof, settlement, vault, market, trade, and conformance.
+- Main Event remains a settlement primitive with deterministic first paint.
+- Market and wallet paint known owned shares and owned assets immediately, and local execution changes visible ownership/settlement immediately.
+- Series Passport is locked as a proof object and Series access primitive, not a generic pass or checkout product.
+- The Series Arena strip labels use Series-specific action truth: `$25 Passport` and `Every lineup counts`.
+- Affiliate sharing reuses the implemented referral system instead of creating a duplicate authority.
+- Truthful speed invariants protect first paint from session, owner, DB, analytics, SEO, global sync, and server reconciliation work.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v85.0.0`.
+- Root package metadata now resolves to `v85.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v80.0.0` through `2219e44061`, as supplied by the release brief.
+- The pre-lock committed arc from `v80.0.0` to `2219e44061` spans 496 changed files, 172,799 insertions, and 3,947 deletions before final `v85.0.0` lock edits.
+- The `v80.0.0` proof-native operating-platform law, `v81.0.0` Signal Card provenance law, `v82.0.0` Sports game economy law, `v83.0.0` stable live-proof law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v85.0.0`.
+- Confirm Series Passport proof-object, pricing, outcome language, payout split, affiliate reuse, and Arena strip-label contracts in the broader platform workspace.
+- Confirm Market/wallet/snapshot/trade continuation contracts in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, and release lock checks.
+- Confirm production DB migrations for Sports, Series Passport, Market, wallet, profile, OTC, and proof-object paths are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v84.0.0
 Release date: 2026-05-18
 
