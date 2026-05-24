@@ -1,5 +1,48 @@
 # Release Notes
 
+## v86.0.0
+Release date: 2026-05-24
+
+`v86.0.0` is the Official Locked Proof-Native Baseline. It locks the v80-to-v86 arc: Receiz remains a proof-native artifact system, Profile-visible proof objects project into Market, Market and Explore first-paint deterministic proof truth, signed-in ownership/history hydration preserves stronger local and public truth, Sports user-live hydration covers every relevant source date, Main Event entry remains payment-confirmed, single Sports card QR proof routes exist without touching existing vault links, and World/public twin continuity stays beneath stronger preview and portrait truth. In this offline verifier repository, the release work is publication of canonical `v86.0.0` artifacts, local release-surface gates, and outward version-surface alignment only.
+
+Canonical full release note: [docs/releases/v86.0.0.md](docs/releases/v86.0.0.md)
+Product-truth freeze: [docs/releases/v86.0.0-product-truth.md](docs/releases/v86.0.0-product-truth.md)
+Release checklist: [docs/releases/v86.0.0-checklist.md](docs/releases/v86.0.0-checklist.md)
+Release process: [docs/releases/v86.0.0-process.md](docs/releases/v86.0.0-process.md)
+Prior v85 archive: [docs/releases/v85.0.0.md](docs/releases/v85.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Known proof, ownership, settlement, identity, market, profile, vault, Sports, World, Explore, and public witness truth paints first.
+- Profile-visible proof objects append to canonical public profile truth and project into Market when visible.
+- Hidden profile proof objects are removed from the local/public Market snapshot and return when unhidden.
+- Market signed-in hydration cannot erase stronger public or local ownership/history truth after the shell paints.
+- Explore first-paints from deterministic proof truth.
+- Sports live appends apply across every relevant game and source date.
+- Main Event checkout cancellation clears pending funding and does not enter the event.
+- Single Sports card QR public proof pages exist without modifying existing vault links.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v86.0.0`.
+- Root package metadata now resolves to `v86.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v80.0.0` through current `HEAD`, as supplied by the release brief.
+- The pre-lock arc from `v80.0.0` to current `HEAD` spans 551 changed files, 182,894 insertions, and 4,364 deletions before final `v86.0.0` lock edits.
+- The post-`v85.0.0` stabilization arc spans 112 changed files, 9,912 insertions, and 907 deletions before this lock.
+- The `v80.0.0` proof-native operating-platform law, `v81.0.0` Signal Card provenance law, `v82.0.0` Sports game economy law, `v83.0.0` stable live-proof law, `v84.0.0` release law, `v85.0.0` Sports/Market/Passport speed law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation only.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v86.0.0`.
+- Confirm Profile, Market, Explore, Sports, World, public witness, and release-law contracts in the broader platform workspace.
+- Confirm Main Event payment-confirmed entry and checkout-cancel contracts in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, and release lock checks.
+- Confirm production DB migrations for Sports, Series Passport, Market, wallet, profile, Explore, OTC, proof-object, and World paths are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v85.0.0
 Release date: 2026-05-19
 

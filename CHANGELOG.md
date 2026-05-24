@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v86.0.0] - 2026-05-24
+
+### Changed
+- Advanced the current release/documentation surface from `v85.0.0` to `v86.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v86.0.0`.
+- Published the canonical `v86.0.0` release artifacts:
+  - `docs/releases/v86.0.0.md`
+  - `docs/releases/v86.0.0-product-truth.md`
+  - `docs/releases/v86.0.0-checklist.md`
+  - `docs/releases/v86.0.0-process.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v86.0.0`.
+- Aligned release framing around the Official Locked Proof-Native Baseline: Profile-visible proof objects in Market, deterministic Market and Explore first paint, signed-in ownership-history preservation, Sports all-source-date live hydration, payment-confirmed Main Event entry, single-card QR proof routes, World/public twin continuity, and service-worker release identity.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v86.0.0`.
+- Updated static service-worker registration and runtime version markers to `86.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v80.0.0` proof-native operating-platform law, `v81.0.0` Signal Card provenance law, `v82.0.0` Sports game economy law, `v83.0.0` stable live-proof law, `v84.0.0` release law, `v85.0.0` Sports/Market/Passport speed law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v85.0.0] - 2026-05-19
 
 ### Changed
