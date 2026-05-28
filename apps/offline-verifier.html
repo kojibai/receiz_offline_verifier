@@ -779,12 +779,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       ui.factsGrid.hidden = false;
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
       ui.factTs.textContent = result.bundle.ts || "-";
       ui.factCode.textContent = result.bundle.code || "-";
       ui.factPulse.textContent = result.bundle.kaiPulseEternal || "-";
-      ui.factPath.textContent = result.bundle.verifyPath || "-";
+      ui.factPath.textContent = derivedAnchor?.parent?.viewUrl || result.anchor?.parent?.viewUrl || result.bundle.verifyPath || "-";
       ui.factHash.textContent = result.fileHash || "-";
-      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
       const bundleAnchorId = asString(result.bundle.anchorId);
       ui.factAnchor.textContent = result.anchor?.anchorId || derivedAnchor?.anchorId || bundleAnchorId || "none";
       if (result.anchor?.contextPreset) {
@@ -802,6 +802,35 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       } catch {
         return String(value);
       }
+    }
+
+    function absoluteReceizVerifyUrl(path) {
+      const text = String(path || "");
+      if (!text) return "";
+      try {
+        return new URL(text, "https://receiz.com").toString();
+      } catch {
+        return text;
+      }
+    }
+
+    function proofBundleDisplayProjection(result) {
+      if (!result || !result.bundle) return null;
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
+      const viewPath =
+        derivedAnchor?.parent?.viewUrl ||
+        result.anchor?.parent?.viewUrl ||
+        proofBearingVerifyPathFromProofBundle(result.bundle) ||
+        result.bundle.verifyPath ||
+        "";
+      if (!viewPath) return result.bundle;
+      return {
+        ...result.bundle,
+        canonicalVerifyPath: result.bundle.verifyPath,
+        canonicalVerifyUrl: result.bundle.verifyUrl,
+        verifyPath: viewPath,
+        verifyUrl: absoluteReceizVerifyUrl(viewPath),
+      };
     }
 
     function hasMissingPackageManifestError(result) {
@@ -980,7 +1009,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       for (const w of result.warnings) addCheck("warn", w);
       for (const e of result.errors) addCheck("bad", e);
 
-      ui.bundleJson.textContent = result.bundle ? safeJson(result.bundle) : "(none)";
+      ui.bundleJson.textContent = result.bundle ? safeJson(proofBundleDisplayProjection(result)) : "(none)";
       ui.chunkJson.textContent = safeJson(
         result.packageSummary
           ? { chunkSummary: result.chunkSummary, packageSummary: result.packageSummary }
@@ -1427,6 +1456,299 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return ts.replace(/-/g, "").replace(/:/g, "").replace(/ /g, "_");
     }
 
+    function receizCompactHexToBytes(hex, expectedBytes) {
+      const normalized = String(hex || "").trim().toLowerCase();
+      if (!new RegExp(`^[0-9a-f]{${expectedBytes * 2}}$`).test(normalized)) return null;
+      const out = new Uint8Array(expectedBytes);
+      for (let i = 0; i < expectedBytes; i += 1) out[i] = Number.parseInt(normalized.slice(i * 2, i * 2 + 2), 16);
+      return out;
+    }
+
+    function receizCompactB64uToBytes(value, expectedBytes) {
+      try {
+        const bytes = base64UrlDecode(String(value || ""));
+        return bytes.length === expectedBytes ? bytes : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function receizCompactTsFromSlug(slug) {
+      const match = String(slug || "").match(/^(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
+      return match ? `${match[1]}-${match[2]}-${match[3]} ${match[4]}:${match[5]}` : "";
+    }
+
+    function receizCompactTs24ToTs12(ts24) {
+      const match = String(ts24 || "").trim().match(/^(\d{4}-\d{2}-\d{2}) (\d{2}):(\d{2})$/);
+      if (!match) return "";
+      const hour = Number.parseInt(match[2], 10);
+      if (!Number.isFinite(hour)) return "";
+      const ampm = hour >= 12 ? "PM" : "AM";
+      let h12 = hour % 12;
+      if (h12 === 0) h12 = 12;
+      return `${match[1]} ${h12}:${match[3]} ${ampm}`;
+    }
+
+    function receizCompactCanWriteU48(value) {
+      return Number.isSafeInteger(value) && value >= 0 && value <= 0xffffffffffff;
+    }
+
+    function receizCompactWriter() {
+      const encoder = new TextEncoder();
+      const out = [];
+      const writeU8 = (value) => out.push(value & 0xff);
+      const writeU16 = (value) => out.push((value >>> 8) & 0xff, value & 0xff);
+      return {
+        writeU8,
+        writeU32(value) {
+          out.push((value >>> 24) & 0xff, (value >>> 16) & 0xff, (value >>> 8) & 0xff, value & 0xff);
+        },
+        writeI16(value) {
+          writeU16(value < 0 ? 0x10000 + value : value);
+        },
+        writeU48(value) {
+          let remaining = value;
+          const bytes = new Uint8Array(6);
+          for (let i = 5; i >= 0; i -= 1) {
+            bytes[i] = remaining & 0xff;
+            remaining = Math.floor(remaining / 256);
+          }
+          this.writeBytes(bytes);
+        },
+        writeVarUint(value) {
+          let remaining = value >>> 0;
+          while (remaining >= 0x80) {
+            writeU8((remaining & 0x7f) | 0x80);
+            remaining >>>= 7;
+          }
+          writeU8(remaining);
+        },
+        writeBytes(bytes) {
+          for (let i = 0; i < bytes.length; i += 1) writeU8(bytes[i]);
+        },
+        writeText(value) {
+          const bytes = encoder.encode(String(value || ""));
+          this.writeVarUint(bytes.length);
+          this.writeBytes(bytes);
+        },
+        bytes() {
+          return Uint8Array.from(out);
+        },
+      };
+    }
+
+    function buildBinaryCompactReceizProofToken(bundle) {
+      if (!isRecord(bundle)) return "";
+      const slim = { ...bundle };
+      delete slim.groth16Proof;
+      delete slim.signatureV3;
+      const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
+      const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
+      const createdAtMs = Number(slim.createdAtMs);
+      if (!receizCompactCanWriteU48(createdAtMs)) return "";
+      if (!receizCompactHexToBytes(slim.receizClaimId, 16) || !receizCompactHexToBytes(slim.sigilClaimSeed, 32)) return "";
+
+      const routeCode = String(slim.code || "").trim().toUpperCase();
+      const routePulse = String(slim.kaiPulseEternal || "").trim();
+      const basePath = `/v/${slim.slug}/${routeCode}/${routePulse}`;
+      const publicBaseUrl = `https://receiz.com${basePath}`;
+      const routeTs = receizCompactTsFromSlug(slim.slug);
+      const derivedTsDisplay = receizCompactTs24ToTs12(slim.ts);
+
+      const FLAG_PAYLOAD_VERSION_V1 = 1 << 0;
+      const FLAG_TS_STORED = 1 << 1;
+      const FLAG_TS_DISPLAY_DERIVED = 1 << 2;
+      const FLAG_TS_DISPLAY_STORED = 1 << 3;
+      const FLAG_VERIFY_URL_BASE = 1 << 4;
+      const FLAG_VERIFY_URL_ANCHORED = 1 << 5;
+      const FLAG_VERIFY_URL_STORED = 1 << 6;
+      const FLAG_KAI_KLOK_STORED = 1 << 7;
+      const FLAG_TZ_MINUTES_PRESENT = 1 << 8;
+      const FLAG_SIGNER_KEY_ID_PRESENT = 1 << 9;
+      const FLAG_ANCHOR_ID_PRESENT = 1 << 10;
+      const FLAG_ZK_POSEIDON_HASH_PRESENT = 1 << 11;
+      const FLAG_GROTH16_DIGEST_PRESENT = 1 << 12;
+      const FLAG_ARTIFACT_BASIS_PRESENT = 1 << 13;
+      const FLAG_WIREPROOF_PRESENT = 1 << 14;
+      const FLAG_WIREPROOF_PATH_STORED = 1 << 15;
+      const FLAG_SIGNATURE_V4_PRESENT = 1 << 16;
+      const FLAG_SIGNATURE_V4_ISSUER_KID_STORED = 1 << 17;
+      const DEFAULT_SIGNATURE_V4_ISSUER_KID = "receiz.v4.prod.2026-03-02";
+
+      let flags = FLAG_KAI_KLOK_STORED;
+      if (slim.payloadVersion === "v1") flags |= FLAG_PAYLOAD_VERSION_V1;
+      if (slim.ts !== routeTs) flags |= FLAG_TS_STORED;
+      if (slim.tsDisplay) flags |= slim.tsDisplay === derivedTsDisplay ? FLAG_TS_DISPLAY_DERIVED : FLAG_TS_DISPLAY_STORED;
+      if (typeof slim.tzMinutesEast === "number" && Number.isFinite(slim.tzMinutesEast)) flags |= FLAG_TZ_MINUTES_PRESENT;
+      if (slim.verifyUrl === publicBaseUrl) flags |= FLAG_VERIFY_URL_BASE;
+      else if (slim.anchorId && slim.verifyUrl === `${publicBaseUrl}?a=${slim.anchorId}&ms=${createdAtMs}`) flags |= FLAG_VERIFY_URL_ANCHORED;
+      else flags |= FLAG_VERIFY_URL_STORED;
+      if (slim.signerKeyId) {
+        if (!receizCompactHexToBytes(slim.signerKeyId, 6)) return "";
+        flags |= FLAG_SIGNER_KEY_ID_PRESENT;
+      }
+      if (slim.anchorId) {
+        if (!receizCompactHexToBytes(slim.anchorId, 4)) return "";
+        flags |= FLAG_ANCHOR_ID_PRESENT;
+      }
+      if (slim.zkPoseidonHash) {
+        if (!receizCompactHexToBytes(slim.zkPoseidonHash, 32)) return "";
+        flags |= FLAG_ZK_POSEIDON_HASH_PRESENT;
+      }
+      if (slim.groth16ProofDigest) {
+        if (!receizCompactHexToBytes(slim.groth16ProofDigest, 32)) return "";
+        flags |= FLAG_GROTH16_DIGEST_PRESENT;
+      }
+      if (slim.artifactSha256Basis) {
+        if (!receizCompactHexToBytes(slim.artifactSha256Basis, 32)) return "";
+        flags |= FLAG_ARTIFACT_BASIS_PRESENT;
+      }
+      if (isRecord(slim.wireproof)) flags |= FLAG_WIREPROOF_PRESENT | FLAG_WIREPROOF_PATH_STORED;
+      if (signatureV4 && cert) {
+        if (
+          !receizCompactCanWriteU48(Number(signatureV4.signedAtMs)) ||
+          !receizCompactCanWriteU48(Number(cert.issuedAtMs)) ||
+          !receizCompactCanWriteU48(Number(cert.expiresAtMs)) ||
+          !receizCompactHexToBytes(signatureV4.payloadHashSha256, 32) ||
+          !receizCompactB64uToBytes(signatureV4.sig, 64) ||
+          !receizCompactHexToBytes(cert.certId, 16) ||
+          !receizCompactB64uToBytes(cert.subjectPublicKeyRawB64u, 32) ||
+          !receizCompactB64uToBytes(cert.sig, 64)
+        ) return "";
+        flags |= FLAG_SIGNATURE_V4_PRESENT;
+        if (cert.issuerKid !== DEFAULT_SIGNATURE_V4_ISSUER_KID) flags |= FLAG_SIGNATURE_V4_ISSUER_KID_STORED;
+      }
+
+      const writer = receizCompactWriter();
+      writer.writeU8(4);
+      writer.writeVarUint(flags);
+      writer.writeU48(createdAtMs);
+      if (flags & FLAG_TS_STORED) writer.writeText(slim.ts);
+      if (flags & FLAG_TS_DISPLAY_STORED) writer.writeText(slim.tsDisplay || "");
+      if (flags & FLAG_TZ_MINUTES_PRESENT) writer.writeI16(Math.trunc(slim.tzMinutesEast || 0));
+      if (flags & FLAG_VERIFY_URL_STORED) writer.writeText(slim.verifyUrl || "");
+      writer.writeText(slim.kaiKlok || "");
+      const writeHex = (value, bytes) => writer.writeBytes(receizCompactHexToBytes(value, bytes));
+      const writeB64 = (value, bytes) => writer.writeBytes(receizCompactB64uToBytes(value, bytes));
+      if (flags & FLAG_SIGNER_KEY_ID_PRESENT) writeHex(slim.signerKeyId, 6);
+      if (flags & FLAG_ANCHOR_ID_PRESENT) writeHex(slim.anchorId, 4);
+      writeHex(slim.receizClaimId, 16);
+      writeHex(slim.sigilClaimSeed, 32);
+      if (flags & FLAG_ZK_POSEIDON_HASH_PRESENT) writeHex(slim.zkPoseidonHash, 32);
+      if (flags & FLAG_GROTH16_DIGEST_PRESENT) writeHex(slim.groth16ProofDigest, 32);
+      if (flags & FLAG_ARTIFACT_BASIS_PRESENT) writeHex(slim.artifactSha256Basis, 32);
+      if (flags & FLAG_WIREPROOF_PRESENT) {
+        if (!isRecord(slim.wireproof) || !receizCompactHexToBytes(slim.wireproof.anchorId, 4) || !receizCompactHexToBytes(slim.wireproof.claimHashSha256, 32)) return "";
+        writeHex(slim.wireproof.anchorId, 4);
+        writeHex(slim.wireproof.claimHashSha256, 32);
+        writer.writeText(slim.wireproof.verifierPath || "");
+      }
+      if (flags & FLAG_SIGNATURE_V4_PRESENT) {
+        writer.writeU48(Math.trunc(Number(signatureV4.signedAtMs)));
+        writeB64(signatureV4.sig, 64);
+        if (flags & FLAG_SIGNATURE_V4_ISSUER_KID_STORED) writer.writeText(cert.issuerKid || "");
+        writeB64(cert.subjectPublicKeyRawB64u, 32);
+        writer.writeU48(Math.trunc(Number(cert.issuedAtMs)));
+        writer.writeU48(Math.trunc(Number(cert.expiresAtMs)));
+        writeB64(cert.sig, 64);
+      }
+      return base64UrlEncode(writer.bytes());
+    }
+
+    function buildCompactReceizProofToken(bundle) {
+      if (!isRecord(bundle)) return "";
+      const slim = { ...bundle };
+      delete slim.groth16Proof;
+      delete slim.signatureV3;
+      const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
+      const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
+      const compact = [
+        "rpb1",
+        slim.payloadVersion,
+        slim.createdAtMs,
+        slim.ts,
+        slim.tsDisplay || "",
+        typeof slim.tzMinutesEast === "number" && Number.isFinite(slim.tzMinutesEast) ? Math.trunc(slim.tzMinutesEast) : null,
+        slim.verifyUrl || "",
+        slim.kaiKlok || "",
+        slim.signerKeyId || "",
+        slim.anchorId || "",
+        slim.receizClaimId || "",
+        slim.sigilClaimSeed || "",
+        slim.zkPoseidonHash || "",
+        slim.groth16ProofDigest || "",
+        slim.artifactSha256Basis || "",
+        isRecord(slim.wireproof)
+          ? [slim.wireproof.anchorId || "", slim.wireproof.claimHashSha256 || "", slim.wireproof.verifierPath || ""]
+          : null,
+        signatureV4 && cert
+          ? [
+              signatureV4.signedAtMs,
+              signatureV4.payloadHashSha256 || "",
+              signatureV4.sig || "",
+              [
+                cert.certId || "",
+                cert.issuerKid || "",
+                cert.subjectPublicKeyRawB64u || "",
+                cert.issuedAtMs,
+                cert.expiresAtMs,
+                cert.sig || "",
+              ],
+            ]
+          : null,
+      ];
+      const raw = new TextEncoder().encode(JSON.stringify(compact));
+      if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
+      if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
+      try {
+        const legacy = `rpb1:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        const binary = buildBinaryCompactReceizProofToken(bundle);
+        return binary && binary.length < legacy.length ? binary : legacy;
+      } catch {
+        return "";
+      }
+    }
+
+    function anchoredVerifyPathFromProofBundle(bundle) {
+      if (!isRecord(bundle)) return null;
+
+      const anchorIdRaw = typeof bundle.anchorId === "string" ? bundle.anchorId.trim().toLowerCase() : "";
+      if (!isHex(anchorIdRaw, 8)) return null;
+
+      const verifyPath = asString(bundle.verifyPath);
+      if (!verifyPath) return null;
+
+      const createdAtMsRaw = Number(bundle.createdAtMs);
+      const createdAtMs = Number.isFinite(createdAtMsRaw) ? Math.trunc(createdAtMsRaw) : null;
+      const params = new URLSearchParams();
+      params.set("a", anchorIdRaw);
+      if (createdAtMs !== null) {
+        params.set("ms", String(createdAtMs));
+      }
+      const joiner = verifyPath.includes("?") ? "&" : "?";
+      return `${verifyPath}${joiner}${params.toString()}`;
+    }
+
+    function proofBearingVerifyPathFromProofBundle(bundle) {
+      const anchoredViewUrl = anchoredVerifyPathFromProofBundle(bundle);
+      if (!anchoredViewUrl) return "";
+      const compactToken = buildCompactReceizProofToken(bundle);
+      let viewUrl = anchoredViewUrl;
+      if (compactToken) {
+        try {
+          const proofUrl = new URL(anchoredViewUrl, "https://receiz.local");
+          proofUrl.searchParams.delete("p");
+          proofUrl.searchParams.delete("a");
+          proofUrl.searchParams.delete("ms");
+          proofUrl.searchParams.set("c", compactToken);
+          viewUrl = `${proofUrl.pathname}${proofUrl.search}${proofUrl.hash}`;
+        } catch {
+          viewUrl = anchoredViewUrl;
+        }
+      }
+      return viewUrl;
+    }
+
     function deriveAnchorBundleFromProofBundle(bundle) {
       if (!isRecord(bundle)) return null;
 
@@ -1440,13 +1762,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       const createdAtMsRaw = Number(bundle.createdAtMs);
       const createdAtMs = Number.isFinite(createdAtMsRaw) ? Math.trunc(createdAtMsRaw) : null;
-      const params = new URLSearchParams();
-      params.set("a", anchorIdRaw);
-      if (createdAtMs !== null) {
-        params.set("ms", String(createdAtMs));
-      }
-      const joiner = verifyPath.includes("?") ? "&" : "?";
-      const viewUrl = `${verifyPath}${joiner}${params.toString()}`;
+      const viewUrl = proofBearingVerifyPathFromProofBundle(bundle) || anchoredVerifyPathFromProofBundle(bundle) || verifyPath;
 
       return {
         version: 1,
@@ -2484,7 +2800,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         try {
           const parsed = new URL(verifyUrl);
           const fromUrl = `${parsed.pathname}${parsed.search}`;
-          if (verifyPath && fromUrl !== verifyPath) {
+          const acceptedVerifyUrlPaths = new Set();
+          if (verifyPath) acceptedVerifyUrlPaths.add(verifyPath);
+          const anchoredVerifyPath = anchoredVerifyPathFromProofBundle(bundle);
+          if (anchoredVerifyPath) acceptedVerifyUrlPaths.add(anchoredVerifyPath);
+          const proofBearingVerifyPath = proofBearingVerifyPathFromProofBundle(bundle);
+          if (proofBearingVerifyPath) acceptedVerifyUrlPaths.add(proofBearingVerifyPath);
+          if (derivedAnchor && typeof derivedAnchor.parent.viewUrl === "string") acceptedVerifyUrlPaths.add(derivedAnchor.parent.viewUrl);
+          if (effectiveAnchor && typeof effectiveAnchor.parent.viewUrl === "string") acceptedVerifyUrlPaths.add(effectiveAnchor.parent.viewUrl);
+          if (isRecord(bundle.wireproof) && typeof bundle.wireproof.verifierPath === "string") {
+            acceptedVerifyUrlPaths.add(bundle.wireproof.verifierPath);
+          }
+          if (verifyPath && !acceptedVerifyUrlPaths.has(fromUrl)) {
             warnings.push("verifyUrl path does not exactly match verifyPath.");
           }
         } catch {
@@ -2580,6 +2907,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } else {
           const acceptedPaths = new Set();
           if (verifyPath) acceptedPaths.add(verifyPath);
+          if (derivedAnchor && typeof derivedAnchor.parent.viewUrl === "string") acceptedPaths.add(derivedAnchor.parent.viewUrl);
           if (effectiveAnchor && typeof effectiveAnchor.parent.viewUrl === "string") acceptedPaths.add(effectiveAnchor.parent.viewUrl);
           if (isRecord(bundle.wireproof) && typeof bundle.wireproof.verifierPath === "string") {
             acceptedPaths.add(bundle.wireproof.verifierPath);
@@ -3500,8 +3828,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
   (() => {
     if (typeof window === "undefined") return;
     if (!("serviceWorker" in navigator)) return;
-    if (!window.isSecureContext && window.location.hostname !== "localhost") return;
+    const hostname = window.location.hostname;
+    const isLocalHost =
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "::1" ||
+      hostname.endsWith(".localhost");
+    if (isLocalHost) return;
+    if (!window.isSecureContext) return;
 
+    const OFFLINE_STANDALONE_SW_VERSION = "87.0.0-offline-proof-url-v1";
     const warmUrls = [
       "/offline-verifier.html",
       "/verify",
@@ -3518,7 +3854,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("/sw.js?v=87.0.0", { scope: "/" })
+        .register(`/sw.js?v=${encodeURIComponent(OFFLINE_STANDALONE_SW_VERSION)}`, { scope: "/" })
         .then((reg) => {
           postWarm(reg);
           return navigator.serviceWorker.ready;
