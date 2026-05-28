@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v87.0.0] - 2026-05-28
+
+### Changed
+- Advanced the current release/documentation surface from `v86.0.0` to `v87.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v87.0.0`.
+- Published the canonical `v87.0.0` release artifacts:
+  - `docs/releases/v87.0.0.md`
+  - `docs/releases/v87.0.0-product-truth.md`
+  - `docs/releases/v87.0.0-checklist.md`
+  - `docs/releases/v87.0.0-process.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v87.0.0`.
+- Aligned release framing around compact offline proof-bearing `/v` links, `/v` Signature V4 proof-bundle classification as `Proof`, coordinate-only historical fallback boundaries, Sports single-card QR/value proof surfaces, World Estate, Market/Profile first-paint hardening, and RLS/security cleanup.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v87.0.0`.
+- Updated static service-worker registration and runtime version markers to `87.0.0`.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v86.0.0] - 2026-05-24
 
 ### Changed

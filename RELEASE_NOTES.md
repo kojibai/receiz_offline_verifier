@@ -1,5 +1,46 @@
 # Release Notes
 
+## v87.0.0
+Release date: 2026-05-28
+
+`v87.0.0` is the Offline Proof Links, QR Proof Transport, And Post-v86 Public Proof Lock release. It locks the post-v86 arc where offline sealed proof objects and offline moments produce compact self-contained `/v` proof links, `/v` verifies embedded Signature V4 proof bundles as `Proof`, and coordinate-only evidence remains historical compatibility evidence rather than upgraded authority. It also locks Sports single-card QR/value surfaces, World Estate, Market/Profile first-paint hardening, and RLS/security cleanup. In this offline verifier repository, the release work is publication of canonical `v87.0.0` artifacts, local release-surface gates, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v87.0.0.md](docs/releases/v87.0.0.md)
+Product-truth freeze: [docs/releases/v87.0.0-product-truth.md](docs/releases/v87.0.0-product-truth.md)
+Release checklist: [docs/releases/v87.0.0-checklist.md](docs/releases/v87.0.0-checklist.md)
+Release process: [docs/releases/v87.0.0-process.md](docs/releases/v87.0.0-process.md)
+Prior v86 archive: [docs/releases/v86.0.0.md](docs/releases/v86.0.0.md)
+
+## Highlights
+- Offline proof remains named directly as proof, not fallback mode.
+- Compact proof links transport sealed proof bundle truth; they do not create a new authority layer.
+- `/v` elevates only signed proof bundles with valid Signature V4 and matching route truth.
+- Coordinate-only links remain historical compatibility evidence.
+- Live offline moment QR points to the compact self-contained proof URL after sealing.
+- Sports single-card QR/value surfaces remain public proof surfaces.
+- World Estate remains a World identity/public witness surface.
+- Market/Profile asset loading and first-paint contracts preserve public proof objects.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v87.0.0`.
+- Root package metadata now resolves to `v87.0.0`.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v86.0.0` tag through the current release candidate, as supplied by the release brief.
+- The post-`v86.0.0` arc spans 17 commits, 77 changed files, 6,903 insertions, and 455 deletions before final `v87.0.0` lock edits.
+- The `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v87.0.0`.
+- Confirm compact offline proof-link and `/v` proof-token contracts in the broader platform workspace.
+- Confirm Sports single-card QR/value, Market/Profile, World Estate, RLS/security, and browser storage contracts in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, and release lock checks.
+- Confirm production DB migrations named by the release are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v86.0.0
 Release date: 2026-05-24
 
