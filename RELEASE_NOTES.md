@@ -1,5 +1,47 @@
 # Release Notes
 
+## v88.0.0
+Release date: 2026-06-03
+
+`v88.0.0` is the Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock release. It locks the post-v87 arc where live Sports field truth, locked entries, per-player scores, live cockpit totals, finalized reward recovery, Public Live Cockpit, service-worker/runtime coherence, session clear migration, Market/Profile first paint, notification/chat delivery, and Supabase timeout hardening are promoted into the next official release line. It preserves the `v87.0.0` offline proof baseline: offline proof remains real proof, compact `/v` URLs remain transport, Signature V4 remains the proof-verification gate, and coordinate-only evidence remains historical compatibility evidence. In this offline verifier repository, the release work is publication of canonical `v88.0.0` artifacts, local release-surface gates, regression-lessons lock, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v88.0.0.md](docs/releases/v88.0.0.md)
+Product-truth freeze: [docs/releases/v88.0.0-product-truth.md](docs/releases/v88.0.0-product-truth.md)
+Release checklist: [docs/releases/v88.0.0-checklist.md](docs/releases/v88.0.0-checklist.md)
+Release process: [docs/releases/v88.0.0-process.md](docs/releases/v88.0.0-process.md)
+Regression lessons: [docs/releases/v88.0.0-regression-lessons.md](docs/releases/v88.0.0-regression-lessons.md)
+Prior v87 archive: [docs/releases/v87.0.0.md](docs/releases/v87.0.0.md)
+
+## Highlights
+- Offline proof semantics remain unchanged from `v87.0.0`.
+- Live Sports selected-game field truth, locked entries, per-player scores, live cockpit totals, and finalized reward recovery remain stronger than hydration and fallback state.
+- `/baseball` is locked as a direct entry route to the canonical Sports baseball arena.
+- Public Live Cockpit and `/live` rooms are named as public witness/live proof surfaces.
+- Market/Profile first paint preserves public proof object and canonical profile truth.
+- Service-worker version, package version, public labels, runtime coherence defaults, and deterministic session/profile projection keys move together.
+- Explicit session clear/logout cannot resurrect stale signed-in first paint.
+- Supabase timeout hardening is tracked as DB policy/index/migration truth with tests and production deployment boundaries.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v88.0.0`.
+- Root package metadata now resolves to `v88.0.0`.
+- `release:lock` now requires the regression lessons document.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v87.0.0` tag through `87.5.0` stable head, as supplied by the release brief.
+- The post-`v87.0.0` arc spans 90 commits, 195 changed files, 72,663 insertions, and 6,475 deletions before final `v88.0.0` lock edits.
+- The `v87.0.0` offline proof baseline, `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v88.0.0`.
+- Confirm Sports live truth, `/baseball`, locked-entry first paint, per-player scores, live cockpit totals, finalized reward recovery, Public Live Cockpit, Market/Profile, runtime/session, notification/chat, Supabase timeout, and release-freeze gates in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, regression lessons, and release lock checks.
+- Confirm production DB migrations named by the release are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v87.0.0
 Release date: 2026-05-28
 

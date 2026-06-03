@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v88.0.0] - 2026-06-03
+
+### Changed
+- Advanced the current release/documentation surface from `v87.0.0` to `v88.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v88.0.0`.
+- Published the canonical `v88.0.0` release artifacts:
+  - `docs/releases/v88.0.0.md`
+  - `docs/releases/v88.0.0-product-truth.md`
+  - `docs/releases/v88.0.0-checklist.md`
+  - `docs/releases/v88.0.0-process.md`
+  - `docs/releases/v88.0.0-regression-lessons.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v88.0.0`.
+- Aligned release framing around live Sports field truth, `/baseball` direct entry, locked entries, per-player scores, finalized reward recovery, Public Live Cockpit, runtime/session coherence, notification/chat delivery, Supabase timeout hardening, and required regression lessons.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v88.0.0`.
+- Updated static service-worker registration and runtime version markers to `88.0.0`.
+- Extended the local release-surface lock to require the regression lessons artifact.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v87.0.0` offline proof baseline, `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v87.0.0] - 2026-05-28
 
 ### Changed

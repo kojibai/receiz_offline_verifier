@@ -2,21 +2,22 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v87.0.0`
+Current release: `v88.0.0`
 
-## What changed in v87.0.0
-- Current release/docs surfaces are aligned to `v87.0.0`.
-- Published the canonical `v87.0.0` Offline Proof Links, QR Proof Transport, And Post-v86 Public Proof Lock note at [docs/releases/v87.0.0.md](docs/releases/v87.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v87.0.0-product-truth.md](docs/releases/v87.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v87.0.0-checklist.md](docs/releases/v87.0.0-checklist.md).
-- Published the release process at [docs/releases/v87.0.0-process.md](docs/releases/v87.0.0-process.md).
-- `v87.0.0` carries the post-v86 proof arc: offline sealed proof objects and offline moments produce compact self-contained `/v` proof links, `/v` verifies embedded Signature V4 proof bundles as `Proof`, coordinate-only evidence remains historical compatibility evidence, Sports single-card QR/value surfaces remain public proof surfaces, World Estate remains a World identity/public witness surface, and Market/Profile first-paint truth remains protected.
-- The `v86.0.0` proof-native artifact-system baseline remains in force.
+## What changed in v88.0.0
+- Current release/docs surfaces are aligned to `v88.0.0`.
+- Published the canonical `v88.0.0` Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock note at [docs/releases/v88.0.0.md](docs/releases/v88.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v88.0.0-product-truth.md](docs/releases/v88.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v88.0.0-checklist.md](docs/releases/v88.0.0-checklist.md).
+- Published the release process at [docs/releases/v88.0.0-process.md](docs/releases/v88.0.0-process.md).
+- Published the regression lessons lock at [docs/releases/v88.0.0-regression-lessons.md](docs/releases/v88.0.0-regression-lessons.md).
+- `v88.0.0` carries the post-v87 live truth arc: Sports selected-game field truth, locked entries, per-player scores, live cockpit totals, finalized reward recovery, Public Live Cockpit, `/live` rooms, service-worker/runtime coherence, session clear migration, market/profile first-paint continuity, notification/chat delivery, and Supabase timeout hardening remain protected beneath proof-native Receiz truth.
+- The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the compact offline proof-link, `/v` proof-token, Sports single-card QR/value, Market/Profile, World Estate, RLS/security, first-paint, and release-freeze gates named in [docs/releases/v87.0.0-checklist.md](docs/releases/v87.0.0-checklist.md).
-- Current shipped verifier, studio, and settlement entrypoints now display `v87.0.0`.
-- Root package metadata now resolves cleanly to `v87.0.0`.
-- The static service-worker surface carries runtime version `87.0.0`.
+- Broader platform target environments require the Sports live truth, `/baseball` direct-route, Public Live Cockpit, Market/Profile, runtime/session, notification/chat, Supabase timeout, RLS/security, first-paint, and release-freeze gates named in [docs/releases/v88.0.0-checklist.md](docs/releases/v88.0.0-checklist.md).
+- Current shipped verifier, studio, and settlement entrypoints now display `v88.0.0`.
+- Root package metadata now resolves cleanly to `v88.0.0`.
+- The static service-worker surface carries runtime version `88.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -34,9 +35,9 @@ Current release: `v87.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v87.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v88.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v87)
+## Release train highlights (v14 -> v88)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -98,6 +99,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v85.0.0`: release/docs alignment for the Official Proof-Native Sports, Market, Passport, and Speed Release, including Signal Card provenance, Sports as a live proof economy, Main Event as a settlement primitive, deterministic Market/wallet ownership and settlement projection, Series Passport proof-object gating, referral-backed public sharing, truthful speed invariants, and coherent release/service-worker identity; verifier semantics remain unchanged from `v60.0.0`.
 - `v86.0.0`: release/docs alignment for the Official Locked Proof-Native Baseline, including the v80-to-v86 proof arc, Profile-visible proof objects in Market, deterministic Market and Explore first paint, signed-in ownership-history preservation, Sports all-source-date live hydration, payment-confirmed Main Event entry, single-card QR proof routes, World/public twin continuity, and coherent release/service-worker identity; verifier semantics remain unchanged from `v60.0.0`.
 - `v87.0.0`: release/docs alignment for Offline Proof Links, QR Proof Transport, And Post-v86 Public Proof Lock, including compact offline proof-bearing `/v` links, `/v` Signature V4 proof-bundle classification as `Proof`, coordinate-only historical fallback boundaries, Sports single-card QR/value proof surfaces, World Estate, Market/Profile first-paint hardening, and RLS/security cleanup; verifier semantics remain unchanged from `v60.0.0`.
+- `v88.0.0`: release/docs alignment for Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock, including Sports selected-game field truth, `/baseball` direct entry, locked entries, per-player scores, finalized reward recovery, Public Live Cockpit, runtime/session coherence, notification/chat delivery, Supabase timeout hardening, and required regression lessons; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -163,7 +165,12 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v87.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v88.0.0`.
+- [docs/releases/v88.0.0.md](docs/releases/v88.0.0.md): canonical Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock note for `v88.0.0`.
+- [docs/releases/v88.0.0-product-truth.md](docs/releases/v88.0.0-product-truth.md): `v88.0.0` product-truth freeze document.
+- [docs/releases/v88.0.0-checklist.md](docs/releases/v88.0.0-checklist.md): release-prep checklist and additional gates for `v88.0.0`.
+- [docs/releases/v88.0.0-process.md](docs/releases/v88.0.0-process.md): release-prep process for `v88.0.0`.
+- [docs/releases/v88.0.0-regression-lessons.md](docs/releases/v88.0.0-regression-lessons.md): required regression lessons lock for `v88.0.0`.
 - [docs/releases/v87.0.0.md](docs/releases/v87.0.0.md): canonical Offline Proof Links, QR Proof Transport, And Post-v86 Public Proof Lock note for `v87.0.0`.
 - [docs/releases/v87.0.0-product-truth.md](docs/releases/v87.0.0-product-truth.md): `v87.0.0` product-truth freeze document.
 - [docs/releases/v87.0.0-checklist.md](docs/releases/v87.0.0-checklist.md): release-prep checklist and additional gates for `v87.0.0`.
@@ -230,10 +237,10 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v87.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v87.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v88.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v88.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v87.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v88.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
