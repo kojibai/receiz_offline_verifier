@@ -1,9 +1,15 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v88.0.0`.
+This directory is the public documentation set for Receiz `v89.0.0`.
 
 ## Start Here
 
+- [releases/v89.0.0.md](releases/v89.0.0.md): canonical Foreground Anchor Publication, Profile Global Sync, Sports Vault Public Proof, Wallet Runtime, And Post-v88 Regression Lock note for `v89.0.0`.
+- [releases/v89.0.0-product-truth.md](releases/v89.0.0-product-truth.md): release-scoped product-truth freeze for `v89.0.0`.
+- [releases/v89.0.0-checklist.md](releases/v89.0.0-checklist.md): release-prep checklist and additional gates for `v89.0.0`.
+- [releases/v89.0.0-process.md](releases/v89.0.0-process.md): release-prep process for `v89.0.0`.
+- [releases/v89.0.0-regression-lessons.md](releases/v89.0.0-regression-lessons.md): required regression lessons lock for `v89.0.0`.
+- [releases/v89.0.0-commit-history.md](releases/v89.0.0-commit-history.md): required commit-history boundary for `v89.0.0`.
 - [releases/v88.0.0.md](releases/v88.0.0.md): canonical Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock note for `v88.0.0`.
 - [releases/v88.0.0-product-truth.md](releases/v88.0.0-product-truth.md): release-scoped product-truth freeze for `v88.0.0`.
 - [releases/v88.0.0-checklist.md](releases/v88.0.0-checklist.md): release-prep checklist and additional gates for `v88.0.0`.
@@ -71,7 +77,7 @@ This directory is the public documentation set for Receiz `v88.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v88.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v89.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.

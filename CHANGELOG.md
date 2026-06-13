@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v89.0.0] - 2026-06-13
+
+### Changed
+- Advanced the current release/documentation surface from `v88.0.0` to `v89.0.0`.
+- Updated canonical root package metadata and set `package.json` to `v89.0.0`.
+- Published the canonical `v89.0.0` release artifacts:
+  - `docs/releases/v89.0.0.md`
+  - `docs/releases/v89.0.0-product-truth.md`
+  - `docs/releases/v89.0.0-checklist.md`
+  - `docs/releases/v89.0.0-process.md`
+  - `docs/releases/v89.0.0-regression-lessons.md`
+  - `docs/releases/v89.0.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v89.0.0`.
+- Aligned release framing around foreground anchor publication, `/api/receiz/anchor` local signed-action outbox exclusion, profile showcase/global/public market/route snapshot projection, Sports Vault sealed-manifest public proof publishing, Sports FIFA/UFC/fight proof additions, wallet/runtime continuity, lease/market ownership surfaces, DB pressure repairs, required regression lessons, and commit-history boundary.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v89.0.0`.
+- Updated static service-worker registration and runtime version markers to `89.0.0`.
+- Extended the local release-surface lock to require the commit-history artifact.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v88.0.0` live proof/runtime baseline, `v87.0.0` offline proof baseline, `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v88.0.0] - 2026-06-03
 
 ### Changed

@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-06-03";
+const releaseDate = "2026-06-13";
 
 const requiredFiles = [
   "README.md",
@@ -21,6 +21,7 @@ const requiredFiles = [
   `docs/releases/${releaseVersion}-checklist.md`,
   `docs/releases/${releaseVersion}-process.md`,
   `docs/releases/${releaseVersion}-regression-lessons.md`,
+  `docs/releases/${releaseVersion}-commit-history.md`,
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
@@ -59,11 +60,14 @@ const currentReleasePointers = [
   ["README.md", `docs/releases/${releaseVersion}-checklist.md`],
   ["README.md", `docs/releases/${releaseVersion}-process.md`],
   ["README.md", `docs/releases/${releaseVersion}-regression-lessons.md`],
+  ["README.md", `docs/releases/${releaseVersion}-commit-history.md`],
   ["RELEASE_NOTES.md", `## ${releaseVersion}`],
+  ["RELEASE_NOTES.md", `docs/releases/${releaseVersion}-commit-history.md`],
   ["CHANGELOG.md", `## [${releaseVersion}] - ${releaseDate}`],
   ["docs/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/README.md", `releases/${releaseVersion}.md`],
   ["docs/README.md", `releases/${releaseVersion}-regression-lessons.md`],
+  ["docs/README.md", `releases/${releaseVersion}-commit-history.md`],
   ["docs/FORMAT.md", `for \`${releaseVersion}\``],
   ["docs/governance/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/literal-product-law.md", `carried forward for \`${releaseVersion}\``],
@@ -81,9 +85,13 @@ const currentReleasePointers = [
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
   [`docs/releases/${releaseVersion}.md`, `release:lock`],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-regression-lessons.md`],
+  [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-commit-history.md`],
   [`docs/releases/${releaseVersion}-checklist.md`, `${releaseVersion}-regression-lessons.md`],
+  [`docs/releases/${releaseVersion}-checklist.md`, `${releaseVersion}-commit-history.md`],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-regression-lessons.md`],
-  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Release-Lock Requirement"]
+  [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-commit-history.md`],
+  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Release-Lock Requirement"],
+  [`docs/releases/${releaseVersion}-commit-history.md`, "Release-Lock Requirement"]
 ];
 
 const errors = [];

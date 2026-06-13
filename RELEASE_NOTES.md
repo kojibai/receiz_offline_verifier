@@ -1,5 +1,50 @@
 # Release Notes
 
+## v89.0.0
+Release date: 2026-06-13
+
+`v89.0.0` is the Foreground Anchor Publication, Profile Global Sync, Sports Vault Public Proof, Wallet Runtime, And Post-v88 Regression Lock release. It locks the post-v88 arc where `/api/receiz/anchor` remains a foreground proof publication route above generic local signed-action outbox replay, profile originals project into showcase/global/public market/route snapshot truth, Sports Vault publishing remains sealed-manifest first, Sports FIFA/UFC/fight additions remain proof objects, wallet/runtime continuity stays identity and settlement truth, and DB pressure repairs preserve stronger proof/local truth. It preserves the `v88.0.0` live proof, runtime coherence, market/profile first-paint, DB hardening, and regression-lessons baseline. In this offline verifier repository, the release work is publication of canonical `v89.0.0` artifacts, local release-surface gates, regression-lessons lock, commit-history boundary, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v89.0.0.md](docs/releases/v89.0.0.md)
+Product-truth freeze: [docs/releases/v89.0.0-product-truth.md](docs/releases/v89.0.0-product-truth.md)
+Release checklist: [docs/releases/v89.0.0-checklist.md](docs/releases/v89.0.0-checklist.md)
+Release process: [docs/releases/v89.0.0-process.md](docs/releases/v89.0.0-process.md)
+Regression lessons: [docs/releases/v89.0.0-regression-lessons.md](docs/releases/v89.0.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v89.0.0-commit-history.md](docs/releases/v89.0.0-commit-history.md)
+Prior v88 archive: [docs/releases/v88.0.0.md](docs/releases/v88.0.0.md)
+
+## Highlights
+- Offline proof semantics remain unchanged from `v87.0.0`.
+- The `v88.0.0` live Sports, runtime, market/profile first-paint, DB hardening, and regression-lessons baseline remains in force.
+- `/api/receiz/anchor` is locked as the foreground proof publication route and remains excluded from local signed-action outbox admission.
+- No broad `/api/receiz` proof classifier may re-admit foreground anchor publication.
+- Profile originals must project into showcase truth, public profile market append truth, and visible local route snapshots.
+- Sports Vault public proof publishing remains sealed-manifest first.
+- Sports live/vault/FIFA/UFC/fight cards, packs, lineups, event proofs, and public showcases remain proof objects.
+- Wallet first-paint, ledger receipts, PBI, Receiz session, and service-worker navigation remain identity, settlement, and runtime continuity primitives.
+- Lease cockpit, market ownership, sale, claim, and transaction room paths remain ownership and settlement primitives.
+- Faster SQL/server reads may append verified additions but may not replace known proof/local truth.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v89.0.0`.
+- Root package metadata now resolves to `v89.0.0`.
+- `release:lock` requires the regression lessons and commit-history documents.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v88.0.0` tag through the profile-original anchor repair, as supplied by the release brief.
+- The post-`v88.0.0` arc spans 169 commits, 361 changed files, 74,225 insertions, and 4,640 deletions before final `v89.0.0` lock edits.
+- The `v88.0.0` live proof/runtime baseline, `v87.0.0` offline proof baseline, `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v89.0.0`.
+- Confirm anchor/outbox, Profile, Sports Vault, Sports FIFA/UFC/fight, Wallet, Market, Lease, runtime/session, DB pressure, and release-freeze gates in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, regression lessons, commit history, and release lock checks.
+- Confirm production DB migrations named by the release are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v88.0.0
 Release date: 2026-06-03
 
