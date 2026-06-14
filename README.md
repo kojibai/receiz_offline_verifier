@@ -2,24 +2,25 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v89.0.0`
+Current release: `v90.0.0`
 
-## What changed in v89.0.0
-- Current release/docs surfaces are aligned to `v89.0.0`.
-- Published the canonical `v89.0.0` Foreground Anchor Publication, Profile Global Sync, Sports Vault Public Proof, Wallet Runtime, And Post-v88 Regression Lock note at [docs/releases/v89.0.0.md](docs/releases/v89.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v89.0.0-product-truth.md](docs/releases/v89.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v89.0.0-checklist.md](docs/releases/v89.0.0-checklist.md).
-- Published the release process at [docs/releases/v89.0.0-process.md](docs/releases/v89.0.0-process.md).
-- Published the regression lessons lock at [docs/releases/v89.0.0-regression-lessons.md](docs/releases/v89.0.0-regression-lessons.md).
-- Published the commit-history boundary at [docs/releases/v89.0.0-commit-history.md](docs/releases/v89.0.0-commit-history.md).
-- `v89.0.0` carries the post-v88 foreground publication arc: `/api/receiz/anchor` stays above generic local signed-action outbox replay, profile originals project into showcase/global/public market/route snapshot truth, Sports Vault publishing stays sealed-manifest first, Sports FIFA/UFC/fight additions remain proof objects, and wallet/runtime/ownership/settlement continuity stays protected beneath proof-native Receiz truth.
-- The `v88.0.0` live proof, runtime, market/profile, DB hardening, and regression-lessons baseline remains in force.
+## What changed in v90.0.0
+- Current release/docs surfaces are aligned to `v90.0.0`.
+- Published the canonical `v90.0.0` Official Stable Proof-Native Artifact System Release note at [docs/releases/v90.0.0.md](docs/releases/v90.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v90.0.0-product-truth.md](docs/releases/v90.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v90.0.0-checklist.md](docs/releases/v90.0.0-checklist.md).
+- Published the release process at [docs/releases/v90.0.0-process.md](docs/releases/v90.0.0-process.md).
+- Published the regression lessons lock at [docs/releases/v90.0.0-regression-lessons.md](docs/releases/v90.0.0-regression-lessons.md).
+- Published the commit-history boundary at [docs/releases/v90.0.0-commit-history.md](docs/releases/v90.0.0-commit-history.md).
+- `v90.0.0` locks the full Receiz arc from the first proof product through the current proof-native artifact system.
+- `v90.0.0` carries the post-v89 Sports proof closure: Sports event proof is a proof object, Sports Vault is an artifact system, Sports card ownership transfer is an ownership append, Sports value movement is a settlement primitive, Sports conformance is release evidence, competition rooms are proof-native game/market coordination surfaces, and metadata projects public proof without defining proof.
+- The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the anchor/outbox, Profile, Sports Vault, Sports, Market, Wallet, runtime/session, DB pressure, RLS/security, first-paint, and release-freeze gates named in [docs/releases/v89.0.0-checklist.md](docs/releases/v89.0.0-checklist.md).
-- Current shipped verifier, studio, and settlement entrypoints now display `v89.0.0`.
-- Root package metadata now resolves cleanly to `v89.0.0`.
-- The static service-worker surface carries runtime version `89.0.0`.
+- Broader platform target environments require the Sports ownership transfer, event proof value, conformance, market-depth, competition-room, metadata projection, foreground anchor/outbox, Profile, Sports Vault, Wallet, runtime/session, security, first-paint, and release-freeze gates named in [docs/releases/v90.0.0-checklist.md](docs/releases/v90.0.0-checklist.md).
+- Current shipped verifier, studio, and settlement entrypoints now display `v90.0.0`.
+- Root package metadata now resolves cleanly to `v90.0.0`.
+- The static service-worker surface carries runtime version `90.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -37,9 +38,9 @@ Current release: `v89.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v89.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v90.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v89)
+## Release train highlights (v14 -> v90)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -103,6 +104,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v87.0.0`: release/docs alignment for Offline Proof Links, QR Proof Transport, And Post-v86 Public Proof Lock, including compact offline proof-bearing `/v` links, `/v` Signature V4 proof-bundle classification as `Proof`, coordinate-only historical fallback boundaries, Sports single-card QR/value proof surfaces, World Estate, Market/Profile first-paint hardening, and RLS/security cleanup; verifier semantics remain unchanged from `v60.0.0`.
 - `v88.0.0`: release/docs alignment for Live Sports Truth, Runtime Coherence, Public Live Cockpit, And Post-v87 Regression Lock, including Sports selected-game field truth, `/baseball` direct entry, locked entries, per-player scores, finalized reward recovery, Public Live Cockpit, runtime/session coherence, notification/chat delivery, Supabase timeout hardening, and required regression lessons; verifier semantics remain unchanged from `v60.0.0`.
 - `v89.0.0`: release/docs alignment for Foreground Anchor Publication, Profile Global Sync, Sports Vault Public Proof, Wallet Runtime, And Post-v88 Regression Lock, including `/api/receiz/anchor` outbox exclusion, profile showcase/global/public market/route snapshot projection, Sports Vault sealed-manifest public proof publishing, Sports FIFA/UFC/fight additions, wallet/runtime continuity, lease/market ownership surfaces, DB pressure repairs, required regression lessons, and commit-history boundary; verifier semantics remain unchanged from `v60.0.0`.
+- `v90.0.0`: release/docs alignment for the Official Stable Proof-Native Artifact System Release, including the full v80-to-current proof-native arc, Sports Vault owner-row projection, Sports card ownership transfer, Sports event proof value, Sports conformance, live value/market depth, competition rooms, public metadata projection, regression lessons, and commit-history boundary; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -168,7 +170,13 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v89.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v90.0.0`.
+- [docs/releases/v90.0.0.md](docs/releases/v90.0.0.md): canonical Official Stable Proof-Native Artifact System Release note for `v90.0.0`.
+- [docs/releases/v90.0.0-product-truth.md](docs/releases/v90.0.0-product-truth.md): `v90.0.0` product-truth freeze document.
+- [docs/releases/v90.0.0-checklist.md](docs/releases/v90.0.0-checklist.md): release-prep checklist and additional gates for `v90.0.0`.
+- [docs/releases/v90.0.0-process.md](docs/releases/v90.0.0-process.md): release-prep process for `v90.0.0`.
+- [docs/releases/v90.0.0-regression-lessons.md](docs/releases/v90.0.0-regression-lessons.md): required regression lessons lock for `v90.0.0`.
+- [docs/releases/v90.0.0-commit-history.md](docs/releases/v90.0.0-commit-history.md): required commit-history boundary for `v90.0.0`.
 - [docs/releases/v89.0.0.md](docs/releases/v89.0.0.md): canonical Foreground Anchor Publication, Profile Global Sync, Sports Vault Public Proof, Wallet Runtime, And Post-v88 Regression Lock note for `v89.0.0`.
 - [docs/releases/v89.0.0-product-truth.md](docs/releases/v89.0.0-product-truth.md): `v89.0.0` product-truth freeze document.
 - [docs/releases/v89.0.0-checklist.md](docs/releases/v89.0.0-checklist.md): release-prep checklist and additional gates for `v89.0.0`.
@@ -246,10 +254,10 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v89.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v89.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v90.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v90.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v89.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v90.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.

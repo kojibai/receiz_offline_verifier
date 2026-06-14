@@ -1,6 +1,6 @@
 # Truthful Speed Invariants
 
-Status: Canonical reference introduced for `v85.0.0`; carried forward for `v89.0.0`
+Status: Canonical reference introduced for `v85.0.0`; carried forward for `v90.0.0`
 Release date: May 19, 2026
 
 ## Purpose

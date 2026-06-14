@@ -1,5 +1,50 @@
 # Release Notes
 
+## v90.0.0
+Release date: 2026-06-14
+
+`v90.0.0` is the Official Stable Proof-Native Artifact System Release. It locks the full Receiz arc from the first proof product through the current proof-native artifact system and closes the post-v89 Sports proof slice where Sports event proof is a proof object, Sports Vault is an artifact system, Sports card ownership transfer is an ownership append, Sports value movement is a settlement primitive, Sports conformance is release evidence, competition rooms are proof-native game/market coordination surfaces, and metadata projects public proof without defining proof. In this offline verifier repository, the release work is publication of canonical `v90.0.0` artifacts, local release-surface gates, regression-lessons lock, commit-history boundary, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v90.0.0.md](docs/releases/v90.0.0.md)
+Product-truth freeze: [docs/releases/v90.0.0-product-truth.md](docs/releases/v90.0.0-product-truth.md)
+Release checklist: [docs/releases/v90.0.0-checklist.md](docs/releases/v90.0.0-checklist.md)
+Release process: [docs/releases/v90.0.0-process.md](docs/releases/v90.0.0-process.md)
+Regression lessons: [docs/releases/v90.0.0-regression-lessons.md](docs/releases/v90.0.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v90.0.0-commit-history.md](docs/releases/v90.0.0-commit-history.md)
+Prior v89 archive: [docs/releases/v89.0.0.md](docs/releases/v89.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Sports event proof is locked as a proof object.
+- Sports Vault remains an artifact system with owner-row projection, `SportsVaultSurface`, vault projection flags, team-code normalization, and batch reveal protected as verified vault truth.
+- Sports card ownership transfer remains an ownership append, including claimed/uploaded card image transfer through the offline-transfer ownership append route before signed-in local vault commit.
+- Sports value movement remains a settlement primitive across live value, market-depth sales, and market value seed projection.
+- Sports conformance remains release evidence through conformance controls, mode guide, issuance tests, and Sports conformance tests.
+- Competition rooms remain proof-native game/market coordination surfaces.
+- Absolute URL metadata projects public proof and does not define proof.
+- The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v90.0.0`.
+- Root package metadata now resolves to `v90.0.0`.
+- `release:lock` requires the regression lessons and commit-history documents.
+- Verifier trust semantics remain unchanged relative to `v60.0.0`.
+
+## Operational notes
+- Broader product trail referenced by this release: `v80.0.0` through the v90 release candidate, as supplied by the release brief.
+- The supplied `v80.0.0` to current arc spans 723 commits, 1,043 changed files, 339,345 insertions, and 6,263 deletions before final `v90.0.0` lock edits.
+- The supplied post-`v89.0.0` arc spans 29 commits, 100 changed files, 9,949 insertions, and 1,259 deletions before final `v90.0.0` lock edits.
+- The `v89.0.0` foreground publication and Sports Vault baseline, `v87.0.0` offline proof baseline, `v86.0.0` proof-native artifact-system baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v90.0.0`.
+- Confirm Sports ownership transfer, event proof value, conformance, market-depth, competition-room, metadata projection, foreground anchor/outbox, Profile, Sports Vault, Wallet, runtime/session, security, and release-freeze gates in the broader platform workspace.
+- Confirm page-first-paint, release-freeze, service-worker coherence, regression lessons, commit history, and release lock checks.
+- Confirm production DB migrations named by the release are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v89.0.0
 Release date: 2026-06-13
 
