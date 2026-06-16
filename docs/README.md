@@ -1,9 +1,15 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v90.0.0`.
+This directory is the public documentation set for Receiz `v91.0.0`.
 
 ## Start Here
 
+- [releases/v91.0.0.md](releases/v91.0.0.md): canonical Deterministic Sports Scale And Proof-Native Game Release note for `v91.0.0`.
+- [releases/v91.0.0-product-truth.md](releases/v91.0.0-product-truth.md): release-scoped product-truth freeze for `v91.0.0`.
+- [releases/v91.0.0-checklist.md](releases/v91.0.0-checklist.md): release-prep checklist and additional gates for `v91.0.0`.
+- [releases/v91.0.0-process.md](releases/v91.0.0-process.md): release-prep process for `v91.0.0`.
+- [releases/v91.0.0-regression-lessons.md](releases/v91.0.0-regression-lessons.md): required regression lessons lock for `v91.0.0`.
+- [releases/v91.0.0-commit-history.md](releases/v91.0.0-commit-history.md): required commit-history boundary for `v91.0.0`.
 - [releases/v90.0.0.md](releases/v90.0.0.md): canonical Official Stable Proof-Native Artifact System Release note for `v90.0.0`.
 - [releases/v90.0.0-product-truth.md](releases/v90.0.0-product-truth.md): release-scoped product-truth freeze for `v90.0.0`.
 - [releases/v90.0.0-checklist.md](releases/v90.0.0-checklist.md): release-prep checklist and additional gates for `v90.0.0`.
@@ -83,7 +89,8 @@ This directory is the public documentation set for Receiz `v90.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v90.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v91.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v91.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.
@@ -113,6 +120,7 @@ This directory is the public documentation set for Receiz `v90.0.0`.
 - [governance/README.md](governance/README.md): governance document map and publication guidance.
 - [governance/charter.v1.md](governance/charter.v1.md): governance authority and decision-rights charter.
 - [governance/release-attestation-standard.v1.md](governance/release-attestation-standard.v1.md): signed release attestation requirements.
+- [governance/historical-continuity-standard.v1.md](governance/historical-continuity-standard.v1.md): governed historical-record continuity requirements.
 - [governance/governance-artifact-signature-standard.v1.md](governance/governance-artifact-signature-standard.v1.md): signed governance manifest rules.
 - [governance/document-register.v1.json](governance/document-register.v1.json): controlled governance document register.
 - [governance/evidence-register.v1.json](governance/evidence-register.v1.json): cadence and status register for governance evidence.

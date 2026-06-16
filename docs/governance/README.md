@@ -1,12 +1,12 @@
 # Governance Docs
 
-This directory contains the public governance documentation set for Receiz `v90.0.0`.
+This directory contains the public governance documentation set for Receiz `v91.0.0`.
 
 ## Contents
 
-- Standards: charter, change control, release attestation, control testing, independent assurance, incident governance, artifact signing, artifact verification, key custody, and control boundaries.
+- Standards: charter, change control, release attestation, historical continuity, control testing, independent assurance, incident governance, artifact signing, artifact verification, key custody, and control boundaries.
 - Registers: [document-register.v1.json](document-register.v1.json), [evidence-register.v1.json](evidence-register.v1.json), [exception-log.v1.md](exception-log.v1.md), and [corrective-action-register.v1.md](corrective-action-register.v1.md).
-- Evidence summaries: files under [evidence/](evidence/) provide public summaries of review activity, not raw operational exports.
+- Evidence summaries: files under [evidence/](evidence/) provide public summaries of review activity, including the June 13, 2026 access review and key rotation evidence, not raw operational exports.
 - Templates: [templates/postmortem-template.v1.md](templates/postmortem-template.v1.md) is the controlled incident template.
 
 ## What Is Safe To Publish

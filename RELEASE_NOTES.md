@@ -1,5 +1,48 @@
 # Release Notes
 
+## v91.0.0
+Release date: 2026-06-16
+
+`v91.0.0` is the Deterministic Sports Scale And Proof-Native Game Release. It locks the post-`v90.0.0` Sports scale arc where deterministic chart data is math, visible LiveChart primitives stay complete, Pack Derby remains a Sports reward game, challenge settlement follows deadline-or-attempts truth, post-deadline challenge receipts are rejected, Soccer/UFC/FIFA closeout routes compose the sport-specific settlement primitives, and settlement conformance becomes its own release gate. In this offline verifier repository, the release work is publication of canonical `v91.0.0` artifacts, scale-law documentation, governance evidence updates, local release-surface gates, regression-lessons lock, commit-history boundary, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v91.0.0.md](docs/releases/v91.0.0.md)
+Product-truth freeze: [docs/releases/v91.0.0-product-truth.md](docs/releases/v91.0.0-product-truth.md)
+Release checklist: [docs/releases/v91.0.0-checklist.md](docs/releases/v91.0.0-checklist.md)
+Release process: [docs/releases/v91.0.0-process.md](docs/releases/v91.0.0-process.md)
+Regression lessons: [docs/releases/v91.0.0-regression-lessons.md](docs/releases/v91.0.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v91.0.0-commit-history.md](docs/releases/v91.0.0-commit-history.md)
+Scale reasoning law: [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md)
+Prior v90 archive: [docs/releases/v90.0.0.md](docs/releases/v90.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- The documented range is `v90.0.0..29de1e15e03e`: `39` commits, `125` files changed, `24,714` insertions, and `7,218` deletions.
+- Deterministic chart data is math, not fetched or accumulated state.
+- LiveChart controls, tooltip, overlay dock, pulse row, time row, y-overflow, and depth remain protected primitives.
+- Pack Derby is locked as a Sports reward game with proof-backed score, run, challenge, and settlement contracts.
+- Challenge settlement follows deadline-or-attempts truth, and post-deadline run receipts are rejected.
+- Opened reward truth cannot reappear as stale first-paint recovery.
+- Soccer/UFC entry claim and finalization use sport-specific routes, and FIFA tournament closeout composes the existing settlement primitive.
+- Settlement conformance is required as its own suite.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v91.0.0`.
+- Root package metadata now resolves to `v91.0.0`.
+
+## Operational notes
+- The `v90.0.0` proof-native artifact-system law remains the base release truth.
+- The `v91.0.0` scale law adds that visible primitives must not be reduced for scale; weaker work beneath the primitive is the optimization target.
+- Live production DB state, authenticated-session evidence, deployed migrations, installed PWA cache state, and production signing remain external evidence boundaries for promotion.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v91.0.0`.
+- Confirm Sports value, LiveChart, Pack Derby, settlement, stale closeout, public proof, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, page-first-paint, settlement conformance, regression lessons, commit history, service-worker coherence, and release attestation checks.
+- Confirm production DB migrations named by the release are applied in the target environment before production promotion.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v90.0.0
 Release date: 2026-06-14
 

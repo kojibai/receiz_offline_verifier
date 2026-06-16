@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-06-14";
+const releaseDate = "2026-06-16";
 
 const requiredFiles = [
   "README.md",
@@ -15,6 +15,7 @@ const requiredFiles = [
   "docs/README.md",
   "docs/FORMAT.md",
   "docs/governance/README.md",
+  "docs/scale-reasoning-invariants.md",
   "docs/truthful-speed-invariants.md",
   `docs/releases/${releaseVersion}.md`,
   `docs/releases/${releaseVersion}-product-truth.md`,
@@ -41,6 +42,7 @@ const versionedFiles = [
   "docs/experience-first-engineering.md",
   "docs/truthful-speed-invariants.md",
   "docs/deterministic-surfaces.md",
+  "docs/scale-reasoning-invariants.md",
   "docs/verified-history-first-principles.md",
   "docs/offline-verified-register.md",
   "docs/pbi-recovery-receiz-id-binding.md",
@@ -55,6 +57,7 @@ const versionedFiles = [
 const currentReleasePointers = [
   ["README.md", `Current release: \`${releaseVersion}\``],
   ["AGENTS.md", `Release law: \`${releaseVersion}\``],
+  ["AGENTS.md", "docs/scale-reasoning-invariants.md"],
   ["README.md", `docs/releases/${releaseVersion}.md`],
   ["README.md", `docs/releases/${releaseVersion}-product-truth.md`],
   ["README.md", `docs/releases/${releaseVersion}-checklist.md`],
@@ -74,6 +77,7 @@ const currentReleasePointers = [
   ["docs/experience-first-engineering.md", `carried forward for \`${releaseVersion}\``],
   ["docs/truthful-speed-invariants.md", `carried forward for \`${releaseVersion}\``],
   ["docs/deterministic-surfaces.md", `carried forward for \`${releaseVersion}\``],
+  ["docs/scale-reasoning-invariants.md", `reasoning for \`${releaseVersion}\``],
   ["docs/verified-history-first-principles.md", `carried forward for \`${releaseVersion}\``],
   ["docs/offline-verified-register.md", `carried forward for \`${releaseVersion}\``],
   ["docs/pbi-recovery-receiz-id-binding.md", `carried forward for \`${releaseVersion}\``],
