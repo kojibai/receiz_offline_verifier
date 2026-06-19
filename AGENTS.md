@@ -1,8 +1,10 @@
 # Receiz Agent Law
 
-Release law: `v91.0.0`
+Release law: `v92.0.0`
 
 Scale reasoning law: `docs/scale-reasoning-invariants.md`
+
+Reasoning kernel: `docs/receiz-reasoning-kernel.md`
 
 Receiz is a proof-native artifact system. Product truth is carried by files, identities, vault objects, ownership states, settlement states, public witness surfaces, and verification routes.
 

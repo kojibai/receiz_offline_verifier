@@ -1,5 +1,47 @@
 # Release Notes
 
+## v92.0.0
+Release date: 2026-06-19
+
+`v92.0.0` is the Receiz Logic Release. It locks the post-`v91.0.0` reasoning shift: Receiz work starts from implemented primitives and strongest truth, then lets weaker implementation layers append, index, hydrate, sync, decorate, or project beneath that truth. In this offline verifier repository, the release work is publication of canonical `v92.0.0` artifacts, the reasoning kernel, local release-surface gates, regression-lessons lock, commit-history boundary, and outward version-surface alignment.
+
+Canonical full release note: [docs/releases/v92.0.0.md](docs/releases/v92.0.0.md)
+Product-truth freeze: [docs/releases/v92.0.0-product-truth.md](docs/releases/v92.0.0-product-truth.md)
+Release checklist: [docs/releases/v92.0.0-checklist.md](docs/releases/v92.0.0-checklist.md)
+Release process: [docs/releases/v92.0.0-process.md](docs/releases/v92.0.0-process.md)
+Regression lessons: [docs/releases/v92.0.0-regression-lessons.md](docs/releases/v92.0.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v92.0.0-commit-history.md](docs/releases/v92.0.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v91 archive: [docs/releases/v91.0.0.md](docs/releases/v91.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- The documented range is `v91.0.0..45287cbd5`: `55` commits, `239` files changed, `21,980` insertions, and `3,883` deletions.
+- Public proof and profile first paint start from deterministic public truth before session/private/world enrichment.
+- Vault objects remain artifacts; ownership rows project custody beneath them.
+- Sports value remains a settlement surface; event memory scrolls and the opened event proof desk stacks above the single-card value panel.
+- Pitch Command is locked as a proof object and public proof surface.
+- Pack Derby is locked as proof-native Sports gameplay.
+- Append source date is projected from `append_json.sourceProof.sourceDate` when that proof payload carries the truth.
+- Source-age UI projects next-game countdown truth when no game is live.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v92.0.0`.
+- Root package metadata now resolves to `v92.0.0`.
+
+## Operational notes
+- The `v91.0.0` deterministic Sports scale law remains in force.
+- The v92 reasoning kernel adds the default loop: primitive, strongest truth, weaker layers, forbidden downgrade, append path, and contract or visual evidence.
+- Live production DB state, authenticated-session evidence, deployed route state, installed PWA cache state, and production signing remain external evidence boundaries for promotion.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v92.0.0`.
+- Confirm reasoning, first-paint, value/event proof, Pitch Command, Pack Derby, vault ownership, append payload, source-age, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, page-first-paint, deterministic surfaces, primitive binding, visual evidence, regression lessons, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v91.0.0
 Release date: 2026-06-16
 

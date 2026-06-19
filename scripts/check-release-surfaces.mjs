@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-06-16";
+const releaseDate = "2026-06-19";
 
 const requiredFiles = [
   "README.md",
@@ -15,6 +15,7 @@ const requiredFiles = [
   "docs/README.md",
   "docs/FORMAT.md",
   "docs/governance/README.md",
+  "docs/receiz-reasoning-kernel.md",
   "docs/scale-reasoning-invariants.md",
   "docs/truthful-speed-invariants.md",
   `docs/releases/${releaseVersion}.md`,
@@ -58,6 +59,7 @@ const currentReleasePointers = [
   ["README.md", `Current release: \`${releaseVersion}\``],
   ["AGENTS.md", `Release law: \`${releaseVersion}\``],
   ["AGENTS.md", "docs/scale-reasoning-invariants.md"],
+  ["AGENTS.md", "docs/receiz-reasoning-kernel.md"],
   ["README.md", `docs/releases/${releaseVersion}.md`],
   ["README.md", `docs/releases/${releaseVersion}-product-truth.md`],
   ["README.md", `docs/releases/${releaseVersion}-checklist.md`],
