@@ -1,5 +1,46 @@
 # Release Notes
 
+## v92.1.0
+Release date: 2026-06-22
+
+`v92.1.0` is the Sports Proof Telemetry Release. It locks the post-`v92.0.0` Sports proof arc: Play Command becomes a full 3D play proof surface, Pitch Command event pills bind to exact historical pitch witnesses, public event pages project playable-video proof material and milestone truth, active Sports Arena views warm live appends on foreground cadence, Pack Derby keeps its settled opening game surface, and rarity/value/rookie truth stays proof-backed.
+
+Canonical full release note: [docs/releases/v92.1.0.md](docs/releases/v92.1.0.md)
+Product-truth freeze: [docs/releases/v92.1.0-product-truth.md](docs/releases/v92.1.0-product-truth.md)
+Release checklist: [docs/releases/v92.1.0-checklist.md](docs/releases/v92.1.0-checklist.md)
+Release process: [docs/releases/v92.1.0-process.md](docs/releases/v92.1.0-process.md)
+Regression lessons: [docs/releases/v92.1.0-regression-lessons.md](docs/releases/v92.1.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v92.1.0-commit-history.md](docs/releases/v92.1.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v92 archive: [docs/releases/v92.0.0.md](docs/releases/v92.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- The documented product implementation range is `v92.0.0..259738026`: `74` commits, `570` files changed, `80,125` insertions, and `1,864` deletions.
+- Play Command is locked as a 3D Sports play proof surface.
+- Pitch Command event-panel pills resolve exact historical pitch witnesses from event proof, snapshot, witness id, game pk, source date, and selected pitch state.
+- Event proof pages project playable-video proof and milestone truth without blocking deterministic first paint.
+- Active signed-in Sports Arena views warm MLB appends on foreground visible poll cadence.
+- Pack Derby preserves the film-backed game surface, mobile framing, compact HUD, and forced-close regression fix.
+- Rarity, value, and rookie status remain settlement/proof projections, not transient UI state.
+- Pitch Command day proofs are served from public archive files and paint from held archive truth before live/date refresh.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v92.1.0`.
+- Root package metadata now resolves to `v92.1.0`.
+
+## Operational notes
+- The `v92.0.0` primitive-first Receiz logic law remains in force.
+- Production DB state and production video CDN availability remain external runtime evidence; they can confirm projection after deployment but do not redefine event proof, pitch witness, play proof, or Sports append truth.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v92.1.0`.
+- Confirm Play Command, Pitch Command binding, event proof video, milestone truth, foreground append, Pack Derby, rarity/value/rookie, archive projection, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v92.0.0
 Release date: 2026-06-19
 

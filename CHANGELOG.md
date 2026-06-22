@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v92.1.0] - 2026-06-22
+
+### Changed
+- Advanced the current release/documentation surface from `v92.0.0` to `v92.1.0`.
+- Updated canonical root package metadata and set `package.json` to `v92.1.0`.
+- Published the canonical `v92.1.0` release artifacts:
+  - `docs/releases/v92.1.0.md`
+  - `docs/releases/v92.1.0-product-truth.md`
+  - `docs/releases/v92.1.0-checklist.md`
+  - `docs/releases/v92.1.0-process.md`
+  - `docs/releases/v92.1.0-regression-lessons.md`
+  - `docs/releases/v92.1.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v92.1.0`.
+- Aligned release framing around Play Command proof, Pitch Command event-witness binding, event proof video, milestone truth, foreground Sports Arena append warming, Pack Derby opening stability, rarity/value/rookie projection, pitch day-proof archives, and Sports DB hot-path hardening.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v92.1.0`.
+- Updated static service-worker registration and runtime version markers to `92.1.0`.
+- Updated the local release-surface lock to use the June 22, 2026 v92.1 date.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v92.0.0` primitive-first Receiz logic law, `v91.0.0` deterministic Sports scale law, `v90.0.0` proof-native artifact system law, `v89.0.0` foreground publication and Sports Vault baseline, `v87.0.0` offline proof baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v92.0.0] - 2026-06-19
 
 ### Changed
