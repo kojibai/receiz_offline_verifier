@@ -1,5 +1,48 @@
 # Release Notes
 
+## v93.0.0
+Release date: 2026-06-25
+
+`v93.0.0` is the Sports Proof Economy Release. It turns the post-`v92.0.0` Sports proof arc into a full proof economy: Sports Economy is a live public proof surface, Sports cards carry deterministic value basis and current proof memory, event and card history remain ledger-backed, Play Command and Pitch Command become command-grade proof surfaces, physical activation becomes a governed proof/settlement route, and hot DB reads use bounded proof projection instead of broad JSON scans.
+
+Canonical full release note: [docs/releases/v93.0.0.md](docs/releases/v93.0.0.md)
+Product-truth freeze: [docs/releases/v93.0.0-product-truth.md](docs/releases/v93.0.0-product-truth.md)
+Release checklist: [docs/releases/v93.0.0-checklist.md](docs/releases/v93.0.0-checklist.md)
+Release process: [docs/releases/v93.0.0-process.md](docs/releases/v93.0.0-process.md)
+Regression lessons: [docs/releases/v93.0.0-regression-lessons.md](docs/releases/v93.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v93.0.0-performance-findings.md](docs/releases/v93.0.0-performance-findings.md)
+Invariant register: [docs/releases/v93.0.0-invariant-register.md](docs/releases/v93.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v93.0.0-commit-history.md](docs/releases/v93.0.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v92 archive: [docs/releases/v92.1.0.md](docs/releases/v92.1.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- The documented product implementation range is `v92.0.0..f7f638af5`: `139` commits, `854` files changed, `114,773` insertions, and `3,371` deletions.
+- Sports Economy is locked as a public proof surface over owned Sports cards, deterministic value, score memory, market state, and settlement-bearing events.
+- Bounded proof-read projection selects IDs first and hydrates authoritative ledger payload second.
+- Sports card value remains deterministic proof/settlement projection, not seller ask, UI estimate, or transient chart state.
+- Causal ownership lineage and visible-card append memory project across public, economy, logged-in, and export surfaces.
+- Physical activation is locked as a proof object route and settlement route.
+- Play Command and Pitch Command open exact proof witnesses instead of current-state shortcuts.
+- Pack Derby preserves stable first scene, receipt, score, and reward proof flow.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v93.0.0`.
+- Root package metadata now resolves to `v93.0.0`.
+
+## Operational notes
+- Performance is release truth only when it preserves proof payload authority, deterministic first paint, bounded hydration, and append-only proof history.
+- Production DB state, Vercel cold-start behavior, Supabase schema-cache timing, live sports feeds, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v93.0.0`.
+- Confirm Sports Economy, bounded proof reads, score ledger projection, card value/lineage/history, visible append memory, physical activation, Play Command, Pitch Command, Pack Derby, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v92.1.0
 Release date: 2026-06-22
 

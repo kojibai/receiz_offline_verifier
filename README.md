@@ -2,26 +2,28 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v92.1.0`
+Current release: `v93.0.0`
 
-## What changed in v92.1.0
-- Current release/docs surfaces are aligned to `v92.1.0`.
-- Published the canonical `v92.1.0` Sports Proof Telemetry Release note at [docs/releases/v92.1.0.md](docs/releases/v92.1.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v92.1.0-product-truth.md](docs/releases/v92.1.0-product-truth.md).
-- Published the release checklist at [docs/releases/v92.1.0-checklist.md](docs/releases/v92.1.0-checklist.md).
-- Published the release process at [docs/releases/v92.1.0-process.md](docs/releases/v92.1.0-process.md).
-- Published the regression lessons lock at [docs/releases/v92.1.0-regression-lessons.md](docs/releases/v92.1.0-regression-lessons.md).
-- Published the commit-history boundary at [docs/releases/v92.1.0-commit-history.md](docs/releases/v92.1.0-commit-history.md).
+## What changed in v93.0.0
+- Current release/docs surfaces are aligned to `v93.0.0`.
+- Published the canonical `v93.0.0` Sports Proof Economy Release note at [docs/releases/v93.0.0.md](docs/releases/v93.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v93.0.0-product-truth.md](docs/releases/v93.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v93.0.0-checklist.md](docs/releases/v93.0.0-checklist.md).
+- Published the release process at [docs/releases/v93.0.0-process.md](docs/releases/v93.0.0-process.md).
+- Published the regression lessons lock at [docs/releases/v93.0.0-regression-lessons.md](docs/releases/v93.0.0-regression-lessons.md).
+- Published the performance findings at [docs/releases/v93.0.0-performance-findings.md](docs/releases/v93.0.0-performance-findings.md).
+- Published the invariant register at [docs/releases/v93.0.0-invariant-register.md](docs/releases/v93.0.0-invariant-register.md).
+- Published the commit-history boundary at [docs/releases/v93.0.0-commit-history.md](docs/releases/v93.0.0-commit-history.md).
 - Published the reasoning kernel at [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md) and carried forward the scale reasoning law at [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md).
-- `v92.1.0` locks the Sports proof telemetry arc after `v92.0.0`: Play Command as a 3D play proof surface, exact Pitch Command event-witness binding, event proof video and milestone truth, foreground Sports Arena append warming, Pack Derby opening stability, rarity/value/rookie truth, and pitch day-proof archive projection.
-- `v92.1.0` preserves the `v92.0.0` primitive-first reasoning law: stronger proof, public witness, verified append, and local archive truth paint before weaker hydration, live refresh, server reconciliation, SEO, or generic UI state.
+- `v93.0.0` locks the Sports proof economy arc after `v92.0.0`: Sports Economy as a live public proof surface, deterministic Sports card value basis, score-ledger projection, bounded proof-read projection, card lineage, visible append memory, physical activation proof/settlement routing, command-grade Play/Pitch surfaces, and Pack Derby proof-game continuity.
+- `v93.0.0` preserves the primitive-first Receiz reasoning law: stronger proof, public witness, verified append, local archive, ownership, settlement, and deterministic route truth paint before weaker hydration, live refresh, server reconciliation, SEO, or generic UI state.
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the Play Command, Pitch Command binding, event proof video, milestone truth, foreground append, Pack Derby, rarity/value, archive projection, reasoning, and release-freeze gates named in [docs/releases/v92.1.0-checklist.md](docs/releases/v92.1.0-checklist.md).
-- Current shipped verifier, studio, and settlement entrypoints now display `v92.1.0`.
-- Root package metadata now resolves cleanly to `v92.1.0`.
-- The static service-worker surface carries runtime version `92.1.0`.
+- Broader platform target environments require the Sports Economy, bounded proof reads, card value/lineage/history, visible append, physical activation, Play Command, Pitch Command, Pack Derby, reasoning, performance, and release-freeze gates named in [docs/releases/v93.0.0-checklist.md](docs/releases/v93.0.0-checklist.md).
+- Current shipped verifier, studio, and settlement entrypoints now display `v93.0.0`.
+- Root package metadata now resolves cleanly to `v93.0.0`.
+- The static service-worker surface carries runtime version `93.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -39,9 +41,9 @@ Current release: `v92.1.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v92.1.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v93.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v92.1)
+## Release train highlights (v14 -> v93.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -109,6 +111,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v91.0.0`: release/docs alignment for the Deterministic Sports Scale And Proof-Native Game Release, including deterministic value chart math, full LiveChart primitive preservation, Pack Derby reward-game challenge settlement, post-deadline receipt rejection, sport-specific Sports entry finalization, FIFA closeout composition, settlement conformance, and the scale reasoning law; verifier semantics remain unchanged from `v60.0.0`.
 - `v92.0.0`: release/docs alignment for the Receiz Logic Release, including the repo-local reasoning kernel, public proof/profile first paint, vault ownership projection, value/event proof stacking, Pitch Command proof, Pack Derby proof gameplay, append source-date truth, source-age countdown truth, and local artifact save; verifier semantics remain unchanged from `v60.0.0`.
 - `v92.1.0`: release/docs alignment for the Sports Proof Telemetry Release, including Play Command 3D play proof, exact Pitch Command event binding, event proof video and milestone projection, foreground Sports Arena appends, Pack Derby opening stability, rarity/value/rookie truth, pitch day-proof archives, and Sports DB hot-path hardening; verifier semantics remain unchanged from `v60.0.0`.
+- `v93.0.0`: release/docs alignment for the Sports Proof Economy Release, including Sports Economy as a live public proof surface, bounded proof-read projection, Sports score ledger projection, deterministic card value basis, causal card lineage, visible-card append memory, physical activation proof/settlement routing, command-grade Play/Pitch surfaces, Pack Derby proof-game continuity, and explicit performance/invariant locks; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -174,14 +177,22 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v92.1.0`.
+- [docs/README.md](docs/README.md): documentation map for `v93.0.0`.
+- [docs/releases/v93.0.0.md](docs/releases/v93.0.0.md): canonical Sports Proof Economy Release note for `v93.0.0`.
+- [docs/releases/v93.0.0-product-truth.md](docs/releases/v93.0.0-product-truth.md): `v93.0.0` product-truth freeze document.
+- [docs/releases/v93.0.0-checklist.md](docs/releases/v93.0.0-checklist.md): release-prep checklist and additional gates for `v93.0.0`.
+- [docs/releases/v93.0.0-process.md](docs/releases/v93.0.0-process.md): release-prep process for `v93.0.0`.
+- [docs/releases/v93.0.0-regression-lessons.md](docs/releases/v93.0.0-regression-lessons.md): required regression lessons lock for `v93.0.0`.
+- [docs/releases/v93.0.0-performance-findings.md](docs/releases/v93.0.0-performance-findings.md): performance findings and bounded proof-read rules for `v93.0.0`.
+- [docs/releases/v93.0.0-invariant-register.md](docs/releases/v93.0.0-invariant-register.md): locked invariant register for `v93.0.0`.
+- [docs/releases/v93.0.0-commit-history.md](docs/releases/v93.0.0-commit-history.md): required commit-history boundary for `v93.0.0`.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v93.0.0`.
 - [docs/releases/v92.1.0.md](docs/releases/v92.1.0.md): canonical Sports Proof Telemetry Release note for `v92.1.0`.
 - [docs/releases/v92.1.0-product-truth.md](docs/releases/v92.1.0-product-truth.md): `v92.1.0` product-truth freeze document.
 - [docs/releases/v92.1.0-checklist.md](docs/releases/v92.1.0-checklist.md): release-prep checklist and additional gates for `v92.1.0`.
 - [docs/releases/v92.1.0-process.md](docs/releases/v92.1.0-process.md): release-prep process for `v92.1.0`.
 - [docs/releases/v92.1.0-regression-lessons.md](docs/releases/v92.1.0-regression-lessons.md): required regression lessons lock for `v92.1.0`.
 - [docs/releases/v92.1.0-commit-history.md](docs/releases/v92.1.0-commit-history.md): required commit-history boundary for `v92.1.0`.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v92.1.0`.
 - [docs/releases/v92.0.0.md](docs/releases/v92.0.0.md): canonical Receiz Logic Release note for `v92.0.0`.
 - [docs/releases/v92.0.0-product-truth.md](docs/releases/v92.0.0-product-truth.md): `v92.0.0` product-truth freeze document.
 - [docs/releases/v92.0.0-checklist.md](docs/releases/v92.0.0-checklist.md): release-prep checklist and additional gates for `v92.0.0`.
@@ -277,11 +288,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v92.1.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v92.1.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v93.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v93.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v92.1.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v92.1.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v93.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v93.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
