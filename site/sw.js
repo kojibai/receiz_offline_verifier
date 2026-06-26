@@ -1,4 +1,4 @@
-const RECEIZ_RELEASE_VERSION = "93.1.0";
+const RECEIZ_RELEASE_VERSION = "93.2.0";
 const RECEIZ_CACHE = `receiz-static-${RECEIZ_RELEASE_VERSION}`;
 const RECEIZ_DEFAULT_WARM_URLS = [
   "/",

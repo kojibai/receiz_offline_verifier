@@ -1,5 +1,45 @@
 # Release Notes
 
+## v93.2.0
+Release date: 2026-06-26
+
+`v93.2.0` is the SDK Proof Developer Experience Release. It keeps `@receiz/sdk` aligned with the app version after `@receiz/sdk@93.1.0` was published and locks the developer primitive: verify proof object, project deterministic rows, admit into durable proof memory, persist, and append verified additions.
+
+Canonical full release note: [docs/releases/v93.2.0.md](docs/releases/v93.2.0.md)
+Product-truth freeze: [docs/releases/v93.2.0-product-truth.md](docs/releases/v93.2.0-product-truth.md)
+Release checklist: [docs/releases/v93.2.0-checklist.md](docs/releases/v93.2.0-checklist.md)
+Release process: [docs/releases/v93.2.0-process.md](docs/releases/v93.2.0-process.md)
+Regression lessons: [docs/releases/v93.2.0-regression-lessons.md](docs/releases/v93.2.0-regression-lessons.md)
+Performance findings: [docs/releases/v93.2.0-performance-findings.md](docs/releases/v93.2.0-performance-findings.md)
+Invariant register: [docs/releases/v93.2.0-invariant-register.md](docs/releases/v93.2.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v93.2.0-commit-history.md](docs/releases/v93.2.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v93 archive: [docs/releases/v93.1.0.md](docs/releases/v93.1.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Runtime schema exports cover asset manifests, Sports card manifests, and webhook events.
+- Deterministic projection helpers produce render-ready proof object and Sports card proof object rows.
+- SDK proof memory admits first truth once, preserves it, and appends verified additions.
+- SDK docs teach verify, project, admit, persist, and append as the default integration path.
+- SDK helpers remain convenience beneath sealed artifacts, proof bundles, verified appends, ownership appends, and settlement ledger rows.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v93.2.0`.
+- Root package metadata now resolves to `v93.2.0`.
+
+## Operational notes
+- Live npm publication, installed SDK consumers, production app rollout, Vercel behavior, Supabase state, installed PWA service-worker uptake, and package-registry cache behavior remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader SDK package files, exported SDK constants, SDK build output, npm publication, and package-registry state are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v93.2.0`.
+- Confirm SDK schema exports, deterministic projections, proof memory register, docs, package build/test/pack, npm publish, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v93.1.0
 Release date: 2026-06-26
 

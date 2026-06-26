@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v93.2.0] - 2026-06-26
+
+### Changed
+- Advanced the current release/documentation surface from `v93.1.0` to `v93.2.0`.
+- Updated canonical root package metadata and set `package.json` to `v93.2.0`.
+- Published the canonical `v93.2.0` release artifacts:
+  - `docs/releases/v93.2.0.md`
+  - `docs/releases/v93.2.0-product-truth.md`
+  - `docs/releases/v93.2.0-checklist.md`
+  - `docs/releases/v93.2.0-process.md`
+  - `docs/releases/v93.2.0-regression-lessons.md`
+  - `docs/releases/v93.2.0-performance-findings.md`
+  - `docs/releases/v93.2.0-invariant-register.md`
+  - `docs/releases/v93.2.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v93.2.0`.
+- Aligned release framing around SDK runtime schema exports, deterministic proof object projections, Sports card proof object projections, append-only SDK proof memory, verify/project/admit/persist/append docs, and SDK convenience boundaries beneath proof authority.
+- Updated shipped version markers in published verifier, studio, and settlement entrypoints to `v93.2.0`.
+- Updated static service-worker registration and runtime version markers to `93.2.0`.
+- Kept the local release-surface lock on the June 26, 2026 release date and required the performance-findings and invariant-register documents.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v93.1.0` Durable Proof Memory law, `v93.0.0` Sports Proof Economy law, `v92.1.0` Sports proof telemetry law, `v92.0.0` primitive-first Receiz logic law, `v91.0.0` deterministic Sports scale law, `v90.0.0` proof-native artifact system law, `v89.0.0` foreground publication and Sports Vault baseline, `v87.0.0` offline proof baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v93.1.0] - 2026-06-26
 
 ### Changed
