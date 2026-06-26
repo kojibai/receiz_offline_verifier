@@ -1,5 +1,48 @@
 # Release Notes
 
+## v93.1.0
+Release date: 2026-06-26
+
+`v93.1.0` is the Durable Proof Memory Release. It locks the post-`v93.0.0` lesson that admitted proof truth is durable local truth, not stale cache: proof objects are admitted once and appended forever, Calendar and Account project the same event proof register, Wallet settlement history uses Kai-ledger heads for append windows, Sports hot paths discover additions beneath known proof, and developer SDK surfaces remain convenience beneath Receiz primitives.
+
+Canonical full release note: [docs/releases/v93.1.0.md](docs/releases/v93.1.0.md)
+Product-truth freeze: [docs/releases/v93.1.0-product-truth.md](docs/releases/v93.1.0-product-truth.md)
+Release checklist: [docs/releases/v93.1.0-checklist.md](docs/releases/v93.1.0-checklist.md)
+Release process: [docs/releases/v93.1.0-process.md](docs/releases/v93.1.0-process.md)
+Regression lessons: [docs/releases/v93.1.0-regression-lessons.md](docs/releases/v93.1.0-regression-lessons.md)
+Performance findings: [docs/releases/v93.1.0-performance-findings.md](docs/releases/v93.1.0-performance-findings.md)
+Invariant register: [docs/releases/v93.1.0-invariant-register.md](docs/releases/v93.1.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v93.1.0-commit-history.md](docs/releases/v93.1.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v93 archive: [docs/releases/v93.0.0.md](docs/releases/v93.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- The documented product implementation range is `v93.0.0..465fde3f5`: `29` commits, `145` files changed, `75,532` insertions, and `836` deletions.
+- Durable proof memory is locked as admitted proof truth that paints before weaker rediscovery work.
+- First admission hydrates or recovers history; normal reopen paths ask for verified additions after the known head.
+- Calendar points and Account brain activity nodes project the same event proof objects.
+- Wallet settlement projection uses Kai pulse/upulse as ordering state, with Chronos as display and fallback context.
+- Sports vault, event proof, visible append, and showcase reads remain bounded addition discovery beneath proof authority.
+- The SDK, OpenAPI console, developer docs, fixtures, and conformance tests remain convenience surfaces below sealed artifacts, proof bundles, and verified registers.
+- Sports proof tests move toward complete fixture construction instead of weakening production proof contracts.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v93.1.0`.
+- Root package metadata now resolves to `v93.1.0`.
+
+## Operational notes
+- Production DB state, Vercel rollout behavior, Supabase schema-cache timing, installed PWA service-worker uptake, live sports feeds, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, and SDK package/version constants are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v93.1.0`.
+- Confirm durable proof memory, shared Calendar/Account event projection, wallet Kai ordering, bounded Sports addition discovery, SDK boundary, strict Sports fixtures, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v93.0.0
 Release date: 2026-06-25
 
