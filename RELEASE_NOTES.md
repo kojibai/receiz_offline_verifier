@@ -1,5 +1,46 @@
 # Release Notes
 
+## v95.0.0
+Release date: 2026-06-27
+
+`v95.0.0` is the Official Public Table Release. It carries forward the `v94.0.0` SDK launch and durable proof operating model, then makes the public developer and report contract exact: complete Receiz proof objects carry Kai/Klok state, Kai Klok is the proof object state machine, and `kaiPulseEternal` / `kai_upulse` is the pulse unit.
+
+Canonical full release note: [docs/releases/v95.0.0.md](docs/releases/v95.0.0.md)
+Product-truth freeze: [docs/releases/v95.0.0-product-truth.md](docs/releases/v95.0.0-product-truth.md)
+Release checklist: [docs/releases/v95.0.0-checklist.md](docs/releases/v95.0.0-checklist.md)
+Release process: [docs/releases/v95.0.0-process.md](docs/releases/v95.0.0-process.md)
+Regression lessons: [docs/releases/v95.0.0-regression-lessons.md](docs/releases/v95.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v95.0.0-performance-findings.md](docs/releases/v95.0.0-performance-findings.md)
+Invariant register: [docs/releases/v95.0.0-invariant-register.md](docs/releases/v95.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v95.0.0-commit-history.md](docs/releases/v95.0.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v94 archive: [docs/releases/v94.0.0.md](docs/releases/v94.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Complete proof objects carry Kai/Klok state by default.
+- Kai Klok is the proof object state machine.
+- `kaiPulseEternal` / `kai_upulse` is the pulse unit, not an optional tie breaker.
+- Chronos remains display, bridge, import context, and debugging context.
+- Durable proof memory renders known verified truth first and asks for verified additions after the known proof/Kai head.
+- SDK, API, server, DB, public report, and UI surfaces must expose or project canonical proof truth without weakening it.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v95.0.0`.
+- Root package metadata now resolves to `v95.0.0`.
+
+## Operational notes
+- Production DB state, Vercel rollout behavior, npm publication state, generated PDF availability, broader app service-worker uptake, SDK package state, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK package/version constants, SDK build output, npm publication, package-registry state, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v95.0.0`.
+- Confirm SDK `ReceizProofBundle` typing, fixtures, schemas, docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v94.0.0
 Release date: 2026-06-27
 

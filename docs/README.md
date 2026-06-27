@@ -1,9 +1,18 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v94.0.0`.
+This directory is the public documentation set for Receiz `v95.0.0`.
 
 ## Start Here
 
+- [releases/v95.0.0.md](releases/v95.0.0.md): canonical Official Public Table Release note for `v95.0.0`.
+- [releases/v95.0.0-product-truth.md](releases/v95.0.0-product-truth.md): release-scoped product-truth freeze for `v95.0.0`.
+- [releases/v95.0.0-checklist.md](releases/v95.0.0-checklist.md): release-prep checklist and additional gates for `v95.0.0`.
+- [releases/v95.0.0-process.md](releases/v95.0.0-process.md): release-prep process for `v95.0.0`.
+- [releases/v95.0.0-regression-lessons.md](releases/v95.0.0-regression-lessons.md): required regression lessons lock for `v95.0.0`.
+- [releases/v95.0.0-performance-findings.md](releases/v95.0.0-performance-findings.md): performance findings and public table proof rules for `v95.0.0`.
+- [releases/v95.0.0-invariant-register.md](releases/v95.0.0-invariant-register.md): locked invariant register for `v95.0.0`.
+- [releases/v95.0.0-commit-history.md](releases/v95.0.0-commit-history.md): required commit-history boundary for `v95.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v95.0.0`.
 - [releases/v94.0.0.md](releases/v94.0.0.md): canonical Official SDK And Durable Proof Operating Model Release note for `v94.0.0`.
 - [releases/v94.0.0-product-truth.md](releases/v94.0.0-product-truth.md): release-scoped product-truth freeze for `v94.0.0`.
 - [releases/v94.0.0-checklist.md](releases/v94.0.0-checklist.md): release-prep checklist and additional gates for `v94.0.0`.
@@ -12,7 +21,6 @@ This directory is the public documentation set for Receiz `v94.0.0`.
 - [releases/v94.0.0-performance-findings.md](releases/v94.0.0-performance-findings.md): performance findings and durable proof operating model rules for `v94.0.0`.
 - [releases/v94.0.0-invariant-register.md](releases/v94.0.0-invariant-register.md): locked invariant register for `v94.0.0`.
 - [releases/v94.0.0-commit-history.md](releases/v94.0.0-commit-history.md): required commit-history boundary for `v94.0.0`.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v94.0.0`.
 - [releases/v93.2.0.md](releases/v93.2.0.md): canonical SDK Proof Developer Experience Release note for `v93.2.0`.
 - [releases/v93.2.0-product-truth.md](releases/v93.2.0-product-truth.md): release-scoped product-truth freeze for `v93.2.0`.
 - [releases/v93.2.0-checklist.md](releases/v93.2.0-checklist.md): release-prep checklist and additional gates for `v93.2.0`.
@@ -134,8 +142,8 @@ This directory is the public documentation set for Receiz `v94.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v94.0.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v94.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v95.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v95.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.
