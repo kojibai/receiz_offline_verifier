@@ -1,5 +1,45 @@
 # Release Notes
 
+## v94.0.0
+Release date: 2026-06-27
+
+`v94.0.0` is the Official SDK And Durable Proof Operating Model Release. It locks the official `@receiz/sdk@94.0.0` launch together with the production rule learned from proof memory, Kai ordering, bounded projections, and database pressure closeout: use known verified truth immediately, then ask only for verified additions after the known head.
+
+Canonical full release note: [docs/releases/v94.0.0.md](docs/releases/v94.0.0.md)
+Product-truth freeze: [docs/releases/v94.0.0-product-truth.md](docs/releases/v94.0.0-product-truth.md)
+Release checklist: [docs/releases/v94.0.0-checklist.md](docs/releases/v94.0.0-checklist.md)
+Release process: [docs/releases/v94.0.0-process.md](docs/releases/v94.0.0-process.md)
+Regression lessons: [docs/releases/v94.0.0-regression-lessons.md](docs/releases/v94.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v94.0.0-performance-findings.md](docs/releases/v94.0.0-performance-findings.md)
+Invariant register: [docs/releases/v94.0.0-invariant-register.md](docs/releases/v94.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v94.0.0-commit-history.md](docs/releases/v94.0.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v93 archive: [docs/releases/v93.2.0.md](docs/releases/v93.2.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Known verified truth paints first; verified additions append after the known head.
+- Durable proof memory remains admitted proof truth, not stale cache.
+- Kai pulse/upulse remains the Receiz state coordinate where present; Chronos remains display/fallback context.
+- Database indexes and RPCs remain bounded projection mechanics beneath proof authority.
+- The official SDK packages typed clients, schemas, deterministic projections, webhook helpers, Connect/wallet/Sports helpers, and durable proof memory utilities without becoming authority.
+- Current shipped verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v94.0.0`.
+- Root package metadata now resolves to `v94.0.0`.
+
+## Operational notes
+- Production DB state, Vercel rollout behavior, npm publication state, Supabase schema-cache timing, installed PWA service-worker uptake, live sports feeds, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK package/version constants, SDK build output, npm publication, and package-registry state are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v94.0.0`.
+- Confirm SDK schema exports, deterministic projections, proof memory register, docs, package build/test/pack, npm publish, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, and `pnpm release:lock`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v93.2.0
 Release date: 2026-06-26
 
