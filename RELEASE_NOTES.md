@@ -1,5 +1,47 @@
 # Release Notes
 
+## v97.0.0
+Release date: 2026-06-30
+
+`v97.0.0` is the Public App-State Projection Rail And SDK Ecosystem Release. It locks the durable public app-state projection rail, SDK app-state surface, OIDC consent repair, public proof projection correctness fixes, admin performance measurement cleanup, and release identity alignment into one documented release.
+
+Canonical full release note: [docs/releases/v97.0.0.md](docs/releases/v97.0.0.md)
+Product-truth freeze: [docs/releases/v97.0.0-product-truth.md](docs/releases/v97.0.0-product-truth.md)
+Release checklist: [docs/releases/v97.0.0-checklist.md](docs/releases/v97.0.0-checklist.md)
+Release process: [docs/releases/v97.0.0-process.md](docs/releases/v97.0.0-process.md)
+Regression lessons: [docs/releases/v97.0.0-regression-lessons.md](docs/releases/v97.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v97.0.0-performance-findings.md](docs/releases/v97.0.0-performance-findings.md)
+Invariant register: [docs/releases/v97.0.0-invariant-register.md](docs/releases/v97.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v97.0.0-commit-history.md](docs/releases/v97.0.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v96.1 archive: [docs/releases/v96.1.0.md](docs/releases/v96.1.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- `@receiz/sdk@97.0.0` exposes `receiz.appState.publish()`, `publishRecord()`, `byUrl()`, `byHost()`, `byCreator()`, `byNamespace()`, and `byId()`.
+- The backend exposes delegated public app-state publishing through `POST /api/public-proof/registry/feed`.
+- Public app-state reads resolve through URL, host/domain, creator, namespace, and object id read paths.
+- App-state projections normalize URL variants such as `https://example.app` and `https://example.app/`.
+- OIDC Connect consent uses browser-correct redirect semantics and readable buttons.
+- Public Receiz record projection responses use canonical absolute verification URLs and preserve owner-scoped behavior.
+- Admin performance analytics measures the user-visible app experience.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v97.0.0`.
+- Root package metadata now resolves to `v97.0.0`.
+
+## Operational notes
+- Production DB state, app-state migration state, Vercel rollout behavior, npm publication state, generated PDF availability, broader app service-worker uptake, SDK package state, OpenAPI/status deployment, OIDC deployment, public proof projection deployment, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK package/version constants, SDK app-state clients, SDK build output, npm publication, package-registry state, app-state backend routes, OIDC consent, public proof projection, admin performance measurement, OpenAPI/status catalog, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v97.0.0`.
+- Confirm app-state SDK clients, app-state backend routes, URL normalization, OIDC consent repair, public proof projection correctness, admin performance cleanup, OpenAPI/status catalog entries, SDK docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 97.0.0`, and `node scripts/check_release_lock.mjs 97.0.0`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v96.1.0
 Release date: 2026-06-30
 
