@@ -1,5 +1,46 @@
 # Release Notes
 
+## v96.1.0
+Release date: 2026-06-30
+
+`v96.1.0` is the Twin And World SDK Release Lock. It keeps the public app, `@receiz/sdk`, OpenAPI/status catalog, Connect docs, identity conformance, and release evidence aligned after the SDK gained first-class Twin and World integration surfaces.
+
+Canonical full release note: [docs/releases/v96.1.0.md](docs/releases/v96.1.0.md)
+Product-truth freeze: [docs/releases/v96.1.0-product-truth.md](docs/releases/v96.1.0-product-truth.md)
+Release checklist: [docs/releases/v96.1.0-checklist.md](docs/releases/v96.1.0-checklist.md)
+Release process: [docs/releases/v96.1.0-process.md](docs/releases/v96.1.0-process.md)
+Regression lessons: [docs/releases/v96.1.0-regression-lessons.md](docs/releases/v96.1.0-regression-lessons.md)
+Performance findings: [docs/releases/v96.1.0-performance-findings.md](docs/releases/v96.1.0-performance-findings.md)
+Invariant register: [docs/releases/v96.1.0-invariant-register.md](docs/releases/v96.1.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v96.1.0-commit-history.md](docs/releases/v96.1.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v96 archive: [docs/releases/v96.0.0.md](docs/releases/v96.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- `@receiz/sdk@96.1.0` exposes World public convenience clients.
+- `@receiz/sdk@96.1.0` exposes delegated Twin clients for Connect-authorized applications.
+- Connect names `receiz:twin.read` and `receiz:twin.write` as scoped capability grants.
+- Twin and World routes are documented in the developer API surface and status catalog.
+- SDK docs include a dedicated Twin and World integration guide.
+- Identity conformance records the new Connect/Twin surface so public developer contracts stay visible.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v96.1.0`.
+- Root package metadata now resolves to `v96.1.0`.
+
+## Operational notes
+- Production DB state, Vercel rollout behavior, npm publication state, generated PDF availability, broader app service-worker uptake, SDK package state, OpenAPI/status deployment, identity conformance deployment, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK package/version constants, SDK Twin and World clients, SDK build output, npm publication, package-registry state, OpenAPI/status catalog, Connect docs, identity conformance, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v96.1.0`.
+- Confirm Twin and World SDK clients, Connect Twin scopes, OpenAPI/status catalog entries, identity conformance, SDK docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 96.1.0`, and `node scripts/check_release_lock.mjs 96.1.0`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v96.0.0
 Release date: 2026-06-29
 

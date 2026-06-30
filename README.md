@@ -2,21 +2,22 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v96.0.0`
+Current release: `v96.1.0`
 
-## What changed in v96.0.0
-- Current release/docs surfaces are aligned to `v96.0.0`.
-- Published the canonical `v96.0.0` SDK A+ Release Evidence Lock note at [docs/releases/v96.0.0.md](docs/releases/v96.0.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v96.0.0-product-truth.md](docs/releases/v96.0.0-product-truth.md).
-- Published the release checklist at [docs/releases/v96.0.0-checklist.md](docs/releases/v96.0.0-checklist.md).
-- Published the release process at [docs/releases/v96.0.0-process.md](docs/releases/v96.0.0-process.md).
-- Published the regression lessons lock at [docs/releases/v96.0.0-regression-lessons.md](docs/releases/v96.0.0-regression-lessons.md).
-- Published the performance findings at [docs/releases/v96.0.0-performance-findings.md](docs/releases/v96.0.0-performance-findings.md).
-- Published the invariant register at [docs/releases/v96.0.0-invariant-register.md](docs/releases/v96.0.0-invariant-register.md).
-- Published the commit-history boundary at [docs/releases/v96.0.0-commit-history.md](docs/releases/v96.0.0-commit-history.md).
-- `v96.0.0` locks the SDK A+ developer evidence contract: the `receiz` CLI, local fixture conformance, proof inspection, local-first proof memory starter, passive observations, copy-paste integrations, and SDK package evidence stay beneath admitted proof truth.
-- `v96.0.0` preserves the public table contract from `v95.0.0`: complete Receiz proof objects carry Kai/Klok state, Kai Klok is the proof object state machine, and `kaiPulseEternal` / `kai_upulse` is the pulse unit.
-- `v96.0.0` preserves the SDK convenience boundary: SDK, CLI, API, server, DB, report, and UI surfaces expose or project canonical proof truth without replacing sealed artifacts, proof bundles, verified appends, ownership appends, and settlement ledger rows.
+## What changed in v96.1.0
+- Current release/docs surfaces are aligned to `v96.1.0`.
+- Published the canonical `v96.1.0` Twin And World SDK Release Lock note at [docs/releases/v96.1.0.md](docs/releases/v96.1.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v96.1.0-product-truth.md](docs/releases/v96.1.0-product-truth.md).
+- Published the release checklist at [docs/releases/v96.1.0-checklist.md](docs/releases/v96.1.0-checklist.md).
+- Published the release process at [docs/releases/v96.1.0-process.md](docs/releases/v96.1.0-process.md).
+- Published the regression lessons lock at [docs/releases/v96.1.0-regression-lessons.md](docs/releases/v96.1.0-regression-lessons.md).
+- Published the performance findings at [docs/releases/v96.1.0-performance-findings.md](docs/releases/v96.1.0-performance-findings.md).
+- Published the invariant register at [docs/releases/v96.1.0-invariant-register.md](docs/releases/v96.1.0-invariant-register.md).
+- Published the commit-history boundary at [docs/releases/v96.1.0-commit-history.md](docs/releases/v96.1.0-commit-history.md).
+- `v96.1.0` locks the Twin and World SDK developer surface: World public convenience clients, delegated Twin clients, `receiz:twin.read` / `receiz:twin.write` Connect scopes, OpenAPI/status catalog visibility, Twin/World integration docs, and identity conformance stay beneath admitted proof truth.
+- `v96.1.0` preserves the SDK A+ evidence contract from `v96.0.0`: the `receiz` CLI, local fixture conformance, proof inspection, local-first proof memory starter, passive observations, copy-paste integrations, and SDK package evidence remain release-bound.
+- `v96.1.0` preserves the public table contract from `v95.0.0`: complete Receiz proof objects carry Kai/Klok state, Kai Klok is the proof object state machine, and `kaiPulseEternal` / `kai_upulse` is the pulse unit.
+- `v96.1.0` preserves the SDK convenience boundary: SDK, CLI, OpenAPI docs, Connect, API, server, DB, report, and UI surfaces expose or project canonical proof truth without replacing sealed artifacts, proof bundles, verified appends, ownership appends, and settlement ledger rows.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -24,10 +25,10 @@ Current release: `v96.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the SDK CLI, SDK proof bundle contract, package build/test/pack, CLI conformance, npm publication, app version, generated public report, and release-freeze gates named in [docs/releases/v96.0.0-checklist.md](docs/releases/v96.0.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v96.0.0`.
-- Root package metadata now resolves cleanly to `v96.0.0`.
-- The static service-worker surface carries runtime version `96.0.0`.
+- Broader platform target environments require Twin and World SDK clients, Connect scope docs, OpenAPI/status catalog visibility, SDK package build/test/pack, CLI conformance, npm publication, app version, generated public report, and release-freeze gates named in [docs/releases/v96.1.0-checklist.md](docs/releases/v96.1.0-checklist.md).
+- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v96.1.0`.
+- Root package metadata now resolves cleanly to `v96.1.0`.
+- The static service-worker surface carries runtime version `96.1.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -45,9 +46,9 @@ Current release: `v96.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v96.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v96.1.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v95.0)
+## Release train highlights (v14 -> v96.1)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -121,6 +122,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v94.0.0`: release/docs alignment for the Official SDK And Durable Proof Operating Model Release, including the official `@receiz/sdk` launch, known-verified-truth-first rendering, verified additions after known heads, Kai coordinate preservation, bounded projection mechanics, and SDK convenience beneath proof authority; verifier semantics remain unchanged from `v60.0.0`.
 - `v95.0.0`: release/docs alignment for the Official Public Table Release, including complete proof objects carrying Kai/Klok state, Kai Klok as proof object state machine, `kaiPulseEternal` / `kai_upulse` as pulse unit, SDK canonical proof bundle parity, and no optional-Kai doctrine for complete proof objects; verifier semantics remain unchanged from `v60.0.0`.
 - `v96.0.0`: release/docs alignment for the SDK A+ Release Evidence Lock, including the `receiz` CLI, local fixture conformance with zero network/DB authority, proof payload inspection, local-first proof memory starter generation, passive SDK observations, copy-paste integration docs, and release-blocking SDK package evidence; verifier semantics remain unchanged from `v60.0.0`.
+- `v96.1.0`: release/docs alignment for the Twin And World SDK Release Lock, including World public SDK clients, delegated Twin clients, Connect Twin scopes, OpenAPI/status catalog visibility, Twin/World integration docs, identity conformance visibility, and app/SDK version identity lock; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -186,7 +188,16 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v96.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v96.1.0`.
+- [docs/releases/v96.1.0.md](docs/releases/v96.1.0.md): canonical Twin And World SDK Release Lock note for `v96.1.0`.
+- [docs/releases/v96.1.0-product-truth.md](docs/releases/v96.1.0-product-truth.md): `v96.1.0` product-truth freeze document.
+- [docs/releases/v96.1.0-checklist.md](docs/releases/v96.1.0-checklist.md): release-prep checklist and additional gates for `v96.1.0`.
+- [docs/releases/v96.1.0-process.md](docs/releases/v96.1.0-process.md): release-prep process for `v96.1.0`.
+- [docs/releases/v96.1.0-regression-lessons.md](docs/releases/v96.1.0-regression-lessons.md): required regression lessons lock for `v96.1.0`.
+- [docs/releases/v96.1.0-performance-findings.md](docs/releases/v96.1.0-performance-findings.md): performance findings and Twin/World SDK proof rules for `v96.1.0`.
+- [docs/releases/v96.1.0-invariant-register.md](docs/releases/v96.1.0-invariant-register.md): locked invariant register for `v96.1.0`.
+- [docs/releases/v96.1.0-commit-history.md](docs/releases/v96.1.0-commit-history.md): required commit-history boundary for `v96.1.0`.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v96.1.0`.
 - [docs/releases/v96.0.0.md](docs/releases/v96.0.0.md): canonical SDK A+ Release Evidence Lock note for `v96.0.0`.
 - [docs/releases/v96.0.0-product-truth.md](docs/releases/v96.0.0-product-truth.md): `v96.0.0` product-truth freeze document.
 - [docs/releases/v96.0.0-checklist.md](docs/releases/v96.0.0-checklist.md): release-prep checklist and additional gates for `v96.0.0`.
@@ -195,7 +206,14 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v96.0.0-performance-findings.md](docs/releases/v96.0.0-performance-findings.md): performance findings and SDK evidence proof rules for `v96.0.0`.
 - [docs/releases/v96.0.0-invariant-register.md](docs/releases/v96.0.0-invariant-register.md): locked invariant register for `v96.0.0`.
 - [docs/releases/v96.0.0-commit-history.md](docs/releases/v96.0.0-commit-history.md): required commit-history boundary for `v96.0.0`.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v96.0.0`.
+- [docs/releases/v95.0.0.md](docs/releases/v95.0.0.md): canonical Official Public Table Release note for `v95.0.0`.
+- [docs/releases/v95.0.0-product-truth.md](docs/releases/v95.0.0-product-truth.md): `v95.0.0` product-truth freeze document.
+- [docs/releases/v95.0.0-checklist.md](docs/releases/v95.0.0-checklist.md): release-prep checklist and additional gates for `v95.0.0`.
+- [docs/releases/v95.0.0-process.md](docs/releases/v95.0.0-process.md): release-prep process for `v95.0.0`.
+- [docs/releases/v95.0.0-regression-lessons.md](docs/releases/v95.0.0-regression-lessons.md): required regression lessons lock for `v95.0.0`.
+- [docs/releases/v95.0.0-performance-findings.md](docs/releases/v95.0.0-performance-findings.md): performance findings and public table proof rules for `v95.0.0`.
+- [docs/releases/v95.0.0-invariant-register.md](docs/releases/v95.0.0-invariant-register.md): locked invariant register for `v95.0.0`.
+- [docs/releases/v95.0.0-commit-history.md](docs/releases/v95.0.0-commit-history.md): required commit-history boundary for `v95.0.0`.
 - [docs/releases/v94.0.0.md](docs/releases/v94.0.0.md): canonical Official SDK And Durable Proof Operating Model Release note for `v94.0.0`.
 - [docs/releases/v94.0.0-product-truth.md](docs/releases/v94.0.0-product-truth.md): `v94.0.0` product-truth freeze document.
 - [docs/releases/v94.0.0-checklist.md](docs/releases/v94.0.0-checklist.md): release-prep checklist and additional gates for `v94.0.0`.
@@ -329,11 +347,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v96.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v96.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v96.1.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v96.1.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v96.0.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v96.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v96.1.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v96.1.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
