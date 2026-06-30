@@ -1,5 +1,45 @@
 # Release Notes
 
+## v97.2.0
+Release date: 2026-06-30
+
+`v97.2.0` is the Enterprise App Runtime SDK Release. It expands `@receiz/sdk` from App State and Commerce Cloud rails into a full enterprise app runtime surface while keeping SDK helpers beneath proof objects, identity primitives, ownership appends, settlement rows, durable proof memory, Kai/Klok state, public projections, and verified appends.
+
+Canonical full release note: [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md)
+Product-truth freeze: [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md)
+Release checklist: [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md)
+Release process: [docs/releases/v97.2.0-process.md](docs/releases/v97.2.0-process.md)
+Regression lessons: [docs/releases/v97.2.0-regression-lessons.md](docs/releases/v97.2.0-regression-lessons.md)
+Performance findings: [docs/releases/v97.2.0-performance-findings.md](docs/releases/v97.2.0-performance-findings.md)
+Invariant register: [docs/releases/v97.2.0-invariant-register.md](docs/releases/v97.2.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v97.2.0-commit-history.md](docs/releases/v97.2.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v97 archive: [docs/releases/v97.0.0.md](docs/releases/v97.0.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- `@receiz/sdk@97.2.0` exposes tenant-scoped customer session helpers, customer portal helpers, merchant onboarding helpers, and expanded commerce primitives.
+- Enterprise rails cover RBAC, audit logs, risk checks, compliance exports, store portability, notifications, search, release pinning, media transforms, jobs, event replay, and offline proof queues.
+- Every new write helper accepts idempotency material for replay after serverless cold starts, browser interruptions, or offline queue recovery.
+- `@receiz/sdk/react` exposes hooks and hosted component factories for identity, checkout, app-state, media, domain connection, wallet balance display, and Twin writer surfaces.
+- App Runtime docs cover app-state, checkout, media, events, jobs, RBAC, audit, search, compliance, offline proof replay, and release pinning.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v97.2.0`.
+- Root package metadata now resolves to `v97.2.0`.
+
+## Operational notes
+- Production DB state, Vercel rollout behavior, npm publication state, generated PDF availability, broader app service-worker uptake, SDK package state, React subpath publication, OpenAPI/status deployment, Connect route deployment, offline proof queue replay, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK package/version constants, SDK enterprise clients, React subpath exports, SDK build output, npm publication, package-registry state, idempotency headers, offline proof queue behavior, OpenAPI/status catalog, Connect routes, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v97.2.0`.
+- Confirm enterprise SDK helpers, React subpath, idempotency headers, offline proof queue replay, App Runtime docs, OpenAPI/status catalog entries, SDK docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 97.2.0`, and `node scripts/check_release_lock.mjs 97.2.0`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v97.0.0
 Release date: 2026-06-30
 
