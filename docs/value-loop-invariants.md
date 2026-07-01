@@ -1,11 +1,11 @@
 # Receiz Value Loop Invariants
 
-Status: Canonical from `v64.0.0`; carried forward for `v97.2.0`
+Status: Canonical from `v64.0.0`; carried forward for `v97.5.0`
 Release date: April 21, 2026
 
 ## Purpose
 
-This document defines the release-stable value-loop invariants for Receiz. It is the canonical cross-surface reference for wallet, market, certificate, note, and wire-transfer behavior introduced in `v64.0.0` and carried forward by `v97.2.0`.
+This document defines the release-stable value-loop invariants for Receiz. It is the canonical cross-surface reference for wallet, market, certificate, note, and wire-transfer behavior introduced in `v64.0.0` and carried forward by `v97.5.0`.
 
 The product truth is one closed causal loop:
 

@@ -1,5 +1,45 @@
 # Release Notes
 
+## v97.5.0
+Release date: 2026-06-30
+
+`v97.5.0` is the Public App-State, Enterprise SDK, and MCP Agent Rail Release. It locks durable public app-state projections, typed Commerce Cloud and enterprise runtime rails in `@receiz/sdk`, Receiz-issued delegated agent tokens, and the published `@receiz/mcp-server` agent interface into one release while preserving proof authority.
+
+Canonical full release note: [docs/releases/v97.5.0.md](docs/releases/v97.5.0.md)
+Product-truth freeze: [docs/releases/v97.5.0-product-truth.md](docs/releases/v97.5.0-product-truth.md)
+Release checklist: [docs/releases/v97.5.0-checklist.md](docs/releases/v97.5.0-checklist.md)
+Release process: [docs/releases/v97.5.0-process.md](docs/releases/v97.5.0-process.md)
+Regression lessons: [docs/releases/v97.5.0-regression-lessons.md](docs/releases/v97.5.0-regression-lessons.md)
+Performance findings: [docs/releases/v97.5.0-performance-findings.md](docs/releases/v97.5.0-performance-findings.md)
+Invariant register: [docs/releases/v97.5.0-invariant-register.md](docs/releases/v97.5.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v97.5.0-commit-history.md](docs/releases/v97.5.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v97.2 archive: [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Public app-state and public-store projections are first-class rails for third-party app recovery.
+- `@receiz/sdk@97.5.0` exposes typed app-state, public-store, Commerce Cloud, enterprise runtime, React, and offline proof queue helpers.
+- `@receiz/mcp-server@97.5.0` is the official MCP package and exposes diagnostics, capability inspection, scoped SDK rails, proof lookup, offline verification, sports memory, pitch witnesses, previews, marketplace template generation, and `receiz://` resource templates.
+- `/developers/connect` creates scoped delegated agent tokens for MCP, CI, and trusted local agents.
+- MCP startup resolves npm `.bin` symlinks so `npx -y @receiz/mcp-server` starts the stdio server.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v97.5.0`.
+- Root package metadata now resolves to `v97.5.0`.
+
+## Operational notes
+- Production DB state, delegated agent token deployment, SDK package state, MCP package state, package-registry publication, Vercel rollout behavior, generated PDF availability, broader app service-worker uptake, OpenAPI/status deployment, MCP host behavior, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK/MCP package versions, SDK runtime constants, MCP initialize metadata, SDK/MCP build output, npm publication, delegated agent token routes, OpenAPI/status catalog, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v97.5.0`.
+- Confirm public app-state/public-store rails, SDK helpers, React subpath, MCP package, MCP resource templates, delegated agent tokens, idempotency headers, offline proof queue replay, OpenAPI/status catalog entries, SDK/MCP docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 97.5.0`, and `node scripts/check_release_lock.mjs 97.5.0`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v97.2.0
 Release date: 2026-06-30
 
