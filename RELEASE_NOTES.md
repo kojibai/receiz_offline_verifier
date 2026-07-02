@@ -1,5 +1,44 @@
 # Release Notes
 
+## v97.6.0
+Release date: 2026-07-01
+
+`v97.6.0` is the Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release. It locks merchant-owned public-store publishing through Identity Seal / Receiz Key proof authority, public proof graph inspection, SDK/MCP release alignment, service-worker runtime continuity, and Sports saved-card base issue language while preserving proof authority.
+
+Canonical full release note: [docs/releases/v97.6.0.md](docs/releases/v97.6.0.md)
+Product-truth freeze: [docs/releases/v97.6.0-product-truth.md](docs/releases/v97.6.0-product-truth.md)
+Release checklist: [docs/releases/v97.6.0-checklist.md](docs/releases/v97.6.0-checklist.md)
+Release process: [docs/releases/v97.6.0-process.md](docs/releases/v97.6.0-process.md)
+Regression lessons: [docs/releases/v97.6.0-regression-lessons.md](docs/releases/v97.6.0-regression-lessons.md)
+Performance findings: [docs/releases/v97.6.0-performance-findings.md](docs/releases/v97.6.0-performance-findings.md)
+Invariant register: [docs/releases/v97.6.0-invariant-register.md](docs/releases/v97.6.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v97.6.0-commit-history.md](docs/releases/v97.6.0-commit-history.md)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v97.5 archive: [docs/releases/v97.5.0.md](docs/releases/v97.5.0.md)
+
+## Highlights
+- Receiz remains named directly as a proof-native artifact system.
+- Merchant-owned public-store state can be published with Identity Seal / Receiz Key proof authority without `RECEIZ_ACCESS_TOKEN`.
+- Public-store publish returns append coordinate evidence: Kai pulse, append anchor, append proof, and known head.
+- `/proof-graph` remains a public proof surface carrying live Kai pulse and release/API/product proof data.
+- `@receiz/sdk@97.6.0` and `@receiz/mcp-server@97.6.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v97.6.0`.
+- Root package metadata now resolves to `v97.6.0`.
+
+## Operational notes
+- Production DB state, SDK package state, MCP package state, package-registry publication, Vercel rollout behavior, broader app service-worker uptake, proof graph deploy behavior, delegated agent token deployment, and CDN media availability remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine the proof primitives.
+- Broader app service-worker/runtime storage labels, public labels, SDK/MCP package versions, SDK runtime constants, MCP initialize metadata, SDK/MCP build output, npm publication, signed merchant public-store route deployment, delegated agent token routes, proof graph visual verification, OpenAPI/status catalog, and public PDF generation are platform release evidence outside this offline verifier checkout.
+- This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
+
+## Migration checklist
+- Confirm version and entrypoint markers show `v97.6.0`.
+- Confirm signed merchant public-store publish, public proof graph contracts, SDK helpers, React subpath, MCP package, MCP resource templates, delegated agent tokens, idempotency headers, offline proof queue replay, OpenAPI/status catalog entries, SDK/MCP docs, package build/test/pack, npm publish, public report regeneration, and release-freeze gates in the broader platform workspace.
+- Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 97.6.0`, and `node scripts/check_release_lock.mjs 97.6.0`.
+- Run whitespace diff check.
+- Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
+- Deploy updated `site/` and `apps/` artifacts.
+
 ## v97.5.0
 Release date: 2026-06-30
 

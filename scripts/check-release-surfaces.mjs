@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-06-30";
+const releaseDate = "2026-07-01";
 
 const requiredFiles = [
   "README.md",
@@ -29,6 +29,7 @@ const requiredFiles = [
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
+  "apps/offline-sports-card-verifier.html",
   "apps/offline-settlement.html",
   "site/sw.js"
 ];
@@ -53,6 +54,7 @@ const versionedFiles = [
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
+  "apps/offline-sports-card-verifier.html",
   "apps/offline-settlement.html",
   "site/sw.js"
 ];
@@ -95,6 +97,7 @@ const currentReleasePointers = [
   ["site/index.html", releaseVersion],
   ["apps/offline-verifier.html", releaseVersion],
   ["apps/offline-record-seal.html", releaseVersion],
+  ["apps/offline-sports-card-verifier.html", releaseVersion],
   ["apps/offline-settlement.html", releaseVersion],
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
   [`docs/releases/${releaseVersion}.md`, `release:lock`],

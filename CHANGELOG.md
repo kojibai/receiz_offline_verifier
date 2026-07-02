@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v97.6.0] - 2026-07-01
+
+### Changed
+- Advanced the current release/documentation surface from `v97.5.0` to `v97.6.0`.
+- Updated canonical root package metadata and set `package.json` to `v97.6.0`.
+- Published the canonical `v97.6.0` release artifacts:
+  - `docs/releases/v97.6.0.md`
+  - `docs/releases/v97.6.0-product-truth.md`
+  - `docs/releases/v97.6.0-checklist.md`
+  - `docs/releases/v97.6.0-process.md`
+  - `docs/releases/v97.6.0-regression-lessons.md`
+  - `docs/releases/v97.6.0-performance-findings.md`
+  - `docs/releases/v97.6.0-invariant-register.md`
+  - `docs/releases/v97.6.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v97.6.0`.
+- Aligned release framing around signed merchant public-store publishing, public proof graph inspection, SDK/MCP release identity, service-worker continuity, and Sports saved-card base issue language beneath proof authority.
+- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v97.6.0`.
+- Updated static service-worker registration and runtime version markers to `97.6.0`.
+- Added the Sports card verifier to release-surface validation so the stated shipped-entrypoint set stays version-locked.
+
+### Kept
+- File-first verification remains authoritative and deterministic.
+- Trusted-signature gating remains `signatureV4`-required for verified outcomes.
+- Effective anchor context remains required for verified outcomes.
+- Groth16 fields remain required and only real `g16:` proof payloads are accepted.
+- Carrier extraction and normalization rules for PNG, PDF, SVG, JSON, trailer, and `.receizbundle`.
+- Package ZIP/folder manifest verification paths.
+- Canonical field validation and artifact binding checks.
+- Fail-closed verification model.
+- The `v97.5.0` Public App-State, Enterprise SDK, and MCP Agent Rail law, `v97.2.0` Enterprise App Runtime SDK law, `v97.0.0` Public App-State Projection Rail And SDK Ecosystem law, `v96.1.0` Twin And World SDK Release Lock law, `v96.0.0` SDK A+ Release Evidence Lock law, `v95.0.0` Official Public Table Release law, `v94.0.0` Official SDK And Durable Proof Operating Model law, `v93.2.0` SDK Proof Developer Experience law, `v93.1.0` Durable Proof Memory law, `v93.0.0` Sports Proof Economy law, `v92.1.0` Sports proof telemetry law, `v92.0.0` primitive-first Receiz logic law, `v91.0.0` deterministic Sports scale law, `v90.0.0` proof-native artifact system law, `v89.0.0` foreground publication and Sports Vault baseline, `v87.0.0` offline proof baseline, `v85.0.0` Sports/Market/Passport speed law, `v84.0.0` release law, and `v64.0.0` value-loop invariants remain in force.
+
 ## [v97.5.0] - 2026-06-30
 
 ### Changed

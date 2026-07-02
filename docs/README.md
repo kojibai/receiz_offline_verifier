@@ -1,9 +1,18 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v97.5.0`.
+This directory is the public documentation set for Receiz `v97.6.0`.
 
 ## Start Here
 
+- [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
+- [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.
+- [releases/v97.6.0-checklist.md](releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
+- [releases/v97.6.0-process.md](releases/v97.6.0-process.md): release-prep process for `v97.6.0`.
+- [releases/v97.6.0-regression-lessons.md](releases/v97.6.0-regression-lessons.md): required regression lessons lock for `v97.6.0`.
+- [releases/v97.6.0-performance-findings.md](releases/v97.6.0-performance-findings.md): performance findings and signed merchant public-store/proof graph proof rules for `v97.6.0`.
+- [releases/v97.6.0-invariant-register.md](releases/v97.6.0-invariant-register.md): locked invariant register for `v97.6.0`.
+- [releases/v97.6.0-commit-history.md](releases/v97.6.0-commit-history.md): required commit-history boundary for `v97.6.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v97.6.0`.
 - [releases/v97.5.0.md](releases/v97.5.0.md): canonical Public App-State, Enterprise SDK, and MCP Agent Rail Release note for `v97.5.0`.
 - [releases/v97.5.0-product-truth.md](releases/v97.5.0-product-truth.md): release-scoped product-truth freeze for `v97.5.0`.
 - [releases/v97.5.0-checklist.md](releases/v97.5.0-checklist.md): release-prep checklist and additional gates for `v97.5.0`.
@@ -182,8 +191,8 @@ This directory is the public documentation set for Receiz `v97.5.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v97.5.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v97.5.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v97.6.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v97.6.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.
