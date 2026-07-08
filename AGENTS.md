@@ -1,6 +1,6 @@
 # Receiz Agent Law
 
-Release law: `v97.6.0`
+Release law: `v98.0.0`
 
 Scale reasoning law: `docs/scale-reasoning-invariants.md`
 

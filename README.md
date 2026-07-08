@@ -2,24 +2,21 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v97.6.0`
+Current release: `v98.0.0`
 
-## What changed in v97.6.0
-- Current release/docs surfaces are aligned to `v97.6.0`.
-- Published the canonical `v97.6.0` Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note at [docs/releases/v97.6.0.md](docs/releases/v97.6.0.md).
-- Published the release-scoped product-truth freeze at [docs/releases/v97.6.0-product-truth.md](docs/releases/v97.6.0-product-truth.md).
-- Published the release checklist at [docs/releases/v97.6.0-checklist.md](docs/releases/v97.6.0-checklist.md).
-- Published the release process at [docs/releases/v97.6.0-process.md](docs/releases/v97.6.0-process.md).
-- Published the regression lessons lock at [docs/releases/v97.6.0-regression-lessons.md](docs/releases/v97.6.0-regression-lessons.md).
-- Published the performance findings at [docs/releases/v97.6.0-performance-findings.md](docs/releases/v97.6.0-performance-findings.md).
-- Published the invariant register at [docs/releases/v97.6.0-invariant-register.md](docs/releases/v97.6.0-invariant-register.md).
-- Published the commit-history boundary at [docs/releases/v97.6.0-commit-history.md](docs/releases/v97.6.0-commit-history.md).
-- `v97.6.0` locks signed merchant public-store publishing through Identity Seal / Receiz Key proof authority, live public proof graph inspection, MCP/SDK release alignment, service-worker runtime continuity, and Sports saved-card base issue language beneath admitted proof truth.
-- `v97.6.0` preserves the public app-state, enterprise SDK, and MCP agent rail release from `v97.5.0`: public-store projections, Commerce Cloud rails, `@receiz/sdk`, `@receiz/sdk/react`, delegated agent tokens, `@receiz/mcp-server`, resource templates, and MCP diagnostics stay beneath admitted proof truth.
-- `v97.6.0` preserves the enterprise app runtime SDK release from `v97.2.0`: customers, merchants, commerce, media, events, jobs, permissions, audit, risk, compliance, portability, search, notifications, releases, React helpers, idempotent writes, and offline proof queues remain release-bound.
-- `v97.6.0` preserves the public app-state projection rail from `v97.0.0`: delegated app-state publishing, URL/host/domain/creator/namespace/id public reads, URL-normalized projections, SDK app-state helpers, and `receiz.publicProof.registryFeed(feed)` compatibility remain release-bound.
-- `v97.6.0` preserves the Twin and World SDK developer surface from `v96.1.0`, the SDK A+ evidence contract from `v96.0.0`, and the public table contract from `v95.0.0`.
-- `v97.6.0` preserves the SDK/MCP convenience boundary: SDK, React helpers, MCP tools, CLI, OpenAPI docs, Connect, app-state projections, API, server, DB, report, and UI surfaces expose or project canonical proof truth without replacing sealed artifacts, proof bundles, verified appends, ownership appends, and settlement ledger rows.
+## What changed in v98.0.0
+- Current release/docs surfaces are aligned to `v98.0.0`.
+- Published the canonical `v98.0.0` Post-v97 Proof Graph, Developer Runtime, Ledger Settlement, Sports Performance, and Pitch Archive Release note at [docs/releases/v98.0.0.md](docs/releases/v98.0.0.md).
+- Published the release-scoped product-truth freeze at [docs/releases/v98.0.0-product-truth.md](docs/releases/v98.0.0-product-truth.md).
+- Published the release checklist at [docs/releases/v98.0.0-checklist.md](docs/releases/v98.0.0-checklist.md).
+- Published the release process at [docs/releases/v98.0.0-process.md](docs/releases/v98.0.0-process.md).
+- Published the regression lessons lock at [docs/releases/v98.0.0-regression-lessons.md](docs/releases/v98.0.0-regression-lessons.md).
+- Published the performance findings at [docs/releases/v98.0.0-performance-findings.md](docs/releases/v98.0.0-performance-findings.md).
+- Published the invariant register at [docs/releases/v98.0.0-invariant-register.md](docs/releases/v98.0.0-invariant-register.md).
+- Published the commit-history boundary at [docs/releases/v98.0.0-commit-history.md](docs/releases/v98.0.0-commit-history.md).
+- `v98.0.0` locks the full working set after `v97.0.0`: SDK and MCP developer-runtime rails, delegated agent tokens, signed merchant public-store publishing, developer webhooks, public proof graph, transaction and ledger proof surfaces, market-cap and settlement projections, sports vault and arena performance hardening, profile/public proof continuity, Receiz AI skills, and Pitch Command day-proof archive catch-up.
+- `v98.0.0` preserves the signed merchant public-store, proof graph, MCP/SDK, and service-worker law from `v97.6.0`, the public app-state/enterprise SDK/MCP agent rail law from `v97.5.0`, and the public app-state projection rail from `v97.0.0`.
+- `v98.0.0` preserves the SDK/MCP/OIDC/webhook convenience boundary: SDK, React helpers, MCP tools, delegated tokens, webhooks, CLI, OpenAPI docs, Connect, app-state projections, API, server, DB, report, and UI surfaces expose or project canonical proof truth without replacing sealed artifacts, proof bundles, verified appends, ownership appends, settlement ledger rows, public proof surfaces, or offline verification.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -27,10 +24,10 @@ Current release: `v97.6.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require signed merchant public-store rails, public proof graph contracts, public app-state/public-store rails, enterprise runtime SDK helpers, React subpath exports, MCP package build/test, delegated agent tokens, idempotency headers, offline proof queue replay, SDK/MCP package build/test/pack, npm publication, app version, generated public report, and release-freeze gates named in [docs/releases/v97.6.0-checklist.md](docs/releases/v97.6.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v97.6.0`.
-- Root package metadata now resolves cleanly to `v97.6.0`.
-- The static service-worker surface carries runtime version `97.6.0`.
+- Broader platform target environments require developer runtime rails, signed merchant public-store rails, developer webhook contracts, public proof graph contracts, ledger/transaction proof routes, market-cap/settlement projections, Sports Arena performance gates, Pitch Command archive workflow gates, SDK/MCP package build/test/pack, npm publication, app version, generated public report, and release-freeze gates named in [docs/releases/v98.0.0-checklist.md](docs/releases/v98.0.0-checklist.md).
+- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v98.0.0`.
+- Root package metadata now resolves cleanly to `v98.0.0`.
+- The static service-worker surface carries runtime version `98.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -48,9 +45,9 @@ Current release: `v97.6.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v97.6.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v98.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
-## Release train highlights (v14 -> v97.6)
+## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
 - `v15.0.0` / `v15.5.0`: runtime/doc route references aligned to `/offline-verifier.html`; release markers advanced.
 - `v16.0.0`: wording shifted from "original/sealed artifact" language to consistent "file/sealed file" language.
@@ -129,6 +126,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v97.2.0`: release/docs alignment for the Enterprise App Runtime SDK Release, including customer sessions, customer portals, merchant onboarding, expanded commerce primitives, media, events, jobs, RBAC, audit, risk, compliance, portability, search, notifications, release pinning, React subpath helpers, idempotent writes, and offline proof queues beneath proof authority; verifier semantics remain unchanged from `v60.0.0`.
 - `v97.5.0`: release/docs alignment for the Public App-State, Enterprise SDK, and MCP Agent Rail Release, including public-store projections, typed SDK app rails, `@receiz/mcp-server`, delegated agent tokens, MCP resource templates, npm `.bin` startup repair, and developer MCP surfaces beneath proof authority; verifier semantics remain unchanged from `v60.0.0`.
 - `v97.6.0`: release/docs alignment for the Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release, including Identity Seal / Receiz Key public-store publishing, proof graph inspection, SDK/MCP authority-boundary guidance, service-worker release continuity, and Sports saved-card base issue copy; verifier semantics remain unchanged from `v60.0.0`.
+- `v98.0.0`: release/docs alignment for the full post-`v97.0.0` proof graph, developer runtime, ledger settlement, Sports performance, and Pitch archive lock, including SDK/MCP rails, delegated tokens, webhooks, proof graph, transaction/ledger routes, market-cap projections, Sports performance gates, Receiz AI skills, and Pitch Command day proofs beneath proof authority; verifier semantics remain unchanged from `v60.0.0`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -194,16 +192,16 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v97.6.0`.
-- [docs/releases/v97.6.0.md](docs/releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
-- [docs/releases/v97.6.0-product-truth.md](docs/releases/v97.6.0-product-truth.md): `v97.6.0` product-truth freeze document.
-- [docs/releases/v97.6.0-checklist.md](docs/releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
-- [docs/releases/v97.6.0-process.md](docs/releases/v97.6.0-process.md): release-prep process for `v97.6.0`.
-- [docs/releases/v97.6.0-regression-lessons.md](docs/releases/v97.6.0-regression-lessons.md): required regression lessons lock for `v97.6.0`.
-- [docs/releases/v97.6.0-performance-findings.md](docs/releases/v97.6.0-performance-findings.md): performance findings and signed merchant public-store/proof graph proof rules for `v97.6.0`.
-- [docs/releases/v97.6.0-invariant-register.md](docs/releases/v97.6.0-invariant-register.md): locked invariant register for `v97.6.0`.
-- [docs/releases/v97.6.0-commit-history.md](docs/releases/v97.6.0-commit-history.md): required commit-history boundary for `v97.6.0`.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v97.6.0`.
+- [docs/README.md](docs/README.md): documentation map for `v98.0.0`.
+- [docs/releases/v98.0.0.md](docs/releases/v98.0.0.md): canonical Post-v97 Proof Graph, Developer Runtime, Ledger Settlement, Sports Performance, and Pitch Archive Release note for `v98.0.0`.
+- [docs/releases/v98.0.0-product-truth.md](docs/releases/v98.0.0-product-truth.md): `v98.0.0` product-truth freeze document.
+- [docs/releases/v98.0.0-checklist.md](docs/releases/v98.0.0-checklist.md): release-prep checklist and additional gates for `v98.0.0`.
+- [docs/releases/v98.0.0-process.md](docs/releases/v98.0.0-process.md): release-prep process for `v98.0.0`.
+- [docs/releases/v98.0.0-regression-lessons.md](docs/releases/v98.0.0-regression-lessons.md): required regression lessons lock for `v98.0.0`.
+- [docs/releases/v98.0.0-performance-findings.md](docs/releases/v98.0.0-performance-findings.md): performance findings and post-`v97.0.0` proof graph/developer runtime proof rules for `v98.0.0`.
+- [docs/releases/v98.0.0-invariant-register.md](docs/releases/v98.0.0-invariant-register.md): locked invariant register for `v98.0.0`.
+- [docs/releases/v98.0.0-commit-history.md](docs/releases/v98.0.0-commit-history.md): required commit-history boundary for `v98.0.0`.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v98.0.0`.
 - [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md): canonical Enterprise App Runtime SDK Release note for `v97.2.0`.
 - [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md): `v97.2.0` product-truth freeze document.
 - [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md): release-prep checklist and additional gates for `v97.2.0`.
@@ -377,11 +375,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v97.6.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v97.6.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v98.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v98.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v97.6.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v97.6.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v98.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v98.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
