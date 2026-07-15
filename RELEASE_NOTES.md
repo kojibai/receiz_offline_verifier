@@ -1,41 +1,41 @@
 # Release Notes
 
-## v100.0.0
-Release date: 2026-07-14
+## v101.0.0
+Release date: 2026-07-15
 
-`v100.0.0` is The Living Proof Release. It carries the complete reviewed post-`v99.0.0` app working set into the offline verifier and public release witness: sealed Twin identity, deterministic living proof media, existing-object continuity, Profile and Market continuity, Sports proof recovery, and operational SDK proof rails.
+`v101.0.0` is the Portable Asset Continuity release. New SDK asset admission accepts only a complete sealed proof object whose verified file carries canonical payload, ownership/custody, provenance/appends, and settlement continuity; manifest-only admission is closed.
 
-Canonical full release note: [docs/releases/v100.0.0.md](docs/releases/v100.0.0.md)
-Product-truth freeze: [docs/releases/v100.0.0-product-truth.md](docs/releases/v100.0.0-product-truth.md)
-Release checklist: [docs/releases/v100.0.0-checklist.md](docs/releases/v100.0.0-checklist.md)
-Release process: [docs/releases/v100.0.0-process.md](docs/releases/v100.0.0-process.md)
-Regression lessons: [docs/releases/v100.0.0-regression-lessons.md](docs/releases/v100.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v100.0.0-performance-findings.md](docs/releases/v100.0.0-performance-findings.md)
-Invariant register: [docs/releases/v100.0.0-invariant-register.md](docs/releases/v100.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v100.0.0-commit-history.md](docs/releases/v100.0.0-commit-history.md)
+Canonical full release note: [docs/releases/v101.0.0.md](docs/releases/v101.0.0.md)
+Product-truth freeze: [docs/releases/v101.0.0-product-truth.md](docs/releases/v101.0.0-product-truth.md)
+Release checklist: [docs/releases/v101.0.0-checklist.md](docs/releases/v101.0.0-checklist.md)
+Release process: [docs/releases/v101.0.0-process.md](docs/releases/v101.0.0-process.md)
+Regression lessons: [docs/releases/v101.0.0-regression-lessons.md](docs/releases/v101.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v101.0.0-performance-findings.md](docs/releases/v101.0.0-performance-findings.md)
+Invariant register: [docs/releases/v101.0.0-invariant-register.md](docs/releases/v101.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v101.0.0-commit-history.md](docs/releases/v101.0.0-commit-history.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v99 archive: [docs/releases/v99.0.0.md](docs/releases/v99.0.0.md)
+Prior v100 archive: [docs/releases/v100.0.0.md](docs/releases/v100.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- Sealed Twin character, genome, mind, portrait source, atlas, and motion remain bound to the enclosing proof identity.
-- Existing Twins receive deterministic atlas media through current-portrait-guarded verified appends behind settled first paint.
-- Profile, Market, and Sports surfaces preserve stronger admitted proof truth before hydration or recovery mechanics.
-- SDK application-state, custody, asset-admission, escrow, and event routes remain mechanics beneath proof, identity, ownership, custody, settlement, and verification authority.
-- `@receiz/sdk@100.0.0` and `@receiz/mcp-server@100.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v100.0.0`.
-- Root package metadata now resolves to `100.0.0`.
+- Proof-object creation seals and locally re-verifies the returned file before authenticated admission.
+- Server admission repeats the existing artifact verifier and binds continuity ownership before the database append.
+- Manifest-only SDK and Sports admission reject with `complete_sealed_proof_object_required`; v1 database admission execution remains revoked.
+- Historical artifact verification and Receiz.com’s existing single verification verdict remain unchanged.
+- `@receiz/sdk@101.0.0` and `@receiz/mcp-server@101.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v101.0.0`.
+- Root package metadata now resolves to `101.0.0`.
 
 ## Operational notes
-- Production DB state, authenticated owner/backfill behavior, package-registry publication, broader app service-worker uptake, and deployed living proof media remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine proof primitives.
-- App release-freeze, governance, attestation, package publication, and production deployment gates remain platform evidence outside this offline verifier checkout.
+- Supabase migration state, package-registry publication, app/service-worker deployment, and production SDK admission remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine sealed file truth.
+- App verification-conformance, release-freeze, governance, attestation, migration, package publication, and production deployment gates remain platform evidence outside this offline verifier checkout.
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v100.0.0`.
-- Confirm Twin character/atlas/backfill, Profile/Market continuity, Sports recovery, SDK runtime, release-freeze, governance, attestation, package publication, and production smoke gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v101.0.0`.
+- Confirm portable continuity, SDK seal/verify/admit order, server owner binding, v2 migration, verification-conformance, release-freeze, governance, attestation, package publication, and production smoke gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 100.0.0`, and `node scripts/check_release_lock.mjs 100.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 101.0.0`, and `node scripts/check_release_lock.mjs 101.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

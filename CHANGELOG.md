@@ -2,24 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v100.0.0] - 2026-07-14
+## [v101.0.0] - 2026-07-15
 
 ### Changed
-- Advanced the current release/documentation surface from `v99.0.0` to `v100.0.0`.
-- Updated canonical root package metadata and set `package.json` to `100.0.0`.
-- Published the canonical `v100.0.0` release artifacts:
-  - `docs/releases/v100.0.0.md`
-  - `docs/releases/v100.0.0-product-truth.md`
-  - `docs/releases/v100.0.0-checklist.md`
-  - `docs/releases/v100.0.0-process.md`
-  - `docs/releases/v100.0.0-regression-lessons.md`
-  - `docs/releases/v100.0.0-performance-findings.md`
-  - `docs/releases/v100.0.0-invariant-register.md`
-  - `docs/releases/v100.0.0-commit-history.md`
-- Updated current-release references in repository docs and verifier-contract docs to point at `v100.0.0`.
-- Aligned release framing around sealed Twin identity, deterministic living proof media, existing-object continuity, Profile and Market continuity, Sports proof recovery, and operational SDK proof rails beneath proof authority.
-- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v100.0.0`.
-- Updated static service-worker registration and runtime version markers to `100.0.0`.
+- Advanced the current release/documentation surface from `v100.0.0` to `v101.0.0`.
+- Updated canonical root package metadata and set `package.json` to `101.0.0`.
+- Published the canonical `v101.0.0` release artifacts:
+  - `docs/releases/v101.0.0.md`
+  - `docs/releases/v101.0.0-product-truth.md`
+  - `docs/releases/v101.0.0-checklist.md`
+  - `docs/releases/v101.0.0-process.md`
+  - `docs/releases/v101.0.0-regression-lessons.md`
+  - `docs/releases/v101.0.0-performance-findings.md`
+  - `docs/releases/v101.0.0-invariant-register.md`
+  - `docs/releases/v101.0.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v101.0.0`.
+- Aligned release framing around complete sealed proof-object admission, canonical payload/ownership/provenance/settlement continuity, and revocation of manifest-only admission beneath file authority.
+- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v101.0.0`.
+- Updated static service-worker registration and runtime version markers to `101.0.0`.
 
 ### Kept
 - File-first verification remains authoritative and deterministic.
