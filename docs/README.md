@@ -1,18 +1,18 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v104.0.0`.
+This directory is the public documentation set for Receiz `v105.0.0`.
 
 ## Start Here
 
-- [releases/v104.0.0.md](releases/v104.0.0.md): canonical Application Contract Compiler release for `v104.0.0`.
-- [releases/v104.0.0-product-truth.md](releases/v104.0.0-product-truth.md): release-scoped product-truth freeze for `v104.0.0`.
-- [releases/v104.0.0-checklist.md](releases/v104.0.0-checklist.md): release-prep checklist and additional gates for `v104.0.0`.
-- [releases/v104.0.0-process.md](releases/v104.0.0-process.md): release-prep process for `v104.0.0`.
-- [releases/v104.0.0-regression-lessons.md](releases/v104.0.0-regression-lessons.md): required regression lessons lock for `v104.0.0`.
-- [releases/v104.0.0-performance-findings.md](releases/v104.0.0-performance-findings.md): compiler determinism, root confinement, safe generation, and external-install boundaries for `v104.0.0`.
-- [releases/v104.0.0-invariant-register.md](releases/v104.0.0-invariant-register.md): locked invariant register for `v104.0.0`.
-- [releases/v104.0.0-commit-history.md](releases/v104.0.0-commit-history.md): required commit-history boundary for `v104.0.0`.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v104.0.0`.
+- [releases/v105.0.0.md](releases/v105.0.0.md): canonical browser-safe SDK architecture release for `v105.0.0`.
+- [releases/v105.0.0-product-truth.md](releases/v105.0.0-product-truth.md): release-scoped product-truth freeze for `v105.0.0`.
+- [releases/v105.0.0-checklist.md](releases/v105.0.0-checklist.md): release-prep checklist and additional gates for `v105.0.0`.
+- [releases/v105.0.0-process.md](releases/v105.0.0-process.md): release-prep process for `v105.0.0`.
+- [releases/v105.0.0-regression-lessons.md](releases/v105.0.0-regression-lessons.md): required regression lessons lock for `v105.0.0`.
+- [releases/v105.0.0-performance-findings.md](releases/v105.0.0-performance-findings.md): browser/Node graph separation, emulator isolation, stable-error, protected-generation, and external-install boundaries for `v105.0.0`.
+- [releases/v105.0.0-invariant-register.md](releases/v105.0.0-invariant-register.md): locked invariant register for `v105.0.0`.
+- [releases/v105.0.0-commit-history.md](releases/v105.0.0-commit-history.md): required commit-history boundary for `v105.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v105.0.0`.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.
 - [releases/v97.6.0-checklist.md](releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
@@ -200,8 +200,8 @@ This directory is the public documentation set for Receiz `v104.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v104.0.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v104.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v105.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v105.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.

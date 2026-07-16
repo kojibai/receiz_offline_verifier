@@ -1,42 +1,42 @@
 # Release Notes
 
-## v104.0.0
+## v105.0.0
 Release date: 2026-07-15
 
-`v104.0.0` is the Application Contract Compiler release. A typed contract now compiles through one deterministic SDK core into scopes, environments, framework wiring, findings, digest-confirmed safe changes, conformance, and upgrade guidance.
+`v105.0.0` ships the browser-safe SDK architecture, Node-only compiler subpath, browser-safe testing emulator, stable redacted errors, capability discovery, protected code generation, expanded conformance, semantic MCP operations, and updated AI skills.
 
-Canonical full release note: [docs/releases/v104.0.0.md](docs/releases/v104.0.0.md)
-Product-truth freeze: [docs/releases/v104.0.0-product-truth.md](docs/releases/v104.0.0-product-truth.md)
-Release checklist: [docs/releases/v104.0.0-checklist.md](docs/releases/v104.0.0-checklist.md)
-Release process: [docs/releases/v104.0.0-process.md](docs/releases/v104.0.0-process.md)
-Regression lessons: [docs/releases/v104.0.0-regression-lessons.md](docs/releases/v104.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v104.0.0-performance-findings.md](docs/releases/v104.0.0-performance-findings.md)
-Invariant register: [docs/releases/v104.0.0-invariant-register.md](docs/releases/v104.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v104.0.0-commit-history.md](docs/releases/v104.0.0-commit-history.md)
+Canonical full release note: [docs/releases/v105.0.0.md](docs/releases/v105.0.0.md)
+Product-truth freeze: [docs/releases/v105.0.0-product-truth.md](docs/releases/v105.0.0-product-truth.md)
+Release checklist: [docs/releases/v105.0.0-checklist.md](docs/releases/v105.0.0-checklist.md)
+Release process: [docs/releases/v105.0.0-process.md](docs/releases/v105.0.0-process.md)
+Regression lessons: [docs/releases/v105.0.0-regression-lessons.md](docs/releases/v105.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v105.0.0-performance-findings.md](docs/releases/v105.0.0-performance-findings.md)
+Invariant register: [docs/releases/v105.0.0-invariant-register.md](docs/releases/v105.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v105.0.0-commit-history.md](docs/releases/v105.0.0-commit-history.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v103 archive: [docs/releases/v103.0.0.md](docs/releases/v103.0.0.md)
+Prior v104 archive: [docs/releases/v104.0.0.md](docs/releases/v104.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- The SDK owns one deterministic compiler rules engine; CLI and MCP remain thin interfaces.
-- MCP inspection and application conformance are not artifact verification.
-- Writes require the exact reviewed preview digest and remain confined to the explicit repository root.
-- The Next.js App Router adapter emits small modules without browser secrets or database proof authority.
-- Source, packed, and externally installed SDK/MCP/AI-skill manifests align exactly at 104.0.0 with no `workspace:` dependency.
-- `@receiz/sdk@104.0.0` and `@receiz/mcp-server@104.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v104.0.0`.
-- Root package metadata now resolves to `104.0.0`.
+- Root and React emitted graphs contain no transitive compiler, testing, filesystem, or Node built-ins.
+- Compiler functionality resolves only through the explicit Node-only `@receiz/sdk/compiler` subpath.
+- The browser-safe emulator and conformance report remain sandbox evidence and never become production verification.
+- Stable errors redact secrets, capability discovery remains compatible, and protected extension generation never overwrites developer-owned siblings.
+- Semantic MCP writes require explicit confirmation; packed external installation confirms exact 105.0.0 package graphs without `workspace:` leakage.
+- `@receiz/sdk@105.0.0` and `@receiz/mcp-server@105.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v105.0.0`.
+- Root package metadata now resolves to `105.0.0`.
 
 ## Operational notes
-- AI-skills/SDK/MCP publication, registry manifest read-back, external installation, app/service-worker deployment, and production compiler smoke remain external evidence; they do not redefine sealed artifact truth.
+- AI-skills/SDK/MCP publication, registry read-back, external installation, app/service-worker deployment, and production probes remain external evidence; they do not redefine authenticated proof truth.
 - App verification-conformance, release-freeze, governance, attestation, migration, package publication, and production deployment gates remain platform evidence outside this offline verifier checkout.
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v104.0.0`.
-- Confirm SDK compiler/CLI, MCP tools/resources, AI-skill distribution, exact package alignment, packed artifact inspection, empty-project installation, historical proof compatibility, release-freeze, governance, publication, and production smoke gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v105.0.0`.
+- Confirm browser/testing emitted graphs, compiler exports, stable errors, capability probes, protected extensions, emulator boundaries, SDK conformance, semantic MCP confirmations, AI-skill distribution, external tarball installation, release-freeze, publication, and production smoke gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 104.0.0`, and `node scripts/check_release_lock.mjs 104.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 105.0.0`, and `node scripts/check_release_lock.mjs 105.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

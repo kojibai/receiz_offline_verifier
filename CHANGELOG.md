@@ -2,24 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v104.0.0] - 2026-07-16
+## [v105.0.0] - 2026-07-16
 
 ### Changed
-- Advanced the current release/documentation surface from `v103.0.0` to `v104.0.0`.
-- Updated canonical root package metadata and set `package.json` to `104.0.0`.
-- Published the canonical `v104.0.0` release artifacts:
-  - `docs/releases/v104.0.0.md`
-  - `docs/releases/v104.0.0-product-truth.md`
-  - `docs/releases/v104.0.0-checklist.md`
-  - `docs/releases/v104.0.0-process.md`
-  - `docs/releases/v104.0.0-regression-lessons.md`
-  - `docs/releases/v104.0.0-performance-findings.md`
-  - `docs/releases/v104.0.0-invariant-register.md`
-  - `docs/releases/v104.0.0-commit-history.md`
-- Updated current-release references in repository docs and verifier-contract docs to point at `v104.0.0`.
-- Aligned release framing around deterministic application-contract compilation, digest-confirmed root-confined changes, thin CLI/MCP interfaces, Next.js adapter boundaries, and exact packed package dependencies.
-- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v104.0.0`.
-- Updated static service-worker registration and runtime version markers to `104.0.0`.
+- Advanced the current release/documentation surface from `v104.0.0` to `v105.0.0`.
+- Updated canonical root package metadata and set `package.json` to `105.0.0`.
+- Published the canonical `v105.0.0` release artifacts:
+  - `docs/releases/v105.0.0.md`
+  - `docs/releases/v105.0.0-product-truth.md`
+  - `docs/releases/v105.0.0-checklist.md`
+  - `docs/releases/v105.0.0-process.md`
+  - `docs/releases/v105.0.0-regression-lessons.md`
+  - `docs/releases/v105.0.0-performance-findings.md`
+  - `docs/releases/v105.0.0-invariant-register.md`
+  - `docs/releases/v105.0.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v105.0.0`.
+- Aligned release framing around browser-safe SDK graphs, Node-only compiler exports, sandbox emulator boundaries, stable redacted errors, capability discovery, protected extensions, semantic MCP operations, and exact external package installation.
+- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v105.0.0`.
+- Updated static service-worker registration and runtime version markers to `105.0.0`.
 
 ### Kept
 - File-first verification remains authoritative and deterministic.
