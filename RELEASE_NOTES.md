@@ -1,42 +1,42 @@
 # Release Notes
 
-## v103.0.0
+## v104.0.0
 Release date: 2026-07-15
 
-`v103.0.0` is the Native Record And Seal Continuity Correction. It removes v102's erroneous universal portable-carrier gate and restores historical and new native Profile Composer, Record, and Seal proof bundles to their established verification path.
+`v104.0.0` is the Application Contract Compiler release. A typed contract now compiles through one deterministic SDK core into scopes, environments, framework wiring, findings, digest-confirmed safe changes, conformance, and upgrade guidance.
 
-Canonical full release note: [docs/releases/v103.0.0.md](docs/releases/v103.0.0.md)
-Product-truth freeze: [docs/releases/v103.0.0-product-truth.md](docs/releases/v103.0.0-product-truth.md)
-Release checklist: [docs/releases/v103.0.0-checklist.md](docs/releases/v103.0.0-checklist.md)
-Release process: [docs/releases/v103.0.0-process.md](docs/releases/v103.0.0-process.md)
-Regression lessons: [docs/releases/v103.0.0-regression-lessons.md](docs/releases/v103.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v103.0.0-performance-findings.md](docs/releases/v103.0.0-performance-findings.md)
-Invariant register: [docs/releases/v103.0.0-invariant-register.md](docs/releases/v103.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v103.0.0-commit-history.md](docs/releases/v103.0.0-commit-history.md)
+Canonical full release note: [docs/releases/v104.0.0.md](docs/releases/v104.0.0.md)
+Product-truth freeze: [docs/releases/v104.0.0-product-truth.md](docs/releases/v104.0.0-product-truth.md)
+Release checklist: [docs/releases/v104.0.0-checklist.md](docs/releases/v104.0.0-checklist.md)
+Release process: [docs/releases/v104.0.0-process.md](docs/releases/v104.0.0-process.md)
+Regression lessons: [docs/releases/v104.0.0-regression-lessons.md](docs/releases/v104.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v104.0.0-performance-findings.md](docs/releases/v104.0.0-performance-findings.md)
+Invariant register: [docs/releases/v104.0.0-invariant-register.md](docs/releases/v104.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v104.0.0-commit-history.md](docs/releases/v104.0.0-commit-history.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v102 archive: [docs/releases/v102.0.0.md](docs/releases/v102.0.0.md)
+Prior v103 archive: [docs/releases/v103.0.0.md](docs/releases/v103.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- Historical native proof bundles verify without metadata or a parallel carrier introduced after sealing.
-- Profile showcase original downloads reuse the native verdict and no longer reject valid artifacts after creation.
-- SDK `assets.createProofObject` resolves the authenticated Receiz ID, creates the native Record before Seal, and verifies matching canonical coordinates.
-- Developers cannot provide an owner or construct a parallel continuity object.
-- MCP and AI skills teach only the native SDK proof-object rail.
-- `@receiz/sdk@103.0.0` and `@receiz/mcp-server@103.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v103.0.0`.
-- Root package metadata now resolves to `103.0.0`.
+- The SDK owns one deterministic compiler rules engine; CLI and MCP remain thin interfaces.
+- MCP inspection and application conformance are not artifact verification.
+- Writes require the exact reviewed preview digest and remain confined to the explicit repository root.
+- The Next.js App Router adapter emits small modules without browser secrets or database proof authority.
+- Source, packed, and externally installed SDK/MCP/AI-skill manifests align exactly at 104.0.0 with no `workspace:` dependency.
+- `@receiz/sdk@104.0.0` and `@receiz/mcp-server@104.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v104.0.0`.
+- Root package metadata now resolves to `104.0.0`.
 
 ## Operational notes
-- AI-skills/SDK/MCP package publication, app/service-worker deployment, native compatibility fixtures, and production showcase verification remain external evidence; they can confirm or falsify deployed projection but do not redefine native proof-bundle truth.
+- AI-skills/SDK/MCP publication, registry manifest read-back, external installation, app/service-worker deployment, and production compiler smoke remain external evidence; they do not redefine sealed artifact truth.
 - App verification-conformance, release-freeze, governance, attestation, migration, package publication, and production deployment gates remain platform evidence outside this offline verifier checkout.
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v103.0.0`.
-- Confirm historical native verifier fixtures, Profile showcase downloads, authenticated native Record-before-Seal ordering, offline compatibility, MCP/AI-skill distribution, release-freeze, governance, attestation, package publication, and production smoke gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v104.0.0`.
+- Confirm SDK compiler/CLI, MCP tools/resources, AI-skill distribution, exact package alignment, packed artifact inspection, empty-project installation, historical proof compatibility, release-freeze, governance, publication, and production smoke gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 103.0.0`, and `node scripts/check_release_lock.mjs 103.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 104.0.0`, and `node scripts/check_release_lock.mjs 104.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

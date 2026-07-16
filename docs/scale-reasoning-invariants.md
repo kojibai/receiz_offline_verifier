@@ -1,6 +1,6 @@
 # Receiz Scale Reasoning Invariants
 
-Status: Product law for scale, performance, and release reasoning for `v103.0.0`.
+Status: Product law for scale, performance, and release reasoning for `v104.0.0`.
 
 Receiz scale is not legacy web-app scale. Receiz is a proof-native artifact system with deterministic primitives, sealed artifact truth, verified local truth, settlement state, ownership state, public proof routes, and deterministic first paint. Scaling Receiz means using those implemented truths directly and removing unnecessary weaker work beneath them.
 
