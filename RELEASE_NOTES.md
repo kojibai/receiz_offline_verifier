@@ -1,42 +1,42 @@
 # Release Notes
 
-## v102.0.0
+## v103.0.0
 Release date: 2026-07-15
 
-`v102.0.0` is the Indivisible Verification And Continuity release. A verified proof-object verdict now requires exact enclosing integrity plus existing continuity binding deterministic identity, a real profile-backed owner, namespace, and prior head or valid genesis.
+`v103.0.0` is the Native Record And Seal Continuity Correction. It removes v102's erroneous universal portable-carrier gate and restores historical and new native Profile Composer, Record, and Seal proof bundles to their established verification path.
 
-Canonical full release note: [docs/releases/v102.0.0.md](docs/releases/v102.0.0.md)
-Product-truth freeze: [docs/releases/v102.0.0-product-truth.md](docs/releases/v102.0.0-product-truth.md)
-Release checklist: [docs/releases/v102.0.0-checklist.md](docs/releases/v102.0.0-checklist.md)
-Release process: [docs/releases/v102.0.0-process.md](docs/releases/v102.0.0-process.md)
-Regression lessons: [docs/releases/v102.0.0-regression-lessons.md](docs/releases/v102.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v102.0.0-performance-findings.md](docs/releases/v102.0.0-performance-findings.md)
-Invariant register: [docs/releases/v102.0.0-invariant-register.md](docs/releases/v102.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v102.0.0-commit-history.md](docs/releases/v102.0.0-commit-history.md)
+Canonical full release note: [docs/releases/v103.0.0.md](docs/releases/v103.0.0.md)
+Product-truth freeze: [docs/releases/v103.0.0-product-truth.md](docs/releases/v103.0.0-product-truth.md)
+Release checklist: [docs/releases/v103.0.0-checklist.md](docs/releases/v103.0.0-checklist.md)
+Release process: [docs/releases/v103.0.0-process.md](docs/releases/v103.0.0-process.md)
+Regression lessons: [docs/releases/v103.0.0-regression-lessons.md](docs/releases/v103.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v103.0.0-performance-findings.md](docs/releases/v103.0.0-performance-findings.md)
+Invariant register: [docs/releases/v103.0.0-invariant-register.md](docs/releases/v103.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v103.0.0-commit-history.md](docs/releases/v103.0.0-commit-history.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v101 archive: [docs/releases/v101.0.0.md](docs/releases/v101.0.0.md)
+Prior v102 archive: [docs/releases/v102.0.0.md](docs/releases/v102.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- Shared web, API, SDK, Connect, and downloadable offline verification reports success only for enclosing integrity plus verified native or portable continuity.
-- Authenticated profile-backed ownership and prior-head/genesis continuity fail closed before proof-object sealing produces bytes.
-- Integrity-only artifacts retain diagnostics but cannot reach the verified proof-object verdict or append path.
-- Generic sealing, MCP lookup, and manifest inspection remain directly named mechanics and cannot claim proof-object verification.
-- `@receiz/ai-skills@102.0.0` aligns installed SDK/MCP agent doctrine with the enforced continuity gate.
-- `@receiz/sdk@102.0.0` and `@receiz/mcp-server@102.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v102.0.0`.
-- Root package metadata now resolves to `102.0.0`.
+- Historical native proof bundles verify without metadata or a parallel carrier introduced after sealing.
+- Profile showcase original downloads reuse the native verdict and no longer reject valid artifacts after creation.
+- SDK `assets.createProofObject` resolves the authenticated Receiz ID, creates the native Record before Seal, and verifies matching canonical coordinates.
+- Developers cannot provide an owner or construct a parallel continuity object.
+- MCP and AI skills teach only the native SDK proof-object rail.
+- `@receiz/sdk@103.0.0` and `@receiz/mcp-server@103.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v103.0.0`.
+- Root package metadata now resolves to `103.0.0`.
 
 ## Operational notes
-- Supabase migration state, AI-skills/SDK/MCP package publication, app/service-worker deployment, and production verification remain external runtime evidence; they can confirm or falsify deployed projection but do not redefine artifact continuity.
+- AI-skills/SDK/MCP package publication, app/service-worker deployment, native compatibility fixtures, and production showcase verification remain external evidence; they can confirm or falsify deployed projection but do not redefine native proof-bundle truth.
 - App verification-conformance, release-freeze, governance, attestation, migration, package publication, and production deployment gates remain platform evidence outside this offline verifier checkout.
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v102.0.0`.
-- Confirm shared-verifier continuity, authenticated pre-seal ownership, downloadable offline rejection/acceptance fixtures, World package continuity, MCP terminology, AI-skills distribution, migration, release-freeze, governance, attestation, package publication, and production smoke gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v103.0.0`.
+- Confirm historical native verifier fixtures, Profile showcase downloads, authenticated native Record-before-Seal ordering, offline compatibility, MCP/AI-skill distribution, release-freeze, governance, attestation, package publication, and production smoke gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 102.0.0`, and `node scripts/check_release_lock.mjs 102.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 103.0.0`, and `node scripts/check_release_lock.mjs 103.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

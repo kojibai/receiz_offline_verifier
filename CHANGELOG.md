@@ -2,24 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v102.0.0] - 2026-07-15
+## [v103.0.0] - 2026-07-16
 
 ### Changed
-- Advanced the current release/documentation surface from `v101.0.0` to `v102.0.0`.
-- Updated canonical root package metadata and set `package.json` to `102.0.0`.
-- Published the canonical `v102.0.0` release artifacts:
-  - `docs/releases/v102.0.0.md`
-  - `docs/releases/v102.0.0-product-truth.md`
-  - `docs/releases/v102.0.0-checklist.md`
-  - `docs/releases/v102.0.0-process.md`
-  - `docs/releases/v102.0.0-regression-lessons.md`
-  - `docs/releases/v102.0.0-performance-findings.md`
-  - `docs/releases/v102.0.0-invariant-register.md`
-  - `docs/releases/v102.0.0-commit-history.md`
-- Updated current-release references in repository docs and verifier-contract docs to point at `v102.0.0`.
-- Aligned release framing around indivisible integrity-and-continuity verification, authenticated pre-seal ownership, shared offline verdicts, and removal of generic verification/sealing shortcuts.
-- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v102.0.0`.
-- Updated static service-worker registration and runtime version markers to `102.0.0`.
+- Advanced the current release/documentation surface from `v102.0.0` to `v103.0.0`.
+- Updated canonical root package metadata and set `package.json` to `103.0.0`.
+- Published the canonical `v103.0.0` release artifacts:
+  - `docs/releases/v103.0.0.md`
+  - `docs/releases/v103.0.0-product-truth.md`
+  - `docs/releases/v103.0.0-checklist.md`
+  - `docs/releases/v103.0.0-process.md`
+  - `docs/releases/v103.0.0-regression-lessons.md`
+  - `docs/releases/v103.0.0-performance-findings.md`
+  - `docs/releases/v103.0.0-invariant-register.md`
+  - `docs/releases/v103.0.0-commit-history.md`
+- Updated current-release references in repository docs and verifier-contract docs to point at `v103.0.0`.
+- Aligned release framing around restoration of native Profile Composer, Record, and Seal continuity, removal of the v102 parallel-carrier gate, and authenticated native Record-before-Seal SDK composition.
+- Updated shipped version markers in published verifier, Sports card verifier, studio, and settlement entrypoints to `v103.0.0`.
+- Updated static service-worker registration and runtime version markers to `103.0.0`.
 
 ### Kept
 - File-first verification remains authoritative and deterministic.
