@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v106.0.0] - 2026-07-16
+
+### Changed
+
+- Advanced the current release/documentation surface from `v105.0.0` to `v106.0.0`.
+- Updated canonical root package metadata and set `package.json` to `106.0.0`.
+- Published the complete supplied v106 evidence set, including product truth, process, regression lessons, commit history, compatibility, performance budget, evidence index, v100–v106 lineage, constitutional registry, migration contract, threat model, and v105 SDK write inventory.
+- Added verifier-required `v106.0.0` performance findings and invariant register records.
+- Aligned release framing around registry-bound SDK command admission, MCP constitutional context, AI-skill implementation contracts, forward-only migration, independent replay, and owner-local PBI/Live Player append continuity.
+- Updated shipped verifier, Sports card verifier, studio, settlement, and service-worker release identity to `106.0.0`.
+
+### Kept
+
+- Sealed proof objects and verified local truth remain stronger than registry, SDK, MCP, AI-skill, migration, release, server, session, or display state.
+- Durable proof memory remains first admission only, then append forever.
+- Offline verification remains deterministic, file-authoritative, and fail-closed.
+- Publication, deployment, production mutation, push, and production verification remain separate actions.
+
 ## [v105.0.0] - 2026-07-16
 
 ### Changed

@@ -1,0 +1,223 @@
+{
+  "schema": "receiz.v106.migration_contract.v1",
+  "version": "106.0.0",
+  "source": {
+    "sdk": "105.0.0",
+    "mcp": "105.0.0",
+    "aiSkills": "105.0.0",
+    "baselineCommit": "f95f2fcab2f1ba732ff59130d80a61e146d210b3"
+  },
+  "destination": {
+    "sdk": "106.0.0",
+    "mcp": "106.0.0",
+    "aiSkills": "106.0.0",
+    "registryDigestRequired": true
+  },
+  "recovery": "roll-forward-from-verified-checkpoint",
+  "preservedInvariants": [
+    "retirement",
+    "spending",
+    "injuries",
+    "ownership",
+    "kai-order",
+    "resource-conservation",
+    "causal-parents",
+    "verified-local-first-paint",
+    "historical-proof-verification"
+  ],
+  "detectors": [
+    {
+      "id": "direct-canonical-write",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "sdk-write-inventory",
+        "source-location"
+      ],
+      "safeAlternatives": [
+        "replace-with-typed-command"
+      ]
+    },
+    {
+      "id": "unverified-projection-publication",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "publish-call",
+        "missing-verification"
+      ],
+      "safeAlternatives": [
+        "verify-enclosing-proof-then-project"
+      ]
+    },
+    {
+      "id": "sdk-adapter-bypass",
+      "severity": "high",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "direct-client-construction",
+        "generated-adapter-state"
+      ],
+      "safeAlternatives": [
+        "route-through-project-adapter"
+      ]
+    },
+    {
+      "id": "mcp-command-bypass",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "mcp-handler",
+        "direct-write-call"
+      ],
+      "safeAlternatives": [
+        "plan-permit-execute-command"
+      ]
+    },
+    {
+      "id": "unscoped-capability",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "capability-fields",
+        "actor-tenant-operation-scope"
+      ],
+      "safeAlternatives": [
+        "issue-attenuated-capability"
+      ]
+    },
+    {
+      "id": "missing-idempotency",
+      "severity": "high",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "mutating-call",
+        "idempotency-field"
+      ],
+      "safeAlternatives": [
+        "add-stable-command-id"
+      ]
+    },
+    {
+      "id": "missing-expected-revision",
+      "severity": "high",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "command-envelope",
+        "aggregate-head"
+      ],
+      "safeAlternatives": [
+        "bind-current-revision"
+      ]
+    },
+    {
+      "id": "nondeterministic-authority",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "authority-function",
+        "ambient-input-scan"
+      ],
+      "safeAlternatives": [
+        "compile-declarative-law-ir"
+      ]
+    },
+    {
+      "id": "authority-clock-or-randomness",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "date-random-usage",
+        "authority-call-graph"
+      ],
+      "safeAlternatives": [
+        "use-kai-coordinate-and-seeded-simulation"
+      ]
+    },
+    {
+      "id": "missing-tenant-binding",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "actor-reference",
+        "tenant-reference"
+      ],
+      "safeAlternatives": [
+        "bind-explicit-tenant"
+      ]
+    },
+    {
+      "id": "version-skew",
+      "severity": "high",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "sdk-mcp-skill-versions",
+        "registry-digests"
+      ],
+      "safeAlternatives": [
+        "align-exact-106-packages"
+      ]
+    },
+    {
+      "id": "unsupported-schema",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "schema-id",
+        "compatibility-manifest"
+      ],
+      "safeAlternatives": [
+        "run-signed-schema-migration"
+      ]
+    },
+    {
+      "id": "silent-fallback",
+      "severity": "critical",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "fallback-branch",
+        "missing-capability-path"
+      ],
+      "safeAlternatives": [
+        "fail-closed-with-typed-denial"
+      ]
+    },
+    {
+      "id": "missing-audit-receipt",
+      "severity": "high",
+      "automaticAction": "report-only",
+      "ambiguousAction": "block-and-explain",
+      "evidence": [
+        "admission-result",
+        "receipt-digest"
+      ],
+      "safeAlternatives": [
+        "seal-admission-or-return-signed-denial"
+      ]
+    }
+  ],
+  "commands": [
+    "receiz migrate v105-v106 --dry-run",
+    "receiz migrate v105-v106 --apply",
+    "receiz migrate v105-v106 --verify"
+  ],
+  "authority": {
+    "migrationIsVerification": false,
+    "strongerTruth": "sealed-receiz-proof-object",
+    "existingWitnessedHistoryMutable": false,
+    "ambiguousAuthorityAutoRewrite": false
+  }
+}

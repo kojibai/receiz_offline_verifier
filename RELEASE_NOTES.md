@@ -1,31 +1,34 @@
 # Release Notes
 
-## v105.0.0
-Release date: 2026-07-15
+## v106.0.0
+Release date: 2026-07-16
 
-`v105.0.0` ships the browser-safe SDK architecture, Node-only compiler subpath, browser-safe testing emulator, stable redacted errors, capability discovery, protected code generation, expanded conformance, semantic MCP operations, and updated AI skills.
+`v106.0.0` coordinates SDK command admission, MCP constitutional context, machine-readable AI-skill contracts, forward-only migration, and independent replay around one declared canonical registry digest. It also restores owner-local PBI signature admission and Live Player projection when a canonical global profile row already exists.
 
-Canonical full release note: [docs/releases/v105.0.0.md](docs/releases/v105.0.0.md)
-Product-truth freeze: [docs/releases/v105.0.0-product-truth.md](docs/releases/v105.0.0-product-truth.md)
-Release checklist: [docs/releases/v105.0.0-checklist.md](docs/releases/v105.0.0-checklist.md)
-Release process: [docs/releases/v105.0.0-process.md](docs/releases/v105.0.0-process.md)
-Regression lessons: [docs/releases/v105.0.0-regression-lessons.md](docs/releases/v105.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v105.0.0-performance-findings.md](docs/releases/v105.0.0-performance-findings.md)
-Invariant register: [docs/releases/v105.0.0-invariant-register.md](docs/releases/v105.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v105.0.0-commit-history.md](docs/releases/v105.0.0-commit-history.md)
+Canonical full release note: [docs/releases/v106.0.0.md](docs/releases/v106.0.0.md)
+Product-truth freeze: [docs/releases/v106.0.0-product-truth.md](docs/releases/v106.0.0-product-truth.md)
+Release checklist: [docs/releases/v106.0.0-checklist.md](docs/releases/v106.0.0-checklist.md)
+Release process: [docs/releases/v106.0.0-process.md](docs/releases/v106.0.0-process.md)
+Regression lessons: [docs/releases/v106.0.0-regression-lessons.md](docs/releases/v106.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v106.0.0-performance-findings.md](docs/releases/v106.0.0-performance-findings.md)
+Invariant register: [docs/releases/v106.0.0-invariant-register.md](docs/releases/v106.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v106.0.0-commit-history.md](docs/releases/v106.0.0-commit-history.md)
+Compatibility contract: [docs/releases/v106.0.0-compatibility.md](docs/releases/v106.0.0-compatibility.md)
+Performance budget: [docs/releases/v106.0.0-performance.md](docs/releases/v106.0.0-performance.md)
+Evidence index: [docs/releases/v106.0.0-evidence.md](docs/releases/v106.0.0-evidence.md)
+Complete v100-v106 lineage: [docs/releases/v106.0.0-v100-v106-lineage.md](docs/releases/v106.0.0-v100-v106-lineage.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v104 archive: [docs/releases/v104.0.0.md](docs/releases/v104.0.0.md)
+Prior v105 archive: [docs/releases/v105.0.0.md](docs/releases/v105.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- Root and React emitted graphs contain no transitive compiler, testing, filesystem, or Node built-ins.
-- Compiler functionality resolves only through the explicit Node-only `@receiz/sdk/compiler` subpath.
-- The browser-safe emulator and conformance report remain sandbox evidence and never become production verification.
-- Stable errors redact secrets, capability discovery remains compatible, and protected extension generation never overwrites developer-owned siblings.
-- Semantic MCP writes require explicit confirmation; packed external installation confirms exact 105.0.0 package graphs without `workspace:` leakage.
-- `@receiz/sdk@105.0.0` and `@receiz/mcp-server@105.0.0` stay aligned beneath proof objects, verified appends, ownership states, settlement states, and public proof surfaces.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v105.0.0`.
-- Root package metadata now resolves to `105.0.0`.
+- `@receiz/sdk@106.0.0`, `@receiz/mcp-server@106.0.0`, and `@receiz/ai-skills@106.0.0` bind to the same declared registry digest; the independent verifier remains separately pinned.
+- Constitutional evaluation, command admission, causal replay, atomic projection, signed receipts, semantic MCP operations, and AI-skill contracts fail closed beneath sealed proof authority.
+- Forward-only v105-to-v106 migration requires dry-run, explicit plan-digest confirmation, resumable apply, and verify without rewriting witnessed history.
+- The owner-local profile path appends accepted PBI authorship and Live Player projection even when the canonical global row already exists.
+- The sole new application capability is that owner-local continuity correction; Sports safe-area work is inherited regression repair.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v106.0.0`.
+- Root package metadata now resolves to `106.0.0`.
 
 ## Operational notes
 - AI-skills/SDK/MCP publication, registry read-back, external installation, app/service-worker deployment, and production probes remain external evidence; they do not redefine authenticated proof truth.
@@ -33,10 +36,10 @@ Prior v104 archive: [docs/releases/v104.0.0.md](docs/releases/v104.0.0.md)
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v105.0.0`.
-- Confirm browser/testing emitted graphs, compiler exports, stable errors, capability probes, protected extensions, emulator boundaries, SDK conformance, semantic MCP confirmations, AI-skill distribution, external tarball installation, release-freeze, publication, and production smoke gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v106.0.0`.
+- Confirm registry-digest parity, command admission, independent replay, SDK/MCP/AI-skill conformance, forward-only migration, exact packaged installation, owner-local profile contracts, release-freeze, publication, and production gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 105.0.0`, and `node scripts/check_release_lock.mjs 105.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 106.0.0`, and `node scripts/check_release_lock.mjs 106.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

@@ -1,0 +1,1427 @@
+{
+  "schema": "receiz.v106.sdk_write_inventory.v1",
+  "baseline": {
+    "tag": "v105.0.0",
+    "commit": "f95f2fcab2f1ba732ff59130d80a61e146d210b3"
+  },
+  "routeFiles": [
+    "app/.well-known/oauth-authorization-server/route.ts",
+    "app/.well-known/openid-configuration/route.ts",
+    "app/[username]/verified/[receizId]/player/live/embed/route.ts",
+    "app/[username]/verified/[receizId]/player/route.ts",
+    "app/api/account/business/certificate/route.ts",
+    "app/api/account/business/holdings/route.ts",
+    "app/api/account/business/route.ts",
+    "app/api/account/custom-domain/route.ts",
+    "app/api/account/payout-profile/route.ts",
+    "app/api/activate/asset/[activationId]/route.ts",
+    "app/api/activate/checkout/route.ts",
+    "app/api/activate/intake/route.ts",
+    "app/api/activate/session/route.ts",
+    "app/api/admin/analytics/compact/route.ts",
+    "app/api/admin/analytics/rollup-drain/route.ts",
+    "app/api/admin/analytics/snapshot-refresh/route.ts",
+    "app/api/admin/security/alerts/test/route.ts",
+    "app/api/admin/security/oidc-clients/block/route.ts",
+    "app/api/admin/security/oidc-clients/route.ts",
+    "app/api/admin/security/oidc-clients/unblock/route.ts",
+    "app/api/admin/sports/rollups/route.ts",
+    "app/api/admin/stripe/backfill/route.ts",
+    "app/api/admin/stripe/users/route.ts",
+    "app/api/admin/users/[userId]/route.ts",
+    "app/api/admin/users/route.ts",
+    "app/api/admin/wallet/balance-adjust/route.ts",
+    "app/api/admin/wallet/live-balances/route.ts",
+    "app/api/admin/wallet/sigil-access/route.ts",
+    "app/api/affiliate/code/route.ts",
+    "app/api/affiliate/summary/route.ts",
+    "app/api/affiliate/track/route.ts",
+    "app/api/artifacts/upload/route.ts",
+    "app/api/assetseal/custody/append/route.ts",
+    "app/api/assetseal/custody/list/route.ts",
+    "app/api/assetseal/dashboard/route.ts",
+    "app/api/assetseal/mint/route.ts",
+    "app/api/audio/search/route.ts",
+    "app/api/auth/bridge/issue/route.ts",
+    "app/api/auth/bridge/redeem/route.ts",
+    "app/api/auth/identity-key/begin/route.ts",
+    "app/api/auth/identity-key/challenge/route.ts",
+    "app/api/auth/identity-key/enroll/route.ts",
+    "app/api/auth/identity-key/export-state/route.ts",
+    "app/api/auth/identity-key/finish/route.ts",
+    "app/api/auth/identity-key/import/route.ts",
+    "app/api/auth/identity-key/list/route.ts",
+    "app/api/auth/identity-key/local-publish/route.ts",
+    "app/api/auth/identity-key/revoke/route.ts",
+    "app/api/auth/logout/route.ts",
+    "app/api/auth/passkey/begin/route.ts",
+    "app/api/auth/passkey/enroll/begin/route.ts",
+    "app/api/auth/passkey/finish/route.ts",
+    "app/api/auth/receiz-id/bind/route.ts",
+    "app/api/auth/receiz-id/continue/route.ts",
+    "app/api/auth/receiz-id/switch/route.ts",
+    "app/api/auth/request/route.ts",
+    "app/api/calendar/confirmation/[eventId]/bundle/route.ts",
+    "app/api/calendar/confirmation/[eventId]/route.ts",
+    "app/api/calendar/embed/[username]/route.ts",
+    "app/api/calendar/events/[eventId]/bundle/route.ts",
+    "app/api/calendar/events/route.ts",
+    "app/api/chat/ai/route.ts",
+    "app/api/chat/calls/ice/route.ts",
+    "app/api/chat/conversations/[conversationId]/ai/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/export/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/moderation/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/notes/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/participants/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/sfu/session/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/signals/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/[callId]/transcript/route.ts",
+    "app/api/chat/conversations/[conversationId]/calls/route.ts",
+    "app/api/chat/conversations/[conversationId]/messages/route.ts",
+    "app/api/chat/conversations/[conversationId]/messages/stream/route.ts",
+    "app/api/chat/conversations/[conversationId]/notes/claim/route.ts",
+    "app/api/chat/conversations/[conversationId]/receize/route.ts",
+    "app/api/chat/conversations/[conversationId]/transfers/route.ts",
+    "app/api/chat/conversations/route.ts",
+    "app/api/chat/messages/[messageId]/attachment/route.ts",
+    "app/api/chat/messages/[messageId]/original/route.ts",
+    "app/api/chat/messages/[messageId]/receize/route.ts",
+    "app/api/chat/notifications/push/route.ts",
+    "app/api/chat/users/search/route.ts",
+    "app/api/connect/login/bootstrap/[username]/route.ts",
+    "app/api/connect/payments/checkout/route.ts",
+    "app/api/connect/payments/notes/[noteId]/download/route.ts",
+    "app/api/connect/payments/notes/claim/route.ts",
+    "app/api/connect/payments/notes/mint/route.ts",
+    "app/api/connect/payments/session/route.ts",
+    "app/api/connect/record/route.ts",
+    "app/api/connect/seal/route.ts",
+    "app/api/connect/transfers/route.ts",
+    "app/api/connect/twin/approval/route.ts",
+    "app/api/connect/twin/market/intents/[intentId]/approve/route.ts",
+    "app/api/connect/twin/market/intents/route.ts",
+    "app/api/connect/twin/market/mandate/route.ts",
+    "app/api/connect/twin/mind/import/route.ts",
+    "app/api/connect/verify/route.ts",
+    "app/api/connect/wallet/me/route.ts",
+    "app/api/contacts/[contactId]/events/route.ts",
+    "app/api/contacts/[contactId]/route.ts",
+    "app/api/contacts/import/route.ts",
+    "app/api/contacts/route.ts",
+    "app/api/creator/assets/cancel/route.ts",
+    "app/api/creator/assets/route.ts",
+    "app/api/creator/publish/route.ts",
+    "app/api/creator/run/route.ts",
+    "app/api/creator/workers/drain/route.ts",
+    "app/api/creator/workspace/route.ts",
+    "app/api/developers/webhooks/[endpointId]/rotate-secret/route.ts",
+    "app/api/developers/webhooks/[endpointId]/route.ts",
+    "app/api/developers/webhooks/[endpointId]/test-event/route.ts",
+    "app/api/developers/webhooks/route.ts",
+    "app/api/document-seal/route.ts",
+    "app/api/document-verify/route.ts",
+    "app/api/economy/conformance/badge/route.ts",
+    "app/api/economy/conformance/history/rollups/route.ts",
+    "app/api/economy/conformance/history/route.ts",
+    "app/api/economy/conformance/route.ts",
+    "app/api/epub/notes/route.ts",
+    "app/api/events/route.ts",
+    "app/api/explore/view/route.ts",
+    "app/api/game/signal-run/best-score/route.ts",
+    "app/api/game/signal-run/cards/[cardId]/appends/route.ts",
+    "app/api/game/signal-run/cards/[cardId]/auction/route.ts",
+    "app/api/game/signal-run/cards/[cardId]/purchase/route.ts",
+    "app/api/game/signal-run/cards/art-image/route.ts",
+    "app/api/game/signal-run/cards/art/route.ts",
+    "app/api/game/signal-run/cards/battle-request/route.ts",
+    "app/api/game/signal-run/cards/battle-settings/route.ts",
+    "app/api/game/signal-run/cards/discovery/route.ts",
+    "app/api/game/signal-run/cards/history/route.ts",
+    "app/api/game/signal-run/cards/record/route.ts",
+    "app/api/game/signal-run/packs/purchase/route.ts",
+    "app/api/game/signal-run/rewarded-card/seal/route.ts",
+    "app/api/game/signal-run/vault/appends/route.ts",
+    "app/api/game/signal-run/vault/card-download/route.ts",
+    "app/api/game/signal-run/vault/global-sync/route.ts",
+    "app/api/game/signal-run/vault/listing/route.ts",
+    "app/api/game/signal-run/vault/route.ts",
+    "app/api/game/signal-run/vault/transfer-download/route.ts",
+    "app/api/game/signal-run/vault/transfer/route.ts",
+    "app/api/game/sports/baseball/cards/[cardId]/provenance/route.ts",
+    "app/api/game/sports/baseball/cards/[cardId]/purchase/route.ts",
+    "app/api/game/sports/baseball/competitions/[inviteCode]/route.ts",
+    "app/api/game/sports/baseball/competitions/route.ts",
+    "app/api/game/sports/baseball/entries/route.ts",
+    "app/api/game/sports/baseball/event-proofs/route.ts",
+    "app/api/game/sports/baseball/event-proofs/trades/[tradeId]/route.ts",
+    "app/api/game/sports/baseball/event-proofs/trades/route.ts",
+    "app/api/game/sports/baseball/live/route.ts",
+    "app/api/game/sports/baseball/market/route.ts",
+    "app/api/game/sports/baseball/pack-derby/challenges/[challengeId]/route.ts",
+    "app/api/game/sports/baseball/pack-derby/challenges/[challengeId]/runs/route.ts",
+    "app/api/game/sports/baseball/pack-derby/challenges/route.ts",
+    "app/api/game/sports/baseball/pack-derby/run/route.ts",
+    "app/api/game/sports/baseball/packs/purchase/route.ts",
+    "app/api/game/sports/baseball/packs/simulate/route.ts",
+    "app/api/game/sports/baseball/pitch-command/media/route.ts",
+    "app/api/game/sports/baseball/pitch-command/route.ts",
+    "app/api/game/sports/baseball/player-image/[personId]/route.ts",
+    "app/api/game/sports/baseball/registry/route.ts",
+    "app/api/game/sports/baseball/scale/route.ts",
+    "app/api/game/sports/baseball/series/passport/purchase/route.ts",
+    "app/api/game/sports/baseball/series/projection/route.ts",
+    "app/api/game/sports/baseball/stream/route.ts",
+    "app/api/game/sports/baseball/tournaments/route.ts",
+    "app/api/game/sports/baseball/trades/[tradeId]/route.ts",
+    "app/api/game/sports/baseball/trades/route.ts",
+    "app/api/game/sports/baseball/user-live/route.ts",
+    "app/api/game/sports/baseball/vault/appends/route.ts",
+    "app/api/game/sports/baseball/vault/history/route.ts",
+    "app/api/game/sports/baseball/vault/listing/route.ts",
+    "app/api/game/sports/baseball/vault/offline-transfer/route.ts",
+    "app/api/game/sports/baseball/vault/route.ts",
+    "app/api/game/sports/baseball/vault/showcase/route.ts",
+    "app/api/game/sports/baseball/vault/transfer/route.ts",
+    "app/api/game/sports/baseball/workers/live/route.ts",
+    "app/api/game/sports/conformance/badge/route.ts",
+    "app/api/game/sports/conformance/history/rollups/route.ts",
+    "app/api/game/sports/conformance/history/route.ts",
+    "app/api/game/sports/conformance/route.ts",
+    "app/api/game/sports/economy/route.ts",
+    "app/api/game/sports/fight/entries/route.ts",
+    "app/api/game/sports/fight/fighter-image/[slug]/route.ts",
+    "app/api/game/sports/fight/packs/purchase/route.ts",
+    "app/api/game/sports/fight/packs/simulate/route.ts",
+    "app/api/game/sports/fight/tournaments/route.ts",
+    "app/api/game/sports/fight/trades/[tradeId]/route.ts",
+    "app/api/game/sports/fight/trades/route.ts",
+    "app/api/game/sports/fight/vault/history/route.ts",
+    "app/api/game/sports/fight/vault/offline-transfer/route.ts",
+    "app/api/game/sports/fight/vault/route.ts",
+    "app/api/game/sports/fight/vault/showcase/route.ts",
+    "app/api/game/sports/fight/vault/transfer/route.ts",
+    "app/api/game/sports/soccer/entries/route.ts",
+    "app/api/game/sports/soccer/live/route.ts",
+    "app/api/game/sports/soccer/packs/purchase/route.ts",
+    "app/api/game/sports/soccer/packs/simulate/route.ts",
+    "app/api/game/sports/soccer/player-image/[teamCode]/[jerseyNumber]/[sourceId]/route.ts",
+    "app/api/game/sports/soccer/tournaments/route.ts",
+    "app/api/game/sports/soccer/trades/[tradeId]/route.ts",
+    "app/api/game/sports/soccer/trades/route.ts",
+    "app/api/game/sports/soccer/user-live/route.ts",
+    "app/api/game/sports/soccer/vault/appends/route.ts",
+    "app/api/game/sports/soccer/vault/history/route.ts",
+    "app/api/game/sports/soccer/vault/offline-transfer/route.ts",
+    "app/api/game/sports/soccer/vault/route.ts",
+    "app/api/game/sports/soccer/vault/showcase/route.ts",
+    "app/api/game/sports/soccer/vault/transfer/route.ts",
+    "app/api/identity/conformance/badge/route.ts",
+    "app/api/identity/conformance/history/rollups/route.ts",
+    "app/api/identity/conformance/history/route.ts",
+    "app/api/identity/conformance/route.ts",
+    "app/api/interoperability/conformance/badge/route.ts",
+    "app/api/interoperability/conformance/history/rollups/route.ts",
+    "app/api/interoperability/conformance/history/route.ts",
+    "app/api/interoperability/conformance/route.ts",
+    "app/api/issuance/conformance/badge/route.ts",
+    "app/api/issuance/conformance/history/rollups/route.ts",
+    "app/api/issuance/conformance/history/route.ts",
+    "app/api/issuance/conformance/route.ts",
+    "app/api/kiosks/host/request/route.ts",
+    "app/api/kiosks/sponsorship/checkout/route.ts",
+    "app/api/kiosks/sponsorship/session/route.ts",
+    "app/api/lease/global-mirror/route.ts",
+    "app/api/ledger/actions/export/route.ts",
+    "app/api/ledger/actions/import/route.ts",
+    "app/api/ledger/actions/public/route.ts",
+    "app/api/ledger/actions/replay/route.ts",
+    "app/api/live/rooms/route.ts",
+    "app/api/live/rooms/sfu/route.ts",
+    "app/api/market/assets/[receizId]/pill/route.ts",
+    "app/api/market/assets/[receizId]/route.ts",
+    "app/api/market/conformance/badge/route.ts",
+    "app/api/market/conformance/history/rollups/route.ts",
+    "app/api/market/conformance/history/route.ts",
+    "app/api/market/conformance/route.ts",
+    "app/api/market/playback/[receizId]/route.ts",
+    "app/api/market/positions/import/route.ts",
+    "app/api/market/positions/preview/route.ts",
+    "app/api/market/predictions/claim/route.ts",
+    "app/api/market/predictions/export/route.ts",
+    "app/api/market/predictions/finalize/route.ts",
+    "app/api/market/predictions/vote/route.ts",
+    "app/api/market/predictions/wager/route.ts",
+    "app/api/market/private-graph/route.ts",
+    "app/api/market/public-membership/route.ts",
+    "app/api/market/public-snapshot/route.ts",
+    "app/api/market/share-certificates/[noteToken]/download/route.ts",
+    "app/api/market/share-certificates/[noteToken]/route.ts",
+    "app/api/market/share-certificates/[noteToken]/trade/route.ts",
+    "app/api/market/shares/export/route.ts",
+    "app/api/market/shares/import/route.ts",
+    "app/api/market/shares/trade/route.ts",
+    "app/api/market/snapshot/route.ts",
+    "app/api/market/twin/intents/[intentId]/approve/route.ts",
+    "app/api/market/twin/intents/route.ts",
+    "app/api/market/twin/mandate/route.ts",
+    "app/api/media/image/route.ts",
+    "app/api/offline-studio/qrcode/route.ts",
+    "app/api/oidc/agent-tokens/route.ts",
+    "app/api/oidc/authorize/consent/route.ts",
+    "app/api/oidc/authorize/route.ts",
+    "app/api/oidc/clients/[clientId]/rotate-secret/route.ts",
+    "app/api/oidc/clients/[clientId]/route.ts",
+    "app/api/oidc/clients/route.ts",
+    "app/api/oidc/introspect/route.ts",
+    "app/api/oidc/jwks/route.ts",
+    "app/api/oidc/revoke/route.ts",
+    "app/api/oidc/token/route.ts",
+    "app/api/oidc/userinfo/route.ts",
+    "app/api/openapi/route.ts",
+    "app/api/payments/embed/checkout/route.ts",
+    "app/api/payments/embed/checkout/session/route.ts",
+    "app/api/payments/embed/note-claim/route.ts",
+    "app/api/pbi/authorship/challenge/route.ts",
+    "app/api/pbi/authorship/invite/challenge/route.ts",
+    "app/api/pbi/authorship/invite/create/route.ts",
+    "app/api/pbi/authorship/invite/list/route.ts",
+    "app/api/pbi/authorship/invite/status/route.ts",
+    "app/api/pbi/authorship/invite/verify/route.ts",
+    "app/api/pbi/authorship/local-append/route.ts",
+    "app/api/pbi/authorship/status/route.ts",
+    "app/api/pbi/authorship/verify/route.ts",
+    "app/api/pbi/reset/route.ts",
+    "app/api/pbi/webauthn/credential/route.ts",
+    "app/api/pbi/webauthn/me/route.ts",
+    "app/api/perf/web-vitals/route.ts",
+    "app/api/premium/refresh/route.ts",
+    "app/api/premium/sync/route.ts",
+    "app/api/profile/[username]/follow/route.ts",
+    "app/api/profile/[username]/manifest/route.ts",
+    "app/api/profile/[username]/originals/[receizId]/player-live/route.ts",
+    "app/api/profile/[username]/originals/[receizId]/verified/route.ts",
+    "app/api/profile/[username]/originals/route.ts",
+    "app/api/profile/[username]/route.ts",
+    "app/api/profile/[username]/viewer/route.ts",
+    "app/api/profile/analytics/route.ts",
+    "app/api/profile/analytics/track/route.ts",
+    "app/api/profile/bootstrap/route.ts",
+    "app/api/profile/me/media/route.ts",
+    "app/api/profile/me/route.ts",
+    "app/api/profile/me/setup/complete/route.ts",
+    "app/api/profile/originals/download/checkout/route.ts",
+    "app/api/profile/originals/download/receiz/challenge/route.ts",
+    "app/api/profile/originals/download/receiz/confirm/route.ts",
+    "app/api/profile/originals/download/route.ts",
+    "app/api/profile/originals/image-variants/backfill/route.ts",
+    "app/api/profile/originals/image-variants/route.ts",
+    "app/api/profile/originals/media/route.ts",
+    "app/api/profile/originals/seal/route.ts",
+    "app/api/profile/originals/storage/route.ts",
+    "app/api/profile/originals/upload-signed/route.ts",
+    "app/api/profile/originals/upload/route.ts",
+    "app/api/profile/originals/upload/signed/route.ts",
+    "app/api/profile/originals/video-playback/route.ts",
+    "app/api/profile/originals/video-poster/route.ts",
+    "app/api/profile/originals/visibility/route.ts",
+    "app/api/profile/username/availability/route.ts",
+    "app/api/proof-graph/ledger/route.ts",
+    "app/api/proof-graph/market-cap/route.ts",
+    "app/api/proof/sigil/route.ts",
+    "app/api/public-proof/[id]/route.ts",
+    "app/api/public-proof/by-url/route.ts",
+    "app/api/public-proof/claim/route.ts",
+    "app/api/public-proof/creator/[externalCreatorId]/route.ts",
+    "app/api/public-proof/dispute/route.ts",
+    "app/api/public-proof/identity/challenge/route.ts",
+    "app/api/public-proof/identity/verify/route.ts",
+    "app/api/public-proof/me/claimable/route.ts",
+    "app/api/public-proof/namespace/[namespace]/route.ts",
+    "app/api/public-proof/oauth/callback/route.ts",
+    "app/api/public-proof/oauth/start/route.ts",
+    "app/api/public-proof/observe/route.ts",
+    "app/api/public-proof/registry/feed/route.ts",
+    "app/api/public-proof/rights/route.ts",
+    "app/api/public-proof/seal/route.ts",
+    "app/api/public-proof/verify/route.ts",
+    "app/api/qr/wallet-pay/route.ts",
+    "app/api/receipt/[slug]/[code]/[pulse]/ownership-provenance/route.ts",
+    "app/api/receipt/[slug]/[code]/[pulse]/player-live/route.ts",
+    "app/api/receiz/anchor/route.ts",
+    "app/api/receiz/attachments/preview/route.ts",
+    "app/api/receiz/attachments/upload/route.ts",
+    "app/api/receiz/copy/route.ts",
+    "app/api/receiz/download/route.ts",
+    "app/api/receiz/meta/route.ts",
+    "app/api/receiz/mint/route.ts",
+    "app/api/receiz/ownership/claim/route.ts",
+    "app/api/receiz/ownership/transfer/route.ts",
+    "app/api/receiz/seen/route.ts",
+    "app/api/receiz/signed/download/route.ts",
+    "app/api/receiz/signed/render/route.ts",
+    "app/api/receiz/zk/route.ts",
+    "app/api/sdk/v1/app-state/append/route.ts",
+    "app/api/sdk/v1/assets/admit/route.ts",
+    "app/api/sdk/v1/assets/escrow/exchange/route.ts",
+    "app/api/sdk/v1/assets/seal/route.ts",
+    "app/api/sdk/v1/capabilities/route.ts",
+    "app/api/sdk/v1/event-proofs/route.ts",
+    "app/api/security/csp-report/route.ts",
+    "app/api/session/route.ts",
+    "app/api/signal-circuit/conformance/badge/route.ts",
+    "app/api/signal-circuit/conformance/history/rollups/route.ts",
+    "app/api/signal-circuit/conformance/history/route.ts",
+    "app/api/signal-circuit/conformance/route.ts",
+    "app/api/signal-circuit/conformance/simulation/route.ts",
+    "app/api/signal-circuit/foundry/campaigns/route.ts",
+    "app/api/signer/v1/receiz/keyring/route.ts",
+    "app/api/signer/v1/receiz/provision/route.ts",
+    "app/api/signer/v1/receiz/sign/route.ts",
+    "app/api/signer/v4/receiz/enroll/route.ts",
+    "app/api/status/live/route.ts",
+    "app/api/storage/object/route.ts",
+    "app/api/stripe/billing/payment-method/route.ts",
+    "app/api/stripe/billing/payment-method/sync/route.ts",
+    "app/api/stripe/billing/subscription/route.ts",
+    "app/api/stripe/billing/summary/route.ts",
+    "app/api/stripe/checkout/route.ts",
+    "app/api/stripe/portal/route.ts",
+    "app/api/stripe/wallet/checkout/route.ts",
+    "app/api/stripe/wallet/session/route.ts",
+    "app/api/stripe/webhook/route.ts",
+    "app/api/verification/conformance/badge/route.ts",
+    "app/api/verification/conformance/history/rollups/route.ts",
+    "app/api/verification/conformance/history/route.ts",
+    "app/api/verification/conformance/route.ts",
+    "app/api/verify/route.ts",
+    "app/api/video/search/route.ts",
+    "app/api/wallet/ledger/public/route.ts",
+    "app/api/wallet/ledger/route.ts",
+    "app/api/wallet/me/route.ts",
+    "app/api/wallet/notes/[noteId]/download/route.ts",
+    "app/api/wallet/notes/claim/route.ts",
+    "app/api/wallet/notes/mint/route.ts",
+    "app/api/wallet/notes/status/[noteId]/[proof]/claim/route.ts",
+    "app/api/wallet/notes/status/[noteId]/[proof]/route.ts",
+    "app/api/wallet/notes/status/[noteId]/[proof]/verify/route.ts",
+    "app/api/wallet/sigils/claim/route.ts",
+    "app/api/wallet/wires/request/route.ts",
+    "app/api/wireproof/admin/create-issuer/route.ts",
+    "app/api/wireproof/dashboard/org-archive/route.ts",
+    "app/api/wireproof/dashboard/route.ts",
+    "app/api/wireproof/export.csv/route.ts",
+    "app/api/wireproof/health/route.ts",
+    "app/api/wireproof/keys/create/route.ts",
+    "app/api/wireproof/keys/list/route.ts",
+    "app/api/wireproof/keys/revoke/route.ts",
+    "app/api/wireproof/mint/route.ts",
+    "app/api/wireproof/webhook/route.ts",
+    "app/api/world/agent/route.ts",
+    "app/api/world/autopilot/brief/notify/route.ts",
+    "app/api/world/autopilot/brief/route.ts",
+    "app/api/world/avatar/generate/route.ts",
+    "app/api/world/avatar/portrait-atlas/backfill/route.ts",
+    "app/api/world/backend/avatar/route.ts",
+    "app/api/world/backend/health/route.ts",
+    "app/api/world/backend/render/route.ts",
+    "app/api/world/backend/tts/route.ts",
+    "app/api/world/campaigns/[campaignId]/autopilot/route.ts",
+    "app/api/world/campaigns/[campaignId]/contacts/[contactId]/sync/route.ts",
+    "app/api/world/campaigns/[campaignId]/lifecycle/route.ts",
+    "app/api/world/campaigns/[campaignId]/schedule/route.ts",
+    "app/api/world/campaigns/autopilot/route.ts",
+    "app/api/world/campaigns/route.ts",
+    "app/api/world/concierge/route.ts",
+    "app/api/world/concierge/stream/route.ts",
+    "app/api/world/concierge/tasks/route.ts",
+    "app/api/world/conformance/badge/route.ts",
+    "app/api/world/conformance/history/rollups/route.ts",
+    "app/api/world/conformance/history/route.ts",
+    "app/api/world/conformance/route.ts",
+    "app/api/world/face-feature-map/route.ts",
+    "app/api/world/internal-workers/render/route.ts",
+    "app/api/world/internal-workers/tts/route.ts",
+    "app/api/world/me/route.ts",
+    "app/api/world/memory/import/route.ts",
+    "app/api/world/outreach/route.ts",
+    "app/api/world/performance-preview/route.ts",
+    "app/api/world/performance-profile/route.ts",
+    "app/api/world/presence/heartbeat/route.ts",
+    "app/api/world/profile/[username]/live/publisher-session/route.ts",
+    "app/api/world/profile/[username]/route.ts",
+    "app/api/world/profile/[username]/stream/route.ts",
+    "app/api/world/providers/resend/webhook/route.ts",
+    "app/api/world/providers/twilio/status/route.ts",
+    "app/api/world/public/route.ts",
+    "app/api/world/trail/actions/[actionId]/bundle/route.ts",
+    "app/api/world/twin-approval/route.ts",
+    "app/api/world/twin-mind/import/route.ts",
+    "app/api/world/ventures/route.ts",
+    "app/auth/verify/route.ts",
+    "app/claim/card/route.ts",
+    "app/claim/free-baseball-card/route.ts",
+    "app/fifa/route.ts",
+    "app/mlb/route.ts",
+    "app/openapi.json/route.ts",
+    "app/physical/[physicalId]/route.ts",
+    "app/wireproof/demo/route.ts"
+  ],
+  "classifications": {
+    "DELETE /api/developers/webhooks/${encodePathSegment(endpointId)}": "lower_authority_operational",
+    "PATCH /api/connect/twin/market/mandate": "canonical_command_candidate",
+    "PATCH /api/developers/webhooks/${encodePathSegment(endpointId)}": "lower_authority_operational",
+    "POST /api/auth/receiz-id/continue": "canonical_command_candidate",
+    "POST /api/connect/audit/events": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/access-passes": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/access-passes/verify": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/discounts": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/discounts/redeem": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/fulfillment": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/gift-cards": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/gift-cards/redeem": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/inventory/adjust": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/inventory/reserve": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/payouts": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/refunds": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/shipping/quote": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/shipping/update": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/subscriptions": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/subscriptions/${encodePathSegment(subscriptionId)}/cancel": "compatibility_adapter_candidate",
+    "POST /api/connect/commerce/tax/quote": "compatibility_adapter_candidate",
+    "POST /api/connect/customers/portal": "compatibility_adapter_candidate",
+    "POST /api/connect/customers/session": "compatibility_adapter_candidate",
+    "POST /api/connect/domains/custom/verify": "compatibility_adapter_candidate",
+    "POST /api/connect/domains/subdomains/reserve": "compatibility_adapter_candidate",
+    "POST /api/connect/events/${encodePathSegment(eventId)}/ack": "compatibility_adapter_candidate",
+    "POST /api/connect/events/replay": "compatibility_adapter_candidate",
+    "POST /api/connect/events/subscribe": "compatibility_adapter_candidate",
+    "POST /api/connect/jobs": "compatibility_adapter_candidate",
+    "POST /api/connect/jobs/${encodePathSegment(jobId)}/cancel": "compatibility_adapter_candidate",
+    "POST /api/connect/media/transform": "compatibility_adapter_candidate",
+    "POST /api/connect/media/upload": "compatibility_adapter_candidate",
+    "POST /api/connect/merchants/onboard": "compatibility_adapter_candidate",
+    "POST /api/connect/notifications/send": "compatibility_adapter_candidate",
+    "POST /api/connect/notifications/subscribe": "compatibility_adapter_candidate",
+    "POST /api/connect/payments/checkout": "canonical_command_candidate",
+    "POST /api/connect/payments/notes/claim": "canonical_command_candidate",
+    "POST /api/connect/payments/notes/mint": "canonical_command_candidate",
+    "POST /api/connect/permissions/check": "compatibility_adapter_candidate",
+    "POST /api/connect/permissions/grants": "compatibility_adapter_candidate",
+    "POST /api/connect/permissions/revoke": "compatibility_adapter_candidate",
+    "POST /api/connect/portability/store/import": "compatibility_adapter_candidate",
+    "POST /api/connect/proof/query": "compatibility_adapter_candidate",
+    "POST /api/connect/record": "canonical_command_candidate",
+    "POST /api/connect/releases/pin": "compatibility_adapter_candidate",
+    "POST /api/connect/risk/account-recovery": "compatibility_adapter_candidate",
+    "POST /api/connect/risk/payment": "compatibility_adapter_candidate",
+    "POST /api/connect/risk/proof-activity": "compatibility_adapter_candidate",
+    "POST /api/connect/risk/velocity": "compatibility_adapter_candidate",
+    "POST /api/connect/search/blog": "compatibility_adapter_candidate",
+    "POST /api/connect/search/customers": "compatibility_adapter_candidate",
+    "POST /api/connect/search/orders": "compatibility_adapter_candidate",
+    "POST /api/connect/search/pages": "compatibility_adapter_candidate",
+    "POST /api/connect/search/products": "compatibility_adapter_candidate",
+    "POST /api/connect/search/proof-objects": "compatibility_adapter_candidate",
+    "POST /api/connect/search/query": "compatibility_adapter_candidate",
+    "POST /api/connect/transfers": "canonical_command_candidate",
+    "POST /api/connect/twin/market/intents": "canonical_command_candidate",
+    "POST /api/connect/twin/market/intents/${encodePathSegment(intentId)}/approve": "canonical_command_candidate",
+    "POST /api/connect/twin/mind/import": "canonical_command_candidate",
+    "POST /api/connect/verify": "canonical_command_candidate",
+    "POST /api/developers/webhooks": "lower_authority_operational",
+    "POST /api/developers/webhooks/${encodePathSegment(endpointId)}/rotate-secret": "lower_authority_operational",
+    "POST /api/developers/webhooks/${encodePathSegment(endpointId)}/test-event": "lower_authority_operational",
+    "POST /api/document-verify": "canonical_command_candidate",
+    "POST /api/oidc/introspect": "canonical_command_candidate",
+    "POST /api/oidc/revoke": "canonical_command_candidate",
+    "POST /api/oidc/token": "canonical_command_candidate",
+    "POST /api/payments/embed/checkout": "canonical_command_candidate",
+    "POST /api/payments/embed/note-claim": "canonical_command_candidate",
+    "POST /api/public-proof/observe": "canonical_command_candidate",
+    "POST /api/public-proof/registry/feed": "canonical_command_candidate",
+    "POST /api/world/profile/${encodePathSegment(username)}": "canonical_command_candidate"
+  },
+  "writes": [
+    {
+      "key": "DELETE /api/developers/webhooks/${encodePathSegment(endpointId)}",
+      "sdkOperation": "deleteWebhookEndpoint",
+      "method": "DELETE",
+      "route": "/api/developers/webhooks/${encodePathSegment(endpointId)}",
+      "routeFile": "app/api/developers/webhooks/[endpointId]/route.ts",
+      "classification": "lower_authority_operational",
+      "evidence": [
+        "app/api/developers/webhooks/[endpointId]/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "PATCH /api/connect/twin/market/mandate",
+      "sdkOperation": "twin",
+      "method": "PATCH",
+      "route": "/api/connect/twin/market/mandate",
+      "routeFile": "app/api/connect/twin/market/mandate/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/twin/market/mandate/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "PATCH /api/developers/webhooks/${encodePathSegment(endpointId)}",
+      "sdkOperation": "updateWebhookEndpoint",
+      "method": "PATCH",
+      "route": "/api/developers/webhooks/${encodePathSegment(endpointId)}",
+      "routeFile": "app/api/developers/webhooks/[endpointId]/route.ts",
+      "classification": "lower_authority_operational",
+      "evidence": [
+        "app/api/developers/webhooks/[endpointId]/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/auth/receiz-id/continue",
+      "sdkOperation": "continueReceizId",
+      "method": "POST",
+      "route": "/api/auth/receiz-id/continue",
+      "routeFile": "app/api/auth/receiz-id/continue/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/auth/receiz-id/continue/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/audit/events",
+      "sdkOperation": "audit",
+      "method": "POST",
+      "route": "/api/connect/audit/events",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/access-passes",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/access-passes",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/access-passes/verify",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/access-passes/verify",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/discounts",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/discounts",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/discounts/redeem",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/discounts/redeem",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/fulfillment",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/fulfillment",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/gift-cards",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/gift-cards",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/gift-cards/redeem",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/gift-cards/redeem",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/inventory/adjust",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/inventory/adjust",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/inventory/reserve",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/inventory/reserve",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/payouts",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/payouts",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/refunds",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/refunds",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/shipping/quote",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/shipping/quote",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/shipping/update",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/shipping/update",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/subscriptions",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/subscriptions",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/subscriptions/${encodePathSegment(subscriptionId)}/cancel",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/subscriptions/${encodePathSegment(subscriptionId)}/cancel",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/commerce/tax/quote",
+      "sdkOperation": "commerce",
+      "method": "POST",
+      "route": "/api/connect/commerce/tax/quote",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/customers/portal",
+      "sdkOperation": "bootstrapCustomerSession",
+      "method": "POST",
+      "route": "/api/connect/customers/portal",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/customers/session",
+      "sdkOperation": "bootstrapCustomerSession",
+      "method": "POST",
+      "route": "/api/connect/customers/session",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/domains/custom/verify",
+      "sdkOperation": "domains",
+      "method": "POST",
+      "route": "/api/connect/domains/custom/verify",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/domains/subdomains/reserve",
+      "sdkOperation": "domains",
+      "method": "POST",
+      "route": "/api/connect/domains/subdomains/reserve",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/events/${encodePathSegment(eventId)}/ack",
+      "sdkOperation": "events",
+      "method": "POST",
+      "route": "/api/connect/events/${encodePathSegment(eventId)}/ack",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/events/replay",
+      "sdkOperation": "events",
+      "method": "POST",
+      "route": "/api/connect/events/replay",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/events/subscribe",
+      "sdkOperation": "eventSubscribe",
+      "method": "POST",
+      "route": "/api/connect/events/subscribe",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/jobs",
+      "sdkOperation": "jobs",
+      "method": "POST",
+      "route": "/api/connect/jobs",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/jobs/${encodePathSegment(jobId)}/cancel",
+      "sdkOperation": "jobs",
+      "method": "POST",
+      "route": "/api/connect/jobs/${encodePathSegment(jobId)}/cancel",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/media/transform",
+      "sdkOperation": "media",
+      "method": "POST",
+      "route": "/api/connect/media/transform",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/media/upload",
+      "sdkOperation": "uploadMedia",
+      "method": "POST",
+      "route": "/api/connect/media/upload",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/merchants/onboard",
+      "sdkOperation": "merchants",
+      "method": "POST",
+      "route": "/api/connect/merchants/onboard",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/notifications/send",
+      "sdkOperation": "notifications",
+      "method": "POST",
+      "route": "/api/connect/notifications/send",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/notifications/subscribe",
+      "sdkOperation": "notifications",
+      "method": "POST",
+      "route": "/api/connect/notifications/subscribe",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/payments/checkout",
+      "sdkOperation": "if",
+      "method": "POST",
+      "route": "/api/connect/payments/checkout",
+      "routeFile": "app/api/connect/payments/checkout/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/payments/checkout/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/payments/notes/claim",
+      "sdkOperation": "connect",
+      "method": "POST",
+      "route": "/api/connect/payments/notes/claim",
+      "routeFile": "app/api/connect/payments/notes/claim/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/payments/notes/claim/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/payments/notes/mint",
+      "sdkOperation": "connect",
+      "method": "POST",
+      "route": "/api/connect/payments/notes/mint",
+      "routeFile": "app/api/connect/payments/notes/mint/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/payments/notes/mint/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/permissions/check",
+      "sdkOperation": "permissions",
+      "method": "POST",
+      "route": "/api/connect/permissions/check",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/permissions/grants",
+      "sdkOperation": "permissions",
+      "method": "POST",
+      "route": "/api/connect/permissions/grants",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/permissions/revoke",
+      "sdkOperation": "permissions",
+      "method": "POST",
+      "route": "/api/connect/permissions/revoke",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/portability/store/import",
+      "sdkOperation": "portability",
+      "method": "POST",
+      "route": "/api/connect/portability/store/import",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/proof/query",
+      "sdkOperation": "proof",
+      "method": "POST",
+      "route": "/api/connect/proof/query",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/record",
+      "sdkOperation": "connect",
+      "method": "POST",
+      "route": "/api/connect/record",
+      "routeFile": "app/api/connect/record/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/record/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/releases/pin",
+      "sdkOperation": "releases",
+      "method": "POST",
+      "route": "/api/connect/releases/pin",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/risk/account-recovery",
+      "sdkOperation": "risk",
+      "method": "POST",
+      "route": "/api/connect/risk/account-recovery",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/risk/payment",
+      "sdkOperation": "risk",
+      "method": "POST",
+      "route": "/api/connect/risk/payment",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/risk/proof-activity",
+      "sdkOperation": "risk",
+      "method": "POST",
+      "route": "/api/connect/risk/proof-activity",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/risk/velocity",
+      "sdkOperation": "risk",
+      "method": "POST",
+      "route": "/api/connect/risk/velocity",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/blog",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/blog",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/customers",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/customers",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/orders",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/orders",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/pages",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/pages",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/products",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/products",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/proof-objects",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/proof-objects",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/search/query",
+      "sdkOperation": "search",
+      "method": "POST",
+      "route": "/api/connect/search/query",
+      "routeFile": null,
+      "classification": "compatibility_adapter_candidate",
+      "evidence": [
+        "literal-route-file-not-found"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/transfers",
+      "sdkOperation": "connectTransfer",
+      "method": "POST",
+      "route": "/api/connect/transfers",
+      "routeFile": "app/api/connect/transfers/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/transfers/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/twin/market/intents",
+      "sdkOperation": "twin",
+      "method": "POST",
+      "route": "/api/connect/twin/market/intents",
+      "routeFile": "app/api/connect/twin/market/intents/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/twin/market/intents/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/twin/market/intents/${encodePathSegment(intentId)}/approve",
+      "sdkOperation": "twin",
+      "method": "POST",
+      "route": "/api/connect/twin/market/intents/${encodePathSegment(intentId)}/approve",
+      "routeFile": "app/api/connect/twin/market/intents/[intentId]/approve/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/twin/market/intents/[intentId]/approve/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/twin/mind/import",
+      "sdkOperation": "delegatedTwinMindImport",
+      "method": "POST",
+      "route": "/api/connect/twin/mind/import",
+      "routeFile": "app/api/connect/twin/mind/import/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/twin/mind/import/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/connect/verify",
+      "sdkOperation": "delegatedVerifyArtifact",
+      "method": "POST",
+      "route": "/api/connect/verify",
+      "routeFile": "app/api/connect/verify/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/connect/verify/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/developers/webhooks",
+      "sdkOperation": "createWebhookEndpoint",
+      "method": "POST",
+      "route": "/api/developers/webhooks",
+      "routeFile": "app/api/developers/webhooks/route.ts",
+      "classification": "lower_authority_operational",
+      "evidence": [
+        "app/api/developers/webhooks/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/developers/webhooks/${encodePathSegment(endpointId)}/rotate-secret",
+      "sdkOperation": "rotateWebhookEndpointSecret",
+      "method": "POST",
+      "route": "/api/developers/webhooks/${encodePathSegment(endpointId)}/rotate-secret",
+      "routeFile": "app/api/developers/webhooks/[endpointId]/rotate-secret/route.ts",
+      "classification": "lower_authority_operational",
+      "evidence": [
+        "app/api/developers/webhooks/[endpointId]/rotate-secret/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/developers/webhooks/${encodePathSegment(endpointId)}/test-event",
+      "sdkOperation": "sendWebhookEndpointTest",
+      "method": "POST",
+      "route": "/api/developers/webhooks/${encodePathSegment(endpointId)}/test-event",
+      "routeFile": "app/api/developers/webhooks/[endpointId]/test-event/route.ts",
+      "classification": "lower_authority_operational",
+      "evidence": [
+        "app/api/developers/webhooks/[endpointId]/test-event/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/document-verify",
+      "sdkOperation": "verifyArtifact",
+      "method": "POST",
+      "route": "/api/document-verify",
+      "routeFile": "app/api/document-verify/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/document-verify/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/oidc/introspect",
+      "sdkOperation": "identity",
+      "method": "POST",
+      "route": "/api/oidc/introspect",
+      "routeFile": "app/api/oidc/introspect/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/oidc/introspect/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/oidc/revoke",
+      "sdkOperation": "identity",
+      "method": "POST",
+      "route": "/api/oidc/revoke",
+      "routeFile": "app/api/oidc/revoke/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/oidc/revoke/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/oidc/token",
+      "sdkOperation": "identity",
+      "method": "POST",
+      "route": "/api/oidc/token",
+      "routeFile": "app/api/oidc/token/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/oidc/token/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/payments/embed/checkout",
+      "sdkOperation": "payments",
+      "method": "POST",
+      "route": "/api/payments/embed/checkout",
+      "routeFile": "app/api/payments/embed/checkout/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/payments/embed/checkout/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/payments/embed/note-claim",
+      "sdkOperation": "payments",
+      "method": "POST",
+      "route": "/api/payments/embed/note-claim",
+      "routeFile": "app/api/payments/embed/note-claim/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/payments/embed/note-claim/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/public-proof/observe",
+      "sdkOperation": "observePublicProof",
+      "method": "POST",
+      "route": "/api/public-proof/observe",
+      "routeFile": "app/api/public-proof/[id]/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/public-proof/[id]/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/public-proof/registry/feed",
+      "sdkOperation": "if",
+      "method": "POST",
+      "route": "/api/public-proof/registry/feed",
+      "routeFile": "app/api/public-proof/registry/feed/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/public-proof/registry/feed/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    },
+    {
+      "key": "POST /api/world/profile/${encodePathSegment(username)}",
+      "sdkOperation": "world",
+      "method": "POST",
+      "route": "/api/world/profile/${encodePathSegment(username)}",
+      "routeFile": "app/api/world/profile/[username]/route.ts",
+      "classification": "canonical_command_candidate",
+      "evidence": [
+        "app/api/world/profile/[username]/route.ts"
+      ],
+      "authorityBoundary": "inspection-is-not-verification"
+    }
+  ],
+  "authority": {
+    "inspectionIsVerification": false,
+    "strongerTruth": "sealed-receiz-proof-object"
+  }
+}

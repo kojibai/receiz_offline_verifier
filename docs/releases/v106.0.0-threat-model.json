@@ -1,0 +1,407 @@
+{
+  "schema": "receiz.v106.threat_model.v1",
+  "version": "106.0.0",
+  "registryDigest": "bf851c209e807309672c0f466411baa5607ce6b3195fe4eb16755edfeb7f5a1a",
+  "registryBinding": "release-locked-before-production-admission",
+  "threats": [
+    {
+      "id": "malicious-client",
+      "primitive": "proof-and-command-admission",
+      "boundary": "untrusted-client-to-admission",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "bounded-input",
+        "signature-verification",
+        "server-or-local-recomputation"
+      ],
+      "negativeFixtures": [
+        "admission.rejects-fabricated-outcome"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "compromised-mcp-client",
+      "primitive": "command-authority",
+      "boundary": "mcp-to-sdk-command",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "mcp-authority-false",
+        "digest-bound-execution-permit",
+        "maximum-effects"
+      ],
+      "negativeFixtures": [
+        "mcp.rejects-direct-state-mutation"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "manipulated-ai-agent",
+      "primitive": "implementation-evidence",
+      "boundary": "ai-output-to-repository-change",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "skill-manifest",
+        "forbidden-operations",
+        "independent-verifier"
+      ],
+      "negativeFixtures": [
+        "skills.reject-completion-without-evidence"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "replay-attack",
+      "primitive": "admission-receipt",
+      "boundary": "prior-command-to-current-admission",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "idempotency-key",
+        "nonce",
+        "expected-revision"
+      ],
+      "negativeFixtures": [
+        "admission.rejects-replayed-command"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "signature-substitution",
+      "primitive": "sealed-proof-object",
+      "boundary": "signature-to-payload-binding",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "signature-domain-separation",
+        "key-purpose",
+        "canonical-encoding"
+      ],
+      "negativeFixtures": [
+        "verification.rejects-cross-domain-signature"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "cross-tenant-access",
+      "primitive": "tenant-authority",
+      "boundary": "actor-to-tenant-boundary",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "explicit-tenant-binding",
+        "tenant-scoped-capability",
+        "negative-tenant-test"
+      ],
+      "negativeFixtures": [
+        "authority.rejects-cross-tenant-command"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "confused-deputy",
+      "primitive": "delegated-capability",
+      "boundary": "caller-to-delegated-service",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "audience-binding",
+        "operation-scope",
+        "resource-scope"
+      ],
+      "negativeFixtures": [
+        "capability.rejects-deputy-escalation"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "capability-escalation",
+      "primitive": "capability-authority",
+      "boundary": "parent-to-child-delegation",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "attenuation-only",
+        "delegation-depth",
+        "maximum-effects"
+      ],
+      "negativeFixtures": [
+        "capability.rejects-amplified-child"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "stale-client",
+      "primitive": "causal-history",
+      "boundary": "stale-head-to-current-head",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "expected-revision",
+        "causal-parent-digest",
+        "registry-digest-pin"
+      ],
+      "negativeFixtures": [
+        "admission.rejects-stale-revision"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "multi-device-rollback",
+      "primitive": "verified-local-history",
+      "boundary": "device-branch-to-merged-history",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "parent-digests",
+        "dominance-laws",
+        "historical-key-retention"
+      ],
+      "negativeFixtures": [
+        "merge.rejects-stale-living-branch"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "double-spending",
+      "primitive": "settlement",
+      "boundary": "concurrent-spend-to-ledger",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "atomic-resource-ledger",
+        "optimistic-concurrency",
+        "resource-conservation"
+      ],
+      "negativeFixtures": [
+        "settlement.rejects-double-spend"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "race-condition",
+      "primitive": "atomic-admission",
+      "boundary": "concurrent-command-to-commit",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "unit-of-work",
+        "expected-revision",
+        "deterministic-conflict"
+      ],
+      "negativeFixtures": [
+        "admission.concurrent-one-winner"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "clock-manipulation",
+      "primitive": "kai-klok-ordering",
+      "boundary": "ambient-clock-to-authority",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "no-wall-clock-law-input",
+        "kai-order",
+        "non-ordering-time-metadata"
+      ],
+      "negativeFixtures": [
+        "law.rejects-clock-derived-order"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "cache-poisoning",
+      "primitive": "deterministic-projection",
+      "boundary": "cache-to-proof-surface",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "projection-beneath-proof",
+        "digest-validation",
+        "rebuild-from-admitted-history"
+      ],
+      "negativeFixtures": [
+        "projection.rejects-unverified-cache"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "direct-database-mutation",
+      "primitive": "proof-and-ledger-truth",
+      "boundary": "database-to-canonical-state",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "command-only-mutation",
+        "append-verification",
+        "bypass-scan"
+      ],
+      "negativeFixtures": [
+        "bypass.detects-direct-database-write"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "webhook-forgery",
+      "primitive": "verified-event-append",
+      "boundary": "external-webhook-to-event",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "signature-verification",
+        "timestamp-mechanics",
+        "replay-id"
+      ],
+      "negativeFixtures": [
+        "webhook.rejects-forged-delivery"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "queue-duplication",
+      "primitive": "outbox-and-inbox",
+      "boundary": "delivery-to-consumer",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "idempotent-consumer",
+        "inbox-record",
+        "event-id"
+      ],
+      "negativeFixtures": [
+        "queue.deduplicates-delivery"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "migration-tampering",
+      "primitive": "historical-proof",
+      "boundary": "migration-input-to-output",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "signed-migration-manifest",
+        "pre-and-postconditions",
+        "independent-replay"
+      ],
+      "negativeFixtures": [
+        "migration.rejects-altered-manifest"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "registry-downgrade",
+      "primitive": "sealed-constitution-registry",
+      "boundary": "candidate-registry-to-trusted-registry",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "previous-digest-chain",
+        "kai-effective-coordinate",
+        "exact-digest-pin",
+        "historical-trust-store"
+      ],
+      "negativeFixtures": [
+        "registry.rejects-older-digest-for-new-admission",
+        "registry.verifies-historical-receipt-under-bound-digest"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "supply-chain-compromise",
+      "primitive": "constitutional-runtime",
+      "boundary": "dependency-or-build-to-release",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "locked-dependencies",
+        "sbom",
+        "provenance-attestation",
+        "reproducible-build"
+      ],
+      "negativeFixtures": [
+        "release.rejects-unprovenanced-package"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "secret-leakage",
+      "primitive": "private-key-and-token-custody",
+      "boundary": "secret-to-output-or-telemetry",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "server-only-secret",
+        "redaction",
+        "purpose-separated-key"
+      ],
+      "negativeFixtures": [
+        "security.redacts-secret-material"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "key-theft-or-rotation-failure",
+      "primitive": "identity-and-governance-keys",
+      "boundary": "key-lifecycle-to-verification",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "key-id",
+        "rotation-append",
+        "revocation",
+        "public-key-history"
+      ],
+      "negativeFixtures": [
+        "verification.rejects-revoked-key-for-new-admission"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "pathological-input-dos",
+      "primitive": "admission-availability",
+      "boundary": "untrusted-input-to-evaluator",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "size-budget",
+        "complexity-budget",
+        "replay-budget"
+      ],
+      "negativeFixtures": [
+        "admission.rejects-over-budget-input"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "audit-log-deletion",
+      "primitive": "audit-evidence",
+      "boundary": "storage-loss-to-accountability",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "append-only-audit-reference",
+        "sealed-receipt",
+        "backup-verification"
+      ],
+      "negativeFixtures": [
+        "audit.detects-missing-segment"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "projection-corruption",
+      "primitive": "public-proof-surface",
+      "boundary": "projection-store-to-visible-state",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "projection-digest",
+        "rebuild-from-admitted-truth",
+        "projection-not-authority"
+      ],
+      "negativeFixtures": [
+        "projection.rebuilds-corrupt-state"
+      ],
+      "status": "controlled-by-v106-contract"
+    },
+    {
+      "id": "backup-rollback",
+      "primitive": "verified-history",
+      "boundary": "restored-backup-to-current-head",
+      "attacker": "malicious-or-faulty-lower-authority-input",
+      "controls": [
+        "checkpoint-head-binding",
+        "causal-continuity",
+        "anti-rollback-restore"
+      ],
+      "negativeFixtures": [
+        "restore.rejects-older-head"
+      ],
+      "status": "controlled-by-v106-contract"
+    }
+  ],
+  "authority": {
+    "planningEvidenceIsVerification": false,
+    "strongerTruth": "sealed-receiz-proof-object",
+    "existingWitnessedHistoryMutable": false
+  }
+}
