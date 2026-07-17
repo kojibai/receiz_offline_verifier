@@ -1,26 +1,27 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v106.0.0`.
+This directory is the public documentation set for Receiz `v107.0.0`.
 
 ## Start Here
 
-- [releases/v106.0.0.md](releases/v106.0.0.md): canonical registry-bound constitutional enforcement release for `v106.0.0`.
-- [releases/v106.0.0-product-truth.md](releases/v106.0.0-product-truth.md): release-scoped product-truth freeze for `v106.0.0`.
-- [releases/v106.0.0-checklist.md](releases/v106.0.0-checklist.md): release-prep checklist and additional gates for `v106.0.0`.
-- [releases/v106.0.0-process.md](releases/v106.0.0-process.md): release-prep process for `v106.0.0`.
-- [releases/v106.0.0-regression-lessons.md](releases/v106.0.0-regression-lessons.md): required regression lessons lock for `v106.0.0`.
-- [releases/v106.0.0-performance-findings.md](releases/v106.0.0-performance-findings.md): deterministic constitutional evaluation, independent replay, owner-local first-paint, and external-action boundaries for `v106.0.0`.
-- [releases/v106.0.0-invariant-register.md](releases/v106.0.0-invariant-register.md): locked invariant register for `v106.0.0`.
-- [releases/v106.0.0-commit-history.md](releases/v106.0.0-commit-history.md): required commit-history boundary for `v106.0.0`.
-- [releases/v106.0.0-compatibility.md](releases/v106.0.0-compatibility.md): exact package and forward-only migration compatibility contract.
-- [releases/v106.0.0-performance.md](releases/v106.0.0-performance.md): constitutional operation budget and zero-network/database conformance contract.
-- [releases/v106.0.0-evidence.md](releases/v106.0.0-evidence.md): qualified implementation, build, browser, governance, and residual-risk evidence index.
-- [releases/v106.0.0-v100-v106-lineage.md](releases/v106.0.0-v100-v106-lineage.md): complete v100 through v106 product-truth lineage.
-- [releases/v106.0.0-constitution-registry.json](releases/v106.0.0-constitution-registry.json): pinned machine-readable constitutional registry.
-- [releases/v106.0.0-migration-contract.json](releases/v106.0.0-migration-contract.json): forward-only v105-to-v106 migration contract.
-- [releases/v106.0.0-threat-model.json](releases/v106.0.0-threat-model.json): registry-bound constitutional enforcement threat model.
-- [releases/v106.0.0-v105-sdk-write-inventory.json](releases/v106.0.0-v105-sdk-write-inventory.json): classified v105 SDK write inventory used by migration qualification.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v106.0.0`.
+- [releases/v107.0.0.md](releases/v107.0.0.md): canonical unified proof-native developer operations release for `v107.0.0`.
+- [releases/v107.0.0-product-truth.md](releases/v107.0.0-product-truth.md): release-scoped product-truth freeze for `v107.0.0`.
+- [releases/v107.0.0-checklist.md](releases/v107.0.0-checklist.md): release-prep checklist and additional gates for `v107.0.0`.
+- [releases/v107.0.0-process.md](releases/v107.0.0-process.md): release-prep process for `v107.0.0`.
+- [releases/v107.0.0-regression-lessons.md](releases/v107.0.0-regression-lessons.md): required regression lessons lock for `v107.0.0`.
+- [releases/v107.0.0-performance-findings.md](releases/v107.0.0-performance-findings.md): local-first, atomic-operation, deterministic-queue, receipt-gated, generator, and external-action boundaries for `v107.0.0`.
+- [releases/v107.0.0-invariant-register.md](releases/v107.0.0-invariant-register.md): locked invariant register for `v107.0.0`.
+- [releases/v107.0.0-commit-history.md](releases/v107.0.0-commit-history.md): required commit-history boundary for `v107.0.0`.
+- [releases/v107.0.0-release-notes.md](releases/v107.0.0-release-notes.md): coordinated SDK, MCP, AI-skill, emulator, generator, migration, and runtime change record.
+- [releases/v107.0.0-developer-guide.md](releases/v107.0.0-developer-guide.md): exact identity, profile, continuity, ownership, offline, MCP, generator, and emulator usage contract.
+- [releases/v107.0.0-migration.md](releases/v107.0.0-migration.md): forward-only v106-to-v107 migration contract.
+- [releases/v107.0.0-v100-v107-lineage.md](releases/v107.0.0-v100-v107-lineage.md): complete v100 through v107 product-truth lineage.
+- [releases/v107.0.0-constitution-registry.digest](releases/v107.0.0-constitution-registry.digest): declared canonical v107 registry payload digest.
+- [releases/v107.0.0-constitution-registry.json](releases/v107.0.0-constitution-registry.json): pinned machine-readable constitutional registry.
+- [releases/v107.0.0-threat-model.json](releases/v107.0.0-threat-model.json): registry-bound constitutional enforcement threat model.
+- [releases/v107.0.0-v106-closure-inventory.json](releases/v107.0.0-v106-closure-inventory.json): closed inherited-v106 requirement inventory.
+- [releases/v107.0.0-visual-evidence.json](releases/v107.0.0-visual-evidence.json): eight-capture non-contradictory visual-evidence index.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v107.0.0`.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.
 - [releases/v97.6.0-checklist.md](releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
@@ -208,8 +209,8 @@ This directory is the public documentation set for Receiz `v106.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v106.0.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v106.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v107.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v107.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.

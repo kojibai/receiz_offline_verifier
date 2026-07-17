@@ -1,0 +1,220 @@
+{
+  "schema": "receiz.release.v106_closure_inventory.v107",
+  "baselineCommit": "477713ae2",
+  "auditedAt": "2026-07-17",
+  "records": [
+    {
+      "requirementId": "v106-foundation-inventory-threat-migration",
+      "source": "docs/superpowers/plans/2026-07-16-v106-milestone-1-inventory-contracts.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "scripts/test_v106_sdk_write_inventory.ts",
+        "docs/releases/v106.0.0-threat-model.json",
+        "packages/receiz-sdk/docs/v106.0.0-migration-contract.json"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-constitutional-foundation"
+      ],
+      "evidence": [
+        "73 mutating SDK writes and 14 migration detectors are deterministically bound; focused foundation gate passed 2026-07-17"
+      ]
+    },
+    {
+      "requirementId": "v106-registry-law-ir",
+      "source": "docs/superpowers/plans/2026-07-16-v106-milestone-2-registry-law-ir.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/constitution.ts",
+        "docs/releases/v106.0.0-constitution-registry.json",
+        "packages/receiz-sdk/test/constitution.test.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-constitution",
+        "pnpm test:v106-constitution-differential"
+      ],
+      "evidence": [
+        "SDK and independent verifier evaluated 3/3 differential fixtures under the canonical registry digest on 2026-07-17"
+      ]
+    },
+    {
+      "requirementId": "v106-independent-verifier",
+      "source": "docs/superpowers/specs/2026-07-16-v106-constitutional-application-platform-design.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-constitutional-verifier/src/index.ts",
+        "packages/receiz-constitutional-verifier/test/verifier.test.ts",
+        "scripts/test_v106_independent_verifier.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-independent-verifier"
+      ],
+      "evidence": [
+        "Independent verifier recomputed receipts, causal history, checkpoints, and adapter atomicity without SDK decision imports"
+      ]
+    },
+    {
+      "requirementId": "v106-command-admission",
+      "source": "docs/superpowers/plans/2026-07-16-v106-milestone-3-command-admission.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/commandAdmission.ts",
+        "packages/receiz-sdk/test/commandAdmission.test.ts",
+        "scripts/test_v106_command_admission.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-command-admission"
+      ],
+      "evidence": [
+        "All four authority profiles and ten denial paths passed with deterministic receipt evidence"
+      ]
+    },
+    {
+      "requirementId": "v106-capabilities-atomic-store",
+      "source": "docs/superpowers/plans/2026-07-16-v106-milestone-4-atomic-capabilities.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/capabilityAuthority.ts",
+        "packages/receiz-sdk/src/admissionStore.ts",
+        "scripts/test_v106_atomic_capabilities.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-atomic-capabilities"
+      ],
+      "evidence": [
+        "Signed capability, one-winner concurrency, idempotency, limits, and complete rollback passed"
+      ]
+    },
+    {
+      "requirementId": "v106-causal-history-replay",
+      "source": "docs/superpowers/plans/2026-07-16-v106-milestone-5-causal-replay.md",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/causalHistory.ts",
+        "packages/receiz-sdk/src/causalReplay.ts",
+        "scripts/test_v106_causal_replay.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-causal-replay"
+      ],
+      "evidence": [
+        "Six-record causal history, deterministic replay, dominance, and ancestry checkpoint passed"
+      ]
+    },
+    {
+      "requirementId": "v106-constitutional-compiler",
+      "source": "docs/superpowers/plans/2026-07-16-v106-release-completion.md#task-2",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/constitutionalCompiler.ts",
+        "packages/receiz-sdk/test/constitutionalCompiler.test.ts",
+        "scripts/test_v106_constitutional_compiler.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-constitutional-compiler"
+      ],
+      "evidence": [
+        "Deterministic compiler emitted 12 command-only files with protected extensions and stable digest"
+      ]
+    },
+    {
+      "requirementId": "v106-mcp-constitutional",
+      "source": "docs/superpowers/plans/2026-07-16-v106-release-completion.md#task-3",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-mcp-server/src/constitutional.ts",
+        "packages/receiz-mcp-server/src/index.ts",
+        "packages/receiz-mcp-server/test/constitutional.test.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-mcp-constitutional"
+      ],
+      "evidence": [
+        "Nineteen MCP tests passed for context, denial, plan/permit/execute, compiler, and semantic operations"
+      ]
+    },
+    {
+      "requirementId": "v106-ai-skills",
+      "source": "docs/superpowers/plans/2026-07-16-v106-release-completion.md#task-4",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "ai-skills/scripts/validate-skills.ts",
+        "scripts/test_v106_skill_contracts.ts",
+        "ai-skills/receiz-build-production-system/SKILL.md"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-ai-skills",
+        "pnpm validate:ai-skills"
+      ],
+      "evidence": [
+        "All 15 constitutional skill contracts passed with manifest-bound authority and evidence requirements"
+      ]
+    },
+    {
+      "requirementId": "v106-v105-forward-migration",
+      "source": "docs/superpowers/plans/2026-07-16-v106-release-completion.md#task-5",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/v105Migration.ts",
+        "packages/receiz-sdk/test/v105Migration.test.ts",
+        "fixtures/v106-migration/v105-representative-app/src/receiz.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-migration"
+      ],
+      "evidence": [
+        "Representative v105 application migrated through exact digest, resumable apply, ambiguity refusal, and preserved proof history"
+      ]
+    },
+    {
+      "requirementId": "v106-coordinated-release",
+      "source": "docs/superpowers/plans/2026-07-16-v106-release-completion.md#task-6",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "scripts/test_v106_release_lock.ts",
+        "scripts/test_mcp_package_release.mjs",
+        "packages/receiz-sdk/src/releaseIdentity.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-release-lock",
+        "pnpm test:coordinated-package-release"
+      ],
+      "evidence": [
+        "SDK, MCP, and AI skills are aligned at 106.0.0 with one registry digest and independently pinned verifier"
+      ]
+    },
+    {
+      "requirementId": "v106-release-evidence-lineage",
+      "source": "docs/superpowers/specs/2026-07-16-v106-constitutional-application-platform-design.md#release-evidence",
+      "disposition": "implemented",
+      "implementationPaths": [
+        "docs/releases/v106.0.0-evidence.md",
+        "docs/releases/v106.0.0-v100-v106-lineage.md",
+        "docs/releases/v106.0.0-product-truth.md"
+      ],
+      "contractCommands": [
+        "pnpm test:v106-release-lock"
+      ],
+      "evidence": [
+        "Release lock verified coordinated packages, registry, threat model, lineage, product truth, and freeze wiring"
+      ]
+    },
+    {
+      "requirementId": "v106-existing-primitives-remain-stronger",
+      "source": "docs/superpowers/specs/2026-07-16-v106-constitutional-application-platform-design.md#existing-primitive-binding",
+      "disposition": "superseded_by_stronger_primitive",
+      "implementationPaths": [
+        "packages/receiz-sdk/src/identity.ts",
+        "packages/receiz-sdk/src/portableAsset.ts",
+        "packages/receiz-sdk/src/causalHistory.ts"
+      ],
+      "contractCommands": [
+        "pnpm test:primitive-binding-contract",
+        "pnpm test:repo-only-reasoning-boundary"
+      ],
+      "evidence": [
+        "v106 machinery remains explicitly beneath sealed identity, artifact, ownership, verified local truth, and causal proof history"
+      ]
+    }
+  ],
+  "unresolved": []
+}

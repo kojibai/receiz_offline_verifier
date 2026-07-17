@@ -1,0 +1,156 @@
+{
+  "schema": "receiz.v107.threat_model.v1",
+  "version": "107.0.0",
+  "registryDigest": "4d0caa6172a69c3bf5817c1c35db5630e555b5d6d824091d45a90fb426b86ef6",
+  "registryBinding": "release-locked-before-production-admission",
+  "source": {
+    "repositoryThreatModel": "codex-security-scans/receiz/threat_model.md",
+    "repositoryTargetId": "sha256:39c03ed5b72ca567f0fc93b120f2b4dcc8694cd2916ee615e8703e142c79a5e4",
+    "repositoryVersion": "8bc7eea29e9f2f6c1e172b05794bf77deed08cb5"
+  },
+  "assets": [
+    "sealed-proof-object-bytes",
+    "receiz-identity-keys-and-portable-state",
+    "proof-heads-and-canonical-receipts",
+    "ownership-custody-and-settlement-state",
+    "verified-local-history",
+    "public-proof-projections",
+    "tenant-capabilities",
+    "registry-release-and-attestation-integrity"
+  ],
+  "threats": [
+    {
+      "id": "identity-key-substitution",
+      "primitive": "identity",
+      "boundary": "carried-key-to-account-session",
+      "controls": ["identity-key-session-binding", "portable-state-verification", "identity-key-mismatch-denial"],
+      "evidence": ["app/lib/receiz/v107/identityProfileOperation.server.ts", "packages/receiz-sdk/src/v107/portableAccount.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "username-race-or-takeover",
+      "primitive": "identity",
+      "boundary": "advisory-availability-to-global-commit",
+      "controls": ["commit-time-global-uniqueness", "same-key-rename", "release-old-name-after-commit", "expected-proof-head"],
+      "evidence": ["packages/receiz-sdk/src/v107/emulator.ts", "app/lib/receiz/v107/identityProfileOperation.server.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "profile-media-partial-commit",
+      "primitive": "identity-profile-proof",
+      "boundary": "raw-or-prepublished-media-to-profile-append",
+      "controls": ["staged-media", "atomic-profile-media-head", "rollback-on-media-rejection", "receipt-before-projection"],
+      "evidence": ["app/lib/receiz/v107/mediaOperation.server.ts", "app/lib/profile/v107ProfileClient.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "canonical-receipt-tampering",
+      "primitive": "proof",
+      "boundary": "server-result-to-client-projection",
+      "controls": ["canonical-digest-recomputation", "operation-and-head-binding", "admission-receipt-verifier-hook", "fail-closed-projection"],
+      "evidence": ["packages/receiz-sdk/src/v107/receipt.ts", "app/lib/profile/__tests__/v107FrontendParityContract.test.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "embedded-payload-authority-confusion",
+      "primitive": "ownership",
+      "boundary": "embedded-payload-to-enclosing-artifact",
+      "controls": ["verify-enclosing-artifact-first", "reject-subpayload-on-outer-proof-failure", "claimant-key-control"],
+      "evidence": ["packages/receiz-sdk/src/v107/bearerOwnership.ts", "app/lib/receiz/v107/bearerOwnershipOperation.server.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "bearer-claim-replay-or-stale-head",
+      "primitive": "ownership",
+      "boundary": "bearer-claim-to-ownership-append",
+      "controls": ["expected-ownership-head", "idempotency-digest", "atomic-one-winner", "sealed-result-artifact"],
+      "evidence": ["packages/receiz-sdk/test/v107BearerOwnership.test.ts", "packages/receiz-sdk/src/v107/emulator.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "offline-queued-as-committed",
+      "primitive": "offline-command",
+      "boundary": "signed-local-proposal-to-global-admission",
+      "controls": ["signed-command-is-global-admission-false", "globally-committed-false", "verified-receipt-on-resume", "stable-queued-ui-state"],
+      "evidence": ["packages/receiz-sdk/src/v107/offline.ts", "app/lib/profile/v107ProfileClient.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "offline-causal-reordering",
+      "primitive": "causal-history",
+      "boundary": "multi-object-outbox-to-resume",
+      "controls": ["fifo-per-proof-object", "parallel-independent-lanes", "stop-lane-on-conflict", "deterministic-resume"],
+      "evidence": ["packages/receiz-sdk/src/v107/offline.ts", "packages/receiz-sdk/test/v107OfflineQueue.test.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "portable-namespace-overwrite",
+      "primitive": "portable-account-state",
+      "boundary": "app-namespace-to-carried-identity",
+      "controls": ["allowed-namespace-list", "append-only-proof-head", "enclosing-artifact-verification", "local-first-projection"],
+      "evidence": ["packages/receiz-sdk/src/v107/portableAccount.ts", "packages/receiz-sdk/test/v107PortableAccount.test.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "continuity-owner-scope-confusion",
+      "primitive": "continuity",
+      "boundary": "prior-owner-scope-to-canonical-owner-scope",
+      "controls": ["read-only-plan", "digest-bound-idempotent-commit", "verified-additions-only", "explicit-conflicts"],
+      "evidence": ["packages/receiz-sdk/src/v107/continuity.ts", "app/lib/receiz/v107/continuityOperation.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "service-worker-cache-poisoning-or-scope-leak",
+      "primitive": "deterministic-first-paint",
+      "boundary": "runtime-cache-to-proof-surface",
+      "controls": ["actor-scoped-private-cache", "public-proof-cache-separation", "held-verified-truth-first", "runtime-version-coherence"],
+      "evidence": ["public/sw.js", "app/components/pwa/__tests__/serviceWorkerNavigationContract.test.ts"],
+      "status": "controlled-by-release-contract"
+    },
+    {
+      "id": "mcp-or-ai-authority-escalation",
+      "primitive": "developer-command-authority",
+      "boundary": "agent-output-to-sdk-command",
+      "controls": ["digest-bound-plan-execute", "maximum-autonomous-authority", "forbidden-operations", "independent-verifier"],
+      "evidence": ["packages/receiz-mcp-server/src/v107Operations.ts", "ai-skills/receiz-receipt-admission/manifest.json"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "emulator-production-confusion",
+      "primitive": "developer-evidence",
+      "boundary": "deterministic-simulation-to-production-claim",
+      "controls": ["emulator-simulation-trust-label", "production-verified-false", "schema-exact-fixtures", "release-lock"],
+      "evidence": ["packages/receiz-sdk/src/v107/emulator.ts", "packages/receiz-sdk/test/v107GeneratorEmulator.test.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "generator-path-or-extension-overwrite",
+      "primitive": "developer-integration",
+      "boundary": "generator-input-to-project-files",
+      "controls": ["fixed-output-inventory", "root-containment", "digest-bound-preview-apply", "developer-extension-preservation"],
+      "evidence": ["packages/receiz-sdk/src/v107/generator.ts", "scripts/test_v107_generated_integration.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "migration-history-rewrite-or-false-commit",
+      "primitive": "historical-proof",
+      "boundary": "v106-project-to-v107-project",
+      "controls": ["73-write-inventory", "history-preservation-digests", "exact-plan-confirmation", "signed-queued-proposal", "zero-global-commit-claims"],
+      "evidence": ["packages/receiz-sdk/src/v106Migration.ts", "packages/receiz-sdk/test/v106Migration.test.ts"],
+      "status": "controlled-by-v107-contract"
+    },
+    {
+      "id": "registry-downgrade-or-package-skew",
+      "primitive": "release-admission",
+      "boundary": "release-metadata-to-runtime-admission",
+      "controls": ["v107-registry-digest-pin", "exact-three-package-versions", "external-tarball-install", "release-freeze-and-attestation"],
+      "evidence": ["packages/receiz-sdk/src/releaseIdentity.ts", "scripts/test_mcp_package_release.mjs"],
+      "status": "controlled-by-release-contract"
+    }
+  ],
+  "authority": {
+    "threatModelIsAdmission": false,
+    "strongerTruth": "sealed-receiz-proof-object",
+    "externalConventionDefinesReceizTruth": false
+  }
+}

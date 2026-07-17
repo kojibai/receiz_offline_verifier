@@ -1,0 +1,72 @@
+{
+  "schema": "receiz.release.visual-evidence.v107",
+  "baseline": "v106.0.0",
+  "verdict": "confirms",
+  "contradictoryEvidence": false,
+  "captures": [
+    {
+      "id": "public-profile-first-paint-desktop",
+      "path": "output/playwright/v107/public-profile-first-paint-desktop.png",
+      "viewport": "desktop",
+      "surface": "public profile deterministic first paint",
+      "sha256": "cec33d64a14f9b6ed68df02f0a5f2ddbac67eacce78336a5d358daf342966264",
+      "confirms": ["public proof surface", "deterministic identity continuity"]
+    },
+    {
+      "id": "public-profile-first-paint-mobile",
+      "path": "output/playwright/v107/public-profile-first-paint-mobile.png",
+      "viewport": "mobile",
+      "surface": "public profile deterministic first paint",
+      "sha256": "c9d3261350ffb937212e89b20d05cf6343637d81915e66af821b3da835ae6e41",
+      "confirms": ["public proof surface", "mobile first-paint continuity"]
+    },
+    {
+      "id": "profile-edit-desktop",
+      "path": "output/playwright/v107/profile-edit-desktop.png",
+      "viewport": "desktop",
+      "surface": "atomic profile append reference",
+      "sha256": "ceaa0748b5be1205d8b626431f02e42235b3d80ce05f6e7d3bd264b8e5ccd053",
+      "confirms": ["same identity after username append", "raw file and existing media proof inputs", "verified receipt before projection"]
+    },
+    {
+      "id": "profile-edit-mobile",
+      "path": "output/playwright/v107/profile-edit-mobile.png",
+      "viewport": "mobile",
+      "surface": "atomic profile append reference",
+      "sha256": "204c295d1bce422edd2945444eace11dc376821e2211b7aa8baf5adf326dbb3c",
+      "confirms": ["responsive identity operation surface", "sealed proof authority boundary"]
+    },
+    {
+      "id": "restored-identity",
+      "path": "output/playwright/v107/restored-identity.png",
+      "viewport": "desktop",
+      "surface": "portable identity restore",
+      "sha256": "8b097fcbc85bdebe0fff8b9e5e6d89ee9902c19f67360e5d74b82d6b9dc57c91",
+      "confirms": ["same carried identity", "immediate local projection", "app namespace isolation"]
+    },
+    {
+      "id": "bearer-claim",
+      "path": "output/playwright/v107/bearer-claim.png",
+      "viewport": "desktop",
+      "surface": "generic bearer ownership claim",
+      "sha256": "1ca284cbc294ad9af6b2dbcf752b306cbceea36e1b43ed2d007491baef65f7e1",
+      "confirms": ["enclosing artifact verified first", "one active committed owner", "generic artifact coverage"]
+    },
+    {
+      "id": "queued-offline-command",
+      "path": "output/playwright/v107/queued-offline-command.png",
+      "viewport": "desktop",
+      "surface": "signed offline proposal",
+      "sha256": "82f6887476152d0b55e86a6f19fb0056f919199f08f04f05dd3d37832d595093",
+      "confirms": ["queued is not globally committed", "per-object FIFO causal lane"]
+    },
+    {
+      "id": "canonical-conflict",
+      "path": "output/playwright/v107/canonical-conflict.png",
+      "viewport": "desktop",
+      "surface": "canonical stale-head conflict",
+      "sha256": "b5b13b3845320fc941166a4c6f1c76c6cd12b027cf96c7ac4390654e5d1b01e9",
+      "confirms": ["zero overwrite on stale head", "verified repair path", "canonical receipt verification"]
+    }
+  ]
+}

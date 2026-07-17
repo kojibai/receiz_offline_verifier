@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v107.0.0] - 2026-07-17
+
+### Changed
+
+- Advanced the current release/documentation surface from `v106.0.0` to `v107.0.0`.
+- Updated canonical root package metadata and set `package.json` to `107.0.0`.
+- Published the complete supplied v107 evidence set, including product truth, process, regression lessons, commit history, release notes, developer guide, migration, v100–v107 lineage, canonical registry and digest, threat model, v106 closure inventory, and visual evidence.
+- Added verifier-required `v107.0.0` performance findings and invariant register records.
+- Aligned release framing around same-key identity rename, atomic profile/media/head append, portable continuity, generic bearer ownership, verified receipts, proof heads, signed offline proposals, coordinated packages, emulator/generator boundaries, and forward-only migration.
+- Updated shipped verifier, Sports card verifier, studio, settlement, release checker, and service-worker release identity to `107.0.0` dated `2026-07-17`.
+
+### Kept
+
+- Sealed proof objects, signed identity, verified ownership/settlement, canonical receipts, proof heads, and append-only history remain stronger than SDK, MCP, AI-skill, emulator, generator, migration, registry, cache, server, session, or release state.
+- Known verified local truth paints immediately, and hidden work may append verified additions only.
+- Durable proof memory remains first admission only, then append forever.
+- Publication, deployment, production mutation, production attestation, push, and production verification remain separate actions.
+
 ## [v106.0.0] - 2026-07-16
 
 ### Changed

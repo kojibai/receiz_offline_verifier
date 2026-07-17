@@ -1,0 +1,236 @@
+{
+  "schema": "receiz.constitution.registry.v1",
+  "version": "107.0.0",
+  "previousRegistryDigest": "bf851c209e807309672c0f466411baa5607ce6b3195fe4eb16755edfeb7f5a1a",
+  "effectiveKai": "kai:107-release",
+  "createdAt": "2026-07-17T00:00:00.000Z",
+  "laws": [
+    {
+      "id": "wilds.retirement.irreversible",
+      "version": 1,
+      "phases": [
+        "command",
+        "merge",
+        "migration"
+      ],
+      "denyWhen": {
+        "op": "transition",
+        "path": "life",
+        "from": "dead",
+        "to": "alive"
+      },
+      "denial": {
+        "code": "RETIREMENT_IS_FINAL",
+        "safeAlternatives": [
+          "memorialize",
+          "retire",
+          "create-descendant"
+        ]
+      }
+    },
+    {
+      "id": "authority.tenant.explicit",
+      "version": 1,
+      "phases": [
+        "command",
+        "admission"
+      ],
+      "denyWhen": {
+        "op": "not",
+        "value": {
+          "op": "path",
+          "value": "tenant.id"
+        }
+      },
+      "denial": {
+        "code": "TENANT_REQUIRED",
+        "safeAlternatives": [
+          "bind-tenant"
+        ]
+      }
+    },
+    {
+      "id": "receiz.command-only-mutation",
+      "version": 1,
+      "phases": [
+        "command",
+        "event",
+        "merge",
+        "migration",
+        "admission"
+      ],
+      "denyWhen": {
+        "op": "not",
+        "value": {
+          "op": "equal",
+          "left": {
+            "op": "path",
+            "value": "mutation.mode"
+          },
+          "right": {
+            "op": "literal",
+            "value": "admitted-command"
+          }
+        }
+      },
+      "denial": {
+        "code": "DIRECT_STATE_WRITE_FORBIDDEN",
+        "safeAlternatives": [
+          "define-command",
+          "simulate-command",
+          "request-capability"
+        ]
+      }
+    },
+    {
+      "id": "identity.rename.same-key",
+      "version": 1,
+      "phases": [
+        "command",
+        "admission",
+        "migration"
+      ],
+      "denyWhen": {
+        "op": "not",
+        "value": {
+          "op": "equal",
+          "left": {
+            "op": "path",
+            "value": "previous.identity.keyId"
+          },
+          "right": {
+            "op": "path",
+            "value": "proposed.identity.keyId"
+          }
+        }
+      },
+      "denial": {
+        "code": "IDENTITY_KEY_MISMATCH",
+        "safeAlternatives": [
+          "reuse-original-identity-key",
+          "restore-receiz-identity"
+        ]
+      }
+    },
+    {
+      "id": "profile.atomic-proof-head",
+      "version": 1,
+      "phases": [
+        "command",
+        "admission"
+      ],
+      "denyWhen": {
+        "op": "not",
+        "value": {
+          "op": "path",
+          "value": "proposed.receipt.head.digest"
+        }
+      },
+      "denial": {
+        "code": "PROFILE_PROOF_HEAD_REQUIRED",
+        "safeAlternatives": [
+          "commit-profile-media-and-head-atomically"
+        ]
+      }
+    },
+    {
+      "id": "ownership.enclosing-artifact-first",
+      "version": 1,
+      "phases": [
+        "command",
+        "admission"
+      ],
+      "denyWhen": {
+        "op": "not",
+        "value": {
+          "op": "equal",
+          "left": {
+            "op": "path",
+            "value": "artifact.enclosingProofVerified"
+          },
+          "right": {
+            "op": "literal",
+            "value": true
+          }
+        }
+      },
+      "denial": {
+        "code": "ENCLOSING_ARTIFACT_PROOF_REQUIRED",
+        "safeAlternatives": [
+          "verify-enclosing-artifact-then-claim"
+        ]
+      }
+    },
+    {
+      "id": "offline.queued-not-committed",
+      "version": 1,
+      "phases": [
+        "command",
+        "admission",
+        "migration"
+      ],
+      "denyWhen": {
+        "op": "all",
+        "values": [
+          {
+            "op": "equal",
+            "left": {
+              "op": "path",
+              "value": "proposed.status"
+            },
+            "right": {
+              "op": "literal",
+              "value": "queued"
+            }
+          },
+          {
+            "op": "equal",
+            "left": {
+              "op": "path",
+              "value": "proposed.globallyCommitted"
+            },
+            "right": {
+              "op": "literal",
+              "value": true
+            }
+          }
+        ]
+      },
+      "denial": {
+        "code": "QUEUED_COMMAND_NOT_COMMITTED",
+        "safeAlternatives": [
+          "report-signed-queued-proposal",
+          "resume-canonical-admission"
+        ]
+      }
+    },
+    {
+      "id": "migration.witnessed-history-immutable",
+      "version": 1,
+      "phases": [
+        "migration"
+      ],
+      "denyWhen": {
+        "op": "equal",
+        "left": {
+          "op": "path",
+          "value": "migration.historyRewritten"
+        },
+        "right": {
+          "op": "literal",
+          "value": true
+        }
+      },
+      "denial": {
+        "code": "WITNESSED_HISTORY_REWRITE_FORBIDDEN",
+        "safeAlternatives": [
+          "roll-forward-from-verified-checkpoint"
+        ]
+      }
+    }
+  ],
+  "authority": {
+    "registryPayloadIsAuthority": false,
+    "strongerTruth": "sealed-receiz-proof-object"
+  }
+}
