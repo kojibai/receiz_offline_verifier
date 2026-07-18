@@ -2,20 +2,20 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v109.0.0`
+Current release: `v110.0.0`
 
-## What changed in v109.0.0
+## What changed in v110.0.0
 
-- Current release/docs surfaces are aligned to `v109.0.0`.
-- Published the coordinated local-offline developer release and complete supplied evidence set at [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md).
-- Published the release-scoped [product truth](docs/releases/v109.0.0-product-truth.md), [checklist](docs/releases/v109.0.0-checklist.md), [process](docs/releases/v109.0.0-process.md), [regression lessons](docs/releases/v109.0.0-regression-lessons.md), [performance findings](docs/releases/v109.0.0-performance-findings.md), [invariant register](docs/releases/v109.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v109.0.0-commit-history.md).
-- `receiz.verification.verifyArtifact(file)` verifies complete `.receizbundle` proof objects locally from their bytes with zero network calls or weaker-state prerequisites.
-- `receiz.artifacts.verifyAndOpen(file)` verifies before extraction and keeps the complete artifact separate from the verified payload.
-- Signature V4 roots, the document-seal Groth16 verification key, and the `snarkjs` runtime are packaged with the SDK; mutation, malformed carriers, binding failures, signature failures, proof failures, and invalid portable continuity fail closed.
-- MCP uses the same SDK verifier beneath sealed artifact authority, while artifact AI skills require zero-network and local-verifier evidence.
-- `ARTIFACT-011` makes complete-artifact zero-network verification constitutional law with denial code `LOCAL_ARTIFACT_VERIFICATION_MUST_NOT_REQUIRE_WEAKER_STATE`.
-- Receiz.com product behavior remains the v108 implementation; application behavior, database schema, migrations, query paths, and production data do not change.
-- Current coordinated identity aligns at `109.0.0` with registry digest `17f76b37c9fcd46f710239b5c1660b03cc34ec64bed30d1cc45c18d5d40eab70` and real Kai-Klok whole pulse `13184788` at the recorded seal instant.
+- Current release/docs surfaces are aligned to `v110.0.0`.
+- Published the coordinated unified artifact admission and recovery release at [docs/releases/v110.0.0.md](docs/releases/v110.0.0.md).
+- Published the release-scoped [product truth](docs/releases/v110.0.0-product-truth.md), [checklist](docs/releases/v110.0.0-checklist.md), [process](docs/releases/v110.0.0-process.md), [regression lessons](docs/releases/v110.0.0-regression-lessons.md), [performance findings](docs/releases/v110.0.0-performance-findings.md), [invariant register](docs/releases/v110.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v110.0.0-commit-history.md).
+- `receiz.artifacts.admitAndRecover(artifact)` verifies exact enclosing bytes, returns one of five typed verdicts and five explicit authority actions, restores verified state/history, and performs zero writes and zero network calls.
+- `artifacts.admit`, `artifacts.planRecovery`, and `artifacts.admitAndRecover` remain read-only; `artifacts.commitRecovery` is separately explicit, SDK-plan-custody-bound, capability-verified, expected-head-bound, idempotent, and caller-locally atomic.
+- Bearer, legacy, and foreign-owner admissions cannot escalate into canonical identity, signing, publishing, ownership, or settlement authority; invalid card-only payloads cannot bypass the enclosing proof object.
+- SDK and MCP share deterministic operation identity, while MCP commit JSON carries no raw capability or store and AI skills teach the same verdict/action/history boundaries.
+- `ARTIFACT-012` through `ARTIFACT-015` lock complete-artifact admission, bearer non-escalation, atomic capability-bound recovery, and non-authoritative explanations.
+- V109 local verification remains the foundation. Receiz.com behavior, APIs, database schema, migrations, queries, production data, and native Record -> Seal issuance remain unchanged.
+- Current coordinated identity aligns at `110.0.0` with registry digest `824aa4af849c4840ba94535798eab36e45d514703b6ae0cd30d4aa53f3c896e4` and real Kai-Klok whole pulse `13185897`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -23,10 +23,10 @@ Current release: `v109.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require SDK/MCP typechecks and suites, AI-skill validation, zero-fetch production-signed verification, mutation rejection, tarball inspection, external installation, registry locking, release freeze, governance, signing, publication, deployment, and production evidence named in [docs/releases/v109.0.0-checklist.md](docs/releases/v109.0.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v109.0.0`.
-- Root package metadata now resolves cleanly to `109.0.0`.
-- The static service-worker surface carries runtime version `109.0.0`.
+- Broader platform target environments require focused admission/recovery tests, SDK/MCP suites, AI validation, multi-application convergence, active-registry binding, package contracts, release freeze, governance, signing, publication, deployment, and production evidence named in [docs/releases/v110.0.0-checklist.md](docs/releases/v110.0.0-checklist.md).
+- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v110.0.0`.
+- Root package metadata now resolves cleanly to `110.0.0`.
+- The static service-worker surface carries runtime version `110.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -44,7 +44,7 @@ Current release: `v109.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v109.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v110.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -130,6 +130,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v107.0.0`: Unified developer operations expose identity, profile, media, portable continuity, generic bearer ownership, receipts, proof heads, and signed offline proposals across coordinated packages and runtime surfaces.
 - `v108.0.0`: Proof-object-first authority restoration returns first-party profile saves to the admitted same-account operation and makes SDK, MCP, and AI adapters explicitly subordinate to Receiz.com reference behavior and stronger sealed proof.
 - `v109.0.0`: Coordinated local-offline developer verification packages Signature V4 and Groth16 dependencies, verifies complete artifact bytes with zero network calls, keeps artifact custody separate from payload extraction, and seals `ARTIFACT-011` beneath proof-object authority.
+- `v110.0.0`: Unified artifact admission and recovery composes exact-byte verification into typed verdicts/actions, deterministic read-only recovery planning, and explicit capability-bound atomic commit under `ARTIFACT-012` through `ARTIFACT-015`.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -195,18 +196,18 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v109.0.0`.
-- [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md): canonical coordinated local-offline developer release for `v109.0.0`.
-- [docs/releases/v109.0.0-product-truth.md](docs/releases/v109.0.0-product-truth.md): `v109.0.0` product-truth freeze document.
-- [docs/releases/v109.0.0-checklist.md](docs/releases/v109.0.0-checklist.md): release-lock checklist and external-action boundary for `v109.0.0`.
-- [docs/releases/v109.0.0-process.md](docs/releases/v109.0.0-process.md): design, TDD, package, registry, and qualification process for `v109.0.0`.
-- [docs/releases/v109.0.0-regression-lessons.md](docs/releases/v109.0.0-regression-lessons.md): network-verdict and stale-package-output regression lock.
-- [docs/releases/v109.0.0-performance-findings.md](docs/releases/v109.0.0-performance-findings.md): zero-network local verification, packaged dependency, custody, and unchanged-application boundaries.
-- [docs/releases/v109.0.0-invariant-register.md](docs/releases/v109.0.0-invariant-register.md): `ARTIFACT-011` and complete-artifact authority invariant lock.
-- [docs/releases/v109.0.0-commit-history.md](docs/releases/v109.0.0-commit-history.md): coordinated upstream and standalone-verifier commit-history boundary.
-- [docs/releases/v109.0.0-constitution-registry.digest](docs/releases/v109.0.0-constitution-registry.digest): declared canonical v109 registry payload digest.
-- [docs/releases/v109.0.0-constitution-registry.json](docs/releases/v109.0.0-constitution-registry.json): pinned machine-readable v109 constitutional registry.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v109.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v110.0.0`.
+- [docs/releases/v110.0.0.md](docs/releases/v110.0.0.md): canonical unified artifact admission and recovery release for `v110.0.0`.
+- [docs/releases/v110.0.0-product-truth.md](docs/releases/v110.0.0-product-truth.md): `v110.0.0` product-truth freeze document.
+- [docs/releases/v110.0.0-checklist.md](docs/releases/v110.0.0-checklist.md): release-lock checklist and external-action boundary.
+- [docs/releases/v110.0.0-process.md](docs/releases/v110.0.0-process.md): coordinated contract-first implementation and qualification process.
+- [docs/releases/v110.0.0-regression-lessons.md](docs/releases/v110.0.0-regression-lessons.md): stale-registry and recovery-authority regression lock.
+- [docs/releases/v110.0.0-performance-findings.md](docs/releases/v110.0.0-performance-findings.md): single-pass admission, deterministic planning, atomic-commit, convergence, and unchanged-application boundaries.
+- [docs/releases/v110.0.0-invariant-register.md](docs/releases/v110.0.0-invariant-register.md): verdict/action, `ARTIFACT-012`–`015`, capability, atomicity, and bearer-authority lock.
+- [docs/releases/v110.0.0-commit-history.md](docs/releases/v110.0.0-commit-history.md): coordinated upstream and standalone-verifier commit-history boundary.
+- [docs/releases/v110.0.0-constitution-registry.digest](docs/releases/v110.0.0-constitution-registry.digest): declared canonical v110 registry payload digest.
+- [docs/releases/v110.0.0-constitution-registry.json](docs/releases/v110.0.0-constitution-registry.json): pinned machine-readable v110 constitutional registry.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v110.0.0`.
 - [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md): canonical Enterprise App Runtime SDK Release note for `v97.2.0`.
 - [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md): `v97.2.0` product-truth freeze document.
 - [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md): release-prep checklist and additional gates for `v97.2.0`.
@@ -380,11 +381,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v109.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v109.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v110.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v110.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v109.0.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v109.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v110.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v110.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.

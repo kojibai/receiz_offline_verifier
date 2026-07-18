@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v110.0.0] - 2026-07-18
+
+### Changed
+
+- Advanced the current release/documentation surface from `v109.0.0` to `v110.0.0`.
+- Updated canonical root package metadata and set `package.json` to `110.0.0`.
+- Published the complete supplied v110 evidence set: product truth, process, regression lessons, commit history, constitutional registry and digest, checklist, and full release note.
+- Added verifier-required `v110.0.0` performance findings and invariant register records.
+- Aligned release framing around exact-byte admission, five verdicts/actions, zero-write/zero-network recovery planning, deterministic history, SDK plan and capability custody, atomic/idempotent commit, operation identity, MCP/AI parity, convergence, and `ARTIFACT-012` through `ARTIFACT-015`.
+- Updated shipped verifier, Sports card verifier, studio, settlement, and service-worker release identity to `110.0.0` dated `2026-07-18`.
+
+### Kept
+
+- Exact sealed artifacts and verified proof history remain stronger than verdicts, actions, plans, explanations, SDK, MCP, AI, registry, server, session, database, or release evidence.
+- V109 local verification, native Record -> Seal issuance, Receiz.com application/API behavior, and database logic remain unchanged.
+- Durable proof memory remains first admission only, then append forever.
+- Production signing, npm publication, deployment, database mutation/verification, authenticated production evidence, and push remain separate actions.
+
 ## [v109.0.0] - 2026-07-18
 
 ### Changed
