@@ -1,34 +1,35 @@
 # Release Notes
 
-## v107.0.0
+## v108.0.0
 Release date: 2026-07-17
 
-`v107.0.0` ships unified proof-native developer operations for identity, profile, media, portable continuity, generic bearer ownership, receipts, proof heads, and signed offline proposals across Receiz.com, SDK, MCP, AI skills, emulator, generator, frontend, service worker, migration, registry, and release evidence.
+`v108.0.0` restores the established Receiz.com profile operation and makes the proof-object-first authority order literal across the application, SDK, MCP, AI skills, constitutional registry, verifier, and release gates.
 
-Canonical full release note: [docs/releases/v107.0.0.md](docs/releases/v107.0.0.md)
-Product-truth freeze: [docs/releases/v107.0.0-product-truth.md](docs/releases/v107.0.0-product-truth.md)
-Release checklist: [docs/releases/v107.0.0-checklist.md](docs/releases/v107.0.0-checklist.md)
-Release process: [docs/releases/v107.0.0-process.md](docs/releases/v107.0.0-process.md)
-Regression lessons: [docs/releases/v107.0.0-regression-lessons.md](docs/releases/v107.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v107.0.0-performance-findings.md](docs/releases/v107.0.0-performance-findings.md)
-Invariant register: [docs/releases/v107.0.0-invariant-register.md](docs/releases/v107.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v107.0.0-commit-history.md](docs/releases/v107.0.0-commit-history.md)
-Coordinated release notes: [docs/releases/v107.0.0-release-notes.md](docs/releases/v107.0.0-release-notes.md)
-Developer guide: [docs/releases/v107.0.0-developer-guide.md](docs/releases/v107.0.0-developer-guide.md)
-Migration contract: [docs/releases/v107.0.0-migration.md](docs/releases/v107.0.0-migration.md)
-Complete v100-v107 lineage: [docs/releases/v107.0.0-v100-v107-lineage.md](docs/releases/v107.0.0-v100-v107-lineage.md)
+Canonical full release note: [docs/releases/v108.0.0.md](docs/releases/v108.0.0.md)
+Product-truth freeze: [docs/releases/v108.0.0-product-truth.md](docs/releases/v108.0.0-product-truth.md)
+Release checklist: [docs/releases/v108.0.0-checklist.md](docs/releases/v108.0.0-checklist.md)
+Release process: [docs/releases/v108.0.0-process.md](docs/releases/v108.0.0-process.md)
+Regression lessons: [docs/releases/v108.0.0-regression-lessons.md](docs/releases/v108.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v108.0.0-performance-findings.md](docs/releases/v108.0.0-performance-findings.md)
+Invariant register: [docs/releases/v108.0.0-invariant-register.md](docs/releases/v108.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v108.0.0-commit-history.md](docs/releases/v108.0.0-commit-history.md)
+Coordinated release notes: [docs/releases/v108.0.0-release-notes.md](docs/releases/v108.0.0-release-notes.md)
+Developer guide: [docs/releases/v108.0.0-developer-guide.md](docs/releases/v108.0.0-developer-guide.md)
+Migration contract: [docs/releases/v108.0.0-migration.md](docs/releases/v108.0.0-migration.md)
+Complete v100-v108 lineage: [docs/releases/v108.0.0-v100-v108-lineage.md](docs/releases/v108.0.0-v100-v108-lineage.md)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v106 archive: [docs/releases/v106.0.0.md](docs/releases/v106.0.0.md)
+Prior v107 archive: [docs/releases/v107.0.0.md](docs/releases/v107.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- `@receiz/sdk@107.0.0`, `@receiz/mcp-server@107.0.0`, and `@receiz/ai-skills@107.0.0` bind to registry digest `4d0caa6172a69c3bf5817c1c35db5630e555b5d6d824091d45a90fb426b86ef6`.
-- Same-key username rename, commit-time uniqueness, atomic profile/media/head append, and verified receipt-before-projection preserve identity continuity.
-- Portable restore projects verified carried truth immediately, while generic bearer ownership verifies the enclosing artifact before embedded material.
-- Signed queued commands remain uncommitted proposals with per-object FIFO causality until canonical receipt verification.
-- Emulator output remains explicitly non-production evidence, and generator changes require digest-bound preview/apply within the repository root.
-- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v107.0.0`.
-- Root package metadata now resolves to `107.0.0`.
+- Authority is ordered from Receiz law through sealed proof and admitted identity to Receiz.com reference behavior, then SDK, MCP, and AI skills.
+- Inline rename and full save use `PATCH /api/profile/me`, preserve the admitted UID, and do not depend on `identity_keys` rows or `/api/receiz/identity/profile`.
+- Native proof-object creation performs Record before Seal; download preserves exact complete bytes and opening verifies before extraction.
+- Bearer ownership derives continuity from the verified complete artifact and returns a new verified native Record-to-Seal artifact.
+- Historical v107 mechanics remain history, never-applied SQL remains non-deployable evidence, and `/developers` remains the unversioned maintained surface.
+- Registry digest is `126ca9283fee4ef4c398dbcb958e861cbea191724fdab8eb08df55ff0c14bb79`; real effective Kai-Klok pulse is `13182786` at the recorded seal instant.
+- Current shipped verifier, Sports card verifier, studio, settlement entrypoints, and static service-worker runtime are marked `v108.0.0`.
+- Root package metadata now resolves to `108.0.0`.
 
 ## Operational notes
 - AI-skills/SDK/MCP publication, registry read-back, external installation, app/service-worker deployment, and production probes remain external evidence; they do not redefine authenticated proof truth.
@@ -36,10 +37,10 @@ Prior v106 archive: [docs/releases/v106.0.0.md](docs/releases/v106.0.0.md)
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v107.0.0`.
-- Confirm identity/profile/media atomicity, enclosing-artifact ownership, receipt verification, queued-not-committed semantics, registry parity, SDK/MCP/AI-skill conformance, emulator/generator contracts, v106-to-v107 migration, external package installation, visual evidence, release freeze, publication, and production gates in the broader platform workspace.
+- Confirm version and entrypoint markers show `v108.0.0`.
+- Confirm exact pre-regression profile behavior, same-UID saves with zero key rows, no developer preflight, native proof-object custody, verify-before-extract opening, bearer composition, SDK/MCP/AI adapter direction, never-applied SQL isolation, registry pulse/digest parity, desktop/mobile evidence, release freeze, publication, and production gates in the broader platform workspace.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 107.0.0`, and `node scripts/check_release_lock.mjs 107.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 108.0.0`, and `node scripts/check_release_lock.mjs 108.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

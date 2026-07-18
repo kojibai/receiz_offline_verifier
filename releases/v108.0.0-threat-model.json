@@ -1,0 +1,105 @@
+{
+  "schema": "receiz.v108.threat_model.v2",
+  "version": "108.0.0",
+  "registryDigest": "126ca9283fee4ef4c398dbcb958e861cbea191724fdab8eb08df55ff0c14bb79",
+  "registryBinding": "release-locked-before-production-admission",
+  "source": {
+    "governingLaw": "docs/literal-product-law.md",
+    "releaseDesign": "docs/superpowers/specs/2026-07-17-v108-proof-object-first-authority-design.md",
+    "currentProductTruth": "docs/releases/v108.0.0-product-truth.md",
+    "historicalRegressionRecord": "docs/releases/v108.0.0-regression-lessons.md"
+  },
+  "assets": [
+    "enclosing-sealed-proof-object-bytes",
+    "deterministic-proof-object-state",
+    "verified-local-truth",
+    "accepted-identity-proof-and-admitted-same-account-binding",
+    "same-uid-profile-and-public-proof-projection",
+    "complete-artifact-carried-ownership-continuity",
+    "native-record-seal-verification-output",
+    "verified-local-history",
+    "deterministic-first-paint",
+    "registry-release-and-attestation-integrity"
+  ],
+  "threats": [
+    {
+      "id": "proof-object-authority-downgrade",
+      "primitive": "proof-object",
+      "boundary": "enclosing-sealed-artifact-to-projection-or-tooling",
+      "controls": ["enclosing-proof-object-is-authority", "verified-local-truth-is-durable", "server-session-database-registry-sdk-mcp-and-ai-remain-beneath-proof"],
+      "evidence": ["docs/literal-product-law.md", "docs/receiz-reasoning-kernel.md", "app/lib/receizArtifactVerifier.ts", "packages/receiz-sdk/src/artifacts.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "first-party-profile-actor-substitution",
+      "primitive": "identity-continuity",
+      "boundary": "admitted-same-account-binding-to-profile-mutation",
+      "controls": ["patch-api-profile-me", "server-derives-admitted-actor", "same-uid-result-check", "session-profile-and-public-projection-refresh"],
+      "evidence": ["app/api/profile/me/route.ts", "app/lib/profile/receizComProfileCommand.server.ts", "app/lib/profile/server.ts", "app/lib/profile/__tests__/v108ProfileDatabaseBoundaryContract.test.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "username-race-or-takeover",
+      "primitive": "identity-profile-projection",
+      "boundary": "advisory-availability-to-canonical-commit",
+      "controls": ["commit-time-global-uniqueness", "same-account-uid-rename", "release-prior-name-after-success", "availability-is-not-reservation"],
+      "evidence": ["app/lib/profile/server.ts", "app/lib/profile/receizComProfileCommand.server.ts", "app/api/profile/me/route.ts", "app/lib/profile/__tests__/v108ProfileDatabaseBoundaryContract.test.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "developer-adapter-authority-inversion",
+      "primitive": "developer-adapter",
+      "boundary": "sdk-mcp-and-ai-to-receiz.com-native-operation",
+      "controls": ["sdk-composes-the-same-profile-operation", "mcp-calls-current-sdk-methods", "ai-skills-adapt-downward", "developer-tooling-cannot-select-or-replace-an-admitted-actor"],
+      "evidence": ["packages/receiz-sdk/src/profile.ts", "packages/receiz-sdk/src/index.ts", "packages/receiz-mcp-server/src/operations.ts", "packages/receiz-sdk/test/v108ProfileUpdate.test.ts", "packages/receiz-mcp-server/test/v108ReceizComAdapter.test.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "embedded-payload-authority-confusion",
+      "primitive": "ownership-surface",
+      "boundary": "embedded-payload-to-enclosing-sealed-artifact",
+      "controls": ["accept-exact-complete-artifact", "verify-enclosing-artifact-before-extraction", "reject-subpayload-when-enclosing-proof-fails", "derive-prior-ownership-from-verified-carried-document"],
+      "evidence": ["app/lib/receizArtifactVerifier.ts", "app/api/sdk/v1/artifacts/open/route.ts", "app/lib/sdk/bearerOwnershipClaim.server.ts", "packages/receiz-sdk/test/artifactCustody.test.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "bearer-ownership-continuity-break",
+      "primitive": "ownership-surface",
+      "boundary": "verified-bearer-custody-to-authenticated-owner-binding",
+      "controls": ["require-carried-bearer-custody", "bind-authenticated-receiz-owner", "native-record-then-seal", "verify-output-and-record-seal-continuity-before-return"],
+      "evidence": ["app/lib/sdk/bearerOwnershipClaim.server.ts", "app/lib/sdk/artifactContinuity.server.ts", "app/lib/documentSeal/receizeDocumentBytes.ts", "app/lib/sdk/__tests__/v108BearerOwnershipComposition.test.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "never-applied-database-design-resurrection",
+      "primitive": "proof-and-ownership-continuity",
+      "boundary": "historical-non-deployable-evidence-to-current-runtime-or-deployment",
+      "controls": ["historical-sql-remains-non-deployable", "active-migration-chain-excludes-retired-designs", "current-profile-and-bearer-outcomes-use-native-operations", "current-capability-inventory-has-no-retired-database-dependency"],
+      "evidence": ["docs/releases/historical/v107-never-applied-sql/README.md", "docs/releases/v108.0.0-migration.md", "scripts/test_v108_never_applied_migration_boundary.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "settled-surface-replacement",
+      "primitive": "deterministic-first-paint",
+      "boundary": "known-verified-truth-to-background-runtime-work",
+      "controls": ["known-verified-truth-paints-immediately", "background-work-appends-or-warms-only", "developer-adapters-do-not-remount-first-party-runtime", "contradictory-visual-evidence-blocks-release"],
+      "evidence": ["docs/deterministic-surfaces.md", "docs/truthful-speed-invariants.md", "app/lib/runtime/runtimeCoherence.ts", "scripts/test_v108_visual_evidence_contract.ts"],
+      "status": "controlled-by-v108-contract"
+    },
+    {
+      "id": "release-evidence-authority-escalation",
+      "primitive": "release-evidence",
+      "boundary": "registry-or-attestation-to-proof-admission",
+      "controls": ["registry-and-attestation-are-evidence-not-admission", "real-kai-klok-seal-time", "focused-gates-and-release-freeze-required", "external-publication-deployment-and-signing-remain-separate"],
+      "evidence": ["docs/releases/v108.0.0-product-truth.md", "docs/releases/v108.0.0-checklist.md", "docs/releases/v108.0.0-constitution-registry.digest", "scripts/test_v108_release_lock.ts"],
+      "status": "controlled-by-release-contract"
+    }
+  ],
+  "authority": {
+    "threatModelIsAdmission": false,
+    "strongerTruth": "enclosing-sealed-receiz-proof-object",
+    "receizComIsProofAuthority": false,
+    "externalConventionDefinesReceizTruth": false,
+    "authorityOrder": ["receiz-law-and-product-invariants", "enclosing-sealed-proof-object-deterministic-proof-and-verified-local-truth", "accepted-identity-proof-and-admitted-same-account-binding", "receiz.com-first-party-reference-behavior", "sdk", "mcp", "ai"]
+  }
+}

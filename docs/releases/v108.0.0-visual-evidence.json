@@ -1,0 +1,49 @@
+{
+  "schema": "receiz.release.visual-evidence.v108",
+  "baselineCommit": "a1081796e90a65124d952ce5907512999dd16cb0",
+  "regressionCommit": "9611cb8f57c587eae1b6ee8079ee6d7bd2a02637",
+  "registryDigest": "126ca9283fee4ef4c398dbcb958e861cbea191724fdab8eb08df55ff0c14bb79",
+  "effectiveKai": "13182786",
+  "verdict": "confirms",
+  "contradictoryEvidence": false,
+  "sameUidConfirmed": true,
+  "zeroIdentityKeyRowsConfirmed": true,
+  "developerRouteRequests": 0,
+  "browserRunProvenance": {
+    "runner": "Playwright CLI",
+    "transport": "loopback-only",
+    "origin": "http://127.0.0.1:3018",
+    "fixture": "fixtures/v108-profile-browser-evidence",
+    "productionComponent": "app/u/[username]/ProfileClient.tsx",
+    "desktopViewport": { "width": 1440, "capturedHeight": 1975 },
+    "mobileViewport": { "width": 390, "capturedHeight": 2542 }
+  },
+  "databaseEvidence": {
+    "kind": "isolated-local-supabase",
+    "command": "node --import tsx scripts/test_v108_profile_database_integration.ts",
+    "path": "output/playwright/v108/profile-database.json",
+    "sha256": "6a63849d56e8739c3ef22ef683338a4aade8eb630ebefe4ca6b620b142b2ff15",
+    "endpoint": "http://127.0.0.1:54321",
+    "productionMutation": false
+  },
+  "captures": [
+    {
+      "id": "inline-rename-desktop",
+      "viewport": "desktop",
+      "operation": "inline-username",
+      "path": "output/playwright/v108/inline-rename-desktop.png",
+      "sha256": "fa07eff6365fb88037ae3a323c33c8477070eb4bbc42fd19a23ba68f794791e6",
+      "networkLogPath": "output/playwright/v108/inline-rename-desktop.network.json",
+      "networkLogSha256": "b0ebd14828b64220e2808688e97174bf83791dbdd599372f8222fa6390e40723"
+    },
+    {
+      "id": "full-save-mobile",
+      "viewport": "mobile",
+      "operation": "full-profile-save",
+      "path": "output/playwright/v108/full-save-mobile.png",
+      "sha256": "2971e22589ac8e5ff03f0acb1a7c09fe2678c3c0a1f344b9c27602b3bb4e079e",
+      "networkLogPath": "output/playwright/v108/full-save-mobile.network.json",
+      "networkLogSha256": "cf52e8b4e61ad05d3365d5bb776bf823a33d143d00a85c8867997f32caeae948"
+    }
+  ]
+}

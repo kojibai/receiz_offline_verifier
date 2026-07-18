@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v108.0.0] - 2026-07-17
+
+### Changed
+
+- Advanced the current release/documentation surface from `v107.0.0` to `v108.0.0`.
+- Updated canonical root package metadata and set `package.json` to `108.0.0`.
+- Published the complete supplied v108 evidence set, including product truth, process, regression lessons, commit history, release notes, developer guide, migration, v100–v108 lineage, constitutional registry and digest, threat model, and desktop/mobile visual evidence.
+- Added verifier-required `v108.0.0` performance findings and invariant register records.
+- Aligned release framing around proof-object-first authority, direct same-UID Receiz.com profile saves, zero-key-row tolerance, native Record-before-Seal custody, verify-before-extract opening, complete-artifact bearer ownership, subordinate developer adapters, real Kai-Klok sealing, historical v107 isolation, and the never-applied SQL boundary.
+- Updated shipped verifier, Sports card verifier, studio, settlement, and service-worker release identity to `108.0.0` while retaining release date `2026-07-17`.
+
+### Kept
+
+- Receiz law, sealed proof objects, deterministic proof state, verified local truth, accepted identity proof, and admitted same-account continuity remain stronger than Receiz.com, SDK, MCP, AI, registry, server, database, session, or release state.
+- Known verified local truth paints immediately, and hidden work may append verified additions only.
+- Durable proof memory remains first admission only, then append forever.
+- Production signing, publication, deployment, production database mutation/verification, push, and production verification remain separate actions.
+
 ## [v107.0.0] - 2026-07-17
 
 ### Changed
