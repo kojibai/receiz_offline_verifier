@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v109.0.0] - 2026-07-18
+
+### Changed
+
+- Advanced the current release/documentation surface from `v108.0.0` to `v109.0.0`.
+- Updated canonical root package metadata and set `package.json` to `109.0.0`.
+- Published the complete supplied v109 evidence set: product truth, process, regression lessons, commit history, constitutional registry and digest, checklist, and full release note.
+- Added verifier-required `v109.0.0` performance findings and invariant register records.
+- Aligned release framing around zero-network complete-artifact verification, verify-before-extract custody, packaged Signature V4/Groth16 dependencies, fail-closed mutation handling, subordinate MCP/AI rails, `ARTIFACT-011`, historical compatibility, and unchanged issuance/application/database boundaries.
+- Updated shipped verifier, Sports card verifier, studio, settlement, release checker, and service-worker release identity to `109.0.0` dated `2026-07-18`.
+
+### Kept
+
+- Complete sealed artifacts, verified local truth, identity, ownership, settlement, and append-only history remain stronger than SDK, MCP, AI, Receiz.com, registry, server, session, database, or release evidence.
+- Native issuance remains authenticated Record -> Seal, and application/database behavior remains unchanged from v108.
+- Durable proof memory remains first admission only, then append forever.
+- Production signing, npm publication, deployment, database mutation/verification, authenticated production evidence, and push remain separate actions.
+
 ## [v108.0.0] - 2026-07-17
 
 ### Changed

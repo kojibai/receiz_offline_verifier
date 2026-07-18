@@ -1,26 +1,20 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v108.0.0`.
+This directory is the public documentation set for Receiz `v109.0.0`.
 
 ## Start Here
 
-- [releases/v108.0.0.md](releases/v108.0.0.md): canonical proof-object-first authority restoration release for `v108.0.0`.
-- [releases/v108.0.0-product-truth.md](releases/v108.0.0-product-truth.md): release-scoped product-truth freeze for `v108.0.0`.
-- [releases/v108.0.0-checklist.md](releases/v108.0.0-checklist.md): release-prep checklist and additional gates for `v108.0.0`.
-- [releases/v108.0.0-process.md](releases/v108.0.0-process.md): release-prep process for `v108.0.0`.
-- [releases/v108.0.0-regression-lessons.md](releases/v108.0.0-regression-lessons.md): required regression lessons lock for `v108.0.0`.
-- [releases/v108.0.0-performance-findings.md](releases/v108.0.0-performance-findings.md): direct profile, same-UID, complete-artifact, first-paint, historical-isolation, and external-action boundaries for `v108.0.0`.
-- [releases/v108.0.0-invariant-register.md](releases/v108.0.0-invariant-register.md): locked invariant register for `v108.0.0`.
-- [releases/v108.0.0-commit-history.md](releases/v108.0.0-commit-history.md): required commit-history boundary for `v108.0.0`.
-- [releases/v108.0.0-release-notes.md](releases/v108.0.0-release-notes.md): proof-object-first correction, restored profile operation, adapter direction, and current developer outcome record.
-- [releases/v108.0.0-developer-guide.md](releases/v108.0.0-developer-guide.md): exact profile, proof-object custody, bearer ownership, MCP, media, offline, SQL-isolation, and developer-route guidance.
-- [releases/v108.0.0-migration.md](releases/v108.0.0-migration.md): forward-only v108 package and authority correction.
-- [releases/v108.0.0-v100-v108-lineage.md](releases/v108.0.0-v100-v108-lineage.md): complete v100 through v108 product-truth lineage.
-- [releases/v108.0.0-constitution-registry.digest](releases/v108.0.0-constitution-registry.digest): declared canonical v108 registry payload digest.
-- [releases/v108.0.0-constitution-registry.json](releases/v108.0.0-constitution-registry.json): pinned machine-readable constitutional registry.
-- [releases/v108.0.0-threat-model.json](releases/v108.0.0-threat-model.json): proof-object-first profile, ownership, historical SQL, first-paint, and release-evidence threat model.
-- [releases/v108.0.0-visual-evidence.json](releases/v108.0.0-visual-evidence.json): desktop/mobile same-UID, zero-key-row, no-developer-route mutation evidence.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v108.0.0`.
+- [releases/v109.0.0.md](releases/v109.0.0.md): canonical coordinated local-offline developer release for `v109.0.0`.
+- [releases/v109.0.0-product-truth.md](releases/v109.0.0-product-truth.md): release-scoped product-truth freeze for `v109.0.0`.
+- [releases/v109.0.0-checklist.md](releases/v109.0.0-checklist.md): release-lock checklist and external-action boundary for `v109.0.0`.
+- [releases/v109.0.0-process.md](releases/v109.0.0-process.md): design, TDD, package, registry, and qualification process for `v109.0.0`.
+- [releases/v109.0.0-regression-lessons.md](releases/v109.0.0-regression-lessons.md): network-verdict and stale-package-output regression lock.
+- [releases/v109.0.0-performance-findings.md](releases/v109.0.0-performance-findings.md): zero-network verification, packaged-dependency, custody, and unchanged-application boundaries.
+- [releases/v109.0.0-invariant-register.md](releases/v109.0.0-invariant-register.md): `ARTIFACT-011` and complete-artifact authority invariant lock.
+- [releases/v109.0.0-commit-history.md](releases/v109.0.0-commit-history.md): coordinated upstream and standalone-verifier commit-history boundary.
+- [releases/v109.0.0-constitution-registry.digest](releases/v109.0.0-constitution-registry.digest): declared canonical v109 registry payload digest.
+- [releases/v109.0.0-constitution-registry.json](releases/v109.0.0-constitution-registry.json): pinned machine-readable v109 constitutional registry.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v109.0.0`.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.
 - [releases/v97.6.0-checklist.md](releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
@@ -208,8 +202,8 @@ This directory is the public documentation set for Receiz `v108.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v108.0.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v108.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v109.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v109.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.

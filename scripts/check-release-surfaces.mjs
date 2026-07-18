@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-07-17";
+const releaseDate = "2026-07-18";
 
 const requiredFiles = [
   "README.md",

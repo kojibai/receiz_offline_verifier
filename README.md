@@ -2,19 +2,20 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v108.0.0`
+Current release: `v109.0.0`
 
-## What changed in v108.0.0
+## What changed in v109.0.0
 
-- Current release/docs surfaces are aligned to `v108.0.0`.
-- Published the proof-object-first authority restoration release and complete evidence set at [docs/releases/v108.0.0.md](docs/releases/v108.0.0.md).
-- Published the release-scoped [product truth](docs/releases/v108.0.0-product-truth.md), [checklist](docs/releases/v108.0.0-checklist.md), [process](docs/releases/v108.0.0-process.md), [regression lessons](docs/releases/v108.0.0-regression-lessons.md), [performance findings](docs/releases/v108.0.0-performance-findings.md), [invariant register](docs/releases/v108.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v108.0.0-commit-history.md).
-- Published release notes, developer guide, forward-only authority migration, v100–v108 lineage, canonical registry/digest, threat model, and desktop/mobile visual-evidence artifacts.
-- The exact authority order is Receiz law, sealed proof and verified local truth, accepted identity proof and admitted binding, Receiz.com reference behavior, SDK, MCP, then AI skills.
-- Inline rename and full profile save use `PATCH /api/profile/me`, preserve the admitted account UID, and cannot be blocked or redefined by missing `identity_keys` projection state or developer rails.
-- Native proof-object creation performs Record before Seal; custody preserves exact complete bytes, opening verifies before extraction, and bearer ownership returns another complete verified artifact.
-- Historical v107 mechanics and the never-applied SQL designs remain non-current, non-deployable evidence; `/developers` remains the maintained unversioned reference.
-- Current packages and runtime surfaces align at `108.0.0` with registry digest `126ca9283fee4ef4c398dbcb958e861cbea191724fdab8eb08df55ff0c14bb79` and real Kai-Klok whole pulse `13182786` at the recorded seal instant.
+- Current release/docs surfaces are aligned to `v109.0.0`.
+- Published the coordinated local-offline developer release and complete supplied evidence set at [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md).
+- Published the release-scoped [product truth](docs/releases/v109.0.0-product-truth.md), [checklist](docs/releases/v109.0.0-checklist.md), [process](docs/releases/v109.0.0-process.md), [regression lessons](docs/releases/v109.0.0-regression-lessons.md), [performance findings](docs/releases/v109.0.0-performance-findings.md), [invariant register](docs/releases/v109.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v109.0.0-commit-history.md).
+- `receiz.verification.verifyArtifact(file)` verifies complete `.receizbundle` proof objects locally from their bytes with zero network calls or weaker-state prerequisites.
+- `receiz.artifacts.verifyAndOpen(file)` verifies before extraction and keeps the complete artifact separate from the verified payload.
+- Signature V4 roots, the document-seal Groth16 verification key, and the `snarkjs` runtime are packaged with the SDK; mutation, malformed carriers, binding failures, signature failures, proof failures, and invalid portable continuity fail closed.
+- MCP uses the same SDK verifier beneath sealed artifact authority, while artifact AI skills require zero-network and local-verifier evidence.
+- `ARTIFACT-011` makes complete-artifact zero-network verification constitutional law with denial code `LOCAL_ARTIFACT_VERIFICATION_MUST_NOT_REQUIRE_WEAKER_STATE`.
+- Receiz.com product behavior remains the v108 implementation; application behavior, database schema, migrations, query paths, and production data do not change.
+- Current coordinated identity aligns at `109.0.0` with registry digest `17f76b37c9fcd46f710239b5c1660b03cc34ec64bed30d1cc45c18d5d40eab70` and real Kai-Klok whole pulse `13184788` at the recorded seal instant.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,10 +23,10 @@ Current release: `v108.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require exact profile-source parity, same-UID mutation with zero key rows, no developer profile preflight, native Record-before-Seal continuity, exact-byte custody, verify-before-extract opening, bearer ownership composition, SDK/MCP/AI adapter parity, historical migration isolation, registry seal verification, desktop/mobile mutation evidence, governance, release freeze, attestation, publication, deployment, and production evidence named in [docs/releases/v108.0.0-checklist.md](docs/releases/v108.0.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v108.0.0`.
-- Root package metadata now resolves cleanly to `108.0.0`.
-- The static service-worker surface carries runtime version `108.0.0`.
+- Broader platform target environments require SDK/MCP typechecks and suites, AI-skill validation, zero-fetch production-signed verification, mutation rejection, tarball inspection, external installation, registry locking, release freeze, governance, signing, publication, deployment, and production evidence named in [docs/releases/v109.0.0-checklist.md](docs/releases/v109.0.0-checklist.md).
+- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints now display `v109.0.0`.
+- Root package metadata now resolves cleanly to `109.0.0`.
+- The static service-worker surface carries runtime version `109.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -43,7 +44,7 @@ Current release: `v108.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v108.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v109.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -128,6 +129,7 @@ The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/
 - `v106.0.0`: Registry-bound constitutional enforcement coordinates SDK command admission, MCP context, AI-skill contracts, forward-only migration, and independent replay while restoring owner-local PBI and Live Player append continuity.
 - `v107.0.0`: Unified developer operations expose identity, profile, media, portable continuity, generic bearer ownership, receipts, proof heads, and signed offline proposals across coordinated packages and runtime surfaces.
 - `v108.0.0`: Proof-object-first authority restoration returns first-party profile saves to the admitted same-account operation and makes SDK, MCP, and AI adapters explicitly subordinate to Receiz.com reference behavior and stronger sealed proof.
+- `v109.0.0`: Coordinated local-offline developer verification packages Signature V4 and Groth16 dependencies, verifies complete artifact bytes with zero network calls, keeps artifact custody separate from payload extraction, and seals `ARTIFACT-011` beneath proof-object authority.
 
 ## Supported artifact inputs (v60)
 1. PNG artifact containing exactly one `receiz.proof_bundle` text chunk.
@@ -193,24 +195,18 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [receiz-bundle-envelope.schema.json](docs/schemas/receiz-bundle-envelope.schema.json)
 
 ## Repository layout
-- [docs/README.md](docs/README.md): documentation map for `v108.0.0`.
-- [docs/releases/v108.0.0.md](docs/releases/v108.0.0.md): canonical proof-object-first authority restoration release for `v108.0.0`.
-- [docs/releases/v108.0.0-product-truth.md](docs/releases/v108.0.0-product-truth.md): `v108.0.0` product-truth freeze document.
-- [docs/releases/v108.0.0-checklist.md](docs/releases/v108.0.0-checklist.md): release-prep checklist and additional gates for `v108.0.0`.
-- [docs/releases/v108.0.0-process.md](docs/releases/v108.0.0-process.md): release-prep process for `v108.0.0`.
-- [docs/releases/v108.0.0-regression-lessons.md](docs/releases/v108.0.0-regression-lessons.md): required regression lessons lock for `v108.0.0`.
-- [docs/releases/v108.0.0-performance-findings.md](docs/releases/v108.0.0-performance-findings.md): direct profile, same-UID, complete-artifact, first-paint, historical-isolation, and external-action boundaries for `v108.0.0`.
-- [docs/releases/v108.0.0-invariant-register.md](docs/releases/v108.0.0-invariant-register.md): locked invariant register for `v108.0.0`.
-- [docs/releases/v108.0.0-commit-history.md](docs/releases/v108.0.0-commit-history.md): required commit-history boundary for `v108.0.0`.
-- [docs/releases/v108.0.0-release-notes.md](docs/releases/v108.0.0-release-notes.md): proof-object-first correction, restored profile operation, adapter direction, and current developer outcome record.
-- [docs/releases/v108.0.0-developer-guide.md](docs/releases/v108.0.0-developer-guide.md): exact profile, proof-object custody, bearer ownership, MCP, media, offline, SQL-isolation, and developer-route guidance.
-- [docs/releases/v108.0.0-migration.md](docs/releases/v108.0.0-migration.md): forward-only v108 package and authority correction.
-- [docs/releases/v108.0.0-v100-v108-lineage.md](docs/releases/v108.0.0-v100-v108-lineage.md): complete v100 through v108 product-truth lineage.
-- [docs/releases/v108.0.0-constitution-registry.digest](docs/releases/v108.0.0-constitution-registry.digest): declared canonical v108 registry payload digest.
-- [docs/releases/v108.0.0-constitution-registry.json](docs/releases/v108.0.0-constitution-registry.json): pinned machine-readable constitutional registry.
-- [docs/releases/v108.0.0-threat-model.json](docs/releases/v108.0.0-threat-model.json): proof-object-first profile, ownership, historical SQL, first-paint, and release-evidence threat model.
-- [docs/releases/v108.0.0-visual-evidence.json](docs/releases/v108.0.0-visual-evidence.json): desktop/mobile same-UID, zero-key-row, no-developer-route mutation evidence.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v108.0.0`.
+- [docs/README.md](docs/README.md): documentation map for `v109.0.0`.
+- [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md): canonical coordinated local-offline developer release for `v109.0.0`.
+- [docs/releases/v109.0.0-product-truth.md](docs/releases/v109.0.0-product-truth.md): `v109.0.0` product-truth freeze document.
+- [docs/releases/v109.0.0-checklist.md](docs/releases/v109.0.0-checklist.md): release-lock checklist and external-action boundary for `v109.0.0`.
+- [docs/releases/v109.0.0-process.md](docs/releases/v109.0.0-process.md): design, TDD, package, registry, and qualification process for `v109.0.0`.
+- [docs/releases/v109.0.0-regression-lessons.md](docs/releases/v109.0.0-regression-lessons.md): network-verdict and stale-package-output regression lock.
+- [docs/releases/v109.0.0-performance-findings.md](docs/releases/v109.0.0-performance-findings.md): zero-network local verification, packaged dependency, custody, and unchanged-application boundaries.
+- [docs/releases/v109.0.0-invariant-register.md](docs/releases/v109.0.0-invariant-register.md): `ARTIFACT-011` and complete-artifact authority invariant lock.
+- [docs/releases/v109.0.0-commit-history.md](docs/releases/v109.0.0-commit-history.md): coordinated upstream and standalone-verifier commit-history boundary.
+- [docs/releases/v109.0.0-constitution-registry.digest](docs/releases/v109.0.0-constitution-registry.digest): declared canonical v109 registry payload digest.
+- [docs/releases/v109.0.0-constitution-registry.json](docs/releases/v109.0.0-constitution-registry.json): pinned machine-readable v109 constitutional registry.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v109.0.0`.
 - [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md): canonical Enterprise App Runtime SDK Release note for `v97.2.0`.
 - [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md): `v97.2.0` product-truth freeze document.
 - [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md): release-prep checklist and additional gates for `v97.2.0`.
@@ -384,11 +380,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v108.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v108.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v109.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v109.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v108.0.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v108.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v109.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v109.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.
