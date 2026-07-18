@@ -1,32 +1,32 @@
 # Release Notes
 
-## v110.0.0
+## v111.0.0
 Release date: 2026-07-18
 
-`v110.0.0` is the coordinated unified artifact admission and recovery release. It composes v109 exact-byte local verification into five typed admission verdicts, five explicit actions, deterministic read-only recovery planning, and separately explicit capability-bound atomic recovery commit.
+`v111.0.0` closes structural-authority and replay gaps by deriving every recovery-authoritative value from canonically reverified exact artifact bytes, independently rooted proof history, complete identity control, current capabilities, and a complete plan basis.
 
-Canonical full release note: [docs/releases/v110.0.0.md](docs/releases/v110.0.0.md)
-Product-truth freeze: [docs/releases/v110.0.0-product-truth.md](docs/releases/v110.0.0-product-truth.md)
-Release checklist: [docs/releases/v110.0.0-checklist.md](docs/releases/v110.0.0-checklist.md)
-Release process: [docs/releases/v110.0.0-process.md](docs/releases/v110.0.0-process.md)
-Regression lessons: [docs/releases/v110.0.0-regression-lessons.md](docs/releases/v110.0.0-regression-lessons.md)
-Performance findings: [docs/releases/v110.0.0-performance-findings.md](docs/releases/v110.0.0-performance-findings.md)
-Invariant register: [docs/releases/v110.0.0-invariant-register.md](docs/releases/v110.0.0-invariant-register.md)
-Commit-history boundary: [docs/releases/v110.0.0-commit-history.md](docs/releases/v110.0.0-commit-history.md)
-Constitutional registry: [docs/releases/v110.0.0-constitution-registry.json](docs/releases/v110.0.0-constitution-registry.json)
+Canonical full release note: [docs/releases/v111.0.0.md](docs/releases/v111.0.0.md)
+Product-truth freeze: [docs/releases/v111.0.0-product-truth.md](docs/releases/v111.0.0-product-truth.md)
+Release checklist: [docs/releases/v111.0.0-checklist.md](docs/releases/v111.0.0-checklist.md)
+Release process: [docs/releases/v111.0.0-process.md](docs/releases/v111.0.0-process.md)
+Regression lessons: [docs/releases/v111.0.0-regression-lessons.md](docs/releases/v111.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v111.0.0-performance-findings.md](docs/releases/v111.0.0-performance-findings.md)
+Invariant register: [docs/releases/v111.0.0-invariant-register.md](docs/releases/v111.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v111.0.0-commit-history.md](docs/releases/v111.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v111.0.0-constitution-registry.json](docs/releases/v111.0.0-constitution-registry.json)
 Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
-Prior v109 archive: [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md)
+Prior v110 archive: [docs/releases/v110.0.0.md](docs/releases/v110.0.0.md)
 
 ## Highlights
 - Receiz remains named directly as a proof-native artifact system.
-- `admitAndRecover` verifies exact bytes once, classifies into five verdicts, returns five explicit actions, restores verified state/history, and performs zero network calls and zero writes.
-- Read-only admission/planning is separate from SDK-plan-custody-bound, Ed25519-capability-verified, expected-head-bound, idempotent, caller-local atomic commit.
-- Bearer possession, legacy reads, foreign ownership, explanations, and plans cannot become identity, signing, publishing, settlement, ownership, or proof authority.
-- SDK/MCP share operation identity; MCP commit JSON carries no raw capability/store, and deterministic history converges across applications and transport order.
-- `ARTIFACT-012` through `ARTIFACT-015` constitutionalize complete admission, bearer bounds, atomic recovery, and explanation non-authority.
-- Receiz.com behavior, APIs, database surfaces, production data, and native issuance remain unchanged; v109 local verification remains the foundation.
-- Registry digest is `824aa4af849c4840ba94535798eab36e45d514703b6ae0cd30d4aa53f3c896e4`; real effective Kai-Klok pulse is `13185897`.
-- Current verifier entrypoints, package metadata, and service worker are marked `v110.0.0`.
+- Exact retained artifact bytes are canonically reverified; structural objects and circular digest comparisons are rejected.
+- Proof history requires independently verified evidence roots and one convergent head; canonical identity proves live private-key control.
+- Recovery plans bind the complete authority basis and capabilities must verify against the current registry.
+- Expected failures are structured, immutable, and zero-write; committed or failed MCP attempts require fresh confirmation identity.
+- `ARTIFACT-016` through `ARTIFACT-020` lock the complete authority and replay boundary.
+- Receiz.com application/API behavior and database surfaces remain unchanged.
+- Registry digest is `cf02d0bce6ad1541cfe84e27bfb1036777b29616bf8a1e5aeafb899a945e359a`; effective Kai-Klok pulse is `13189908`.
+- Current verifier entrypoints, package metadata, and service worker are marked `v111.0.0`.
 
 ## Operational notes
 - AI-skills/SDK/MCP publication, registry read-back, external installation, app/service-worker deployment, and production probes remain external evidence; they do not redefine authenticated proof truth.
@@ -34,10 +34,10 @@ Prior v109 archive: [docs/releases/v109.0.0.md](docs/releases/v109.0.0.md)
 - This offline verifier cut remains docs/governance alignment and static release-surface validation for this repository.
 
 ## Migration checklist
-- Confirm version and entrypoint markers show `v110.0.0`.
-- Confirm five verdict/action boundaries, exact-byte admission, read-only recovery, deterministic history, plan/capability custody, atomic/idempotent commit, operation identity, multi-application convergence, active-registry binding, SDK/MCP suites, AI validation, release freeze, governance, publication, and production boundaries in the broader platform workspace.
+- Confirm version and entrypoint markers show `v111.0.0`.
+- Confirm canonical encoding, exact-byte reverification, structural rejection, independently rooted single-head history, identity challenge, complete plan basis, current-registry capabilities, immutable failures, fresh MCP attempts, SDK/MCP suites, AI validation, clean-room qualification, release freeze, governance, authorized attestation, and external boundaries.
 - Confirm `release:lock`, `check_release_lock`, regression lessons, performance findings, invariant register, commit history, service-worker coherence, and release attestation checks.
-- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 110.0.0`, and `node scripts/check_release_lock.mjs 110.0.0`.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 111.0.0`, and `node scripts/check_release_lock.mjs 111.0.0`.
 - Run whitespace diff check.
 - Run `pnpm release:attest` for the final commit in the release-signing environment before production shipment.
 - Deploy updated `site/` and `apps/` artifacts.

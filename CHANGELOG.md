@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v111.0.0] - 2026-07-18
+
+### Changed
+
+- Advanced the current release/documentation surface from `v110.0.0` to `v111.0.0`.
+- Updated canonical root package metadata and set `package.json` to `111.0.0`.
+- Published the complete supplied v111 evidence set and verifier-required performance/invariant locks.
+- Aligned release framing around canonical domain-separated authority, exact-byte reverification, structural rejection, independently rooted single-head history, private-key control, complete plan basis, current-registry capabilities, immutable failures, and fresh MCP attempts.
+- Updated verifier, Sports verifier, studio, settlement, and service-worker release identity to `111.0.0`.
+
+### Kept
+
+- Sealed artifacts and independently verified proof history remain stronger than runtime custody, admissions, plans, confirmations, SDK, MCP, AI, server, session, database, registry, or release evidence.
+- Receiz.com application/API behavior, database logic, and native issuance remain unchanged.
+- Durable proof memory remains first admission only, then append forever.
+- GitHub attestation, publication, deployment, production work, and push remain separate actions.
+
 ## [v110.0.0] - 2026-07-18
 
 ### Changed

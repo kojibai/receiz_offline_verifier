@@ -1,20 +1,20 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v110.0.0`.
+This directory is the public documentation set for Receiz `v111.0.0`.
 
 ## Start Here
 
-- [releases/v110.0.0.md](releases/v110.0.0.md): canonical unified artifact admission and recovery release for `v110.0.0`.
-- [releases/v110.0.0-product-truth.md](releases/v110.0.0-product-truth.md): release-scoped product-truth freeze for `v110.0.0`.
-- [releases/v110.0.0-checklist.md](releases/v110.0.0-checklist.md): release-lock checklist and external-action boundary.
-- [releases/v110.0.0-process.md](releases/v110.0.0-process.md): coordinated contract-first implementation and qualification process.
-- [releases/v110.0.0-regression-lessons.md](releases/v110.0.0-regression-lessons.md): stale-registry and recovery-authority regression lock.
-- [releases/v110.0.0-performance-findings.md](releases/v110.0.0-performance-findings.md): single-pass admission, deterministic planning, atomic-commit, convergence, and unchanged-application boundaries.
-- [releases/v110.0.0-invariant-register.md](releases/v110.0.0-invariant-register.md): verdict/action, `ARTIFACT-012`–`015`, capability, atomicity, and bearer-authority lock.
-- [releases/v110.0.0-commit-history.md](releases/v110.0.0-commit-history.md): coordinated upstream and standalone-verifier commit-history boundary.
-- [releases/v110.0.0-constitution-registry.digest](releases/v110.0.0-constitution-registry.digest): declared canonical v110 registry payload digest.
-- [releases/v110.0.0-constitution-registry.json](releases/v110.0.0-constitution-registry.json): pinned machine-readable v110 constitutional registry.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v110.0.0`.
+- [releases/v111.0.0.md](releases/v111.0.0.md): canonical artifact-derived authority release.
+- [releases/v111.0.0-product-truth.md](releases/v111.0.0-product-truth.md): release-scoped product-truth freeze.
+- [releases/v111.0.0-checklist.md](releases/v111.0.0-checklist.md): release lock and authorized-attestation boundary.
+- [releases/v111.0.0-process.md](releases/v111.0.0-process.md): constitutional, adversarial, clean-room, and qualification process.
+- [releases/v111.0.0-regression-lessons.md](releases/v111.0.0-regression-lessons.md): structural admission, unrooted history, and confirmation-reuse regression lock.
+- [releases/v111.0.0-performance-findings.md](releases/v111.0.0-performance-findings.md): canonical reverification, rooted-history, identity-control, failure, and attempt boundaries.
+- [releases/v111.0.0-invariant-register.md](releases/v111.0.0-invariant-register.md): `ARTIFACT-016`–`020` and artifact-derived authority lock.
+- [releases/v111.0.0-commit-history.md](releases/v111.0.0-commit-history.md): coordinated upstream and standalone-verifier history boundary.
+- [releases/v111.0.0-constitution-registry.digest](releases/v111.0.0-constitution-registry.digest): canonical v111 registry digest.
+- [releases/v111.0.0-constitution-registry.json](releases/v111.0.0-constitution-registry.json): pinned machine-readable v111 registry.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v111.0.0`.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.
 - [releases/v97.6.0-checklist.md](releases/v97.6.0-checklist.md): release-prep checklist and additional gates for `v97.6.0`.
@@ -202,8 +202,8 @@ This directory is the public documentation set for Receiz `v110.0.0`.
 - [releases/v72.0.0-product-truth.md](releases/v72.0.0-product-truth.md): release-scoped product-truth freeze for `v72.0.0`.
 - [releases/v72.0.0-checklist.md](releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [releases/v72.0.0-process.md](releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v110.0.0`.
-- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v110.0.0`.
+- [releases/v70.0.0-invariant-register.md](releases/v70.0.0-invariant-register.md): invariant register for the public alpha release boundary carried forward by `v111.0.0`.
+- [scale-reasoning-invariants.md](scale-reasoning-invariants.md): scale, performance, deterministic chart, closeout, and primitive-preservation law for `v111.0.0`.
 - [releases/v70.0.0.md](releases/v70.0.0.md): canonical public alpha release note for `v70.0.0`.
 - [literal-product-law.md](literal-product-law.md): literal product law for local identity, file proof, append-only truth, canonical profiles, funded causality, and network propagation.
 - [experience-first-engineering.md](experience-first-engineering.md): experience-first rules for local proof, deterministic state, and hidden runtime work.
