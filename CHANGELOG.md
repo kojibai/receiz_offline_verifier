@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v112.0.0] - 2026-07-19
+
+### Changed
+
+- Advanced the current release/documentation surface from `v111.0.0` to `v112.0.0`.
+- Updated canonical root package metadata and set `package.json` to `112.0.0`.
+- Published the complete supplied v112 evidence set, compatibility matrix, deterministic unsigned registry, and verifier-required performance/invariant locks.
+- Aligned release framing around exact-byte artifact truth, profile admission, verified actor/history, portable transition identity, complete plan/capability binding, neutral staging, independently verified named-domain commit, and reporting-only receipts.
+- Updated verifier, Sports verifier, studio, settlement, and service-worker release identity to `112.0.0`.
+
+### Kept
+
+- Exact sealed artifacts and verified history remain stronger than admission ledgers, plans, capabilities, staging references, receipts, SDK, MCP, AI, server, session, database, registry, or UI state.
+- v111 exact bytes remain verifiable/readmissible, while historical runtime authority remains contained.
+- Receiz.com application/API behavior, database logic, native issuance, remote global admission, and offline-to-global reconciliation remain unchanged or outside scope.
+- Durable proof memory remains first admission only, then append forever.
+- GitHub attestation, publication, deployment, production work, and push remain separate actions.
+
 ## [v111.0.0] - 2026-07-18
 
 ### Changed

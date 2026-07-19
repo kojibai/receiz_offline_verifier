@@ -1,5 +1,47 @@
 # Release Notes
 
+## v112.0.0
+Release date: 2026-07-19
+
+`v112.0.0` makes the artifact authority hierarchy executable while preserving exact sealed bytes as stronger truth and durable proof memory as first admission only, then append forever.
+
+Canonical full release note: [docs/releases/v112.0.0.md](docs/releases/v112.0.0.md)
+Product-truth freeze: [docs/releases/v112.0.0-product-truth.md](docs/releases/v112.0.0-product-truth.md)
+Release checklist: [docs/releases/v112.0.0-checklist.md](docs/releases/v112.0.0-checklist.md)
+Release process: [docs/releases/v112.0.0-process.md](docs/releases/v112.0.0-process.md)
+Regression lessons: [docs/releases/v112.0.0-regression-lessons.md](docs/releases/v112.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v112.0.0-performance-findings.md](docs/releases/v112.0.0-performance-findings.md)
+Invariant register: [docs/releases/v112.0.0-invariant-register.md](docs/releases/v112.0.0-invariant-register.md)
+Compatibility matrix: [docs/releases/v112.0.0-compatibility-matrix.md](docs/releases/v112.0.0-compatibility-matrix.md)
+Commit-history boundary: [docs/releases/v112.0.0-commit-history.md](docs/releases/v112.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v112.0.0-constitution-registry.json](docs/releases/v112.0.0-constitution-registry.json)
+Reasoning kernel: [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md)
+Prior v111 archive: [docs/releases/v111.0.0.md](docs/releases/v111.0.0.md)
+
+### Highlights
+
+- Exact bytes, profile admission, verified actor/history, transition, plan, capability, staging, named-domain commit, and receipt reporting are separate executable boundaries.
+- Effects are registry-derived, unknown namespaces are preserved, and known namespace changes require authorized reducers.
+- Neutral staging preserves exact candidate bytes without advancing a head; commit independently resolves and verifies staged bytes.
+- The browser admission ledger is durable local truth but stores no proof objects or sealed artifact bytes.
+- v111 exact bytes remain verifiable/readmissible while v111 runtime authority stays historical.
+- The deterministic unsigned registry digest is `1356f8122d0b5fcbe891d7e6ed1e75faca827f15d63d1ed5d950664e11c146ee`, pinned to the v111 predecessor at effective Kai `13192000`.
+- No product HTTP route, application behavior, database migration, or remote-global reconciliation rail is added.
+- Current verifier entrypoints, package metadata, and service worker are marked `v112.0.0`.
+
+### Operational notes
+
+- Task 14 records the full release freeze and desktop/mobile browser evidence passing on 2026-07-19.
+- The signed governance attestation runs after push through the existing GitHub Environment workflow so it binds the final commit SHA.
+- Publication, deployment, production verification, database activity, and Git push remain external.
+
+### Migration checklist
+
+- Confirm version and entrypoint markers show `v112.0.0`.
+- Confirm the registry digest/predecessor, 57-law count, exact-byte verification/admission split, actor/history custody, transition-plan-command separation, derived effects, namespace preservation, neutral staging, independent commit verification, named-domain atomicity, receipt non-authority, and v111 compatibility.
+- Run `pnpm lint`, `pnpm build`, `pnpm release:lock 112.0.0`, `node scripts/check_release_lock.mjs 112.0.0`, and `git diff --check`.
+- Push the final commit and tag before invoking the authorized GitHub Environment attestation workflow.
+
 ## v111.0.0
 Release date: 2026-07-18
 
