@@ -2,22 +2,21 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v112.0.0`
+Current release: `v113.0.0`
 
-## What changed in v112.0.0
+## What changed in v113.0.0
 
-- Current release/docs surfaces are aligned to `v112.0.0`.
-- Published the executable artifact-authority release at [docs/releases/v112.0.0.md](docs/releases/v112.0.0.md).
-- Published the release-scoped [product truth](docs/releases/v112.0.0-product-truth.md), [checklist](docs/releases/v112.0.0-checklist.md), [process](docs/releases/v112.0.0-process.md), [regression lessons](docs/releases/v112.0.0-regression-lessons.md), [performance findings](docs/releases/v112.0.0-performance-findings.md), [invariant register](docs/releases/v112.0.0-invariant-register.md), [compatibility matrix](docs/releases/v112.0.0-compatibility-matrix.md), and [commit-history boundary](docs/releases/v112.0.0-commit-history.md).
-- Exact verified sealed bytes establish artifact truth; admission establishes profile membership without granting operation authority.
-- Verified actor/history, portable transition, complete operation plan, exact-plan capability, neutral staging, independent commit verification, named-domain atomicity, and reporting-only receipts remain distinct boundaries.
-- Effects derive under pinned registry law, unknown namespaces remain preserved, and known namespace changes require registered reducers.
-- The durable IndexedDB admission ledger is not cache and stores no proof objects or sealed artifact bytes, so known artifact truth paints first.
-- v111 exact bytes remain verifiable and readmissible, while historical runtime authority objects cannot mutate a v112 receiver.
-- The deterministic unsigned 57-law registry is recursively frozen and pinned to the v111 predecessor chain; no native `.receiz` or signed wrapper is claimed.
-- Receiz.com application/API behavior, database schema, migrations, queries, production data, and native issuance remain unchanged.
-- Remote global admission and offline-to-global reconciliation remain outside v112.0.
-- Current coordinated identity aligns at `112.0.0` with registry digest `1356f8122d0b5fcbe891d7e6ed1e75faca827f15d63d1ed5d950664e11c146ee` and canonical effective Kai `13192000`.
+- Current release/docs surfaces are aligned to `v113.0.0`.
+- Published the Production Global Reconciliation release at [docs/releases/v113.0.0.md](docs/releases/v113.0.0.md).
+- Published the release-scoped [product truth](docs/releases/v113.0.0-product-truth.md), [checklist](docs/releases/v113.0.0-checklist.md), [process](docs/releases/v113.0.0-process.md), [regression lessons](docs/releases/v113.0.0-regression-lessons.md), [performance findings](docs/releases/v113.0.0-performance-findings.md), [invariant register](docs/releases/v113.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v113.0.0-commit-history.md).
+- “Global” is explicitly scoped to acceptance by `receiz.com/global/v1`; it does not mean universal consensus.
+- Exact sealed artifact bytes and independently verified causal history remain above Connect tokens, private staging, rows, receipts, effects, outbox state, projections, and release records.
+- The SDK keeps plan, Identity Seal capability, neutral stage, commit, accepted-head resolution, attempt recovery, and effect status as distinct phases.
+- Returned artifacts are independently reverified before the SDK exposes runtime-custodied artifact truth.
+- MCP retains the frozen five v112 artifact tools and adds exactly four reconciliation tools.
+- Known artifact truth paints before remote construction or requests; remote work may append only verified additions.
+- The additive private migration is coordination-only and remains unapplied by this release commit.
+- Current coordinated identity aligns at `113.0.0` with registry digest `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637` and effective Kai `13198000`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -25,10 +24,10 @@ Current release: `v112.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the package, clean-room, release-freeze, visual, governance, publication, deployment, and post-push attestation evidence named in [docs/releases/v112.0.0-checklist.md](docs/releases/v112.0.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints display `v112.0.0`.
-- Root package metadata resolves cleanly to `112.0.0`.
-- The static service-worker surface carries runtime version `112.0.0`.
+- Broader platform target environments require reconciliation, packed-package, release-freeze, governance, migration, publication, deployment, production, and attestation evidence named in [docs/releases/v113.0.0-checklist.md](docs/releases/v113.0.0-checklist.md).
+- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints display `v113.0.0`.
+- Root package metadata resolves cleanly to `113.0.0`.
+- The static service-worker surface carries runtime version `113.0.0`.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -46,7 +45,7 @@ Current release: `v112.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v112.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v113.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

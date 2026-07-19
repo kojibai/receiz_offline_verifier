@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v113.0.0] - 2026-07-19
+
+### Changed
+
+- Advanced current release/documentation surfaces from `v112.0.0` to `v113.0.0`.
+- Published the complete supplied v113 registry and release evidence plus verifier-required performance and invariant locks.
+- Aligned release framing around named-domain global reconciliation, independently verified causal history, Identity Seal capability authority, neutral staging, atomic expected-head acceptance, attempt recovery, and separately observable effects.
+- Updated verifier, Sports verifier, studio, settlement, and service-worker identity to `113.0.0`.
+
+### Kept
+
+- Exact sealed artifact bytes and independently verified causal history remain stronger than tokens, rows, storage, receipts, effects, outbox state, SDK/MCP/AI rails, or projections.
+- Deterministic product first paint and static verifier behavior remain unchanged.
+- Durable proof memory remains first admission only, then append forever.
+- Migration application, publication, deployment, production verification/data work, attestation, and push remain separate actions.
+
 ## [v112.0.0] - 2026-07-19
 
 ### Changed

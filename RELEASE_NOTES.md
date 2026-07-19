@@ -1,5 +1,43 @@
 # Release Notes
 
+## v113.0.0
+Release date: 2026-07-19
+
+`v113.0.0` ships Production Global Reconciliation for the explicitly named `receiz.com/global/v1` coordination domain while preserving exact sealed bytes and independently verified causal history as stronger truth.
+
+Canonical full release note: [docs/releases/v113.0.0.md](docs/releases/v113.0.0.md)
+Product-truth freeze: [docs/releases/v113.0.0-product-truth.md](docs/releases/v113.0.0-product-truth.md)
+Release checklist: [docs/releases/v113.0.0-checklist.md](docs/releases/v113.0.0-checklist.md)
+Release process: [docs/releases/v113.0.0-process.md](docs/releases/v113.0.0-process.md)
+Regression lessons: [docs/releases/v113.0.0-regression-lessons.md](docs/releases/v113.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v113.0.0-performance-findings.md](docs/releases/v113.0.0-performance-findings.md)
+Invariant register: [docs/releases/v113.0.0-invariant-register.md](docs/releases/v113.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v113.0.0-commit-history.md](docs/releases/v113.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v113.0.0-constitution-registry.json](docs/releases/v113.0.0-constitution-registry.json)
+Prior v112 archive: [docs/releases/v112.0.0.md](docs/releases/v112.0.0.md)
+
+### Highlights
+
+- “Global” means named-domain acceptance by `receiz.com/global/v1`, not universal consensus.
+- Exact carried history, ownership handoffs, Identity Seal evidence, and key-specific revocation Kai remain independently verified.
+- Connect authentication cannot substitute for the completed-plan Identity Seal capability.
+- Plan, neutral stage, atomic commit, head resolution, indeterminate-attempt recovery, and effect status remain distinct.
+- Monotonic resolution rejects ancestors; divergence does not auto-merge, rebase, or use last-write-wins.
+- MCP exposes the frozen five v112 artifact tools plus exactly four v113 reconciliation tools.
+- The registry digest is `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637`, chained to v112 at effective Kai `13198000`.
+- Static verifier semantics and deterministic first paint remain unchanged.
+
+### Operational notes
+
+- The additive private migration remains unapplied by this commit.
+- Migration application, npm publication, Receiz.com deployment, production smoke verification, final-SHA attestation, and Git push remain external.
+
+### Migration checklist
+
+- Confirm current labels show `v113.0.0` and the coordination domain is exactly `receiz.com/global/v1`.
+- Confirm registry digest/predecessor, 57-law count, protocol limits, exact history/revocation custody, Connect/capability separation, phase separation, atomic failure behavior, monotonic resolution, nine-tool MCP inventory, and migration non-authority.
+- Run `node scripts/check_release_lock.mjs 113.0.0`, `pnpm lint`, `pnpm build`, `pnpm release:lock 113.0.0`, and `git diff --check`.
+
 ## v112.0.0
 Release date: 2026-07-19
 
