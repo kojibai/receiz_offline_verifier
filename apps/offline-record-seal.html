@@ -3524,8 +3524,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
     const JPEG_STANDARD_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xmp/extension/\0");
+    const JPEG_EXIF_IDENTIFIER = textEncoder.encode("Exif\0\0");
+    const JPEG_PHOTOSHOP_APP13_IDENTIFIER = textEncoder.encode("Photoshop 3.0\0");
 
     function startsWithBytesAt(bytes, prefix, offset) {
       if (offset < 0 || offset + prefix.length > bytes.length) return false;
@@ -3535,9 +3538,33 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return true;
     }
 
-    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+    function equalByteChunks(left, right) {
+      if (left.length !== right.length) return false;
+      for (let index = 0; index < left.length; index += 1) {
+        if (left[index] !== right[index]) return false;
+      }
+      return true;
+    }
+
+    function canonicalizeExifTrailingNullPadding(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      let trailingNullCount = 0;
+      for (let index = segmentEnd - 1; index >= payloadOffset && bytes[index] === 0; index -= 1) {
+        trailingNullCount += 1;
+      }
+      if (trailingNullCount <= 2) return bytes.slice(markerStart, segmentEnd);
+      const canonicalEnd = segmentEnd - (trailingNullCount - 2);
+      const canonicalDeclaredLength = canonicalEnd - markerCodeEnd;
+      return concatByteChunks([
+        bytes.slice(markerStart, markerCodeEnd),
+        new Uint8Array([(canonicalDeclaredLength >>> 8) & 255, canonicalDeclaredLength & 255]),
+        bytes.slice(payloadOffset, canonicalEnd),
+      ]);
+    }
+
+    function normalizeJpegCarrierBasis(bytes, normalization) {
       if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
       const kept = [bytes.slice(0, 2)];
+      const photoshopApp13Segments = [];
       let offset = 2;
       let inScan = false;
       let sawSos = false;
@@ -3568,6 +3595,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
         const marker = bytes[offset];
         offset += 1;
+        const markerCodeEnd = offset;
         if (marker === 0) throw new Error("jpeg_marker_invalid");
         const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
         if (standalone) {
@@ -3589,7 +3617,33 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
           || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
         );
-        if (!adobeXmp) kept.push(bytes.slice(markerStart, segmentEnd));
+        if (adobeXmp) {
+          // Adobe XMP is a non-authoritative carrier append in both versions.
+        } else if (
+          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          && marker === 225
+          && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
+        ) {
+          kept.push(canonicalizeExifTrailingNullPadding(
+            bytes,
+            markerStart,
+            markerCodeEnd,
+            payloadOffset,
+            segmentEnd,
+          ));
+        } else if (
+          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          && marker === 237
+          && startsWithBytesAt(bytes, JPEG_PHOTOSHOP_APP13_IDENTIFIER, payloadOffset)
+        ) {
+          const segmentBytes = bytes.slice(markerStart, segmentEnd);
+          if (!photoshopApp13Segments.some((prior) => equalByteChunks(prior, segmentBytes))) {
+            photoshopApp13Segments.push(segmentBytes);
+            kept.push(segmentBytes);
+          }
+        } else {
+          kept.push(bytes.slice(markerStart, segmentEnd));
+        }
         offset = segmentEnd;
         if (marker === 218) {
           sawSos = true;
@@ -3599,6 +3653,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (!sawSos) throw new Error("jpeg_sos_missing");
       if (!sawEoi) throw new Error("jpeg_eoi_missing");
       return concatByteChunks(kept);
+    }
+
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION);
+    }
+
+    function normalizeJpegIosPhotosCarrierV2Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION);
     }
 
     function extensionForFormat(format) {
@@ -4483,10 +4545,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       const artifactBasis = sourceFormat === "jpeg"
-        ? { algorithm: "sha256", normalization: JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION }
+        ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION }
         : null;
       const identityBasisBytes = artifactBasis
-        ? normalizeJpegAdobeXmpApp1Basis(basisBytes)
+        ? normalizeJpegIosPhotosCarrierV2Basis(basisBytes)
         : basisBytes;
       const basisSha256 = (await sha256Hex(identityBasisBytes)).toLowerCase();
       const anchorId = (await sha256Hex(`${code}:${pulse}::${basisSha256}`)).slice(0, 8);
@@ -4706,7 +4768,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v9";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v10";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -5243,8 +5305,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
     const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
+    const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
+    const JPEG_PHOTOSHOP_APP13_IDENTIFIER = new TextEncoder().encode("Photoshop 3.0\0");
 
     function startsWithBytesAt(bytes, prefix, offset) {
       if (offset < 0 || offset + prefix.length > bytes.length) return false;
@@ -5265,9 +5330,33 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return joined;
     }
 
-    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+    function equalByteChunks(left, right) {
+      if (left.length !== right.length) return false;
+      for (let index = 0; index < left.length; index += 1) {
+        if (left[index] !== right[index]) return false;
+      }
+      return true;
+    }
+
+    function canonicalizeExifTrailingNullPadding(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      let trailingNullCount = 0;
+      for (let index = segmentEnd - 1; index >= payloadOffset && bytes[index] === 0; index -= 1) {
+        trailingNullCount += 1;
+      }
+      if (trailingNullCount <= 2) return bytes.slice(markerStart, segmentEnd);
+      const canonicalEnd = segmentEnd - (trailingNullCount - 2);
+      const canonicalDeclaredLength = canonicalEnd - markerCodeEnd;
+      return concatByteChunks([
+        bytes.slice(markerStart, markerCodeEnd),
+        new Uint8Array([(canonicalDeclaredLength >>> 8) & 255, canonicalDeclaredLength & 255]),
+        bytes.slice(payloadOffset, canonicalEnd),
+      ]);
+    }
+
+    function normalizeJpegCarrierBasis(bytes, normalization) {
       if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
       const kept = [bytes.slice(0, 2)];
+      const photoshopApp13Segments = [];
       let offset = 2;
       let inScan = false;
       let sawSos = false;
@@ -5298,6 +5387,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
         const marker = bytes[offset];
         offset += 1;
+        const markerCodeEnd = offset;
         if (marker === 0) throw new Error("jpeg_marker_invalid");
         const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
         if (standalone) {
@@ -5319,7 +5409,33 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
           || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
         );
-        if (!adobeXmp) kept.push(bytes.slice(markerStart, segmentEnd));
+        if (adobeXmp) {
+          // Adobe XMP is a non-authoritative carrier append in both versions.
+        } else if (
+          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          && marker === 225
+          && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
+        ) {
+          kept.push(canonicalizeExifTrailingNullPadding(
+            bytes,
+            markerStart,
+            markerCodeEnd,
+            payloadOffset,
+            segmentEnd,
+          ));
+        } else if (
+          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          && marker === 237
+          && startsWithBytesAt(bytes, JPEG_PHOTOSHOP_APP13_IDENTIFIER, payloadOffset)
+        ) {
+          const segmentBytes = bytes.slice(markerStart, segmentEnd);
+          if (!photoshopApp13Segments.some((prior) => equalByteChunks(prior, segmentBytes))) {
+            photoshopApp13Segments.push(segmentBytes);
+            kept.push(segmentBytes);
+          }
+        } else {
+          kept.push(bytes.slice(markerStart, segmentEnd));
+        }
         offset = segmentEnd;
         if (marker === 218) {
           sawSos = true;
@@ -5331,19 +5447,32 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return concatByteChunks(kept);
     }
 
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION);
+    }
+
+    function normalizeJpegIosPhotosCarrierV2Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION);
+    }
+
     function artifactIdentityBasisBytes(bundle, basisBytes) {
       if (typeof bundle.artifactBasis === "undefined") return basisBytes;
       if (
         !isRecord(bundle.artifactBasis)
         || bundle.artifactBasis.algorithm !== "sha256"
-        || bundle.artifactBasis.normalization !== JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION
       ) {
         throw new Error("artifact_basis_normalization_unsupported");
       }
       if (detectDocumentFormat(basisBytes, {}) !== "jpeg") {
         throw new Error("artifact_basis_normalization_requires_jpeg");
       }
-      return normalizeJpegAdobeXmpApp1Basis(basisBytes);
+      if (bundle.artifactBasis.normalization === JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION) {
+        return normalizeJpegAdobeXmpApp1Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV2Basis(basisBytes);
+      }
+      throw new Error("artifact_basis_normalization_unsupported");
     }
 
     function readUint32BE(bytes, offset) {
