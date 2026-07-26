@@ -1535,11 +1535,73 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       });
     }
 
-    function showDownloadLink(blob, filename) {
+    function isIphoneRuntime() {
+      if (typeof navigator === "undefined") return false;
+      const userAgent = navigator.userAgent || "";
+      const platform = navigator.platform || "";
+      return /iPhone/i.test(userAgent) || platform === "iPhone";
+    }
+
+    async function shareOfflineProofBlobAsNativeFile(blob, filename, options, fileOnly) {
+      if (typeof navigator === "undefined" || typeof File === "undefined") return false;
+      const navigatorShare = navigator;
+      if (typeof navigatorShare.share !== "function") return false;
+      const file = new File([blob], filename, { type: blob.type || "application/octet-stream" });
+      if (navigatorShare.canShare && !navigatorShare.canShare({ files: [file] })) return false;
+      try {
+        const payload = fileOnly
+          ? { files: [file] }
+          : {
+              files: [file],
+              title: options && options.title,
+              text: options && options.text,
+            };
+        await navigatorShare.share(payload);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    async function saveOfflineProofBlobAsFile(blob, filename, options) {
+      if (isStandalonePwa()) {
+        const exactIphoneJpeg =
+          isIphoneRuntime() &&
+          String((options && options.sourceFormat) || "").toLowerCase() === "jpeg" &&
+          String((options && options.sealEmbedding) || "").toLowerCase() === "trailer";
+        return shareOfflineProofBlobAsNativeFile(blob, filename, options, exactIphoneJpeg);
+      }
+      triggerDownload(blob, filename);
+      return true;
+    }
+
+    function showDownloadLink(blob, filename, nativeFileOptions) {
+      if (nativeFileOptions && isStandalonePwa()) {
+        ui.downloadLink.href = "#";
+        ui.downloadLink.removeAttribute("download");
+        ui.downloadLink.textContent = `Save ${filename}`;
+        ui.downloadLink.onclick = async (event) => {
+          event.preventDefault();
+          const saved = await saveOfflineProofBlobAsFile(blob, filename, {
+            ...nativeFileOptions,
+            title: "Receiz Proof Object",
+            text: "Save this offline-verifiable Receiz proof object.",
+          });
+          setStatus(
+            saved
+              ? "Proof object handed to the native file saver."
+              : "Save cancelled. Tap Save again and choose Save to Files.",
+            saved ? "ok" : "warn",
+          );
+        };
+        ui.downloadLink.classList.remove("hidden");
+        return;
+      }
       const url = URL.createObjectURL(blob);
       ui.downloadLink.href = url;
       ui.downloadLink.download = filename;
       ui.downloadLink.textContent = `Download ${filename}`;
+      ui.downloadLink.onclick = null;
       ui.downloadLink.classList.remove("hidden");
       setTimeout(() => URL.revokeObjectURL(url), 30000);
     }
@@ -1547,6 +1609,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function hideDownloadLink() {
       ui.downloadLink.classList.add("hidden");
       ui.downloadLink.removeAttribute("href");
+      ui.downloadLink.onclick = null;
     }
 
     function showResult(target, lines) {
@@ -4455,8 +4518,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       try {
         const result = await sealFileOffline(selectedSealFile);
-        triggerDownload(result.blob, result.filename);
-        showDownloadLink(result.blob, result.filename);
+        const saved = await saveOfflineProofBlobAsFile(result.blob, result.filename, {
+          title: "Receiz Sealed File",
+          text: "Save this offline-verifiable Receiz proof object.",
+          sourceFormat: result.sourceFormat,
+          sealEmbedding: result.sealEmbedding,
+        });
+        showDownloadLink(result.blob, result.filename, {
+          sourceFormat: result.sourceFormat,
+          sealEmbedding: result.sealEmbedding,
+        });
         showResult(ui.sealResult, [
           { k: "file", v: selectedSealFile.name },
           { k: "format", v: `${result.sourceFormat} (${result.sealEmbedding})` },
@@ -4469,7 +4540,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "stripped proofs", v: String(result.strippedExistingProofs || 0) },
           { k: "download", v: result.filename },
         ]);
-        setStatus("Seal complete. Continuity-bearing proof object downloaded.", "ok");
+        setStatus(
+          saved
+            ? "Seal complete. Proof object handed to the native file saver."
+            : "Seal complete. Tap Save and choose Save to Files.",
+          saved ? "ok" : "warn",
+        );
       } catch (err) {
         const code = err instanceof Error ? err.message : String(err || "seal_failed");
         if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED || code === "receiz_identity_required") {
@@ -4534,7 +4610,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v4";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v7";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
