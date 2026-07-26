@@ -1570,8 +1570,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           String((options && options.sourceFormat) || "").toLowerCase() === "jpeg" &&
           String((options && options.sealEmbedding) || "").toLowerCase() === "trailer";
         if (exactIphoneJpeg) {
-          triggerDownload(blob, filename, true);
-          return true;
+          return shareOfflineProofBlobAsNativeFile(blob, filename, options, true);
         }
         return shareOfflineProofBlobAsNativeFile(blob, filename, options, exactIphoneJpeg);
       }
@@ -1593,7 +1592,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           });
           setStatus(
             saved
-              ? "Full file-save interface opened for the exact proof object."
+              ? "Proof object handed to the native save sheet."
               : "Save did not open. Tap Save again.",
             saved ? "ok" : "warn",
           );
@@ -2034,15 +2033,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return `${parsed.base}.receized`;
     }
 
-    function triggerDownload(blob, filename, fullDocumentSurface = false) {
+    function triggerDownload(blob, filename) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
-      if (fullDocumentSurface) {
-        a.target = "_blank";
-        a.rel = "noopener";
-      }
       a.style.display = "none";
       document.body.appendChild(a);
       a.click();
@@ -2234,6 +2229,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         zkPoseidonHash,
         groth16ProofDigest,
       ];
+      if (input.artifactBasisNormalization) parts.push(input.artifactBasisNormalization);
 
       if (input.signerKeyId) parts.push(input.signerKeyId);
       if (input.anchorId) parts.push(input.anchorId);
@@ -2257,6 +2253,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         signerKeyId,
         anchorId: anchorId || undefined,
         artifactSha256Basis,
+        artifactBasisNormalization: input.artifactBasis && input.artifactBasis.normalization,
         zkPoseidonHash: input.zkPoseidonHash,
         groth16ProofDigest: input.groth16ProofDigest,
       });
@@ -2285,6 +2282,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ...(input.groth16Proof ? { groth16Proof: input.groth16Proof } : {}),
         ...(input.groth16ProofDigest ? { groth16ProofDigest: input.groth16ProofDigest } : {}),
         artifactSha256Basis,
+        ...(input.artifactBasis ? { artifactBasis: input.artifactBasis } : {}),
       };
     }
 
@@ -2433,6 +2431,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...proofbundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
+      if (slim.artifactBasis) return "";
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2588,6 +2587,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               ],
             ]
           : null,
+        slim.artifactBasis && typeof slim.artifactBasis === "object"
+          ? slim.artifactBasis.normalization || ""
+          : "",
       ];
       const raw = textEncoder.encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_ENCODE_BYTES) {
@@ -2792,6 +2794,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         zkPoseidonHash: bundle.zkPoseidonHash || "",
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
+        ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
         wireproof: bundle.wireproof || null,
       });
     }
@@ -3518,6 +3521,84 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const textHint = detectFromTextPrefix(bytes);
       if (textHint) return textHint;
       return "unknown";
+    }
+
+    const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_STANDARD_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xap/1.0/\0");
+    const JPEG_EXTENDED_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xmp/extension/\0");
+
+    function startsWithBytesAt(bytes, prefix, offset) {
+      if (offset < 0 || offset + prefix.length > bytes.length) return false;
+      for (let index = 0; index < prefix.length; index += 1) {
+        if (bytes[offset + index] !== prefix[index]) return false;
+      }
+      return true;
+    }
+
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
+      const kept = [bytes.slice(0, 2)];
+      let offset = 2;
+      let inScan = false;
+      let sawSos = false;
+      let sawEoi = false;
+      while (offset < bytes.length) {
+        if (inScan) {
+          const scanStart = offset;
+          while (offset < bytes.length) {
+            if (bytes[offset] !== 255) {
+              offset += 1;
+              continue;
+            }
+            if (offset + 1 >= bytes.length) throw new Error("jpeg_scan_truncated");
+            const next = bytes[offset + 1];
+            if (next === 0 || next === 255 || (next >= 208 && next <= 215)) {
+              offset += 2;
+              continue;
+            }
+            break;
+          }
+          kept.push(bytes.slice(scanStart, offset));
+          inScan = false;
+          continue;
+        }
+        const markerStart = offset;
+        if (bytes[offset] !== 255) throw new Error("jpeg_marker_missing");
+        while (offset < bytes.length && bytes[offset] === 255) offset += 1;
+        if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
+        const marker = bytes[offset];
+        offset += 1;
+        if (marker === 0) throw new Error("jpeg_marker_invalid");
+        const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
+        if (standalone) {
+          kept.push(bytes.slice(markerStart, offset));
+          if (marker === 217) {
+            sawEoi = true;
+            if (offset < bytes.length) kept.push(bytes.slice(offset));
+            offset = bytes.length;
+          }
+          continue;
+        }
+        if (offset + 2 > bytes.length) throw new Error("jpeg_segment_length_missing");
+        const declaredLength = (bytes[offset] << 8) | bytes[offset + 1];
+        if (declaredLength < 2) throw new Error("jpeg_segment_length_invalid");
+        const segmentEnd = offset + declaredLength;
+        if (segmentEnd > bytes.length) throw new Error("jpeg_segment_truncated");
+        const payloadOffset = offset + 2;
+        const adobeXmp = marker === 225 && (
+          startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
+          || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
+        );
+        if (!adobeXmp) kept.push(bytes.slice(markerStart, segmentEnd));
+        offset = segmentEnd;
+        if (marker === 218) {
+          sawSos = true;
+          inScan = true;
+        }
+      }
+      if (!sawSos) throw new Error("jpeg_sos_missing");
+      if (!sawEoi) throw new Error("jpeg_eoi_missing");
+      return concatByteChunks(kept);
     }
 
     function extensionForFormat(format) {
@@ -4401,7 +4482,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         contentType = sourceMimeRaw || mimeForFormat(sourceFormat) || "application/octet-stream";
       }
 
-      const basisSha256 = (await sha256Hex(basisBytes)).toLowerCase();
+      const artifactBasis = sourceFormat === "jpeg"
+        ? { algorithm: "sha256", normalization: JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION }
+        : null;
+      const identityBasisBytes = artifactBasis
+        ? normalizeJpegAdobeXmpApp1Basis(basisBytes)
+        : basisBytes;
+      const basisSha256 = (await sha256Hex(identityBasisBytes)).toLowerCase();
       const anchorId = (await sha256Hex(`${code}:${pulse}::${basisSha256}`)).slice(0, 8);
       const anchoredVerifyPath = `${verifyPath}?a=${anchorId}&ms=${createdAtMs}`;
       verifyUrl = buildVerifyUrl(anchoredVerifyPath);
@@ -4436,6 +4523,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16Proof: zk.groth16Proof,
         groth16ProofDigest: zk.groth16ProofDigest,
         artifactSha256Basis: basisSha256,
+        ...(artifactBasis ? { artifactBasis } : {}),
       });
 
       const proofbundle = await ensureTrustedSignature(unsignedBundle);
@@ -4550,8 +4638,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ]);
         setStatus(
           saved
-            ? "Seal complete. Full file-save interface opened for the exact proof object."
-            : "Seal complete. Tap Save to open the file-save interface.",
+            ? "Seal complete. Proof object handed to the native save sheet."
+            : "Seal complete. Tap Save to open the native save sheet.",
           saved ? "ok" : "warn",
         );
       } catch (err) {
@@ -4618,7 +4706,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v8";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v9";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -5154,6 +5242,110 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return "unknown";
     }
 
+    const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
+    const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
+
+    function startsWithBytesAt(bytes, prefix, offset) {
+      if (offset < 0 || offset + prefix.length > bytes.length) return false;
+      for (let index = 0; index < prefix.length; index += 1) {
+        if (bytes[offset + index] !== prefix[index]) return false;
+      }
+      return true;
+    }
+
+    function concatByteChunks(chunks) {
+      const byteLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+      const joined = new Uint8Array(byteLength);
+      let offset = 0;
+      for (const chunk of chunks) {
+        joined.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return joined;
+    }
+
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
+      const kept = [bytes.slice(0, 2)];
+      let offset = 2;
+      let inScan = false;
+      let sawSos = false;
+      let sawEoi = false;
+      while (offset < bytes.length) {
+        if (inScan) {
+          const scanStart = offset;
+          while (offset < bytes.length) {
+            if (bytes[offset] !== 255) {
+              offset += 1;
+              continue;
+            }
+            if (offset + 1 >= bytes.length) throw new Error("jpeg_scan_truncated");
+            const next = bytes[offset + 1];
+            if (next === 0 || next === 255 || (next >= 208 && next <= 215)) {
+              offset += 2;
+              continue;
+            }
+            break;
+          }
+          kept.push(bytes.slice(scanStart, offset));
+          inScan = false;
+          continue;
+        }
+        const markerStart = offset;
+        if (bytes[offset] !== 255) throw new Error("jpeg_marker_missing");
+        while (offset < bytes.length && bytes[offset] === 255) offset += 1;
+        if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
+        const marker = bytes[offset];
+        offset += 1;
+        if (marker === 0) throw new Error("jpeg_marker_invalid");
+        const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
+        if (standalone) {
+          kept.push(bytes.slice(markerStart, offset));
+          if (marker === 217) {
+            sawEoi = true;
+            if (offset < bytes.length) kept.push(bytes.slice(offset));
+            offset = bytes.length;
+          }
+          continue;
+        }
+        if (offset + 2 > bytes.length) throw new Error("jpeg_segment_length_missing");
+        const declaredLength = (bytes[offset] << 8) | bytes[offset + 1];
+        if (declaredLength < 2) throw new Error("jpeg_segment_length_invalid");
+        const segmentEnd = offset + declaredLength;
+        if (segmentEnd > bytes.length) throw new Error("jpeg_segment_truncated");
+        const payloadOffset = offset + 2;
+        const adobeXmp = marker === 225 && (
+          startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
+          || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
+        );
+        if (!adobeXmp) kept.push(bytes.slice(markerStart, segmentEnd));
+        offset = segmentEnd;
+        if (marker === 218) {
+          sawSos = true;
+          inScan = true;
+        }
+      }
+      if (!sawSos) throw new Error("jpeg_sos_missing");
+      if (!sawEoi) throw new Error("jpeg_eoi_missing");
+      return concatByteChunks(kept);
+    }
+
+    function artifactIdentityBasisBytes(bundle, basisBytes) {
+      if (typeof bundle.artifactBasis === "undefined") return basisBytes;
+      if (
+        !isRecord(bundle.artifactBasis)
+        || bundle.artifactBasis.algorithm !== "sha256"
+        || bundle.artifactBasis.normalization !== JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION
+      ) {
+        throw new Error("artifact_basis_normalization_unsupported");
+      }
+      if (detectDocumentFormat(basisBytes, {}) !== "jpeg") {
+        throw new Error("artifact_basis_normalization_requires_jpeg");
+      }
+      return normalizeJpegAdobeXmpApp1Basis(basisBytes);
+    }
+
     function readUint32BE(bytes, offset) {
       return (
         ((bytes[offset] || 0) << 24) |
@@ -5592,6 +5784,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
+      if (slim.artifactBasis) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -5746,6 +5939,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               ],
             ]
           : null,
+        isRecord(slim.artifactBasis) ? slim.artifactBasis.normalization || "" : "",
       ];
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
@@ -5954,6 +6148,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         zkPoseidonHash: bundle.zkPoseidonHash || "",
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
+        ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
         wireproof: bundle.wireproof || null
       };
       return jcsCanonicalize(canonical);
@@ -6929,12 +7124,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push("Artifact binding field has invalid format.");
           checks.push({ state: "bad", message: "Artifact binding" });
         } else {
-          const computedBasis = (await sha256Hex(basisBytes)).toLowerCase();
-          if (computedBasis !== artifactSha256Basis) {
-            errors.push("Artifact binding mismatch");
+          try {
+            const identityBasisBytes = artifactIdentityBasisBytes(bundle, basisBytes);
+            const computedBasis = (await sha256Hex(identityBasisBytes)).toLowerCase();
+            if (computedBasis !== artifactSha256Basis) {
+              errors.push("Artifact binding mismatch");
+              checks.push({ state: "bad", message: "Artifact binding" });
+            } else {
+              checks.push({ state: "ok", message: "Artifact binding" });
+            }
+          } catch {
+            errors.push("Artifact basis normalization is unsupported.");
             checks.push({ state: "bad", message: "Artifact binding" });
-          } else {
-            checks.push({ state: "ok", message: "Artifact binding" });
           }
         }
       } else {
@@ -7454,7 +7655,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
 
-      
+
       await validateBundleAgainstBasis({
         bundle,
         basisBytes,

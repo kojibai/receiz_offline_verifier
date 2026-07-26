@@ -1104,6 +1104,110 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return "unknown";
     }
 
+    const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
+    const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
+
+    function startsWithBytesAt(bytes, prefix, offset) {
+      if (offset < 0 || offset + prefix.length > bytes.length) return false;
+      for (let index = 0; index < prefix.length; index += 1) {
+        if (bytes[offset + index] !== prefix[index]) return false;
+      }
+      return true;
+    }
+
+    function concatByteChunks(chunks) {
+      const byteLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+      const joined = new Uint8Array(byteLength);
+      let offset = 0;
+      for (const chunk of chunks) {
+        joined.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return joined;
+    }
+
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
+      const kept = [bytes.slice(0, 2)];
+      let offset = 2;
+      let inScan = false;
+      let sawSos = false;
+      let sawEoi = false;
+      while (offset < bytes.length) {
+        if (inScan) {
+          const scanStart = offset;
+          while (offset < bytes.length) {
+            if (bytes[offset] !== 255) {
+              offset += 1;
+              continue;
+            }
+            if (offset + 1 >= bytes.length) throw new Error("jpeg_scan_truncated");
+            const next = bytes[offset + 1];
+            if (next === 0 || next === 255 || (next >= 208 && next <= 215)) {
+              offset += 2;
+              continue;
+            }
+            break;
+          }
+          kept.push(bytes.slice(scanStart, offset));
+          inScan = false;
+          continue;
+        }
+        const markerStart = offset;
+        if (bytes[offset] !== 255) throw new Error("jpeg_marker_missing");
+        while (offset < bytes.length && bytes[offset] === 255) offset += 1;
+        if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
+        const marker = bytes[offset];
+        offset += 1;
+        if (marker === 0) throw new Error("jpeg_marker_invalid");
+        const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
+        if (standalone) {
+          kept.push(bytes.slice(markerStart, offset));
+          if (marker === 217) {
+            sawEoi = true;
+            if (offset < bytes.length) kept.push(bytes.slice(offset));
+            offset = bytes.length;
+          }
+          continue;
+        }
+        if (offset + 2 > bytes.length) throw new Error("jpeg_segment_length_missing");
+        const declaredLength = (bytes[offset] << 8) | bytes[offset + 1];
+        if (declaredLength < 2) throw new Error("jpeg_segment_length_invalid");
+        const segmentEnd = offset + declaredLength;
+        if (segmentEnd > bytes.length) throw new Error("jpeg_segment_truncated");
+        const payloadOffset = offset + 2;
+        const adobeXmp = marker === 225 && (
+          startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
+          || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
+        );
+        if (!adobeXmp) kept.push(bytes.slice(markerStart, segmentEnd));
+        offset = segmentEnd;
+        if (marker === 218) {
+          sawSos = true;
+          inScan = true;
+        }
+      }
+      if (!sawSos) throw new Error("jpeg_sos_missing");
+      if (!sawEoi) throw new Error("jpeg_eoi_missing");
+      return concatByteChunks(kept);
+    }
+
+    function artifactIdentityBasisBytes(bundle, basisBytes) {
+      if (typeof bundle.artifactBasis === "undefined") return basisBytes;
+      if (
+        !isRecord(bundle.artifactBasis)
+        || bundle.artifactBasis.algorithm !== "sha256"
+        || bundle.artifactBasis.normalization !== JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION
+      ) {
+        throw new Error("artifact_basis_normalization_unsupported");
+      }
+      if (detectDocumentFormat(basisBytes, {}) !== "jpeg") {
+        throw new Error("artifact_basis_normalization_requires_jpeg");
+      }
+      return normalizeJpegAdobeXmpApp1Basis(basisBytes);
+    }
+
     function readUint32BE(bytes, offset) {
       return (
         ((bytes[offset] || 0) << 24) |
@@ -1542,6 +1646,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
+      if (slim.artifactBasis) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -1696,6 +1801,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               ],
             ]
           : null,
+        isRecord(slim.artifactBasis) ? slim.artifactBasis.normalization || "" : "",
       ];
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
@@ -1904,6 +2010,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         zkPoseidonHash: bundle.zkPoseidonHash || "",
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
+        ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
         wireproof: bundle.wireproof || null
       };
       return jcsCanonicalize(canonical);
@@ -2879,12 +2986,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push("Artifact binding field has invalid format.");
           checks.push({ state: "bad", message: "Artifact binding" });
         } else {
-          const computedBasis = (await sha256Hex(basisBytes)).toLowerCase();
-          if (computedBasis !== artifactSha256Basis) {
-            errors.push("Artifact binding mismatch");
+          try {
+            const identityBasisBytes = artifactIdentityBasisBytes(bundle, basisBytes);
+            const computedBasis = (await sha256Hex(identityBasisBytes)).toLowerCase();
+            if (computedBasis !== artifactSha256Basis) {
+              errors.push("Artifact binding mismatch");
+              checks.push({ state: "bad", message: "Artifact binding" });
+            } else {
+              checks.push({ state: "ok", message: "Artifact binding" });
+            }
+          } catch {
+            errors.push("Artifact basis normalization is unsupported.");
             checks.push({ state: "bad", message: "Artifact binding" });
-          } else {
-            checks.push({ state: "ok", message: "Artifact binding" });
           }
         }
       } else {
@@ -3404,7 +3517,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
 
-      
+
       await validateBundleAgainstBasis({
         bundle,
         basisBytes,
