@@ -1569,10 +1569,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           isIphoneRuntime() &&
           String((options && options.sourceFormat) || "").toLowerCase() === "jpeg" &&
           String((options && options.sealEmbedding) || "").toLowerCase() === "trailer";
-        if (exactIphoneJpeg) {
+        const exactIphoneHeic =
+          isIphoneRuntime() &&
+          String((options && options.sourceFormat) || "").toLowerCase() === "heic" &&
+          String((options && options.sealEmbedding) || "").toLowerCase() === "heic";
+        const exactNativeProof = exactIphoneJpeg || exactIphoneHeic;
+        if (exactNativeProof) {
           return shareOfflineProofBlobAsNativeFile(blob, filename, options, true);
         }
-        return shareOfflineProofBlobAsNativeFile(blob, filename, options, exactIphoneJpeg);
+        return shareOfflineProofBlobAsNativeFile(blob, filename, options, exactNativeProof);
       }
       triggerDownload(blob, filename);
       return true;
@@ -3482,6 +3487,50 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       );
     }
 
+    const HEIC_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "heim", "heis", "hevm", "hevs"]);
+    function heicAscii4(bytes, offset) {
+      return String.fromCharCode(bytes[offset] || 0, bytes[offset + 1] || 0, bytes[offset + 2] || 0, bytes[offset + 3] || 0);
+    }
+    function isCompleteHeic(bytes) {
+      if (bytes.length < 16 || heicAscii4(bytes, 4) !== "ftyp") return false;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      let offset = 0;
+      let sawFtyp = false;
+      let sawMeta = false;
+      let sawMdat = false;
+      let hasHeicBrand = false;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return false;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return false;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return false;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return false;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return false;
+        if (offset === 0) {
+          if (type !== "ftyp" || headerLength !== 8 || size < 16 || (size - 16) % 4 !== 0) return false;
+          sawFtyp = true;
+          hasHeicBrand = HEIC_BRANDS.has(heicAscii4(bytes, offset + 8));
+          for (let brandOffset = offset + 16; brandOffset < offset + size; brandOffset += 4) {
+            if (HEIC_BRANDS.has(heicAscii4(bytes, brandOffset))) hasHeicBrand = true;
+          }
+        } else if (type === "ftyp") {
+          return false;
+        }
+        if (type === "meta") sawMeta = true;
+        if (type === "mdat") sawMdat = true;
+        offset += size;
+      }
+      return sawFtyp && hasHeicBrand && sawMeta && sawMdat && offset === bytes.length;
+    }
+
     function extensionFromFilename(filename) {
       return stripLastExtension(filename).ext;
     }
@@ -3513,6 +3562,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (startsWithBytes(bytes, PNG_SIGNATURE)) return "png";
       if (startsWithBytes(bytes, PDF_SIGNATURE)) return "pdf";
       if (startsWithBytes(bytes, JPEG_SIGNATURE)) return "jpeg";
+      if (isCompleteHeic(bytes)) return "heic";
       if (startsWithBytes(bytes, GIF87A_SIGNATURE) || startsWithBytes(bytes, GIF89A_SIGNATURE)) return "gif";
       if (isWebp(bytes)) return "webp";
       if (startsWithBytes(bytes, ZIP_SIGNATURE)) return "zip";
@@ -3523,12 +3573,139 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return "unknown";
     }
 
+    const RECEIZ_HEIC_PROOF_UUID = new Uint8Array([
+      0xc0, 0x61, 0x19, 0xbd, 0x6b, 0x98, 0x55, 0x1f,
+      0xad, 0x30, 0x6d, 0x23, 0xed, 0xcb, 0x79, 0xd0,
+    ]);
+    const RECEIZ_HEIC_PROOF_MAGIC = new TextEncoder().encode("receiz.heic.proof.v1\0");
+    const heicDecoder = new TextDecoder("utf-8", { fatal: true });
+
+    function heicBytesEqualAt(bytes, expected, offset) {
+      if (offset < 0 || offset + expected.length > bytes.length) return false;
+      for (let index = 0; index < expected.length; index += 1) {
+        if (bytes[offset + index] !== expected[index]) return false;
+      }
+      return true;
+    }
+
+    function heicConcat(parts) {
+      const length = parts.reduce((sum, part) => sum + part.length, 0);
+      const out = new Uint8Array(length);
+      let offset = 0;
+      for (const part of parts) {
+        out.set(part, offset);
+        offset += part.length;
+      }
+      return out;
+    }
+
+    function parseHeicTopLevelBoxes(bytes) {
+      if (bytes.length < 8) return null;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const boxes = [];
+      let offset = 0;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return null;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return null;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return null;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return null;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return null;
+        boxes.push({ start: offset, end: offset + size, type, headerLength });
+        offset += size;
+      }
+      return offset === bytes.length ? boxes : null;
+    }
+
+    function parseHeicProofBox(bytes, box) {
+      if (box.type !== "uuid") return null;
+      const uuidOffset = box.start + box.headerLength;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_UUID, uuidOffset)) return null;
+      const magicOffset = uuidOffset + RECEIZ_HEIC_PROOF_UUID.length;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_MAGIC, magicOffset)) return { error: "heic_receiz_magic_invalid" };
+      const lengthOffset = magicOffset + RECEIZ_HEIC_PROOF_MAGIC.length;
+      if (lengthOffset + 4 > box.end) return { error: "heic_receiz_json_length_missing" };
+      const jsonLength = new DataView(bytes.buffer, bytes.byteOffset + lengthOffset, 4).getUint32(0, false);
+      const jsonOffset = lengthOffset + 4;
+      if (jsonOffset + jsonLength !== box.end) return { error: "heic_receiz_json_length_invalid" };
+      try {
+        const jsonText = heicDecoder.decode(bytes.slice(jsonOffset, box.end));
+        const bundle = JSON.parse(jsonText);
+        if (jcsCanonicalize(bundle) !== jsonText) return { error: "heic_receiz_json_noncanonical" };
+        return { bundle };
+      } catch {
+        return { error: "heic_receiz_json_invalid" };
+      }
+    }
+
+    function parseReceizHeicProof(bytes) {
+      const boxes = parseHeicTopLevelBoxes(bytes);
+      if (!boxes || boxes.length === 0 || boxes[0].type !== "ftyp") {
+        return { basisBytes: bytes.slice(), proofCount: 0, bundle: null, parseError: "heic_container_invalid" };
+      }
+      const basisParts = [];
+      let proofCount = 0;
+      let bundle = null;
+      for (let index = 0; index < boxes.length; index += 1) {
+        const box = boxes[index];
+        const parsed = parseHeicProofBox(bytes, box);
+        if (parsed && "error" in parsed) {
+          return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: parsed.error };
+        }
+        if (parsed) {
+          proofCount += 1;
+          if (proofCount !== 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_duplicate" };
+          }
+          if (index !== boxes.length - 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_not_final" };
+          }
+          bundle = parsed.bundle;
+        } else {
+          basisParts.push(bytes.slice(box.start, box.end));
+        }
+      }
+      return { basisBytes: heicConcat(basisParts), proofCount, bundle, parseError: null };
+    }
+
+    function appendReceizHeicProof(args) {
+      const parsed = parseReceizHeicProof(args.basisBytes);
+      if (parsed.parseError) throw new Error(parsed.parseError);
+      const jsonBytes = new TextEncoder().encode(jcsCanonicalize(args.bundle));
+      const payloadLength = RECEIZ_HEIC_PROOF_UUID.length + RECEIZ_HEIC_PROOF_MAGIC.length + 4 + jsonBytes.length;
+      const boxLength = 8 + payloadLength;
+      if (boxLength > 0xffffffff) throw new Error("heic_receiz_proof_too_large");
+      const proofBox = new Uint8Array(boxLength);
+      const view = new DataView(proofBox.buffer);
+      view.setUint32(0, boxLength, false);
+      proofBox.set(new TextEncoder().encode("uuid"), 4);
+      let offset = 8;
+      proofBox.set(RECEIZ_HEIC_PROOF_UUID, offset);
+      offset += RECEIZ_HEIC_PROOF_UUID.length;
+      proofBox.set(RECEIZ_HEIC_PROOF_MAGIC, offset);
+      offset += RECEIZ_HEIC_PROOF_MAGIC.length;
+      view.setUint32(offset, jsonBytes.length, false);
+      offset += 4;
+      proofBox.set(jsonBytes, offset);
+      return heicConcat([parsed.basisBytes, proofBox]);
+    }
+
     const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
     const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
-    const JPEG_STANDARD_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xap/1.0/\0");
-    const JPEG_EXTENDED_XMP_IDENTIFIER = textEncoder.encode("http://ns.adobe.com/xmp/extension/\0");
-    const JPEG_EXIF_IDENTIFIER = textEncoder.encode("Exif\0\0");
-    const JPEG_PHOTOSHOP_APP13_IDENTIFIER = textEncoder.encode("Photoshop 3.0\0");
+    const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
+    const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
+    const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
+    const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
+    const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
+    const JPEG_PHOTOSHOP_APP13_IDENTIFIER = new TextEncoder().encode("Photoshop 3.0\0");
 
     function startsWithBytesAt(bytes, prefix, offset) {
       if (offset < 0 || offset + prefix.length > bytes.length) return false;
@@ -3536,6 +3713,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (bytes[offset + index] !== prefix[index]) return false;
       }
       return true;
+    }
+
+    function concatByteChunks(chunks) {
+      const byteLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+      const joined = new Uint8Array(byteLength);
+      let offset = 0;
+      for (const chunk of chunks) {
+        joined.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return joined;
     }
 
     function equalByteChunks(left, right) {
@@ -3561,6 +3749,230 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ]);
     }
 
+    const JPEG_TIFF_TYPE_BYTE_LENGTH = new Map([
+      [1, 1], [2, 1], [3, 2], [4, 4], [5, 8],
+      [7, 1], [9, 4], [10, 8], [11, 4], [12, 8],
+    ]);
+    const JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS = new Set([0x8769, 0x8825, 0xa005]);
+    const JPEG_PHOTOS_IFD1_TAGS = new Set([0x0103, 0x011a, 0x011b, 0x0128, 0x0201, 0x0202]);
+    const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
+    const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
+    const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
+
+    function canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+      const findEntry = (ifdOffset, wantedTag) => {
+        const count = uint16(ifdOffset);
+        if (count === null) return null;
+        const tableEnd = ifdOffset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        let found = null;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = ifdOffset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          if (tag !== wantedTag) continue;
+          if (found) return null;
+          found = { type, count: entryCount, value };
+        }
+        return found;
+      };
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const exifPointer = findEntry(ifd0Offset, 0x8769);
+      if (!exifPointer || exifPointer.type !== 4 || exifPointer.count !== 1) return null;
+      const makerNoteEntry = findEntry(exifPointer.value, 0x927c);
+      if (!makerNoteEntry || makerNoteEntry.type !== 7 || makerNoteEntry.count < JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 16) return null;
+      const makerNoteOffset = makerNoteEntry.value;
+      const makerNoteEnd = makerNoteOffset + makerNoteEntry.count;
+      if (!Number.isSafeInteger(makerNoteEnd) || makerNoteOffset < 0 || makerNoteEnd > tiffLength
+        || !startsWithBytesAt(bytes, JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER, tiffOffset + makerNoteOffset)) return null;
+      const makerNoteByteOrderOffset = makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 1;
+      if (bytes[tiffOffset + makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length] !== 1
+        || bytes[tiffOffset + makerNoteByteOrderOffset] !== 0x4d
+        || bytes[tiffOffset + makerNoteByteOrderOffset + 1] !== 0x4d) return null;
+      const makerView = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset + makerNoteOffset, makerNoteEntry.count);
+      const makerIfdOffset = makerNoteByteOrderOffset + 2 - makerNoteOffset;
+      if (makerIfdOffset + 2 > makerNoteEntry.count) return null;
+      const makerEntryCount = makerView.getUint16(makerIfdOffset, false);
+      const makerTableEnd = makerIfdOffset + 2 + makerEntryCount * 12 + 4;
+      if (!Number.isSafeInteger(makerTableEnd) || makerTableEnd > makerNoteEntry.count) return null;
+      let assetUuidOffset = null;
+      for (let index = 0; index < makerEntryCount; index += 1) {
+        const entryOffset = makerIfdOffset + 2 + index * 12;
+        if (makerView.getUint16(entryOffset, false) !== JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) continue;
+        if (assetUuidOffset !== null) return null;
+        const type = makerView.getUint16(entryOffset + 2, false);
+        const count = makerView.getUint32(entryOffset + 4, false);
+        const value = makerView.getUint32(entryOffset + 8, false);
+        if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
+          || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+        assetUuidOffset = value;
+      }
+      if (assetUuidOffset === null) return null;
+      const uuidBytes = bytes.slice(
+        tiffOffset + makerNoteOffset + assetUuidOffset,
+        tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
+      );
+      const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
+      if (uuidBytes[uuidBytes.length - 1] !== 0
+        || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      const canonical = bytes.slice(markerStart, segmentEnd);
+      canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      return canonical;
+    }
+
+    function canonicalizeExifPhotosIfd1(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+
+      const parseIfd = (offset) => {
+        const count = uint16(offset);
+        if (count === null) return null;
+        const tableEnd = offset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        const entries = [];
+        let referencedEnd = tableEnd;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = offset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          const unitLength = JPEG_TIFF_TYPE_BYTE_LENGTH.get(type);
+          if (!unitLength) return null;
+          const valueByteLength = unitLength * entryCount;
+          if (!Number.isSafeInteger(valueByteLength)) return null;
+          const valueOffset = valueByteLength > 4 ? value : null;
+          if (valueOffset !== null) {
+            const valueEnd = valueOffset + valueByteLength;
+            if (!Number.isSafeInteger(valueEnd) || valueOffset < 0 || valueEnd > tiffLength) return null;
+            referencedEnd = Math.max(referencedEnd, valueEnd);
+          }
+          entries.push({ tag, type, count: entryCount, value, valueByteLength, valueOffset });
+        }
+        const nextIfdOffset = uint32(tableEnd - 4);
+        if (nextIfdOffset === null) return null;
+        return { entries, nextIfdOffset, tableEnd, referencedEnd };
+      };
+
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const ifd0 = parseIfd(ifd0Offset);
+      if (!ifd0 || ifd0.nextIfdOffset === 0) return null;
+      let primaryReferencedEnd = ifd0.referencedEnd;
+      const visited = new Set([ifd0Offset]);
+      const pending = ifd0.entries
+        .filter((entry) => JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1)
+        .map((entry) => entry.value);
+      while (pending.length > 0) {
+        const childOffset = pending.pop() || 0;
+        if (childOffset === 0 || visited.has(childOffset)) return null;
+        visited.add(childOffset);
+        const child = parseIfd(childOffset);
+        if (!child || child.nextIfdOffset !== 0) return null;
+        primaryReferencedEnd = Math.max(primaryReferencedEnd, child.referencedEnd);
+        for (const entry of child.entries) {
+          if (JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1) {
+            pending.push(entry.value);
+          }
+        }
+      }
+
+      const ifd1Offset = ifd0.nextIfdOffset;
+      const ifd1 = parseIfd(ifd1Offset);
+      if (!ifd1 || ifd1.nextIfdOffset !== 0 || ifd1.entries.length !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      if (ifd1Offset < primaryReferencedEnd) return null;
+      for (let offset = primaryReferencedEnd; offset < ifd1Offset; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+      const byTag = new Map(ifd1.entries.map((entry) => [entry.tag, entry]));
+      if (byTag.size !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      for (const tag of JPEG_PHOTOS_IFD1_TAGS) {
+        if (!byTag.has(tag)) return null;
+      }
+      const compression = byTag.get(0x0103);
+      const xResolution = byTag.get(0x011a);
+      const yResolution = byTag.get(0x011b);
+      const resolutionUnit = byTag.get(0x0128);
+      const previewOffsetEntry = byTag.get(0x0201);
+      const previewLengthEntry = byTag.get(0x0202);
+      if (
+        !compression || compression.type !== 3 || compression.count !== 1
+        || (littleEndian ? compression.value & 0xffff : compression.value >>> 16) !== 6
+        || !xResolution || xResolution.type !== 5 || xResolution.count !== 1 || xResolution.valueOffset === null
+        || !yResolution || yResolution.type !== 5 || yResolution.count !== 1 || yResolution.valueOffset === null
+        || !resolutionUnit || resolutionUnit.type !== 3 || resolutionUnit.count !== 1
+        || !previewOffsetEntry || previewOffsetEntry.type !== 4 || previewOffsetEntry.count !== 1
+        || !previewLengthEntry || previewLengthEntry.type !== 4 || previewLengthEntry.count !== 1
+      ) return null;
+
+      const previewOffset = previewOffsetEntry.value;
+      const previewLength = previewLengthEntry.value;
+      const previewEnd = previewOffset + previewLength;
+      if (
+        xResolution.valueOffset !== ifd1.tableEnd
+        || yResolution.valueOffset !== xResolution.valueOffset + 8
+        || previewOffset !== yResolution.valueOffset + 8
+        || !Number.isSafeInteger(previewEnd)
+        || previewLength < 4
+        || previewEnd > tiffLength
+        || bytes[tiffOffset + previewOffset] !== 255
+        || bytes[tiffOffset + previewOffset + 1] !== 216
+        || bytes[tiffOffset + previewEnd - 2] !== 255
+        || bytes[tiffOffset + previewEnd - 1] !== 217
+      ) return null;
+      for (let offset = previewEnd; offset < tiffLength; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+
+      let canonicalPrefix = bytes.slice(markerStart, tiffOffset + ifd1Offset);
+      const nextIfdPointerOffset = tiffOffset + ifd0.tableEnd - 4 - markerStart;
+      canonicalPrefix.fill(0, nextIfdPointerOffset, nextIfdPointerOffset + 4);
+      let trailingNullCount = 0;
+      for (
+        let offset = canonicalPrefix.length - 1;
+        offset >= payloadOffset - markerStart && canonicalPrefix[offset] === 0;
+        offset -= 1
+      ) trailingNullCount += 1;
+      if (trailingNullCount > 2) {
+        canonicalPrefix = canonicalPrefix.slice(0, canonicalPrefix.length - (trailingNullCount - 2));
+      }
+      const canonicalDeclaredLength = canonicalPrefix.length - (markerCodeEnd - markerStart);
+      canonicalPrefix[markerCodeEnd - markerStart] = (canonicalDeclaredLength >>> 8) & 255;
+      canonicalPrefix[markerCodeEnd - markerStart + 1] = canonicalDeclaredLength & 255;
+      return canonicalPrefix;
+    }
+
     function normalizeJpegCarrierBasis(bytes, normalization) {
       if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
       const kept = [bytes.slice(0, 2)];
@@ -3569,6 +3981,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let inScan = false;
       let sawSos = false;
       let sawEoi = false;
+      const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION;
       while (offset < bytes.length) {
         if (inScan) {
           const scanStart = offset;
@@ -3620,19 +4035,27 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (adobeXmp) {
           // Adobe XMP is a non-authoritative carrier append in both versions.
         } else if (
-          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          isIosPhotosCarrier
           && marker === 225
           && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
         ) {
-          kept.push(canonicalizeExifTrailingNullPadding(
-            bytes,
-            markerStart,
-            markerCodeEnd,
-            payloadOffset,
-            segmentEnd,
+          const v4MakerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            ? canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd)
+            : null;
+          const ifd1Source = v4MakerNoteCanonical ? (() => {
+            const copy = bytes.slice();
+            copy.set(v4MakerNoteCanonical, markerStart);
+            return copy;
+          })() : bytes;
+          const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
+            : null;
+          kept.push(v3Ifd1Canonical || v4MakerNoteCanonical || canonicalizeExifTrailingNullPadding(
+            bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
           ));
         } else if (
-          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          isIosPhotosCarrier
           && marker === 237
           && startsWithBytesAt(bytes, JPEG_PHOTOSHOP_APP13_IDENTIFIER, payloadOffset)
         ) {
@@ -3663,10 +4086,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION);
     }
 
+    function normalizeJpegIosPhotosCarrierV3Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION);
+    }
+    function normalizeJpegIosPhotosCarrierV4Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION);
+    }
+
     function extensionForFormat(format) {
       if (format === "png") return "png";
       if (format === "pdf") return "pdf";
       if (format === "jpeg") return "jpg";
+      if (format === "heic") return "heic";
       if (format === "gif") return "gif";
       if (format === "webp") return "webp";
       if (format === "zip") return "zip";
@@ -3679,6 +4110,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (format === "png") return "image/png";
       if (format === "pdf") return "application/pdf";
       if (format === "jpeg") return "image/jpeg";
+      if (format === "heic") return "image/heic";
       if (format === "gif") return "image/gif";
       if (format === "webp") return "image/webp";
       if (format === "zip") return "application/zip";
@@ -4524,6 +4956,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const remainingProofs = extractReceizProofBundlesFromPdf(basisBytes);
         sealEmbedding = remainingProofs.length > 0 ? "trailer" : "pdf";
         contentType = "application/pdf";
+      } else if (sourceFormat === "heic") {
+        const parsed = parseReceizHeicProof(fileBytes);
+        if (parsed.parseError) throw new Error(parsed.parseError);
+        basisBytes = parsed.basisBytes;
+        strippedExistingProofs = parsed.proofCount;
+        sealEmbedding = "heic";
+        contentType = "image/heic";
       } else if (sourceFormat === "svg") {
         const parsed = parseReceizSvgProof(fileBytes);
         basisBytes = parsed.basisBytes;
@@ -4545,10 +4984,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       const artifactBasis = sourceFormat === "jpeg"
-        ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION }
+        ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION }
         : null;
       const identityBasisBytes = artifactBasis
-        ? normalizeJpegIosPhotosCarrierV2Basis(basisBytes)
+        ? normalizeJpegIosPhotosCarrierV4Basis(basisBytes)
         : basisBytes;
       const basisSha256 = (await sha256Hex(identityBasisBytes)).toLowerCase();
       const anchorId = (await sha256Hex(`${code}:${pulse}::${basisSha256}`)).slice(0, 8);
@@ -4597,6 +5036,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         artifactBytes = insertPngTextChunks(basisBytes, [{ keyword: RECEIZ_PROOF_BUNDLE_CHUNK_KEY, text: encodedBundle }]);
       } else if (sealEmbedding === "pdf") {
         artifactBytes = embedReceizProofBundleIntoPdf({ pdfBytes: basisBytes, encodedBundle });
+      } else if (sealEmbedding === "heic") {
+        artifactBytes = appendReceizHeicProof({ basisBytes, bundle: proofbundle });
       } else if (sealEmbedding === "svg") {
         artifactBytes = embedReceizProofBundleIntoSvg({ svgBytes: basisBytes, encodedBundle }).svgBytes;
       } else if (sealEmbedding === "json") {
@@ -4607,7 +5048,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       const filename = buildReceizedDownloadName({
         filename: sourceFilename || "document",
-        forcedExtension: preferredExtension,
+        forcedExtension: sourceFormat === "heic" ? "heic" : preferredExtension,
       });
       const downloadContentType =
         sealEmbedding === "trailer"
@@ -4768,7 +5209,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v10";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v11";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -5253,6 +5694,50 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       );
     }
 
+    const HEIC_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "heim", "heis", "hevm", "hevs"]);
+    function heicAscii4(bytes, offset) {
+      return String.fromCharCode(bytes[offset] || 0, bytes[offset + 1] || 0, bytes[offset + 2] || 0, bytes[offset + 3] || 0);
+    }
+    function isCompleteHeic(bytes) {
+      if (bytes.length < 16 || heicAscii4(bytes, 4) !== "ftyp") return false;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      let offset = 0;
+      let sawFtyp = false;
+      let sawMeta = false;
+      let sawMdat = false;
+      let hasHeicBrand = false;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return false;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return false;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return false;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return false;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return false;
+        if (offset === 0) {
+          if (type !== "ftyp" || headerLength !== 8 || size < 16 || (size - 16) % 4 !== 0) return false;
+          sawFtyp = true;
+          hasHeicBrand = HEIC_BRANDS.has(heicAscii4(bytes, offset + 8));
+          for (let brandOffset = offset + 16; brandOffset < offset + size; brandOffset += 4) {
+            if (HEIC_BRANDS.has(heicAscii4(bytes, brandOffset))) hasHeicBrand = true;
+          }
+        } else if (type === "ftyp") {
+          return false;
+        }
+        if (type === "meta") sawMeta = true;
+        if (type === "mdat") sawMdat = true;
+        offset += size;
+      }
+      return sawFtyp && hasHeicBrand && sawMeta && sawMdat && offset === bytes.length;
+    }
+
     function extensionFromName(filename) {
       const trimmed = String(filename || "").trim();
       if (!trimmed) return null;
@@ -5294,6 +5779,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (startsWithBytes(bytes, PNG_SIGNATURE)) return "png";
       if (startsWithBytes(bytes, PDF_SIGNATURE)) return "pdf";
       if (startsWithBytes(bytes, JPEG_SIGNATURE)) return "jpeg";
+      if (isCompleteHeic(bytes)) return "heic";
       if (startsWithBytes(bytes, GIF87A_SIGNATURE) || startsWithBytes(bytes, GIF89A_SIGNATURE)) return "gif";
       if (isWebp(bytes)) return "webp";
       if (startsWithBytes(bytes, ZIP_SIGNATURE)) return "zip";
@@ -5304,8 +5790,113 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return "unknown";
     }
 
+    const RECEIZ_HEIC_PROOF_UUID = new Uint8Array([
+      0xc0, 0x61, 0x19, 0xbd, 0x6b, 0x98, 0x55, 0x1f,
+      0xad, 0x30, 0x6d, 0x23, 0xed, 0xcb, 0x79, 0xd0,
+    ]);
+    const RECEIZ_HEIC_PROOF_MAGIC = new TextEncoder().encode("receiz.heic.proof.v1\0");
+    const heicDecoder = new TextDecoder("utf-8", { fatal: true });
+
+    function heicBytesEqualAt(bytes, expected, offset) {
+      if (offset < 0 || offset + expected.length > bytes.length) return false;
+      for (let index = 0; index < expected.length; index += 1) {
+        if (bytes[offset + index] !== expected[index]) return false;
+      }
+      return true;
+    }
+
+    function heicConcat(parts) {
+      const length = parts.reduce((sum, part) => sum + part.length, 0);
+      const out = new Uint8Array(length);
+      let offset = 0;
+      for (const part of parts) {
+        out.set(part, offset);
+        offset += part.length;
+      }
+      return out;
+    }
+
+    function parseHeicTopLevelBoxes(bytes) {
+      if (bytes.length < 8) return null;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const boxes = [];
+      let offset = 0;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return null;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return null;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return null;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return null;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return null;
+        boxes.push({ start: offset, end: offset + size, type, headerLength });
+        offset += size;
+      }
+      return offset === bytes.length ? boxes : null;
+    }
+
+    function parseHeicProofBox(bytes, box) {
+      if (box.type !== "uuid") return null;
+      const uuidOffset = box.start + box.headerLength;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_UUID, uuidOffset)) return null;
+      const magicOffset = uuidOffset + RECEIZ_HEIC_PROOF_UUID.length;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_MAGIC, magicOffset)) return { error: "heic_receiz_magic_invalid" };
+      const lengthOffset = magicOffset + RECEIZ_HEIC_PROOF_MAGIC.length;
+      if (lengthOffset + 4 > box.end) return { error: "heic_receiz_json_length_missing" };
+      const jsonLength = new DataView(bytes.buffer, bytes.byteOffset + lengthOffset, 4).getUint32(0, false);
+      const jsonOffset = lengthOffset + 4;
+      if (jsonOffset + jsonLength !== box.end) return { error: "heic_receiz_json_length_invalid" };
+      try {
+        const jsonText = heicDecoder.decode(bytes.slice(jsonOffset, box.end));
+        const bundle = JSON.parse(jsonText);
+        if (jcsCanonicalize(bundle) !== jsonText) return { error: "heic_receiz_json_noncanonical" };
+        return { bundle };
+      } catch {
+        return { error: "heic_receiz_json_invalid" };
+      }
+    }
+
+    function parseReceizHeicProof(bytes) {
+      const boxes = parseHeicTopLevelBoxes(bytes);
+      if (!boxes || boxes.length === 0 || boxes[0].type !== "ftyp") {
+        return { basisBytes: bytes.slice(), proofCount: 0, bundle: null, parseError: "heic_container_invalid" };
+      }
+      const basisParts = [];
+      let proofCount = 0;
+      let bundle = null;
+      for (let index = 0; index < boxes.length; index += 1) {
+        const box = boxes[index];
+        const parsed = parseHeicProofBox(bytes, box);
+        if (parsed && "error" in parsed) {
+          return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: parsed.error };
+        }
+        if (parsed) {
+          proofCount += 1;
+          if (proofCount !== 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_duplicate" };
+          }
+          if (index !== boxes.length - 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_not_final" };
+          }
+          bundle = parsed.bundle;
+        } else {
+          basisParts.push(bytes.slice(box.start, box.end));
+        }
+      }
+      return { basisBytes: heicConcat(basisParts), proofCount, bundle, parseError: null };
+    }
+
     const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
     const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
+    const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
+    const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
     const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
     const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
@@ -5353,6 +5944,230 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ]);
     }
 
+    const JPEG_TIFF_TYPE_BYTE_LENGTH = new Map([
+      [1, 1], [2, 1], [3, 2], [4, 4], [5, 8],
+      [7, 1], [9, 4], [10, 8], [11, 4], [12, 8],
+    ]);
+    const JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS = new Set([0x8769, 0x8825, 0xa005]);
+    const JPEG_PHOTOS_IFD1_TAGS = new Set([0x0103, 0x011a, 0x011b, 0x0128, 0x0201, 0x0202]);
+    const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
+    const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
+    const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
+
+    function canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+      const findEntry = (ifdOffset, wantedTag) => {
+        const count = uint16(ifdOffset);
+        if (count === null) return null;
+        const tableEnd = ifdOffset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        let found = null;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = ifdOffset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          if (tag !== wantedTag) continue;
+          if (found) return null;
+          found = { type, count: entryCount, value };
+        }
+        return found;
+      };
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const exifPointer = findEntry(ifd0Offset, 0x8769);
+      if (!exifPointer || exifPointer.type !== 4 || exifPointer.count !== 1) return null;
+      const makerNoteEntry = findEntry(exifPointer.value, 0x927c);
+      if (!makerNoteEntry || makerNoteEntry.type !== 7 || makerNoteEntry.count < JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 16) return null;
+      const makerNoteOffset = makerNoteEntry.value;
+      const makerNoteEnd = makerNoteOffset + makerNoteEntry.count;
+      if (!Number.isSafeInteger(makerNoteEnd) || makerNoteOffset < 0 || makerNoteEnd > tiffLength
+        || !startsWithBytesAt(bytes, JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER, tiffOffset + makerNoteOffset)) return null;
+      const makerNoteByteOrderOffset = makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 1;
+      if (bytes[tiffOffset + makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length] !== 1
+        || bytes[tiffOffset + makerNoteByteOrderOffset] !== 0x4d
+        || bytes[tiffOffset + makerNoteByteOrderOffset + 1] !== 0x4d) return null;
+      const makerView = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset + makerNoteOffset, makerNoteEntry.count);
+      const makerIfdOffset = makerNoteByteOrderOffset + 2 - makerNoteOffset;
+      if (makerIfdOffset + 2 > makerNoteEntry.count) return null;
+      const makerEntryCount = makerView.getUint16(makerIfdOffset, false);
+      const makerTableEnd = makerIfdOffset + 2 + makerEntryCount * 12 + 4;
+      if (!Number.isSafeInteger(makerTableEnd) || makerTableEnd > makerNoteEntry.count) return null;
+      let assetUuidOffset = null;
+      for (let index = 0; index < makerEntryCount; index += 1) {
+        const entryOffset = makerIfdOffset + 2 + index * 12;
+        if (makerView.getUint16(entryOffset, false) !== JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) continue;
+        if (assetUuidOffset !== null) return null;
+        const type = makerView.getUint16(entryOffset + 2, false);
+        const count = makerView.getUint32(entryOffset + 4, false);
+        const value = makerView.getUint32(entryOffset + 8, false);
+        if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
+          || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+        assetUuidOffset = value;
+      }
+      if (assetUuidOffset === null) return null;
+      const uuidBytes = bytes.slice(
+        tiffOffset + makerNoteOffset + assetUuidOffset,
+        tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
+      );
+      const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
+      if (uuidBytes[uuidBytes.length - 1] !== 0
+        || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      const canonical = bytes.slice(markerStart, segmentEnd);
+      canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      return canonical;
+    }
+
+    function canonicalizeExifPhotosIfd1(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+
+      const parseIfd = (offset) => {
+        const count = uint16(offset);
+        if (count === null) return null;
+        const tableEnd = offset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        const entries = [];
+        let referencedEnd = tableEnd;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = offset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          const unitLength = JPEG_TIFF_TYPE_BYTE_LENGTH.get(type);
+          if (!unitLength) return null;
+          const valueByteLength = unitLength * entryCount;
+          if (!Number.isSafeInteger(valueByteLength)) return null;
+          const valueOffset = valueByteLength > 4 ? value : null;
+          if (valueOffset !== null) {
+            const valueEnd = valueOffset + valueByteLength;
+            if (!Number.isSafeInteger(valueEnd) || valueOffset < 0 || valueEnd > tiffLength) return null;
+            referencedEnd = Math.max(referencedEnd, valueEnd);
+          }
+          entries.push({ tag, type, count: entryCount, value, valueByteLength, valueOffset });
+        }
+        const nextIfdOffset = uint32(tableEnd - 4);
+        if (nextIfdOffset === null) return null;
+        return { entries, nextIfdOffset, tableEnd, referencedEnd };
+      };
+
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const ifd0 = parseIfd(ifd0Offset);
+      if (!ifd0 || ifd0.nextIfdOffset === 0) return null;
+      let primaryReferencedEnd = ifd0.referencedEnd;
+      const visited = new Set([ifd0Offset]);
+      const pending = ifd0.entries
+        .filter((entry) => JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1)
+        .map((entry) => entry.value);
+      while (pending.length > 0) {
+        const childOffset = pending.pop() || 0;
+        if (childOffset === 0 || visited.has(childOffset)) return null;
+        visited.add(childOffset);
+        const child = parseIfd(childOffset);
+        if (!child || child.nextIfdOffset !== 0) return null;
+        primaryReferencedEnd = Math.max(primaryReferencedEnd, child.referencedEnd);
+        for (const entry of child.entries) {
+          if (JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1) {
+            pending.push(entry.value);
+          }
+        }
+      }
+
+      const ifd1Offset = ifd0.nextIfdOffset;
+      const ifd1 = parseIfd(ifd1Offset);
+      if (!ifd1 || ifd1.nextIfdOffset !== 0 || ifd1.entries.length !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      if (ifd1Offset < primaryReferencedEnd) return null;
+      for (let offset = primaryReferencedEnd; offset < ifd1Offset; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+      const byTag = new Map(ifd1.entries.map((entry) => [entry.tag, entry]));
+      if (byTag.size !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      for (const tag of JPEG_PHOTOS_IFD1_TAGS) {
+        if (!byTag.has(tag)) return null;
+      }
+      const compression = byTag.get(0x0103);
+      const xResolution = byTag.get(0x011a);
+      const yResolution = byTag.get(0x011b);
+      const resolutionUnit = byTag.get(0x0128);
+      const previewOffsetEntry = byTag.get(0x0201);
+      const previewLengthEntry = byTag.get(0x0202);
+      if (
+        !compression || compression.type !== 3 || compression.count !== 1
+        || (littleEndian ? compression.value & 0xffff : compression.value >>> 16) !== 6
+        || !xResolution || xResolution.type !== 5 || xResolution.count !== 1 || xResolution.valueOffset === null
+        || !yResolution || yResolution.type !== 5 || yResolution.count !== 1 || yResolution.valueOffset === null
+        || !resolutionUnit || resolutionUnit.type !== 3 || resolutionUnit.count !== 1
+        || !previewOffsetEntry || previewOffsetEntry.type !== 4 || previewOffsetEntry.count !== 1
+        || !previewLengthEntry || previewLengthEntry.type !== 4 || previewLengthEntry.count !== 1
+      ) return null;
+
+      const previewOffset = previewOffsetEntry.value;
+      const previewLength = previewLengthEntry.value;
+      const previewEnd = previewOffset + previewLength;
+      if (
+        xResolution.valueOffset !== ifd1.tableEnd
+        || yResolution.valueOffset !== xResolution.valueOffset + 8
+        || previewOffset !== yResolution.valueOffset + 8
+        || !Number.isSafeInteger(previewEnd)
+        || previewLength < 4
+        || previewEnd > tiffLength
+        || bytes[tiffOffset + previewOffset] !== 255
+        || bytes[tiffOffset + previewOffset + 1] !== 216
+        || bytes[tiffOffset + previewEnd - 2] !== 255
+        || bytes[tiffOffset + previewEnd - 1] !== 217
+      ) return null;
+      for (let offset = previewEnd; offset < tiffLength; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+
+      let canonicalPrefix = bytes.slice(markerStart, tiffOffset + ifd1Offset);
+      const nextIfdPointerOffset = tiffOffset + ifd0.tableEnd - 4 - markerStart;
+      canonicalPrefix.fill(0, nextIfdPointerOffset, nextIfdPointerOffset + 4);
+      let trailingNullCount = 0;
+      for (
+        let offset = canonicalPrefix.length - 1;
+        offset >= payloadOffset - markerStart && canonicalPrefix[offset] === 0;
+        offset -= 1
+      ) trailingNullCount += 1;
+      if (trailingNullCount > 2) {
+        canonicalPrefix = canonicalPrefix.slice(0, canonicalPrefix.length - (trailingNullCount - 2));
+      }
+      const canonicalDeclaredLength = canonicalPrefix.length - (markerCodeEnd - markerStart);
+      canonicalPrefix[markerCodeEnd - markerStart] = (canonicalDeclaredLength >>> 8) & 255;
+      canonicalPrefix[markerCodeEnd - markerStart + 1] = canonicalDeclaredLength & 255;
+      return canonicalPrefix;
+    }
+
     function normalizeJpegCarrierBasis(bytes, normalization) {
       if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
       const kept = [bytes.slice(0, 2)];
@@ -5361,6 +6176,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let inScan = false;
       let sawSos = false;
       let sawEoi = false;
+      const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION;
       while (offset < bytes.length) {
         if (inScan) {
           const scanStart = offset;
@@ -5412,19 +6230,27 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (adobeXmp) {
           // Adobe XMP is a non-authoritative carrier append in both versions.
         } else if (
-          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          isIosPhotosCarrier
           && marker === 225
           && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
         ) {
-          kept.push(canonicalizeExifTrailingNullPadding(
-            bytes,
-            markerStart,
-            markerCodeEnd,
-            payloadOffset,
-            segmentEnd,
+          const v4MakerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            ? canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd)
+            : null;
+          const ifd1Source = v4MakerNoteCanonical ? (() => {
+            const copy = bytes.slice();
+            copy.set(v4MakerNoteCanonical, markerStart);
+            return copy;
+          })() : bytes;
+          const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
+            : null;
+          kept.push(v3Ifd1Canonical || v4MakerNoteCanonical || canonicalizeExifTrailingNullPadding(
+            bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
           ));
         } else if (
-          normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+          isIosPhotosCarrier
           && marker === 237
           && startsWithBytesAt(bytes, JPEG_PHOTOSHOP_APP13_IDENTIFIER, payloadOffset)
         ) {
@@ -5455,6 +6281,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION);
     }
 
+    function normalizeJpegIosPhotosCarrierV3Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION);
+    }
+    function normalizeJpegIosPhotosCarrierV4Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION);
+    }
+
     function artifactIdentityBasisBytes(bundle, basisBytes) {
       if (typeof bundle.artifactBasis === "undefined") return basisBytes;
       if (
@@ -5471,6 +6304,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
       if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION) {
         return normalizeJpegIosPhotosCarrierV2Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV3Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV4Basis(basisBytes);
       }
       throw new Error("artifact_basis_normalization_unsupported");
     }
@@ -7666,6 +8505,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
+      } else if (format === "heic") {
+        const parsed = parseReceizHeicProof(bytes);
+        if (parsed.proofCount !== 1 || parsed.parseError || !parsed.bundle || !isRecord(parsed.bundle)) {
+          errors.push(
+            parsed.proofCount > 1
+              ? "Duplicate HEIC proof bundles detected."
+              : parsed.parseError
+                ? "HEIC proof bundle is malformed."
+                : "Missing embedded HEIC proof bundle."
+          );
+          checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+        }
+        bundle = parsed.bundle;
+        basisBytes = parsed.basisBytes;
+        chunkSummary = [{ keyword: "receiz.heic.proof.v1", bytes: bytes.length - basisBytes.length }];
+        checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+        checks.push({ state: "ok", message: "Proof bundle decode" });
       } else if (format === "svg") {
         const parsed = parseReceizSvgProof(bytes);
         if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
