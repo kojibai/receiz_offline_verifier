@@ -1569,6 +1569,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           isIphoneRuntime() &&
           String((options && options.sourceFormat) || "").toLowerCase() === "jpeg" &&
           String((options && options.sealEmbedding) || "").toLowerCase() === "trailer";
+        if (exactIphoneJpeg) {
+          triggerDownload(blob, filename, true);
+          return true;
+        }
         return shareOfflineProofBlobAsNativeFile(blob, filename, options, exactIphoneJpeg);
       }
       triggerDownload(blob, filename);
@@ -1589,8 +1593,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           });
           setStatus(
             saved
-              ? "Proof object handed to the native file saver."
-              : "Save cancelled. Tap Save again and choose Save to Files.",
+              ? "Full file-save interface opened for the exact proof object."
+              : "Save did not open. Tap Save again.",
             saved ? "ok" : "warn",
           );
         };
@@ -2030,11 +2034,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return `${parsed.base}.receized`;
     }
 
-    function triggerDownload(blob, filename) {
+    function triggerDownload(blob, filename, fullDocumentSurface = false) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = filename;
+      if (fullDocumentSurface) {
+        a.target = "_blank";
+        a.rel = "noopener";
+      }
       a.style.display = "none";
       document.body.appendChild(a);
       a.click();
@@ -4542,8 +4550,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ]);
         setStatus(
           saved
-            ? "Seal complete. Proof object handed to the native file saver."
-            : "Seal complete. Tap Save and choose Save to Files.",
+            ? "Seal complete. Full file-save interface opened for the exact proof object."
+            : "Seal complete. Tap Save to open the file-save interface.",
           saved ? "ok" : "warn",
         );
       } catch (err) {
@@ -4610,7 +4618,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v7";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-local-receiz-id-v8";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
