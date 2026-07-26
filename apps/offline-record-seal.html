@@ -1351,7 +1351,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const RECEIZ_ANCHOR_BUNDLE_CHUNK_KEY = "receiz_anchor_bundle";
     const RECEIZ_GROTH16_NOTICE_CHUNK_KEY = "receiz.groth16";
     const OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED = "offline_signature_v4_enrollment_required";
-    const OFFLINE_SIGNATURE_V4_SIGNIN_REQUIRED = "offline_signature_v4_signin_required";
     const EMPTY_ARTIFACT_SHA256_BASIS = "0".repeat(64);
     const MAX_BUNDLE_ENCODE_BYTES = 24 * 1024;
     const STORE_KEY = "receiz.offline.v1";
@@ -1390,11 +1389,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function setStatus(text, tone) {
       ui.statusLine.textContent = text;
       ui.statusLine.className = `status-line${tone ? ` ${tone}` : ""}`;
-    }
-
-    function continueReceizIdentityForTrustedSigner() {
-      setStatus("Continuing through Receiz ID to activate this browser's trusted signer...", "warn");
-      window.location.assign(`/signin?next=${encodeURIComponent("/offline-record-seal.html")}`);
     }
 
     function isStandalonePwa() {
@@ -2703,10 +2697,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             return;
           }
           const owner = normalizeAuthenticatedReceizOwner(row.owner);
-          if (!owner) {
-            resolve(null);
-            return;
-          }
           if (!row.privateKey || typeof row.privateKey !== "object") {
             resolve(null);
             return;
@@ -2832,7 +2822,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const cert = normalizeSignatureV4Cert(payload.cert);
       if (!cert) return { enrolled: false, reason: "invalid_cert" };
       const owner = normalizeAuthenticatedReceizOwner(payload.owner);
-      if (!owner) return { enrolled: false, reason: "receiz_identity_required" };
       if (cert.subjectPublicKeyRawB64u !== keys.publicKeyRawB64u) {
         return { enrolled: false, reason: "cert_subject_mismatch" };
       }
@@ -2862,13 +2851,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       delete unsigned.signatureV4;
 
       let signer = await activeSignerFromEnrollment();
-      let enrollmentReason = null;
       if (!signer && (typeof navigator === "undefined" || navigator.onLine !== false)) {
-        const enrollment = await enrollSignerFromServer().catch(() => ({
-          enrolled: false,
-          reason: "network_failed",
-        }));
-        enrollmentReason = typeof enrollment.reason === "string" ? enrollment.reason : null;
+        await enrollSignerFromServer().catch(() => ({ enrolled: false }));
         signer = await activeSignerFromEnrollment();
       }
 
@@ -2877,9 +2861,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (signatureV4) return { ...bundle, signatureV4 };
       }
 
-      if (enrollmentReason === "signin_required") {
-        throw new Error(OFFLINE_SIGNATURE_V4_SIGNIN_REQUIRED);
-      }
       throw new Error(OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED);
     }
 
@@ -3966,8 +3947,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function buildRecordArtifact(record) {
-      const signer = await activeSignerFromEnrollment();
-      if (!signer || !signer.owner) throw new Error("receiz_identity_required");
+      let signer = await activeSignerFromEnrollment();
+      if (!signer && (typeof navigator === "undefined" || navigator.onLine !== false)) {
+        const enrollment = await provisionTrustedSignerForOfflineUse();
+        signer = enrollment.signer;
+      }
+      if (!signer) throw new Error(OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED);
       const slug = slugFromTs(record.ts);
       const kaiKlok = buildKaiKlokFromPulse(record.pulse);
       const anchorSeed = `${record.code}:${record.pulse}::${record.ms || String(record.createdAt)}`;
@@ -4019,15 +4004,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16Proof: zk.groth16Proof,
         groth16ProofDigest: zk.groth16ProofDigest,
       };
-      const priorHeadReference = readOfflineContinuityHead(signer.owner.receizId);
-      const provenanceIdentity = {
+      const continuityId = signer.owner ? signer.owner.receizId : `signature-v4:${signer.cert.certId}`;
+      const priorHeadReference = readOfflineContinuityHead(continuityId);
+      const provenanceIdentity = signer.owner ? {
         userId: signer.owner.userId,
         username: signer.owner.username,
         displayName: null,
         label: signer.owner.username,
         profilePath: `/${signer.owner.username}`,
-      };
-      const ownershipProvenance = {
+      } : null;
+      const ownershipProvenance = provenanceIdentity ? {
         kind: "receiz.ownership_provenance",
         version: 1,
         generatedAt: new Date(record.createdAt).toISOString(),
@@ -4046,8 +4032,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         }],
         complete: true,
         nextCursor: null,
-      };
-      const ownershipEncoded = `c1.${base64UrlEncode(fflate.deflateSync(textEncoder.encode(canonicalizeJson(ownershipProvenance))))}`;
+      } : null;
+      const ownershipChunks = ownershipProvenance
+        ? [{ keyword: "receiz.ownership_provenance", text: `c1.${base64UrlEncode(fflate.deflateSync(textEncoder.encode(canonicalizeJson(ownershipProvenance))))}` }]
+        : [];
       const provisionalBundle = await buildReceizProofBundle({
         ...bundleInput,
         artifactSha256Basis: EMPTY_ARTIFACT_SHA256_BASIS,
@@ -4074,7 +4062,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         { keyword: RECEIZ_GROTH16_NOTICE_CHUNK_KEY, text: JSON.stringify(OFFLINE_GROTH16_NOTICE) },
         { keyword: RECEIZ_ANCHOR_BUNDLE_CHUNK_KEY, text: JSON.stringify(anchorBundle) },
         { keyword: RECEIZ_PROOF_BUNDLE_CHUNK_KEY, text: await encodeReceizProofBundle(signedProvisional) },
-        { keyword: "receiz.ownership_provenance", text: ownershipEncoded },
+        ...ownershipChunks,
       ]);
 
       const artifactSha256Basis = await computeReceizArtifactSha256Basis(firstPass);
@@ -4089,9 +4077,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         { keyword: RECEIZ_GROTH16_NOTICE_CHUNK_KEY, text: JSON.stringify(OFFLINE_GROTH16_NOTICE) },
         { keyword: RECEIZ_ANCHOR_BUNDLE_CHUNK_KEY, text: JSON.stringify(anchorBundle) },
         { keyword: RECEIZ_PROOF_BUNDLE_CHUNK_KEY, text: await encodeReceizProofBundle(finalBundle) },
-        { keyword: "receiz.ownership_provenance", text: ownershipEncoded },
+        ...ownershipChunks,
       ]);
-      writeOfflineContinuityHead(signer.owner.receizId, finalBundle.receizClaimId);
+      writeOfflineContinuityHead(continuityId, finalBundle.receizClaimId);
 
       return {
         blob: new Blob([finalBytes], { type: "image/png" }),
@@ -4180,11 +4168,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (!signer && (typeof navigator === "undefined" || navigator.onLine !== false)) {
         const enrollment = await provisionTrustedSignerForOfflineUse();
         signer = enrollment.signer;
-        if (!signer && enrollment.reason === "signin_required") {
-          throw new Error(OFFLINE_SIGNATURE_V4_SIGNIN_REQUIRED);
-        }
       }
-      if (!signer || !signer.owner) throw new Error(OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED);
+      if (!signer) throw new Error(OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED);
 
       const createdAtMs = Date.now();
       const kai = buildKaiKlockResponseFromEpochMs(BigInt(createdAtMs));
@@ -4200,7 +4185,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const sourceMimeRaw = (file.type || "").trim();
       const sourceMime = sourceMimeRaw || "application/octet-stream";
       const fileBytes = new Uint8Array(await file.arrayBuffer());
-      const priorHeadReference = readOfflineContinuityHead(signer.owner.receizId);
+      const continuityId = signer.owner ? signer.owner.receizId : `signature-v4:${signer.cert.certId}`;
+      const priorHeadReference = readOfflineContinuityHead(continuityId);
       const sourceFormat = detectDocumentFormat(fileBytes, { filename: sourceFilename, mime: sourceMime });
       const preferredExtension = extensionFromFilename(sourceFilename) || extensionForFormat(sourceFormat) || "bin";
 
@@ -4304,7 +4290,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         sealEmbedding === "trailer"
           ? "application/octet-stream"
           : contentType || "application/octet-stream";
-      writeOfflineContinuityHead(signer.owner.receizId, proofbundle.receizClaimId);
+      writeOfflineContinuityHead(continuityId, proofbundle.receizClaimId);
 
       return {
         blob: new Blob([artifactBytes], { type: downloadContentType }),
@@ -4317,7 +4303,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         sourceFormat,
         sealEmbedding,
         strippedExistingProofs,
-        ownerReceizId: signer.owner.receizId,
+        ownerReceizId: signer.owner ? signer.owner.receizId : null,
         priorHeadReference,
       };
     }
@@ -4346,10 +4332,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         setStatus("Record complete. Artifact downloaded.", "ok");
       } catch (err) {
         const code = err instanceof Error ? err.message : String(err || "record_failed");
-        if (code === OFFLINE_SIGNATURE_V4_SIGNIN_REQUIRED) {
-          continueReceizIdentityForTrustedSigner();
-        } else if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED) {
-          setStatus("No trusted signer exists in this browser. Open the installed Offline Studio that holds it, or reconnect and continue through Receiz ID.", "bad");
+        if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED) {
+          setStatus("Trusted signer enrollment required. Open this page online once to auto-provision, then retry offline.", "bad");
         } else if (code.includes("groth16")) {
           setStatus(`Groth16 runtime unavailable: ${code}`, "bad");
         } else {
@@ -4378,7 +4362,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "pulse", v: result.pulse },
           { k: "verify path", v: result.verifyPath },
           { k: "basis sha", v: result.basisSha256 },
-          { k: "owner", v: result.ownerReceizId },
+          { k: "owner", v: result.ownerReceizId || "not asserted" },
           { k: "prior head", v: result.priorHeadReference },
           { k: "stripped proofs", v: String(result.strippedExistingProofs || 0) },
           { k: "download", v: result.filename },
@@ -4386,10 +4370,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         setStatus("Seal complete. Continuity-bearing proof object downloaded.", "ok");
       } catch (err) {
         const code = err instanceof Error ? err.message : String(err || "seal_failed");
-        if (code === OFFLINE_SIGNATURE_V4_SIGNIN_REQUIRED) {
-          continueReceizIdentityForTrustedSigner();
-        } else if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED || code === "receiz_identity_required") {
-          setStatus("No trusted signer exists in this browser. Open the installed Offline Studio that holds it, or reconnect and continue through Receiz ID.", "bad");
+        if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED || code === "receiz_identity_required") {
+          setStatus("Trusted signer enrollment required. Open this page online once to auto-provision, then retry offline.", "bad");
         } else if (code.includes("groth16")) {
           setStatus(`Groth16 runtime unavailable: ${code}`, "bad");
         } else {
@@ -4450,7 +4432,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-offline-studio-signer-continuity-v1";
+      const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-offline-studio-sealed-bytes-v1";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
