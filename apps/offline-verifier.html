@@ -1001,7 +1001,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setStatus("bad", "No sealed files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
-        setStatus("ok", "Verified file", "All required checks passed.");
+        setStatus("ok", "Verified", "The sealed file passed offline verification.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
       }
@@ -1243,7 +1243,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (type === "iTXt" || type === "tEXt" || type === "zTXt") {
           const data = pngBytes.slice(dataStart, dataEnd);
           const parsed = type === "iTXt" ? parseITXtData(data) : type === "tEXt" ? parseTextData(data) : parseZTxtData(data);
-          if (parsed && parsed.keyword === PROOF_KEY) remove = true;
+          if (parsed && (parsed.keyword === PROOF_KEY || parsed.keyword === "receiz.ownership_provenance")) remove = true;
         }
 
         if (!remove) {
@@ -2747,6 +2747,60 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
+    async function classifyPortableAssetContinuity(originalBytes) {
+      let value = null;
+      try { value = JSON.parse(new TextDecoder().decode(originalBytes)); } catch { return { state: "not_applicable" }; }
+      if (!isRecord(value)) return { state: "not_applicable" };
+      if (value.schema === "receiz.asset_manifest.v1") return { state: "historical_missing" };
+      if (value.schema !== "receiz.portable_asset.v1") return { state: "not_applicable" };
+      if (!isRecord(value.payload) || !asString(value.payload.mimeType) || typeof value.payload.bytesBase64Url !== "string" || !asHex64(value.payload.sha256)) return { state: "invalid", error: "continuity_payload_missing" };
+      if (!isRecord(value.ownership) || !asString(value.ownership.ownerReceizId) || !asString(value.ownership.custody) || !asString(value.ownership.proofRef)) return { state: "invalid", error: "continuity_ownership_missing" };
+      if (!/^[a-z0-9_]{3,24}\\.receiz\\.id$/.test(value.ownership.ownerReceizId)) return { state: "invalid", error: "continuity_identity_mismatch" };
+      if (!isRecord(value.provenance) || !asString(value.provenance.root) || !Array.isArray(value.provenance.appends) || value.provenance.appends.some((entry) => !isRecord(entry))) return { state: "invalid", error: "continuity_provenance_missing" };
+      const ownerUsername = value.ownership.ownerReceizId.slice(0, -".receiz.id".length);
+      if (value.provenance.root !== `profile:${ownerUsername}`) return { state: "invalid", error: "continuity_namespace_mismatch" };
+      const headBearingAppends = value.provenance.appends.filter((append) => append && typeof append.priorHeadReference === "string" && append.priorHeadReference.trim());
+      const latestHeadBearingAppend = headBearingAppends.length > 0 ? headBearingAppends[headBearingAppends.length - 1] : null;
+      if ((value.ownership.proofRef === "genesis" && headBearingAppends.length !== 0) || (value.ownership.proofRef !== "genesis" && (!latestHeadBearingAppend || latestHeadBearingAppend.priorHeadReference !== value.ownership.proofRef))) return { state: "invalid", error: "continuity_append_mismatch" };
+      if (!isRecord(value.settlement) || !asString(value.settlement.state)) return { state: "invalid", error: "continuity_settlement_missing" };
+      let payloadBytes = null;
+      try { payloadBytes = base64UrlDecode(value.payload.bytesBase64Url); } catch { return { state: "invalid", error: "continuity_payload_missing" }; }
+      if ((await sha256Hex(payloadBytes)).toLowerCase() !== value.payload.sha256.toLowerCase()) return { state: "invalid", error: "continuity_media_unbound" };
+      return { state: "verified", carrier: "portable_asset", artifactId: value.payload.sha256, ownerReceizId: value.ownership.ownerReceizId, namespace: value.provenance.root, priorHeadReference: value.ownership.proofRef, document: value };
+    }
+
+    function classifyOwnershipProvenanceContinuity(bytes, bundle) {
+      if (!bundle || !isRecord(bundle)) return { state: "not_applicable" };
+      const chunks = readPngTextChunks(bytes);
+      const matches = chunks.filter((entry) => entry.keyword === "receiz.ownership_provenance");
+      if (matches.length === 0) return { state: "not_applicable" };
+      if (matches.length !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
+      const raw = matches[0].text || "";
+      const dot = raw.indexOf(".");
+      if (dot <= 0 || raw.slice(0, dot) !== "c1") return { state: "invalid", error: "continuity_round_trip_failed" };
+      let provenance = null;
+      try {
+        const compressed = base64UrlDecode(raw.slice(dot + 1));
+        const inflated = fflate.inflateSync(compressed);
+        provenance = JSON.parse(new TextDecoder().decode(inflated));
+      } catch {
+        return { state: "invalid", error: "continuity_round_trip_failed" };
+      }
+      if (!isRecord(provenance) || provenance.kind !== "receiz.ownership_provenance" || provenance.version !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
+      const slug = asString(bundle.slug);
+      const code = asString(bundle.code);
+      const pulse = asString(bundle.kaiPulseEternal);
+      const verifyPath = asString(bundle.verifyPath);
+      if (!slug || !code || !pulse || !verifyPath || provenance.slug !== slug || provenance.code !== code || provenance.pulse !== pulse || provenance.verifyPath !== verifyPath || verifyPath !== `/v/${slug}/${code}/${pulse}`) {
+        return { state: "invalid", error: "continuity_coordinate_mismatch" };
+      }
+      const owner = isRecord(provenance.currentOwner) ? provenance.currentOwner : (isRecord(provenance.originalCreator) ? provenance.originalCreator : null);
+      const username = owner && typeof owner.username === "string" ? owner.username.trim().toLowerCase() : "";
+      if (!owner || !asString(owner.userId) || !/^[a-z0-9_]{3,24}$/.test(username)) return { state: "invalid", error: "continuity_ownership_missing" };
+      const latestTransfer = Array.isArray(provenance.transfers) ? provenance.transfers[provenance.transfers.length - 1] : null;
+      return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
+    }
+
     async function validateBundleAgainstBasis({
       bundle,
       basisBytes,
@@ -3128,6 +3182,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let basisBytes = null;
       let chunkSummary = [];
       let packageSummary = null;
+      let assetContinuity = { state: "not_applicable" };
       const bundleParsed = decodeReceizBundleEnvelope(bytes);
       if (bundleParsed) {
         checks.push({ state: "ok", message: "Container envelope parse" });
@@ -3143,6 +3198,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (bundleBasis !== manifestBasis) {
           errors.push("Proof bundle artifact binding does not match container file bytes.");
         }
+        assetContinuity = await classifyPortableAssetContinuity(bundleParsed.originalBytes);
+        if (assetContinuity.state === "invalid") errors.push(assetContinuity.error || "continuity_round_trip_failed");
       } else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
         chunkSummary = summarizeChunks(chunks);
@@ -3367,7 +3424,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         anchor,
         fileHash,
         chunkSummary,
-        packageSummary
+        packageSummary,
+        assetContinuity
       };
     }
 
@@ -3837,7 +3895,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     if (isLocalHost) return;
     if (!window.isSecureContext) return;
 
-    const OFFLINE_STANDALONE_SW_VERSION = "113.0.0-offline-proof-url-v1";
+    const OFFLINE_STANDALONE_SW_VERSION = "97.2.0-official-release-v1";
     const warmUrls = [
       "/offline-verifier.html",
       "/verify",
