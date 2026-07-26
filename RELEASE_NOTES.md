@@ -1,5 +1,33 @@
 # Release Notes
 
+## v113.5.0
+Release date: 2026-07-26
+
+`v113.5.0` is the clean stabilization distribution for exact proof continuity, iOS Photos carrier normalization, airplane-mode verification, signed-upload/public-projection continuity, atomic Sports closeout, deterministic first paint, and warning-free lint.
+
+Canonical full release note: [docs/releases/v113.5.0.md](docs/releases/v113.5.0.md)
+Product-truth freeze: [docs/releases/v113.5.0-product-truth.md](docs/releases/v113.5.0-product-truth.md)
+Release checklist: [docs/releases/v113.5.0-checklist.md](docs/releases/v113.5.0-checklist.md)
+Release process: [docs/releases/v113.5.0-process.md](docs/releases/v113.5.0-process.md)
+Regression lessons: [docs/releases/v113.5.0-regression-lessons.md](docs/releases/v113.5.0-regression-lessons.md)
+Performance findings: [docs/releases/v113.5.0-performance-findings.md](docs/releases/v113.5.0-performance-findings.md)
+Invariant register: [docs/releases/v113.5.0-invariant-register.md](docs/releases/v113.5.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v113.5.0-commit-history.md](docs/releases/v113.5.0-commit-history.md)
+Frozen v113 constitutional registry: [docs/releases/v113.0.0-constitution-registry.json](docs/releases/v113.0.0-constitution-registry.json)
+
+### Authority boundary
+
+- `113.5.0` advances the coordinated package and distribution identity without creating a `v113.5` authority layer.
+- The ruleset, registry, artifact law, operation matrix, compiler, and compatibility range remain frozen at `v113.0.0` / `>=113.0.0 <114.0.0`.
+- The registry digest remains `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637`.
+- PR #223 and the v114 development line are excluded.
+
+### Operational boundary
+
+- Local standalone-verifier qualification is recorded in the checklist.
+- Signed attestation remains blocked until configured approval and Ed25519 values exist.
+- Publication, deployment, production mutation, GitHub release creation, and push are separate external actions.
+
 ## v113.0.0
 Release date: 2026-07-19
 

@@ -2,21 +2,17 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v113.0.0`
+Current release: `v113.5.0`
 
-## What changed in v113.0.0
+## What changed in v113.5.0
 
-- Current release/docs surfaces are aligned to `v113.0.0`.
-- Published the Production Global Reconciliation release at [docs/releases/v113.0.0.md](docs/releases/v113.0.0.md).
-- Published the release-scoped [product truth](docs/releases/v113.0.0-product-truth.md), [checklist](docs/releases/v113.0.0-checklist.md), [process](docs/releases/v113.0.0-process.md), [regression lessons](docs/releases/v113.0.0-regression-lessons.md), [performance findings](docs/releases/v113.0.0-performance-findings.md), [invariant register](docs/releases/v113.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v113.0.0-commit-history.md).
-- “Global” is explicitly scoped to acceptance by `receiz.com/global/v1`; it does not mean universal consensus.
-- Exact sealed artifact bytes and independently verified causal history remain above Connect tokens, private staging, rows, receipts, effects, outbox state, projections, and release records.
-- The SDK keeps plan, Identity Seal capability, neutral stage, commit, accepted-head resolution, attempt recovery, and effect status as distinct phases.
-- Returned artifacts are independently reverified before the SDK exposes runtime-custodied artifact truth.
-- MCP retains the frozen five v112 artifact tools and adds exactly four reconciliation tools.
-- Known artifact truth paints before remote construction or requests; remote work may append only verified additions.
-- The additive private migration is coordination-only and remains unapplied by this release commit.
-- Current coordinated identity aligns at `113.0.0` with registry digest `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637` and effective Kai `13198000`.
+- Current release, package, verifier, Sports verifier, studio, settlement, and service-worker surfaces align at `113.5.0`.
+- The complete clean-stabilization release is recorded at [docs/releases/v113.5.0.md](docs/releases/v113.5.0.md), with [product truth](docs/releases/v113.5.0-product-truth.md), [checklist](docs/releases/v113.5.0-checklist.md), [process](docs/releases/v113.5.0-process.md), [regression lessons](docs/releases/v113.5.0-regression-lessons.md), [performance findings](docs/releases/v113.5.0-performance-findings.md), [invariant register](docs/releases/v113.5.0-invariant-register.md), and [commit-history boundary](docs/releases/v113.5.0-commit-history.md).
+- Exact proof continuity, JPEG/HEIC iOS Photos carrier normalization, airplane-mode verification, signed-upload/public-projection continuity, atomic Sports closeout, deterministic first paint, and warning-free lint are locked together.
+- Exact sealed artifact bytes, independently verified causal history, identity, ownership, and settlement proof remain above transport, database, session, SDK, MCP, AI, and display state.
+- `v113.5.0` is a coordinated distribution release. It does not create a new authority layer: the ruleset, constitutional registry, artifact law, operation matrix, compiler boundary, and compatibility range remain frozen at `v113.0.0` / `>=113.0.0 <114.0.0`.
+- The frozen constitutional registry digest remains `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637`.
+- PR #223 and the v114 development line are explicitly excluded from this release.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -24,10 +20,8 @@ Current release: `v113.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require reconciliation, packed-package, release-freeze, governance, migration, publication, deployment, production, and attestation evidence named in [docs/releases/v113.0.0-checklist.md](docs/releases/v113.0.0-checklist.md).
-- Current shipped verifier, Sports card verifier, studio, and settlement entrypoints display `v113.0.0`.
-- Root package metadata resolves cleanly to `113.0.0`.
-- The static service-worker surface carries runtime version `113.0.0`.
+- Broader platform target environments require the checks and separately authorized external actions named in [docs/releases/v113.5.0-checklist.md](docs/releases/v113.5.0-checklist.md).
+- Signed attestation remains blocked until the configured approval and Ed25519 values are present; publication, deployment, production mutation, GitHub release creation, and push remain external.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -45,7 +39,7 @@ Current release: `v113.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the broader `v113.0.0` release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v113.5.0` stabilization release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

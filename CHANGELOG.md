@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v113.5.0] - 2026-07-26
+
+### Changed
+
+- Advanced coordinated distribution, documentation, verifier, Sports verifier, studio, settlement, and service-worker identity to `113.5.0`.
+- Published the complete v113.5 clean-stabilization evidence set and standalone-verifier qualification boundary.
+- Locked exact proof continuity, JPEG/HEIC iOS Photos carrier normalization, airplane-mode verification, signed-upload/public-projection continuity, atomic Sports closeout, deterministic first paint, and warning-free lint.
+- Restored the Record-and-Seal drop surface as a direct interactive surface.
+
+### Kept
+
+- The v113 ruleset, registry, artifact law, operation matrix, compiler boundary, compatibility range, and registry digest remain frozen at `v113.0.0`.
+- Exact sealed bytes, independently verified history, identity, ownership, settlement, and deterministic first paint remain stronger truth.
+- PR #223 and v114 work are excluded.
+- Attestation, publication, deployment, production mutation, GitHub release creation, and push remain external.
+
 ## [v113.0.0] - 2026-07-19
 
 ### Changed
