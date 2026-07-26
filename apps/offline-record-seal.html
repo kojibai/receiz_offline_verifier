@@ -3702,6 +3702,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
     const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
     const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
+    const JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v5";
     const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
     const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
@@ -3757,9 +3758,28 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_PHOTOS_IFD1_TAGS = new Set([0x0103, 0x011a, 0x011b, 0x0128, 0x0201, 0x0202]);
     const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
     const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
+    const JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG = 0x0016;
     const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX = new Uint8Array([98, 112, 108, 105, 115, 116, 48, 48, 95, 16, 28]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX = new Uint8Array([
+      8,
+      0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 39,
+    ]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH = 28;
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH =
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX.length;
+    const JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN = concatByteChunks([
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX,
+      new TextEncoder().encode("A".repeat(JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH)),
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX,
+    ]);
 
-    function canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd) {
+    function canonicalizeExifAppleMakerNoteAssetIdentifiers(bytes, markerStart, payloadOffset, segmentEnd, includePhotosAssetToken) {
       const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
       const tiffLength = segmentEnd - tiffOffset;
       if (tiffLength < 8) return null;
@@ -3814,27 +3834,59 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const makerTableEnd = makerIfdOffset + 2 + makerEntryCount * 12 + 4;
       if (!Number.isSafeInteger(makerTableEnd) || makerTableEnd > makerNoteEntry.count) return null;
       let assetUuidOffset = null;
+      let photosAssetTokenOffset = null;
       for (let index = 0; index < makerEntryCount; index += 1) {
         const entryOffset = makerIfdOffset + 2 + index * 12;
-        if (makerView.getUint16(entryOffset, false) !== JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) continue;
-        if (assetUuidOffset !== null) return null;
+        const tag = makerView.getUint16(entryOffset, false);
         const type = makerView.getUint16(entryOffset + 2, false);
         const count = makerView.getUint32(entryOffset + 4, false);
         const value = makerView.getUint32(entryOffset + 8, false);
-        if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
-          || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
-        assetUuidOffset = value;
+        if (tag === JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) {
+          if (assetUuidOffset !== null) return null;
+          if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          assetUuidOffset = value;
+          continue;
+        }
+        if (includePhotosAssetToken && tag === JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG) {
+          if (photosAssetTokenOffset !== null) return null;
+          if (type !== 7 || count !== JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          photosAssetTokenOffset = value;
+        }
       }
-      if (assetUuidOffset === null) return null;
-      const uuidBytes = bytes.slice(
-        tiffOffset + makerNoteOffset + assetUuidOffset,
-        tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
-      );
-      const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
-      if (uuidBytes[uuidBytes.length - 1] !== 0
-        || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      if (assetUuidOffset === null && photosAssetTokenOffset === null) return null;
+      if (assetUuidOffset !== null) {
+        const uuidBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + assetUuidOffset,
+          tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
+        );
+        const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
+        if (uuidBytes[uuidBytes.length - 1] !== 0
+          || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      }
+      if (photosAssetTokenOffset !== null) {
+        const tokenBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset + JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH,
+        );
+        const tokenTextStart = JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length;
+        const tokenTextEnd = tokenTextStart + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH;
+        const tokenText = new TextDecoder("ascii").decode(tokenBytes.slice(tokenTextStart, tokenTextEnd));
+        if (!startsWithBytesAt(tokenBytes, JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX, 0)
+          || !equalByteChunks(tokenBytes.slice(tokenTextEnd), JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX)
+          || !/^[A-Za-z0-9+/]{28}$/.test(tokenText)) return null;
+      }
       const canonical = bytes.slice(markerStart, segmentEnd);
-      canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      if (assetUuidOffset !== null) {
+        canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      }
+      if (photosAssetTokenOffset !== null) {
+        canonical.set(
+          JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset - markerStart,
+        );
+      }
       return canonical;
     }
 
@@ -3983,7 +4035,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let sawEoi = false;
       const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
         || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
-        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION;
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION;
       while (offset < bytes.length) {
         if (inScan) {
           const scanStart = offset;
@@ -4039,19 +4092,27 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           && marker === 225
           && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
         ) {
-          const v4MakerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
-            ? canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd)
+          const makerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            ? canonicalizeExifAppleMakerNoteAssetIdentifiers(
+              bytes,
+              markerStart,
+              payloadOffset,
+              segmentEnd,
+              normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION,
+            )
             : null;
-          const ifd1Source = v4MakerNoteCanonical ? (() => {
+          const ifd1Source = makerNoteCanonical ? (() => {
             const copy = bytes.slice();
-            copy.set(v4MakerNoteCanonical, markerStart);
+            copy.set(makerNoteCanonical, markerStart);
             return copy;
           })() : bytes;
           const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
             || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
             ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
             : null;
-          kept.push(v3Ifd1Canonical || v4MakerNoteCanonical || canonicalizeExifTrailingNullPadding(
+          kept.push(v3Ifd1Canonical || makerNoteCanonical || canonicalizeExifTrailingNullPadding(
             bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
           ));
         } else if (
@@ -4091,6 +4152,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
     function normalizeJpegIosPhotosCarrierV4Basis(bytes) {
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION);
+    }
+    function normalizeJpegIosPhotosCarrierV5Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION);
     }
 
     function extensionForFormat(format) {
@@ -4984,10 +5048,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       const artifactBasis = sourceFormat === "jpeg"
-        ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION }
+        ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION }
         : null;
       const identityBasisBytes = artifactBasis
-        ? normalizeJpegIosPhotosCarrierV4Basis(basisBytes)
+        ? normalizeJpegIosPhotosCarrierV5Basis(basisBytes)
         : basisBytes;
       const basisSha256 = (await sha256Hex(identityBasisBytes)).toLowerCase();
       const anchorId = (await sha256Hex(`${code}:${pulse}::${basisSha256}`)).slice(0, 8);
@@ -5897,6 +5961,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
     const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
     const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
+    const JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v5";
     const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
     const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
@@ -5952,9 +6017,28 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_PHOTOS_IFD1_TAGS = new Set([0x0103, 0x011a, 0x011b, 0x0128, 0x0201, 0x0202]);
     const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
     const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
+    const JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG = 0x0016;
     const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX = new Uint8Array([98, 112, 108, 105, 115, 116, 48, 48, 95, 16, 28]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX = new Uint8Array([
+      8,
+      0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 39,
+    ]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH = 28;
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH =
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX.length;
+    const JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN = concatByteChunks([
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX,
+      new TextEncoder().encode("A".repeat(JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH)),
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX,
+    ]);
 
-    function canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd) {
+    function canonicalizeExifAppleMakerNoteAssetIdentifiers(bytes, markerStart, payloadOffset, segmentEnd, includePhotosAssetToken) {
       const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
       const tiffLength = segmentEnd - tiffOffset;
       if (tiffLength < 8) return null;
@@ -6009,27 +6093,59 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const makerTableEnd = makerIfdOffset + 2 + makerEntryCount * 12 + 4;
       if (!Number.isSafeInteger(makerTableEnd) || makerTableEnd > makerNoteEntry.count) return null;
       let assetUuidOffset = null;
+      let photosAssetTokenOffset = null;
       for (let index = 0; index < makerEntryCount; index += 1) {
         const entryOffset = makerIfdOffset + 2 + index * 12;
-        if (makerView.getUint16(entryOffset, false) !== JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) continue;
-        if (assetUuidOffset !== null) return null;
+        const tag = makerView.getUint16(entryOffset, false);
         const type = makerView.getUint16(entryOffset + 2, false);
         const count = makerView.getUint32(entryOffset + 4, false);
         const value = makerView.getUint32(entryOffset + 8, false);
-        if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
-          || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
-        assetUuidOffset = value;
+        if (tag === JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) {
+          if (assetUuidOffset !== null) return null;
+          if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          assetUuidOffset = value;
+          continue;
+        }
+        if (includePhotosAssetToken && tag === JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG) {
+          if (photosAssetTokenOffset !== null) return null;
+          if (type !== 7 || count !== JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          photosAssetTokenOffset = value;
+        }
       }
-      if (assetUuidOffset === null) return null;
-      const uuidBytes = bytes.slice(
-        tiffOffset + makerNoteOffset + assetUuidOffset,
-        tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
-      );
-      const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
-      if (uuidBytes[uuidBytes.length - 1] !== 0
-        || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      if (assetUuidOffset === null && photosAssetTokenOffset === null) return null;
+      if (assetUuidOffset !== null) {
+        const uuidBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + assetUuidOffset,
+          tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
+        );
+        const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
+        if (uuidBytes[uuidBytes.length - 1] !== 0
+          || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      }
+      if (photosAssetTokenOffset !== null) {
+        const tokenBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset + JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH,
+        );
+        const tokenTextStart = JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length;
+        const tokenTextEnd = tokenTextStart + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH;
+        const tokenText = new TextDecoder("ascii").decode(tokenBytes.slice(tokenTextStart, tokenTextEnd));
+        if (!startsWithBytesAt(tokenBytes, JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX, 0)
+          || !equalByteChunks(tokenBytes.slice(tokenTextEnd), JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX)
+          || !/^[A-Za-z0-9+/]{28}$/.test(tokenText)) return null;
+      }
       const canonical = bytes.slice(markerStart, segmentEnd);
-      canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      if (assetUuidOffset !== null) {
+        canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      }
+      if (photosAssetTokenOffset !== null) {
+        canonical.set(
+          JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset - markerStart,
+        );
+      }
       return canonical;
     }
 
@@ -6178,7 +6294,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let sawEoi = false;
       const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
         || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
-        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION;
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION;
       while (offset < bytes.length) {
         if (inScan) {
           const scanStart = offset;
@@ -6234,19 +6351,27 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           && marker === 225
           && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
         ) {
-          const v4MakerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
-            ? canonicalizeExifAppleMakerNoteAssetUuid(bytes, markerStart, payloadOffset, segmentEnd)
+          const makerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            ? canonicalizeExifAppleMakerNoteAssetIdentifiers(
+              bytes,
+              markerStart,
+              payloadOffset,
+              segmentEnd,
+              normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION,
+            )
             : null;
-          const ifd1Source = v4MakerNoteCanonical ? (() => {
+          const ifd1Source = makerNoteCanonical ? (() => {
             const copy = bytes.slice();
-            copy.set(v4MakerNoteCanonical, markerStart);
+            copy.set(makerNoteCanonical, markerStart);
             return copy;
           })() : bytes;
           const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
             || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
             ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
             : null;
-          kept.push(v3Ifd1Canonical || v4MakerNoteCanonical || canonicalizeExifTrailingNullPadding(
+          kept.push(v3Ifd1Canonical || makerNoteCanonical || canonicalizeExifTrailingNullPadding(
             bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
           ));
         } else if (
@@ -6287,6 +6412,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function normalizeJpegIosPhotosCarrierV4Basis(bytes) {
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION);
     }
+    function normalizeJpegIosPhotosCarrierV5Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION);
+    }
 
     function artifactIdentityBasisBytes(bundle, basisBytes) {
       if (typeof bundle.artifactBasis === "undefined") return basisBytes;
@@ -6310,6 +6438,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
       if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION) {
         return normalizeJpegIosPhotosCarrierV4Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV5Basis(basisBytes);
       }
       throw new Error("artifact_basis_normalization_unsupported");
     }
