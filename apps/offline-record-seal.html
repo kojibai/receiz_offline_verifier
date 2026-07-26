@@ -4388,10 +4388,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         filename: sourceFilename || "document",
         forcedExtension: preferredExtension,
       });
+      const downloadContentType =
+        sealEmbedding === "trailer"
+          ? "application/octet-stream"
+          : contentType || "application/octet-stream";
       writeOfflineContinuityHead(signer.owner.receizId, proofbundle.receizClaimId);
 
       return {
-        blob: new Blob([artifactBytes], { type: contentType || "application/octet-stream" }),
+        blob: new Blob([artifactBytes], { type: downloadContentType }),
         filename,
         ts,
         code,
