@@ -1257,6 +1257,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
     const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
     const JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v5";
+    const JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v6";
     const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
     const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
     const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
@@ -1313,6 +1314,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
     const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
     const JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG = 0x0016;
+    const JPEG_EXIF_BRIGHTNESS_VALUE_TAG = 0x9203;
+    const JPEG_GPS_ALTITUDE_TAG = 0x0006;
+    const JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE = 10_000_000;
+    const JPEG_GPS_ALTITUDE_CANONICAL_SCALE = 100_000;
     const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
     const JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX = new Uint8Array([98, 112, 108, 105, 115, 116, 48, 48, 95, 16, 28]);
     const JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX = new Uint8Array([
@@ -1440,6 +1445,86 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN,
           tiffOffset + makerNoteOffset + photosAssetTokenOffset - markerStart,
         );
+      }
+      return canonical;
+    }
+
+    function canonicalizeExifIosPhotosReserializedRationals(bytes, markerStart, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+      const findEntry = (ifdOffset, wantedTag) => {
+        const count = uint16(ifdOffset);
+        if (count === null) return null;
+        const tableEnd = ifdOffset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        let found;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = ifdOffset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          if (tag !== wantedTag) continue;
+          if (found) return null;
+          found = { type, count: entryCount, value, tableEnd };
+        }
+        return found;
+      };
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const exifPointer = findEntry(ifd0Offset, 0x8769);
+      const gpsPointer = findEntry(ifd0Offset, 0x8825);
+      if (exifPointer === null || gpsPointer === null) return null;
+      if (exifPointer && (exifPointer.type !== 4 || exifPointer.count !== 1)) return null;
+      if (gpsPointer && (gpsPointer.type !== 4 || gpsPointer.count !== 1)) return null;
+      const brightness = exifPointer ? findEntry(exifPointer.value, JPEG_EXIF_BRIGHTNESS_VALUE_TAG) : undefined;
+      const altitude = gpsPointer ? findEntry(gpsPointer.value, JPEG_GPS_ALTITUDE_TAG) : undefined;
+      if (brightness === null || altitude === null) return null;
+      if (!brightness && !altitude) return null;
+      const canonical = bytes.slice(markerStart, segmentEnd);
+      const canonicalView = new DataView(canonical.buffer, canonical.byteOffset, canonical.byteLength);
+      if (brightness) {
+        if (brightness.type !== 10 || brightness.count !== 1
+          || brightness.value < brightness.tableEnd || brightness.value + 8 > tiffLength) return null;
+        const numerator = view.getInt32(brightness.value, littleEndian);
+        const denominator = view.getInt32(brightness.value + 4, littleEndian);
+        if (denominator <= 0) return null;
+        const canonicalNumerator = Math.round(
+          (numerator / denominator) * JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE,
+        );
+        if (!Number.isSafeInteger(canonicalNumerator)
+          || canonicalNumerator < -0x80000000 || canonicalNumerator > 0x7fffffff) return null;
+        const valueOffset = tiffOffset + brightness.value - markerStart;
+        canonicalView.setInt32(valueOffset, canonicalNumerator, littleEndian);
+        canonicalView.setInt32(valueOffset + 4, JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE, littleEndian);
+      }
+      if (altitude) {
+        if (altitude.type !== 5 || altitude.count !== 1
+          || altitude.value < altitude.tableEnd || altitude.value + 8 > tiffLength) return null;
+        const numerator = view.getUint32(altitude.value, littleEndian);
+        const denominator = view.getUint32(altitude.value + 4, littleEndian);
+        if (denominator === 0) return null;
+        const canonicalNumerator = Math.round(
+          (numerator / denominator) * JPEG_GPS_ALTITUDE_CANONICAL_SCALE,
+        );
+        if (!Number.isSafeInteger(canonicalNumerator)
+          || canonicalNumerator < 0 || canonicalNumerator > 0xffffffff) return null;
+        const valueOffset = tiffOffset + altitude.value - markerStart;
+        canonicalView.setUint32(valueOffset, canonicalNumerator, littleEndian);
+        canonicalView.setUint32(valueOffset + 4, JPEG_GPS_ALTITUDE_CANONICAL_SCALE, littleEndian);
       }
       return canonical;
     }
@@ -1590,7 +1675,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
         || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
         || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
-        || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION;
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION;
       while (offset < bytes.length) {
         if (inScan) {
           const scanStart = offset;
@@ -1648,25 +1734,38 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ) {
           const makerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
             || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
             ? canonicalizeExifAppleMakerNoteAssetIdentifiers(
               bytes,
               markerStart,
               payloadOffset,
               segmentEnd,
-              normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION,
+              normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+                || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION,
             )
             : null;
-          const ifd1Source = makerNoteCanonical ? (() => {
+          const makerNoteSource = makerNoteCanonical ? (() => {
             const copy = bytes.slice();
             copy.set(makerNoteCanonical, markerStart);
             return copy;
           })() : bytes;
+          const reserializedRationalsCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
+            ? canonicalizeExifIosPhotosReserializedRationals(
+              makerNoteSource, markerStart, payloadOffset, segmentEnd,
+            )
+            : null;
+          const ifd1Source = reserializedRationalsCanonical ? (() => {
+            const copy = makerNoteSource.slice();
+            copy.set(reserializedRationalsCanonical, markerStart);
+            return copy;
+          })() : makerNoteSource;
           const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
             || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
             || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
             ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
             : null;
-          kept.push(v3Ifd1Canonical || makerNoteCanonical || canonicalizeExifTrailingNullPadding(
+          kept.push(v3Ifd1Canonical || reserializedRationalsCanonical || makerNoteCanonical || canonicalizeExifTrailingNullPadding(
             bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
           ));
         } else if (
@@ -1710,6 +1809,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function normalizeJpegIosPhotosCarrierV5Basis(bytes) {
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION);
     }
+    function normalizeJpegIosPhotosCarrierV6Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION);
+    }
 
     function artifactIdentityBasisBytes(bundle, basisBytes) {
       if (typeof bundle.artifactBasis === "undefined") return basisBytes;
@@ -1736,6 +1838,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
       if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION) {
         return normalizeJpegIosPhotosCarrierV5Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV6Basis(basisBytes);
       }
       throw new Error("artifact_basis_normalization_unsupported");
     }
