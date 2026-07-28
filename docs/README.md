@@ -1,21 +1,25 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v113.5.0`.
+This directory is the public documentation set for Receiz `v114.0.0`.
 
 ## Start Here
 
-- [releases/v113.5.0.md](releases/v113.5.0.md): canonical clean-stabilization release.
-- [releases/v113.5.0-product-truth.md](releases/v113.5.0-product-truth.md): release-scoped exact-proof and stabilization truth.
-- [releases/v113.5.0-checklist.md](releases/v113.5.0-checklist.md): release lock, local qualification, and external-action boundaries.
-- [releases/v113.5.0-process.md](releases/v113.5.0-process.md): implementation and qualification process.
-- [releases/v113.5.0-regression-lessons.md](releases/v113.5.0-regression-lessons.md): carrier, upload, settlement, first-paint, and version-boundary regression lock.
-- [releases/v113.5.0-performance-findings.md](releases/v113.5.0-performance-findings.md): deterministic first-paint and bounded-work findings.
-- [releases/v113.5.0-invariant-register.md](releases/v113.5.0-invariant-register.md): stabilization and stronger-truth lock.
-- [releases/v113.5.0-commit-history.md](releases/v113.5.0-commit-history.md): upstream working-set and standalone-verifier history boundary.
-- [releases/v113.0.0.md](releases/v113.0.0.md): prior Production Global Reconciliation release and frozen authority layer.
+- [releases/v114.0.0.md](releases/v114.0.0.md): canonical sealed profile/economy composite-proof release.
+- [releases/v114.0.0-product-truth.md](releases/v114.0.0-product-truth.md): release-scoped composite-proof authority.
+- [releases/v114.0.0-checklist.md](releases/v114.0.0-checklist.md): release lock, evidence limits, and external-action boundaries.
+- [releases/v114.0.0-process.md](releases/v114.0.0-process.md): implementation, qualification, and promotion process.
+- [releases/v114.0.0-regression-lessons.md](releases/v114.0.0-regression-lessons.md): production wiring and truth-order regression lock.
+- [releases/v114.0.0-performance-findings.md](releases/v114.0.0-performance-findings.md): bounded foreground append and deterministic first-paint findings.
+- [releases/v114.0.0-invariant-register.md](releases/v114.0.0-invariant-register.md): composite authority, convergence, custody, and evidence lock.
+- [releases/v114.0.0-commit-history.md](releases/v114.0.0-commit-history.md): upstream candidate and standalone-verifier history boundary.
+- [releases/v114-profile-economy-composite-proof.md](releases/v114-profile-economy-composite-proof.md): exact composite-proof evidence.
+- [releases/v114-profile-economy-composite-checklist.md](releases/v114-profile-economy-composite-checklist.md): executable acceptance and evidence checklist.
+- [releases/v114.0.0-constitution-registry.digest](releases/v114.0.0-constitution-registry.digest): canonical v114 registry digest.
+- [releases/v114.0.0-constitution-registry.json](releases/v114.0.0-constitution-registry.json): deterministic v114 constitutional registry.
+- [releases/v113.5.0.md](releases/v113.5.0.md): prior clean-stabilization release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v113.5.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v114.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v114.0.0] - 2026-07-27
+
+### Changed
+
+- Advanced standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker identity to `114.0.0`.
+- Published the complete v114 release book, deterministic registry, composite proof evidence/checklist, performance findings, invariant register, and local/upstream history boundary.
+- Locked sealed profile and economy successors, exact admitted recursion, Market’s derivative role, bounded foreground append, deterministic first paint, visibility quarantine, economy CAS/retry, and generation-bound Identity Record custody.
+- Advanced constitutional identity to registry digest `ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a` with compatibility `>=114.0.0 <115.0.0`.
+
+### Kept
+
+- Exact sealed Originals, Identity Records, carried history, ownership, settlement, and deterministic first paint remain stronger than projection, database, session, cache, and developer rails.
+- Existing v113 proof objects and coordination behavior remain verifiable.
+- Historical composer failure and incomplete authenticated visual evidence remain unresolved.
+- Coordinated promotion, final upstream freeze, attestation, publication, deployment, migration, production work, GitHub release publication, and push remain external or unchecked.
+
 ## [v113.5.0] - 2026-07-26
 
 ### Changed

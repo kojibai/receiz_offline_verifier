@@ -2,17 +2,18 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v113.5.0`
+Current release: `v114.0.0`
 
-## What changed in v113.5.0
+## What changed in v114.0.0
 
-- Current release, package, verifier, Sports verifier, studio, settlement, and service-worker surfaces align at `113.5.0`.
-- The complete clean-stabilization release is recorded at [docs/releases/v113.5.0.md](docs/releases/v113.5.0.md), with [product truth](docs/releases/v113.5.0-product-truth.md), [checklist](docs/releases/v113.5.0-checklist.md), [process](docs/releases/v113.5.0-process.md), [regression lessons](docs/releases/v113.5.0-regression-lessons.md), [performance findings](docs/releases/v113.5.0-performance-findings.md), [invariant register](docs/releases/v113.5.0-invariant-register.md), and [commit-history boundary](docs/releases/v113.5.0-commit-history.md).
-- Exact proof continuity, JPEG/HEIC iOS Photos carrier normalization, airplane-mode verification, signed-upload/public-projection continuity, atomic Sports closeout, deterministic first paint, and warning-free lint are locked together.
-- Exact sealed artifact bytes, independently verified causal history, identity, ownership, and settlement proof remain above transport, database, session, SDK, MCP, AI, and display state.
-- `v113.5.0` is a coordinated distribution release. It does not create a new authority layer: the ruleset, constitutional registry, artifact law, operation matrix, compiler boundary, and compatibility range remain frozen at `v113.0.0` / `>=113.0.0 <114.0.0`.
-- The frozen constitutional registry digest remains `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637`.
-- PR #223 and the v114 development line are explicitly excluded from this release.
+- Current standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker surfaces align at `114.0.0`.
+- The complete release is recorded at [docs/releases/v114.0.0.md](docs/releases/v114.0.0.md), with [product truth](docs/releases/v114.0.0-product-truth.md), [checklist](docs/releases/v114.0.0-checklist.md), [process](docs/releases/v114.0.0-process.md), [regression lessons](docs/releases/v114.0.0-regression-lessons.md), [performance findings](docs/releases/v114.0.0-performance-findings.md), [invariant register](docs/releases/v114.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v114.0.0-commit-history.md).
+- The profile showcase is a sealed composite proof object with stable identity `profile-showcase:<Receiz ID>`; every accepted state is a sealed successor.
+- The economy recursively appends the exact admitted profile successor under `economy-showcase:receiz.com`; Market remains an exact-digest projection beneath it.
+- Known verified profile/economy truth paints before weaker discovery, and foreground append remains bounded by compact head state plus one delta.
+- Exact sealed Originals, Identity Records, profile/economy successors, carried history, ownership, and settlement remain above projection, database, session, cache, SDK, MCP, AI, and display state.
+- The v114 registry digest is `ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a`, chained to v113 digest `4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637`.
+- The compatibility interval is `>=114.0.0 <115.0.0`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -20,8 +21,9 @@ Current release: `v113.5.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized external actions named in [docs/releases/v113.5.0-checklist.md](docs/releases/v113.5.0-checklist.md).
-- Signed attestation remains blocked until the configured approval and Ed25519 values are present; publication, deployment, production mutation, GitHub release creation, and push remain external.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v114.0.0-checklist.md](docs/releases/v114.0.0-checklist.md).
+- The historical composer failure and authenticated profile/media/continuity captures remain unresolved evidence.
+- Coordinated app/SDK/MCP/AI promotion, upstream final freeze, attestation, publication, deployment, migration, production work, GitHub release publication, and push remain external or unchecked.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -39,7 +41,7 @@ Current release: `v113.5.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v113.5.0` stabilization release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v114.0.0` composite-proof release is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

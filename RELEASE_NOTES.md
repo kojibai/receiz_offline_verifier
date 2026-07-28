@@ -1,5 +1,36 @@
 # Release Notes
 
+## v114.0.0
+Release date: 2026-07-27
+
+`v114.0.0` makes the profile showcase and the global economy showcase sealed recursive composite proof objects. Every accepted profile/economy state is a sealed successor; Market remains an exact-digest projection beneath the economy proof.
+
+Canonical full release note: [docs/releases/v114.0.0.md](docs/releases/v114.0.0.md)
+Product-truth freeze: [docs/releases/v114.0.0-product-truth.md](docs/releases/v114.0.0-product-truth.md)
+Release checklist: [docs/releases/v114.0.0-checklist.md](docs/releases/v114.0.0-checklist.md)
+Release process: [docs/releases/v114.0.0-process.md](docs/releases/v114.0.0-process.md)
+Regression lessons: [docs/releases/v114.0.0-regression-lessons.md](docs/releases/v114.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v114.0.0-performance-findings.md](docs/releases/v114.0.0-performance-findings.md)
+Invariant register: [docs/releases/v114.0.0-invariant-register.md](docs/releases/v114.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v114.0.0-commit-history.md](docs/releases/v114.0.0-commit-history.md)
+Composite proof evidence: [docs/releases/v114-profile-economy-composite-proof.md](docs/releases/v114-profile-economy-composite-proof.md)
+Composite proof checklist: [docs/releases/v114-profile-economy-composite-checklist.md](docs/releases/v114-profile-economy-composite-checklist.md)
+Constitutional registry: [docs/releases/v114.0.0-constitution-registry.json](docs/releases/v114.0.0-constitution-registry.json)
+
+### Authority
+
+- Profile identity is `profile-showcase:<Receiz ID>` and economy identity is `economy-showcase:receiz.com`.
+- The recursive operation verifies, admits, appends one bounded delta, seals the successor, projects beneath it, and reconciles only verified additions.
+- Registry digest is `ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a`; compatibility is `>=114.0.0 <115.0.0`.
+- V113 proof objects and the v113 coordination rail remain verifiable and unchanged.
+
+### Evidence and operational boundary
+
+- The upstream Market and Original captures support those settled public surfaces; the profile capture supports identity/shell continuity only.
+- The historical composer failure remains unresolved until a fresh authenticated end-to-end capture contradicts it.
+- This repository qualifies the standalone verifier distribution only.
+- Coordinated app/SDK/MCP/AI promotion, upstream final freeze, attestation, publication, deployment, migration, production verification, GitHub release publication, and push remain unchecked or external.
+
 ## v113.5.0
 Release date: 2026-07-26
 
