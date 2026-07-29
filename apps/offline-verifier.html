@@ -5049,19 +5049,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setVerifiedArtifact,
         });
         renderResult(successor.successorResult);
-        const signedBlob = new Blob([successor.successorBytes], {
-          type: successor.mime || "application/octet-stream",
-        });
-        const saved = await saveOfflineProofBlobAsFile(
-          signedBlob,
-          successor.filename,
-          successor.nativeFileOptions,
-        );
-        showDownloadLink(signedBlob, successor.filename, successor.nativeFileOptions);
         setStatus(
           "ok",
           "PBI authorship verified",
-          saved
+          successor.saved
             ? "Signed Receiz handed to the native save sheet."
             : "Signed Receiz ready. Tap Save if the native save sheet did not open.",
         );

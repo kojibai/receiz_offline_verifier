@@ -6318,7 +6318,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v4";
+      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v5";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -7308,6 +7308,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         throw new Error("Canonical successor artifact identity is invalid.");
       }
       const blob = new Blob([carried.successorBytes], { type: carried.mime });
+      const saved = await saveOfflineProofBlobAsFile(
+        blob,
+        carried.filename,
+        carried.nativeFileOptions,
+      );
       setVerifiedArtifact(successorResult, carried.successorBytes, carried.filename);
       showDownloadLink(blob, carried.filename, carried.nativeFileOptions);
       await enqueueLocalPbiProofObjectAuthorshipReconciliation({
@@ -7317,7 +7322,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         predecessorArtifactSha256,
         authorshipHistory: successorResult.bundle.pbiAuthorshipHistory,
       });
-      return { successorResult, ...carried, append };
+      return { successorResult, ...carried, append, saved };
     }
 
     function installPbiAuthorshipRuntime() {
@@ -11770,19 +11775,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setVerifiedArtifact,
         });
         renderResult(successor.successorResult);
-        const signedBlob = new Blob([successor.successorBytes], {
-          type: successor.mime || "application/octet-stream",
-        });
-        const saved = await saveOfflineProofBlobAsFile(
-          signedBlob,
-          successor.filename,
-          successor.nativeFileOptions,
-        );
-        showDownloadLink(signedBlob, successor.filename, successor.nativeFileOptions);
         setStatus(
           "ok",
           "PBI authorship verified",
-          saved
+          successor.saved
             ? "Signed Receiz handed to the native save sheet."
             : "Signed Receiz ready. Tap Save if the native save sheet did not open.",
         );
