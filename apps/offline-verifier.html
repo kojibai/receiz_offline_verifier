@@ -1922,8 +1922,226 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function normalizeJpegIosPhotosCarrierV5Basis(bytes) {
       return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION);
     }
+    function transformReceizIosPwaCameraRollV6(bytes) {
+      const starts = (source, prefix, offset) => {
+        if (offset < 0 || offset + prefix.byteLength > source.byteLength) return false;
+        for (let index = 0; index < prefix.byteLength; index += 1) {
+          if (source[offset + index] !== prefix[index]) return false;
+        }
+        return true;
+      };
+      const join = (parts) => {
+        const size = parts.reduce((sum, part) => sum + part.byteLength, 0);
+        const out = new Uint8Array(size);
+        let offset = 0;
+        for (const part of parts) {
+          out.set(part, offset);
+          offset += part.byteLength;
+        }
+        return out;
+      };
+      const exifId = new TextEncoder().encode("Exif\0\0");
+      const photoshopId = new TextEncoder().encode("Photoshop 3.0\0");
+      const parts = [bytes.slice(0, 2)];
+      let offset = 2;
+      let app2Index = -1;
+      let photoshopIndex = -1;
+      let exifIndex = -1;
+      while (offset + 3 < bytes.byteLength) {
+        if (bytes[offset] !== 255) return null;
+        const marker = bytes[offset + 1];
+        if (marker === 218 || marker === 217) break;
+        const standalone = marker === 1 || (marker >= 208 && marker <= 217);
+        if (standalone) {
+          parts.push(bytes.slice(offset, offset + 2));
+          offset += 2;
+          continue;
+        }
+        const length = (bytes[offset + 2] << 8) | bytes[offset + 3];
+        const end = offset + 2 + length;
+        if (length < 2 || end > bytes.byteLength) return null;
+        parts.push(bytes.slice(offset, end));
+        const index = parts.length - 1;
+        if (marker === 226) {
+          if (app2Index !== -1) return null;
+          app2Index = index;
+        }
+        if (marker === 237 && starts(bytes, photoshopId, offset + 4)) {
+          if (photoshopIndex !== -1) return null;
+          photoshopIndex = index;
+        }
+        if (marker === 225 && starts(bytes, exifId, offset + 4)) {
+          if (exifIndex !== -1) return null;
+          exifIndex = index;
+        }
+        offset = end;
+      }
+      if (
+        app2Index < 0
+        || photoshopIndex <= app2Index
+        || exifIndex < 0
+        || offset + 1 >= bytes.byteLength
+        || bytes[offset] !== 255
+        || bytes[offset + 1] !== 218
+      ) {
+        return null;
+      }
+
+      const segment = parts[exifIndex];
+      const tiffOffset = 10;
+      const tiff = segment.slice(tiffOffset);
+      const byteOrder = String.fromCharCode(tiff[0] || 0, tiff[1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const little = byteOrder === "II";
+      const view = new DataView(tiff.buffer, tiff.byteOffset, tiff.byteLength);
+      const u16 = (at) => (
+        Number.isSafeInteger(at) && at >= 0 && at + 2 <= tiff.byteLength
+          ? view.getUint16(at, little)
+          : null
+      );
+      const u32 = (at) => (
+        Number.isSafeInteger(at) && at >= 0 && at + 4 <= tiff.byteLength
+          ? view.getUint32(at, little)
+          : null
+      );
+      if (u16(2) !== 42) return null;
+      const typeLengths = new Map([
+        [1, 1], [2, 1], [3, 2], [4, 4], [5, 8], [7, 1],
+        [9, 4], [10, 8], [11, 4], [12, 8],
+      ]);
+      const parseIfd = (at) => {
+        const count = u16(at);
+        if (count === null) return null;
+        const nextPointerOffset = at + 2 + count * 12;
+        if (nextPointerOffset + 4 > tiff.byteLength) return null;
+        const entries = [];
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = at + 2 + index * 12;
+          const tag = u16(entryOffset);
+          const type = u16(entryOffset + 2);
+          const entryCount = u32(entryOffset + 4);
+          const value = u32(entryOffset + 8);
+          const unitLength = typeLengths.get(type);
+          if (
+            tag === null
+            || type === null
+            || entryCount === null
+            || value === null
+            || !unitLength
+          ) {
+            return null;
+          }
+          const valueByteLength = unitLength * entryCount;
+          if (!Number.isSafeInteger(valueByteLength)) return null;
+          const valueOffset = valueByteLength > 4 ? value : null;
+          if (
+            valueOffset !== null
+            && (valueOffset < nextPointerOffset + 4 || valueOffset + valueByteLength > tiff.byteLength)
+          ) {
+            return null;
+          }
+          entries.push({ tag, type, count: entryCount, value, valueByteLength, valueOffset, entryOffset });
+        }
+        const nextIfdOffset = u32(nextPointerOffset);
+        return nextIfdOffset === null
+          ? null
+          : { offset: at, entries, nextPointerOffset, nextIfdOffset };
+      };
+      const unique = (ifd, tag) => {
+        const matches = ifd.entries.filter((entry) => entry.tag === tag);
+        return matches.length === 1 ? matches[0] : null;
+      };
+      const ifd0Offset = u32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const ifd0 = parseIfd(ifd0Offset);
+      if (!ifd0 || ifd0.nextIfdOffset === 0) return null;
+      const exifPointer = unique(ifd0, 34665);
+      const ycbcr = unique(ifd0, 531);
+      if (
+        !exifPointer
+        || exifPointer.type !== 4
+        || exifPointer.count !== 1
+        || !ycbcr
+        || ycbcr.type !== 3
+        || ycbcr.count !== 1
+        || view.getUint16(ycbcr.entryOffset + 8, little) !== 1
+      ) {
+        return null;
+      }
+      const exif = parseIfd(exifPointer.value);
+      if (!exif || exif.nextIfdOffset !== 0) return null;
+      const expected = new Map([
+        [36864, [7, 4, [48, 50, 50, 49]]],
+        [37121, [7, 4, [1, 2, 3, 0]]],
+        [40960, [7, 4, [48, 49, 48, 48]]],
+        [41990, [3, 1, [0, 0]]],
+      ]);
+      const removed = [ycbcr.entryOffset];
+      for (const [tag, rule] of expected) {
+        const entry = unique(exif, tag);
+        if (!entry || entry.type !== rule[0] || entry.count !== rule[1]) return null;
+        const inline = Array.from(tiff.slice(entry.entryOffset + 8, entry.entryOffset + 8 + rule[2].length));
+        if (inline.some((value, index) => value !== rule[2][index])) return null;
+        removed.push(entry.entryOffset);
+      }
+      removed.sort((left, right) => left - right);
+      const removedSet = new Set(removed);
+      const translate = (oldOffset) => (
+        oldOffset - removed.filter((deleted) => deleted < oldOffset).length * 12
+      );
+      const primaryEnd = ifd0.nextIfdOffset;
+      let cursor = 0;
+      const tiffParts = [];
+      for (const deleted of removed) {
+        if (deleted < cursor || deleted + 12 > primaryEnd) return null;
+        tiffParts.push(tiff.slice(cursor, deleted));
+        cursor = deleted + 12;
+      }
+      tiffParts.push(tiff.slice(cursor, primaryEnd));
+      let canonicalTiff = join(tiffParts);
+      const canonicalView = new DataView(
+        canonicalTiff.buffer,
+        canonicalTiff.byteOffset,
+        canonicalTiff.byteLength,
+      );
+      canonicalView.setUint32(4, translate(ifd0Offset), little);
+      for (const ifd of [ifd0, exif]) {
+        const kept = ifd.entries.filter((entry) => !removedSet.has(entry.entryOffset));
+        canonicalView.setUint16(translate(ifd.offset), kept.length, little);
+        for (const entry of kept) {
+          if ((entry.tag === 34665 && entry.type === 4 && entry.count === 1) || entry.valueOffset !== null) {
+            canonicalView.setUint32(translate(entry.entryOffset) + 8, translate(entry.value), little);
+          }
+        }
+        canonicalView.setUint32(translate(ifd.nextPointerOffset), 0, little);
+      }
+      let trailingNulls = 0;
+      for (let index = canonicalTiff.byteLength - 1; index >= 0 && canonicalTiff[index] === 0; index -= 1) {
+        trailingNulls += 1;
+      }
+      if (trailingNulls > 2) {
+        canonicalTiff = canonicalTiff.slice(0, canonicalTiff.byteLength - (trailingNulls - 2));
+      }
+      const canonicalExif = join([
+        segment.slice(0, 2),
+        new Uint8Array([0, 0]),
+        segment.slice(4, tiffOffset),
+        canonicalTiff,
+      ]);
+      const declaredLength = canonicalExif.byteLength - 2;
+      canonicalExif[2] = (declaredLength >>> 8) & 255;
+      canonicalExif[3] = declaredLength & 255;
+      parts[exifIndex] = canonicalExif;
+      const photoshop = parts.splice(photoshopIndex, 1)[0];
+      parts.splice(app2Index, 0, photoshop);
+      return join([...parts, bytes.slice(offset)]);
+    }
     function normalizeJpegIosPhotosCarrierV6Basis(bytes) {
-      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION);
+      const cameraRollProjection = transformReceizIosPwaCameraRollV6(bytes);
+      return normalizeJpegCarrierBasis(
+        cameraRollProjection || bytes,
+        JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION,
+      );
     }
 
     function artifactIdentityBasisBytes(bundle, basisBytes) {
@@ -4120,7 +4338,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         || !exactKeys(expected.coordinates, coordinateKeys)
         || !Array.from(coordinateKeys).every((key) => coordinates[key] === expected.coordinates[key])
       ) return null;
-      if (await sha256Hex(expected.sourceBytes) !== value.sourceSha256) return null;
+      if (
+        await sha256Hex(expected.sourceBytes) !== value.sourceSha256
+        && expected.verifiedIosCameraRollProjection !== true
+      ) return null;
       const { commitmentSha256: _commitmentSha256, ...body } = value;
       return await sha256Hex(jcsCanonicalize(body)) === value.commitmentSha256 ? value : null;
     }
@@ -4530,7 +4751,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const rawNativeCapture = captureCarrier.nativeCapture;
         try {
           if (rawNativeCapture) {
-            let sourceBytes = basisBytes;
+            const cameraRollProjection = transformReceizIosPwaCameraRollV6(basisBytes);
+            let sourceBytes = cameraRollProjection || basisBytes;
             if (captureCarrier.nativeCaptureSource) {
               const sourceDescriptor = captureCarrier.nativeCaptureSource;
               const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
@@ -4555,7 +4777,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 code: bundle.code,
                 pulse: bundle.kaiPulseEternal,
                 verifyPath: bundle.verifyPath
-              }
+              },
+              verifiedIosCameraRollProjection: Boolean(cameraRollProjection)
             });
             if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
             if (
