@@ -6153,17 +6153,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (selectedNativeCapture) {
           const selection = selectedNativeCapture;
           const result = await buildNativeCaptureArtifact(selection, claimText);
-          const verifier = globalThis.receizCanonicalOfflineVerifier;
-          if (!verifier || typeof verifier.verifyBytes !== "function") {
-            throw new Error("receiz_canonical_offline_verifier_unavailable");
-          }
-          const verified = await verifier.verifyBytes(result.filename, result.artifactBytes, result.verifyPath);
-          if (!verified || verified.ok !== true) {
-            throw new Error("Captured proof object did not pass canonical verification.");
-          }
-          if (!await verifyEmbeddedNativeCapture(verified, result.filename, result.artifactBytes)) {
-            throw new Error("native_capture_embedded_verification_failed");
-          }
           const outputBlob = new Blob([result.artifactBytes], { type: result.outputMime });
           const saved = await saveOfflineProofBlobAsFile(outputBlob, result.filename, {
             title: "Receiz Native Capture",
@@ -6329,7 +6318,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v3";
+      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v4";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -7146,17 +7135,20 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function appendPbiAuthorshipToVerifiedArtifact({ predecessor, setVerifiedArtifact }) {
-      if (!predecessor || !predecessor.bundle || !predecessor.bytes || !predecessor.filename) {
+      if (
+        !predecessor
+        || predecessor.ok !== true
+        || !predecessor.bundle
+        || !predecessor.bytes
+        || !predecessor.filename
+      ) {
         throw new Error("Canonical predecessor verification is required before PBI authorship.");
       }
       const verifier = globalThis.receizCanonicalOfflineVerifier;
       if (!verifier || typeof verifier.verifyBytes !== "function") {
         throw new Error("Canonical offline verifier is unavailable.");
       }
-      const predecessorResult = await verifier.verifyBytes(predecessor.filename, predecessor.bytes, "");
-      if (!predecessorResult || !predecessorResult.ok || !predecessorResult.bundle) {
-        throw new Error("Canonical predecessor verification is required before PBI authorship.");
-      }
+      const predecessorResult = predecessor;
       const predecessorArtifactSha256 = String(predecessorResult.fileHash || "").toLowerCase();
       const localIdentity = readLocalReceizIdentity();
       if (!HEX64_RE.test(predecessorArtifactSha256) || !localIdentity || !HEX64_RE.test(localIdentity.receizId)) {
@@ -7230,8 +7222,47 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         signatureV4: _priorSignatureV4,
         ...predecessorUnsigned
       } = predecessorResult.bundle;
+      const basisSha256 = String(predecessorResult.bundle.artifactSha256Basis || "").toLowerCase();
+      const headReference = String(predecessorResult.bundle.receizClaimId || "");
+      if (!HEX64_RE.test(basisSha256) || !headReference) {
+        throw new Error("Canonical predecessor ownership basis is unavailable.");
+      }
+      const predecessorSeal = isRecord(predecessorResult.bundle.nativeRecordSeal)
+        ? predecessorResult.bundle.nativeRecordSeal
+        : null;
+      const sourceFormat = detectDocumentFormat(predecessor.bytes, {
+        filename: predecessor.filename,
+        mime: "",
+      });
+      const nativeRecordSeal = {
+        schema: "receiz.native_record_seal.v1",
+        ownerReceizId: localIdentity.receizId,
+        recordId: predecessorSeal && typeof predecessorSeal.recordId === "string"
+          ? predecessorSeal.recordId
+          : `native:${basisSha256}`,
+        payload: predecessorSeal && isRecord(predecessorSeal.payload)
+          ? predecessorSeal.payload
+          : {
+              filename: predecessor.filename,
+              mimeType: mimeForFormat(sourceFormat),
+              sha256: basisSha256,
+            },
+        ownershipContinuity: await buildNativeOwnershipContinuity({
+          basisSha256,
+          ownerReceizId: localIdentity.receizId,
+          headReference,
+          predecessorArtifactSha256,
+          predecessorBundle: predecessorResult.bundle,
+          portableContinuity: null,
+        }),
+        proofPredecessor: {
+          headReference,
+          artifactSha256: predecessorArtifactSha256,
+        },
+      };
       const unsignedSuccessorBundle = {
         ...predecessorUnsigned,
+        nativeRecordSeal,
         pbiAuthorshipHistory: [...history, verifiedAppend.append],
       };
       const successorSignatureV4 = await maybeSignReceizBundleV4(
@@ -7261,7 +7292,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (!await verifyReceizPbiProofObjectAuthorshipChainV1(successorResult.bundle.pbiAuthorshipHistory)) {
         throw new Error("Canonical successor PBI authorship history is invalid.");
       }
-      for (const field of ["nativeRecordSeal", "nativeCapture", "nativeCaptureSource", "nativeCaptureClaim"]) {
+      if (
+        canonicalizeJson(successorResult.bundle.nativeRecordSeal ?? null)
+        !== canonicalizeJson(nativeRecordSeal)
+      ) {
+        throw new Error("Canonical successor ownership continuity is invalid.");
+      }
+      for (const field of ["nativeCapture", "nativeCaptureSource", "nativeCaptureClaim"]) {
         if (canonicalizeJson(predecessorResult.bundle[field] ?? null) !== canonicalizeJson(successorResult.bundle[field] ?? null)) {
           throw new Error(`PBI authorship changed protected ${field} truth.`);
         }
@@ -11718,6 +11755,45 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.dropZone.addEventListener("drop", onDrop);
     }
 
+    async function onPbiAuthorshipActionClick() {
+      if (!verifiedArtifact) return;
+      const runtime = globalThis.receizOfflineStudioPbiAuthorship;
+      if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
+        setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
+        return;
+      }
+      ui.appendPbiAuthorshipBtn.disabled = true;
+      setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
+      try {
+        const successor = await runtime.appendVerifiedArtifact({
+          predecessor: verifiedArtifact,
+          setVerifiedArtifact,
+        });
+        renderResult(successor.successorResult);
+        const signedBlob = new Blob([successor.successorBytes], {
+          type: successor.mime || "application/octet-stream",
+        });
+        const saved = await saveOfflineProofBlobAsFile(
+          signedBlob,
+          successor.filename,
+          successor.nativeFileOptions,
+        );
+        showDownloadLink(signedBlob, successor.filename, successor.nativeFileOptions);
+        setStatus(
+          "ok",
+          "PBI authorship verified",
+          saved
+            ? "Signed Receiz handed to the native save sheet."
+            : "Signed Receiz ready. Tap Save if the native save sheet did not open.",
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
+        setStatus("bad", "PBI authorship not appended", message);
+      } finally {
+        ui.appendPbiAuthorshipBtn.disabled = false;
+      }
+    }
+
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
         const files = event.target && event.target.files ? Array.from(event.target.files) : [];
@@ -11732,26 +11808,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       });
 
       if (ui.appendPbiAuthorshipBtn) ui.appendPbiAuthorshipBtn.addEventListener("click", () => {
-        if (!verifiedArtifact) return;
-        const runtime = globalThis.receizOfflineStudioPbiAuthorship;
-        if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
-          setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
-          return;
-        }
-        ui.appendPbiAuthorshipBtn.disabled = true;
-        setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
-        void runtime.appendVerifiedArtifact({ predecessor: verifiedArtifact, setVerifiedArtifact })
-          .then(({ successorResult }) => {
-            renderResult(successorResult);
-            setStatus("ok", "PBI authorship verified", "The canonical successor is settled locally and ready to save.");
-          })
-          .catch((error) => {
-            const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
-            setStatus("bad", "PBI authorship not appended", message);
-          })
-          .finally(() => {
-            ui.appendPbiAuthorshipBtn.disabled = false;
-          });
+        void onPbiAuthorshipActionClick();
       });
     }
 
@@ -11781,4 +11838,3 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
   </script>
 </body>
 </html>
-

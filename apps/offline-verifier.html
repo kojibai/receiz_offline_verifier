@@ -5034,6 +5034,45 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.dropZone.addEventListener("drop", onDrop);
     }
 
+    async function onPbiAuthorshipActionClick() {
+      if (!verifiedArtifact) return;
+      const runtime = globalThis.receizOfflineStudioPbiAuthorship;
+      if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
+        setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
+        return;
+      }
+      ui.appendPbiAuthorshipBtn.disabled = true;
+      setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
+      try {
+        const successor = await runtime.appendVerifiedArtifact({
+          predecessor: verifiedArtifact,
+          setVerifiedArtifact,
+        });
+        renderResult(successor.successorResult);
+        const signedBlob = new Blob([successor.successorBytes], {
+          type: successor.mime || "application/octet-stream",
+        });
+        const saved = await saveOfflineProofBlobAsFile(
+          signedBlob,
+          successor.filename,
+          successor.nativeFileOptions,
+        );
+        showDownloadLink(signedBlob, successor.filename, successor.nativeFileOptions);
+        setStatus(
+          "ok",
+          "PBI authorship verified",
+          saved
+            ? "Signed Receiz handed to the native save sheet."
+            : "Signed Receiz ready. Tap Save if the native save sheet did not open.",
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
+        setStatus("bad", "PBI authorship not appended", message);
+      } finally {
+        ui.appendPbiAuthorshipBtn.disabled = false;
+      }
+    }
+
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
         const files = event.target && event.target.files ? Array.from(event.target.files) : [];
@@ -5048,26 +5087,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       });
 
       if (ui.appendPbiAuthorshipBtn) ui.appendPbiAuthorshipBtn.addEventListener("click", () => {
-        if (!verifiedArtifact) return;
-        const runtime = globalThis.receizOfflineStudioPbiAuthorship;
-        if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
-          setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
-          return;
-        }
-        ui.appendPbiAuthorshipBtn.disabled = true;
-        setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
-        void runtime.appendVerifiedArtifact({ predecessor: verifiedArtifact, setVerifiedArtifact })
-          .then(({ successorResult }) => {
-            renderResult(successorResult);
-            setStatus("ok", "PBI authorship verified", "The canonical successor is settled locally and ready to save.");
-          })
-          .catch((error) => {
-            const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
-            setStatus("bad", "PBI authorship not appended", message);
-          })
-          .finally(() => {
-            ui.appendPbiAuthorshipBtn.disabled = false;
-          });
+        void onPbiAuthorshipActionClick();
       });
     }
 
