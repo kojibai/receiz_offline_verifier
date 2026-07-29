@@ -593,8 +593,24 @@
         <div class="kv"><span class="k">Verify Path</span><p class="v mono" id="factPath">-</p></div>
         <div class="kv"><span class="k">Artifact SHA-256</span><p class="v mono" id="factHash">-</p></div>
         <div class="kv"><span class="k">Anchor</span><p class="v mono" id="factAnchor">-</p></div>
+        <div class="kv" id="factCurrentOwnerRow" hidden><span class="k">Current Owner</span><p class="v mono" id="factCurrentOwner">-</p></div>
+        <div class="kv" id="factPreviousOwnerRow" hidden><span class="k">Previous Owner</span><p class="v mono" id="factPreviousOwner">-</p></div>
+        <div class="kv" id="factGenesisOwnerRow" hidden><span class="k">Genesis Owner</span><p class="v mono" id="factGenesisOwner">-</p></div>
+        <div class="kv" id="factOwnershipCountRow" hidden><span class="k">Ownership Appends</span><p class="v mono" id="factOwnershipCount">-</p></div>
+        <div class="kv" id="factNativeCaptureRow" hidden><span class="k">Native Capture Verified</span><p class="v mono" id="factNativeCapture">-</p></div>
+        <div class="kv" id="factPbiAuthorshipCountRow" hidden><span class="k">PBI authorship appends</span><p class="v mono" id="factPbiAuthorshipCount">-</p></div>
         <div class="kv" id="factPresetRow" hidden><span class="k">Preset</span><p class="v mono" id="factPreset">-</p></div>
       </div>
+
+      <details id="ownershipHistoryPanel" hidden>
+        <summary>Show full verified provenance history</summary>
+        <div class="panel"><pre id="ownershipHistoryJson">(none)</pre></div>
+      </details>
+
+      <details id="pbiAuthorshipHistoryPanel" hidden>
+        <summary>Show complete ordered PBI authorship history</summary>
+        <div class="panel"><pre id="pbiAuthorshipHistoryJson">(none)</pre></div>
+      </details>
 
       <details>
         <summary>Show decoded proof bundle</summary>
@@ -712,6 +728,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       factPath: document.getElementById("factPath"),
       factHash: document.getElementById("factHash"),
       factAnchor: document.getElementById("factAnchor"),
+      factCurrentOwner: document.getElementById("factCurrentOwner"),
+      factCurrentOwnerRow: document.getElementById("factCurrentOwnerRow"),
+      factPreviousOwner: document.getElementById("factPreviousOwner"),
+      factPreviousOwnerRow: document.getElementById("factPreviousOwnerRow"),
+      factGenesisOwner: document.getElementById("factGenesisOwner"),
+      factGenesisOwnerRow: document.getElementById("factGenesisOwnerRow"),
+      factOwnershipCount: document.getElementById("factOwnershipCount"),
+      factOwnershipCountRow: document.getElementById("factOwnershipCountRow"),
+      factNativeCapture: document.getElementById("factNativeCapture"),
+      factNativeCaptureRow: document.getElementById("factNativeCaptureRow"),
+      factPbiAuthorshipCount: document.getElementById("factPbiAuthorshipCount"),
+      factPbiAuthorshipCountRow: document.getElementById("factPbiAuthorshipCountRow"),
+      ownershipHistoryPanel: document.getElementById("ownershipHistoryPanel"),
+      ownershipHistoryJson: document.getElementById("ownershipHistoryJson"),
+      pbiAuthorshipHistoryPanel: document.getElementById("pbiAuthorshipHistoryPanel"),
+      pbiAuthorshipHistoryJson: document.getElementById("pbiAuthorshipHistoryJson"),
+      appendPbiAuthorshipPanel: document.getElementById("appendPbiAuthorshipPanel"),
+      appendPbiAuthorshipBtn: document.getElementById("appendPbiAuthorshipBtn"),
       factPreset: document.getElementById("factPreset"),
       factPresetRow: document.getElementById("factPresetRow"),
       bundleJson: document.getElementById("bundleJson"),
@@ -719,6 +753,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     };
 
     let selectedFiles = [];
+    let verifiedArtifact = null;
+
+    function setVerifiedArtifact(result, bytes, filename) {
+      verifiedArtifact = result && result.ok && result.bundle && bytes && filename
+        ? {
+            ...result,
+            bytes: bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes),
+            filename: String(filename),
+          }
+        : null;
+      if (ui.appendPbiAuthorshipPanel) ui.appendPbiAuthorshipPanel.hidden = !verifiedArtifact;
+    }
 
     function setStatus(kind, title, note) {
       ui.statusBox.className = `status ${kind}`;
@@ -765,6 +811,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     function writeFacts(result) {
+      const continuity = result?.bundle?.nativeRecordSeal?.ownershipContinuity;
+      const history = continuity && Array.isArray(continuity.history) ? continuity.history : [];
+      const latestTransfer = history.length > 1 ? history[history.length - 1] : null;
+      const nativeCapture = result?.ok ? result.nativeCapture : null;
+      const pbiAuthorshipHistory = result?.ok && Array.isArray(result.pbiAuthorshipHistory)
+        ? result.pbiAuthorshipHistory
+        : [];
       if (!result || !result.bundle) {
         ui.factsGrid.hidden = true;
         ui.factTs.textContent = "-";
@@ -773,6 +826,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.factPath.textContent = "-";
         ui.factHash.textContent = "-";
         ui.factAnchor.textContent = "-";
+        ui.factCurrentOwnerRow.hidden = true;
+        ui.factPreviousOwnerRow.hidden = true;
+        ui.factGenesisOwnerRow.hidden = true;
+        ui.factOwnershipCountRow.hidden = true;
+        ui.ownershipHistoryPanel.hidden = true;
+        ui.ownershipHistoryJson.textContent = "(none)";
+        ui.factNativeCaptureRow.hidden = true;
+        ui.factNativeCapture.textContent = "-";
+        ui.factPbiAuthorshipCountRow.hidden = true;
+        ui.factPbiAuthorshipCount.textContent = "-";
+        ui.pbiAuthorshipHistoryPanel.hidden = true;
+        ui.pbiAuthorshipHistoryJson.textContent = "(none)";
         ui.factPreset.textContent = "-";
         ui.factPresetRow.hidden = true;
         return;
@@ -787,6 +852,39 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.factHash.textContent = result.fileHash || "-";
       const bundleAnchorId = asString(result.bundle.anchorId);
       ui.factAnchor.textContent = result.anchor?.anchorId || derivedAnchor?.anchorId || bundleAnchorId || "none";
+      const hasOwnership = result.ok && continuity && typeof continuity.ownerReceizId === "string";
+      ui.factCurrentOwnerRow.hidden = !hasOwnership;
+      ui.factPreviousOwnerRow.hidden = !hasOwnership;
+      ui.factGenesisOwnerRow.hidden = !hasOwnership;
+      ui.factOwnershipCountRow.hidden = !hasOwnership;
+      ui.factCurrentOwner.textContent = hasOwnership ? continuity.ownerReceizId : "-";
+      ui.factPreviousOwner.textContent = hasOwnership
+        ? (latestTransfer?.fromOwnerReceizId || continuity.genesisOwnerReceizId || "-")
+        : "-";
+      ui.factGenesisOwner.textContent = hasOwnership ? (continuity.genesisOwnerReceizId || "-") : "-";
+      ui.factOwnershipCount.textContent = hasOwnership ? String(history.length) : "-";
+      ui.ownershipHistoryPanel.hidden = !hasOwnership || history.length === 0;
+      ui.ownershipHistoryJson.textContent = history.length > 0
+        ? safeJson({ proofPredecessor: result.bundle.nativeRecordSeal?.proofPredecessor || null, ownershipHistory: history })
+        : "(none)";
+      ui.factNativeCaptureRow.hidden = !nativeCapture;
+      ui.factNativeCapture.textContent = nativeCapture
+        ? `${nativeCapture.mediaKind} · ${nativeCapture.sourceSha256}`
+        : "-";
+      ui.factPbiAuthorshipCountRow.hidden = !result.ok;
+      ui.factPbiAuthorshipCount.textContent = result.ok ? String(pbiAuthorshipHistory.length) : "-";
+      ui.pbiAuthorshipHistoryPanel.hidden = pbiAuthorshipHistory.length === 0;
+      ui.pbiAuthorshipHistoryJson.textContent = pbiAuthorshipHistory.length > 0
+        ? safeJson(pbiAuthorshipHistory.map((entry) => ({
+            position: entry.position,
+            credentialId: entry.credentialId,
+            receizId: entry.receizId,
+            pbiReceiptHash: entry.pbiReceiptHash,
+            predecessorDigest: entry.predecessorArtifactSha256,
+            signingTime: entry.signedAt,
+            appendHead: entry.appendHeadSha256
+          })))
+        : "(none)";
       if (result.anchor?.contextPreset) {
         ui.factPreset.textContent = result.anchor.contextPreset;
         ui.factPresetRow.hidden = false;
@@ -950,7 +1048,22 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       try {
         const result = await verifySelectedFiles(selectedFiles, "");
         renderResult(result);
+        if (
+          result.ok
+          && result.bundle
+          && !result.packageSummary
+          && !result.folderScanSummary
+          && selectedFiles.length === 1
+        ) {
+          const file = selectedFiles[0];
+          const bytes = new Uint8Array(await file.arrayBuffer());
+          const digest = await sha256Hex(bytes);
+          setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+        } else {
+          setVerifiedArtifact(null);
+        }
       } catch (err) {
+        setVerifiedArtifact(null);
         const msg = err instanceof Error ? err.message : String(err);
         setStatus("bad", "Verification failed", msg || "Unknown error.");
         addCheck("bad", msg || "Unexpected error.");
@@ -2283,7 +2396,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2440,6 +2553,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           : null,
         isRecord(slim.artifactBasis) ? slim.artifactBasis.normalization || "" : "",
       ];
+      if (isRecord(slim.nativeCapture) || isRecord(slim.nativeCaptureSource) || isRecord(slim.nativeCaptureClaim)) {
+        compact.push(slim.nativeCapture || null, slim.nativeCaptureSource || null, slim.nativeCaptureClaim || null);
+      }
+      if (Array.isArray(slim.pbiAuthorshipHistory)) {
+        while (compact.length < 21) compact.push(null);
+        compact.push(slim.pbiAuthorshipHistory);
+      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
@@ -2648,6 +2768,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
         ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
+        ...(bundle.nativeCapture ? { nativeCapture: bundle.nativeCapture } : {}),
+        ...(bundle.nativeCaptureSource ? { nativeCaptureSource: bundle.nativeCaptureSource } : {}),
+        ...(bundle.nativeCaptureClaim ? { nativeCaptureClaim: bundle.nativeCaptureClaim } : {}),
+        ...(bundle.pbiAuthorshipHistory ? { pbiAuthorshipHistory: bundle.pbiAuthorshipHistory } : {}),
+        ...(bundle.nativeRecordSeal ? { nativeRecordSeal: bundle.nativeRecordSeal } : {}),
         wireproof: bundle.wireproof || null
       };
       return jcsCanonicalize(canonical);
@@ -3545,6 +3670,42 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
     }
 
+    async function verifyNativeOwnershipContinuity(bundle, basisSha256) {
+      if (!bundle || !isRecord(bundle.nativeRecordSeal)) return true;
+      const seal = bundle.nativeRecordSeal;
+      if (!isRecord(seal.ownershipContinuity)) return true;
+      const continuity = seal.ownershipContinuity;
+      if (typeof continuity.namespace !== "string" || !continuity.namespace.startsWith("receiz.native-proof:")) return true;
+      if (!isRecord(seal.payload) || seal.payload.sha256 !== basisSha256 || continuity.artifactId !== basisSha256 || continuity.namespace !== `receiz.native-proof:${basisSha256}` || continuity.ownerReceizId !== seal.ownerReceizId || continuity.headReference !== bundle.receizClaimId || !Number.isSafeInteger(continuity.appendCount) || continuity.appendCount < 0) return false;
+      if (Array.isArray(continuity.history)) {
+        if (continuity.history.length !== continuity.appendCount + 1) return false;
+        const genesis = continuity.history[0];
+        if (!isRecord(genesis) || genesis.schema !== "receiz.native_ownership_genesis.v1" || genesis.index !== 0 || genesis.ownerReceizId !== continuity.genesisOwnerReceizId) return false;
+        let expectedOwner = genesis.ownerReceizId;
+        let expectedHead = genesis.headReference;
+        let expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: expectedOwner }));
+        if (genesis.historyDigestSha256 !== expectedDigest) return false;
+        for (let index = 1; index < continuity.history.length; index += 1) {
+          const entry = continuity.history[index];
+          if (!isRecord(entry) || entry.schema !== "receiz.native_ownership_transfer.v1" || entry.index !== index || entry.fromOwnerReceizId !== expectedOwner || entry.priorHeadReference !== expectedHead) return false;
+          expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: expectedDigest, sourceArtifactSha256: entry.sourceArtifactSha256, priorHeadReference: entry.priorHeadReference, fromOwnerReceizId: entry.fromOwnerReceizId, toOwnerReceizId: entry.toOwnerReceizId }));
+          if (entry.historyDigestSha256 !== expectedDigest) return false;
+          expectedOwner = entry.toOwnerReceizId;
+          expectedHead = entry.headReference;
+        }
+        if (expectedOwner !== continuity.ownerReceizId || expectedHead !== continuity.headReference || expectedDigest !== continuity.historyDigestSha256) return false;
+      }
+      if (continuity.appendCount === 0) {
+        if (continuity.predecessor) return false;
+        const expectedGenesis = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: continuity.ownerReceizId }));
+        return continuity.genesisOwnerReceizId === continuity.ownerReceizId && continuity.historyDigestSha256 === expectedGenesis;
+      }
+      const predecessor = continuity.predecessor;
+      if (!isRecord(predecessor) || !Number.isSafeInteger(predecessor.appendCount) || continuity.appendCount !== predecessor.appendCount + 1) return false;
+      const expectedAppend = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: predecessor.historyDigestSha256, sourceArtifactSha256: predecessor.artifactSha256, priorHeadReference: predecessor.headReference, fromOwnerReceizId: predecessor.ownerReceizId, toOwnerReceizId: continuity.ownerReceizId }));
+      return continuity.historyDigestSha256 === expectedAppend;
+    }
+
     async function validateBundleAgainstBasis({
       bundle,
       basisBytes,
@@ -3919,6 +4080,180 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return found;
     }
 
+    async function verifyReceizNativeCaptureV1(value, expected) {
+      const captureKeys = new Set([
+        "schema", "source", "mediaKind", "sourceSha256", "mimeType", "width", "height",
+        "durationMs", "requestedFacingMode", "captureSessionCommitment", "capturedAt",
+        "kaiUpulse", "ownerReceizId", "coordinates", "commitmentSha256"
+      ]);
+      const coordinateKeys = new Set(["slug", "code", "pulse", "verifyPath"]);
+      const exactKeys = (candidate, keys) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return false;
+        const ownKeys = Object.keys(candidate);
+        return ownKeys.length === keys.size && ownKeys.every((key) => keys.has(key));
+      };
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const integerOrNull = (candidate) => candidate === null
+        || (typeof candidate === "number" && Number.isSafeInteger(candidate) && candidate >= 0);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const coordinates = value && value.coordinates;
+      if (
+        !exactKeys(value, captureKeys)
+        || value.schema !== "receiz.native_capture.v1"
+        || value.source !== "camera"
+        || (value.mediaKind !== "photo" && value.mediaKind !== "video")
+        || !hex64(value.sourceSha256)
+        || !nonempty(value.mimeType)
+        || !integerOrNull(value.width)
+        || !integerOrNull(value.height)
+        || !integerOrNull(value.durationMs)
+        || !["user", "environment", null].includes(value.requestedFacingMode)
+        || !hex64(value.captureSessionCommitment)
+        || !nonempty(value.capturedAt)
+        || !nonempty(value.kaiUpulse)
+        || !nonempty(value.ownerReceizId)
+        || !exactKeys(coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => nonempty(coordinates[key]))
+        || !hex64(value.commitmentSha256)
+        || !expected
+        || !(expected.sourceBytes instanceof Uint8Array)
+        || !exactKeys(expected.coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => coordinates[key] === expected.coordinates[key])
+      ) return null;
+      if (await sha256Hex(expected.sourceBytes) !== value.sourceSha256) return null;
+      const { commitmentSha256: _commitmentSha256, ...body } = value;
+      return await sha256Hex(jcsCanonicalize(body)) === value.commitmentSha256 ? value : null;
+    }
+
+    async function verifyReceizPbiProofObjectAuthorshipChainV1(history) {
+      const appendKeys = new Set([
+        "schema", "position", "predecessorArtifactSha256", "predecessorProofHead",
+        "previousAppendHeadSha256", "claimHashHex", "slug", "code", "pulse", "receizId",
+        "credentialId", "credentialPublicKeyPem", "pbiReceipt", "pbiReceiptHash", "signedAt",
+        "kaiUpulse", "actionHashSha256", "appendHeadSha256"
+      ]);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const portable = (candidate, ancestors = new Set(), state = { nodes: 0 }, depth = 0) => {
+        state.nodes += 1;
+        if (depth > 64 || state.nodes > 100000) return false;
+        if (candidate === null || typeof candidate === "string" || typeof candidate === "boolean") return true;
+        if (typeof candidate === "number") return Number.isFinite(candidate);
+        if (typeof candidate !== "object" || ancestors.has(candidate)) return false;
+        ancestors.add(candidate);
+        try {
+          if (Array.isArray(candidate)) {
+            const keys = Object.keys(candidate);
+            return keys.length === candidate.length
+              && keys.every((key, index) => key === String(index))
+              && candidate.every((entry) => portable(entry, ancestors, state, depth + 1));
+          }
+          const prototype = Object.getPrototypeOf(candidate);
+          if (prototype !== Object.prototype && prototype !== null) return false;
+          return Reflect.ownKeys(Object.getOwnPropertyDescriptors(candidate)).every((key) => {
+            const descriptor = Object.getOwnPropertyDescriptor(candidate, key);
+            return typeof key === "string"
+              && Boolean(descriptor?.enumerable)
+              && Object.prototype.hasOwnProperty.call(descriptor, "value")
+              && portable(descriptor.value, ancestors, state, depth + 1);
+          });
+        } finally {
+          ancestors.delete(candidate);
+        }
+      };
+      const exactAppend = (candidate) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate) || "toJSON" in candidate) return false;
+        const descriptors = Object.getOwnPropertyDescriptors(candidate);
+        const ownKeys = Reflect.ownKeys(candidate);
+        return ownKeys.length === appendKeys.size
+          && ownKeys.every((key) => typeof key === "string"
+            && appendKeys.has(key)
+            && descriptors[key]?.enumerable === true
+            && Object.prototype.hasOwnProperty.call(descriptors[key], "value"));
+      };
+      const canonicalChronos = (candidate) => {
+        if (typeof candidate !== "string") return false;
+        try { return new Date(candidate).toISOString() === candidate; } catch { return false; }
+      };
+      const actionBody = (candidate) => ({
+        schema: candidate.schema,
+        position: candidate.position,
+        predecessorArtifactSha256: candidate.predecessorArtifactSha256,
+        predecessorProofHead: candidate.predecessorProofHead,
+        previousAppendHeadSha256: candidate.previousAppendHeadSha256,
+        claimHashHex: candidate.claimHashHex,
+        slug: candidate.slug,
+        code: candidate.code,
+        pulse: candidate.pulse,
+        receizId: candidate.receizId,
+        credentialId: candidate.credentialId,
+        credentialPublicKeyPem: candidate.credentialPublicKeyPem,
+        pbiReceipt: candidate.pbiReceipt,
+        pbiReceiptHash: candidate.pbiReceiptHash,
+        signedAt: candidate.signedAt,
+        kaiUpulse: candidate.kaiUpulse
+      });
+      try {
+        if (!Array.isArray(history)) return false;
+        const appendHeads = new Set();
+        const predecessorArtifacts = new Set();
+        let previous = null;
+        for (const [position, candidate] of history.entries()) {
+          if (
+            !exactAppend(candidate)
+            || candidate.schema !== "receiz.pbi.proof-object-authorship.v1"
+            || !Number.isSafeInteger(candidate.position)
+            || candidate.position < 0
+            || !hex64(candidate.predecessorArtifactSha256)
+            || !hex64(candidate.predecessorProofHead)
+            || (candidate.previousAppendHeadSha256 !== null && !hex64(candidate.previousAppendHeadSha256))
+            || !hex64(candidate.claimHashHex)
+            || !nonempty(candidate.slug)
+            || !nonempty(candidate.code)
+            || !nonempty(candidate.pulse)
+            || !hex64(candidate.receizId)
+            || !nonempty(candidate.credentialId)
+            || !nonempty(candidate.credentialPublicKeyPem)
+            || !portable(candidate.pbiReceipt)
+            || !hex64(candidate.pbiReceiptHash)
+            || !canonicalChronos(candidate.signedAt)
+            || typeof candidate.kaiUpulse !== "string"
+            || !/^(0|[1-9][0-9]*)$/.test(candidate.kaiUpulse)
+            || !hex64(candidate.actionHashSha256)
+            || !hex64(candidate.appendHeadSha256)
+          ) return false;
+          const expectedPreviousHead = previous?.appendHeadSha256 || null;
+          if (
+            candidate.position !== position
+            || candidate.previousAppendHeadSha256 !== expectedPreviousHead
+            || (previous && candidate.predecessorProofHead !== previous.appendHeadSha256)
+            || (previous && candidate.claimHashHex !== previous.claimHashHex)
+            || (previous && candidate.slug !== previous.slug)
+            || (previous && candidate.code !== previous.code)
+            || (previous && candidate.pulse !== previous.pulse)
+            || (previous && BigInt(candidate.kaiUpulse) <= BigInt(previous.kaiUpulse))
+            || appendHeads.has(candidate.appendHeadSha256)
+            || predecessorArtifacts.has(candidate.predecessorArtifactSha256)
+          ) return false;
+          const actionHashSha256 = await sha256Hex(jcsCanonicalize(actionBody(candidate)));
+          const appendHeadSha256 = await sha256Hex(jcsCanonicalize({
+            actionHashSha256,
+            previousAppendHeadSha256: candidate.previousAppendHeadSha256
+          }));
+          if (
+            actionHashSha256 !== candidate.actionHashSha256
+            || appendHeadSha256 !== candidate.appendHeadSha256
+          ) return false;
+          appendHeads.add(candidate.appendHeadSha256);
+          predecessorArtifacts.add(candidate.predecessorArtifactSha256);
+          previous = candidate;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
     async function verifyReceizBytes(fileName, bytes, optionalLink) {
       const errors = [];
       const warnings = [];
@@ -3970,7 +4305,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const proofEncoded = chunkMap.get(PROOF_KEY) || null;
         if (!proofEncoded) {
           checks.push({ state: "bad", message: "Proof bundle chunk present" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle chunk present" });
 
@@ -3981,7 +4316,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
 
@@ -4019,7 +4354,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               : "Missing embedded PDF proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
@@ -4032,7 +4367,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
@@ -4047,7 +4382,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 : "Missing embedded HEIC proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         bundle = parsed.bundle;
         basisBytes = parsed.basisBytes;
@@ -4077,7 +4412,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("SVG proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -4089,7 +4424,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -4117,7 +4452,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("JSON proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -4129,7 +4464,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -4144,14 +4479,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 : "Missing trailer proof bundle."
             );
             checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
           if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
             errors.push("Trailer proof bundle is malformed.");
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
 
           bundle = trailerParsed.bundle;
@@ -4160,12 +4495,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
           errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
       }
 
       if (!bundle || !basisBytes || !isRecord(bundle)) {
-        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary };
+        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
       }
 
       if (!anchor) {
@@ -4182,9 +4517,80 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         errors,
         warnings
       });
+      if (!await verifyNativeOwnershipContinuity(bundle, String(bundle.artifactSha256Basis || "").toLowerCase())) {
+        errors.push("continuity_ownership_attestation_mismatch");
+      }
 
+      let nativeCapture = null;
+      let pbiAuthorshipHistory = [];
+      if (errors.length === 0) {
+        const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
+          ? bundle.nativeRecordSeal
+          : bundle;
+        const rawNativeCapture = captureCarrier.nativeCapture;
+        try {
+          if (rawNativeCapture) {
+            let sourceBytes = basisBytes;
+            if (captureCarrier.nativeCaptureSource) {
+              const sourceDescriptor = captureCarrier.nativeCaptureSource;
+              const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
+              if (
+                sourceDescriptorKeys.length !== 3
+                || !sourceDescriptorKeys.includes("schema")
+                || !sourceDescriptorKeys.includes("carrier")
+                || !sourceDescriptorKeys.includes("sourceBytesSha256")
+                || sourceDescriptor.schema !== "receiz.native_capture_source.v1"
+                || sourceDescriptor.carrier !== "png.iTXt"
+                || typeof sourceDescriptor.sourceBytesSha256 !== "string"
+              ) throw new Error("native_capture_source_descriptor_invalid");
+              const sourceChunks = readPngTextChunks(basisBytes)
+                .filter((entry) => entry.keyword === "receiz.native_capture.source.v1");
+              if (sourceChunks.length !== 1) throw new Error("native_capture_source_chunk_invalid");
+              sourceBytes = base64UrlDecode(sourceChunks[0].text);
+            }
+            nativeCapture = await verifyReceizNativeCaptureV1(rawNativeCapture, {
+              sourceBytes,
+              coordinates: {
+                slug: bundle.slug,
+                code: bundle.code,
+                pulse: bundle.kaiPulseEternal,
+                verifyPath: bundle.verifyPath
+              }
+            });
+            if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
+            if (
+              captureCarrier.nativeCaptureSource
+              && captureCarrier.nativeCaptureSource.sourceBytesSha256 !== nativeCapture.sourceSha256
+            ) throw new Error("native_capture_source_binding_failed");
+            checks.push({ state: "ok", message: "Native Capture Verified" });
+          } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+            throw new Error("native_capture_append_missing");
+          }
+        } catch (error) {
+          nativeCapture = null;
+          errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+          checks.push({ state: "bad", message: "Native Capture verification" });
+        }
+
+        const rawHistory = bundle.pbiAuthorshipHistory;
+        if (
+          typeof rawHistory !== "undefined"
+          && (!Array.isArray(rawHistory)
+            || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
+        ) {
+          errors.push("pbi_authorship_history_verification_failed");
+          checks.push({ state: "bad", message: "PBI authorship history verification" });
+        } else {
+          pbiAuthorshipHistory = rawHistory || [];
+          if (pbiAuthorshipHistory.length > 0) {
+            checks.push({ state: "ok", message: "PBI authorship history verified" });
+          }
+        }
+      }
+
+      const ok = errors.length === 0;
       return {
-        ok: errors.length === 0,
+        ok,
         errors,
         warnings,
         checks,
@@ -4193,7 +4599,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         fileHash,
         chunkSummary,
         packageSummary,
-        assetContinuity
+        assetContinuity,
+        nativeCapture: ok ? nativeCapture : null,
+        pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
       };
     }
 
@@ -4614,6 +5022,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.dropZone.classList.remove("is-over");
         const files = event.dataTransfer && event.dataTransfer.files ? Array.from(event.dataTransfer.files) : [];
         if (!files.length) return;
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = false;
@@ -4628,6 +5037,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
         const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = selectedFiles.length === 0;
@@ -4636,16 +5046,51 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.verifyBtn.addEventListener("click", () => {
         void onVerifyClick();
       });
+
+      if (ui.appendPbiAuthorshipBtn) ui.appendPbiAuthorshipBtn.addEventListener("click", () => {
+        if (!verifiedArtifact) return;
+        const runtime = globalThis.receizOfflineStudioPbiAuthorship;
+        if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
+          setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
+          return;
+        }
+        ui.appendPbiAuthorshipBtn.disabled = true;
+        setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
+        void runtime.appendVerifiedArtifact({ predecessor: verifiedArtifact, setVerifiedArtifact })
+          .then(({ successorResult }) => {
+            renderResult(successorResult);
+            setStatus("ok", "PBI authorship verified", "The canonical successor is settled locally and ready to save.");
+          })
+          .catch((error) => {
+            const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
+            setStatus("bad", "PBI authorship not appended", message);
+          })
+          .finally(() => {
+            ui.appendPbiAuthorshipBtn.disabled = false;
+          });
+      });
     }
 
     function init() {
       installEvents();
       installDnD();
       setFileMeta([]);
+      setVerifiedArtifact(null);
       ui.bundleJson.textContent = "(none)";
       ui.chunkJson.textContent = "(none)";
       writeFacts(null);
     }
+
+    Object.defineProperty(globalThis, "receizCanonicalOfflineVerifier", {
+      value: Object.freeze({
+        verifyBytes: verifyReceizBytes,
+        verifyNativeCapture: verifyReceizNativeCaptureV1,
+        verifyPbiAuthorshipHistory: verifyReceizPbiProofObjectAuthorshipChainV1,
+      }),
+      configurable: false,
+      enumerable: false,
+      writable: false
+    });
 
     init();
   })();

@@ -40,7 +40,7 @@
     .shell {
       max-width: 900px;
       margin: 0 auto;
-      padding: 20px 14px 34px;
+      padding: 10px 12px 28px;
       animation: fade-in 0.3s ease;
     }
 
@@ -54,24 +54,24 @@
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(246,250,255,0.88));
       box-shadow: 0 24px 50px -42px rgba(12,22,44,0.45), inset 0 1px 0 rgba(255,255,255,0.9);
-      padding: 18px;
+      padding: 13px 14px 12px;
     }
 
     .brand-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 8px;
+      flex-wrap: nowrap;
     }
 
     .mark {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
       border: 1px solid #163066;
       display: grid;
       place-items: center;
-      font: 700 13px/1 "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+      font: 700 11px/1 "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
       letter-spacing: 0.05em;
       background: linear-gradient(145deg, #ffffff, #e9f2ff);
       color: #102145;
@@ -80,54 +80,61 @@
     .wordmark {
       font-family: "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
       letter-spacing: 0.26em;
-      font-size: 16px;
+      font-size: 14px;
       text-transform: uppercase;
       color: #102145;
     }
 
     .tag {
       margin-left: auto;
-      font-size: 11px;
+      font-size: 10px;
       color: var(--muted);
       border: 1px solid var(--line);
       border-radius: 999px;
-      padding: 3px 10px;
+      padding: 2px 8px;
       white-space: nowrap;
       background: rgba(255, 255, 255, 0.9);
     }
 
     h1 {
-      margin: 10px 0 6px;
-      font: 700 32px/1.06 "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+      margin: 7px 0 3px;
+      font: 700 clamp(23px, 6.7vw, 42px)/1.02 "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
       letter-spacing: 0.01em;
       color: #102145;
+      white-space: nowrap;
     }
 
     .sub {
       margin: 0;
       color: var(--muted);
       max-width: 60ch;
+      font-size: 13px;
+      line-height: 1.35;
     }
 
     .rail {
-      margin-top: 10px;
+      margin-top: 7px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: clamp(2px, 0.75vw, 5px);
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      justify-content: center;
+      min-width: 0;
+      flex-shrink: 0;
       border: 1px solid #d2def5;
       border-radius: 999px;
       background: #f8fbff;
       color: #4f628b;
-      font-size: 11px;
-      padding: 3px 10px;
-      letter-spacing: 0.08em;
+      font-size: clamp(6.5px, 1.85vw, 9px);
+      padding: 2px clamp(2px, 0.75vw, 6px);
+      letter-spacing: 0.025em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .grid {
@@ -202,6 +209,49 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+    }
+
+    .capture-actions {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .capture-action {
+      min-width: 0;
+      min-height: 44px;
+      flex: 1 1 0;
+      white-space: nowrap;
+    }
+
+    #recordNativeCaptureBtn,
+    #recordBtn,
+    #sealBtn,
+    #verifyBtn,
+    #appendPbiAuthorshipBtn,
+    #downloadLink {
+      min-height: 44px;
+    }
+
+    .capture-action svg {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      vertical-align: -3px;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     button,
@@ -544,6 +594,10 @@
       gap: 6px;
     }
 
+    .verify-facts[hidden] {
+      display: none !important;
+    }
+
     .verify-fact {
       border: 1px solid #d8e3f7;
       border-radius: 10px;
@@ -599,7 +653,37 @@
       word-break: break-word;
     }
 
+    .authorship-panel {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #bdd0ef;
+      border-radius: 12px;
+      background: #f6f9ff;
+    }
+
+    .authorship-panel p {
+      margin: 0 0 10px;
+      color: #33486f;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
     .hidden { display: none !important; }
+
+    @media (max-width: 350px) {
+      .hero {
+        padding-inline: 11px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .pill {
+        padding-inline: 2px;
+        font-size: 6.5px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -611,22 +695,26 @@
         <div class="tag">Offline Studio</div>
       </div>
       <h1>Record + Seal + Verify</h1>
-      <p class="sub">One offline studio for Record Moment, Seal File, and Verify File. When installed as a PWA (Add to Home Screen), it runs fully offline.</p>
-      <div class="rail">
-        <span class="pill">Offline-first</span>
-        <span class="pill">Signature v4</span>
-        <span class="pill">Groth16 runtime</span>
-        <span class="pill">Receiz ID continuity</span>
+      <p class="sub">Record, seal, and verify proof objects fully offline.</p>
+      <div class="rail" aria-label="Offline proof capabilities">
+        <span class="pill">Offline</span>
+        <span class="pill">Canonical Verify</span>
+        <span class="pill">Ownership Continuity</span>
+        <span class="pill">Proof Native</span>
       </div>
     </section>
 
     <section class="grid">
       <article class="card">
         <h2>Record Moment</h2>
-        <p class="hint">Creates a sealed PNG record artifact from current time using the same offline record primitives.</p>
+        <p class="hint">Captures a native proof object with sealed time, deterministic identity, and canonical offline verification.</p>
         <label class="field-label" for="recordClaimInput">Claim text (optional)</label>
         <textarea id="recordClaimInput" class="claim-input" maxlength="180" placeholder="Add what this record proves."></textarea>
         <div class="claim-meta"><span id="recordClaimCount">0/180</span></div>
+        <div class="capture-actions" role="group" aria-label="Capture original media">
+          <button id="recordNativeCaptureBtn" type="button" class="capture-action" aria-controls="recordNativeCaptureInput">Native Capture</button>
+        </div>
+        <input id="recordNativeCaptureInput" class="visually-hidden" type="file" accept="image/*,video/*" capture="environment" />
         <div class="btn-row">
           <button id="recordBtn" type="button">Record Moment</button>
         </div>
@@ -635,7 +723,7 @@
 
       <article class="card">
         <h2>Seal File</h2>
-        <p class="hint">Seals files in their original format (PNG/PDF/SVG/JSON/trailer-safe) with verifiable Receiz proof embedding.</p>
+        <p class="hint">Seals original bytes as portable proof objects with canonical verification and append-only ownership continuity.</p>
 
         <label id="sealDrop" class="drop" for="sealInput">
           <strong>Drop a file or tap to upload</strong>
@@ -651,7 +739,7 @@
 
       <article class="card verify-card">
         <h2>Verify File</h2>
-        <p class="hint">Run deterministic offline verification from artifact bytes in the same studio.</p>
+        <p class="hint">Reveals sealed truth, current ownership, and full provenance directly from the proof object.</p>
 
         <label id="dropZone" class="drop" for="fileInput">
           <strong>Drop a file or tap to upload</strong>
@@ -672,15 +760,39 @@
 
         <ul id="checks" class="verify-list"></ul>
 
-        <div id="factsGrid" class="verify-facts hidden">
+        <div id="factsGrid" class="verify-facts" hidden>
           <div class="verify-fact"><b>Time</b><span id="factTs">-</span></div>
           <div class="verify-fact"><b>Code</b><span id="factCode">-</span></div>
           <div class="verify-fact"><b>Pulse</b><span id="factPulse">-</span></div>
           <div class="verify-fact"><b>Verify Path</b><span id="factPath">-</span></div>
           <div class="verify-fact"><b>Artifact SHA-256</b><span id="factHash">-</span></div>
           <div class="verify-fact"><b>Anchor</b><span id="factAnchor">-</span></div>
-          <div id="factPresetRow" class="verify-fact hidden"><b>Preset</b><span id="factPreset">-</span></div>
+          <div id="factCurrentOwnerRow" class="verify-fact" hidden><b>Current Owner</b><span id="factCurrentOwner">-</span></div>
+          <div id="factPreviousOwnerRow" class="verify-fact" hidden><b>Previous Owner</b><span id="factPreviousOwner">-</span></div>
+          <div id="factGenesisOwnerRow" class="verify-fact" hidden><b>Genesis Owner</b><span id="factGenesisOwner">-</span></div>
+          <div id="factOwnershipCountRow" class="verify-fact" hidden><b>Ownership Appends</b><span id="factOwnershipCount">-</span></div>
+          <div id="factNativeCaptureRow" class="verify-fact" hidden><b>Native Capture Verified</b><span id="factNativeCapture">-</span></div>
+          <div id="factPbiAuthorshipCountRow" class="verify-fact" hidden><b>PBI authorship appends</b><span id="factPbiAuthorshipCount">-</span></div>
+          <div id="factPresetRow" class="verify-fact" hidden><b>Preset</b><span id="factPreset">-</span></div>
         </div>
+
+        <details id="ownershipHistoryPanel" hidden>
+          <summary>Show full verified provenance history</summary>
+          <pre id="ownershipHistoryJson">(none)</pre>
+        </details>
+
+        <details id="pbiAuthorshipHistoryPanel" hidden>
+          <summary>Show complete ordered PBI authorship history</summary>
+          <pre id="pbiAuthorshipHistoryJson">(none)</pre>
+        </details>
+
+        <section id="appendPbiAuthorshipPanel" class="authorship-panel" hidden>
+          <div>
+            <strong>Append PBI Authorship</strong>
+            <span>Bind your verified presence to this exact proof object.</span>
+          </div>
+          <button id="appendPbiAuthorshipBtn" type="button">Sign with Face ID</button>
+        </section>
 
         <details>
           <summary>Show decoded proof bundle</summary>
@@ -1349,6 +1461,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     const OFFLINE_SIGNING_KEY = "receiz-offline-signing-key-v2";
     const RECEIZ_PROOF_BUNDLE_CHUNK_KEY = "receiz.proof_bundle";
+    const RECEIZ_NATIVE_CAPTURE_SOURCE_CHUNK_KEY = "receiz.native_capture.source.v1";
     const RECEIZ_ANCHOR_BUNDLE_CHUNK_KEY = "receiz_anchor_bundle";
     const RECEIZ_GROTH16_NOTICE_CHUNK_KEY = "receiz.groth16";
     const OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED = "offline_signature_v4_enrollment_required";
@@ -1365,10 +1478,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       vkeySha256: "f42919b0ee8bd79394e78bb6c21f2c1023f7ffe432fa5cbd16f50502b81cc89f",
     };
 
+    function isRecord(value) {
+      return Boolean(value && typeof value === "object" && !Array.isArray(value));
+    }
+
     const ui = {
       recordBtn: document.getElementById("recordBtn"),
       recordClaimInput: document.getElementById("recordClaimInput"),
       recordClaimCount: document.getElementById("recordClaimCount"),
+      recordNativeCaptureBtn: document.getElementById("recordNativeCaptureBtn"),
+      recordNativeCaptureInput: document.getElementById("recordNativeCaptureInput"),
       sealInput: document.getElementById("sealInput"),
       sealDrop: document.getElementById("sealDrop"),
       sealSelected: document.getElementById("sealSelected"),
@@ -1381,6 +1500,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     };
 
     let selectedSealFile = null;
+    let nativeCaptureSession = null;
+    const nativeCaptureFileOptions = new WeakMap();
     let deferredInstallPrompt = null;
     let trustedSignerProvisionPromise = null;
 
@@ -2437,7 +2558,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...proofbundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2597,6 +2718,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           ? slim.artifactBasis.normalization || ""
           : "",
       ];
+      if (slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim) {
+        compact.push(slim.nativeCapture || null, slim.nativeCaptureSource || null, slim.nativeCaptureClaim || null);
+      }
+      if (Array.isArray(slim.pbiAuthorshipHistory)) {
+        while (compact.length < 21) compact.push(null);
+        compact.push(slim.pbiAuthorshipHistory);
+      }
       const raw = textEncoder.encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_ENCODE_BYTES) {
         throw new Error("compact_proof_token_too_large");
@@ -2801,6 +2929,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
         ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
+        ...(bundle.nativeCapture ? { nativeCapture: bundle.nativeCapture } : {}),
+        ...(bundle.nativeCaptureSource ? { nativeCaptureSource: bundle.nativeCaptureSource } : {}),
+        ...(bundle.nativeCaptureClaim ? { nativeCaptureClaim: bundle.nativeCaptureClaim } : {}),
+        ...(bundle.pbiAuthorshipHistory ? { pbiAuthorshipHistory: bundle.pbiAuthorshipHistory } : {}),
+        ...(bundle.nativeRecordSeal ? { nativeRecordSeal: bundle.nativeRecordSeal } : {}),
         wireproof: bundle.wireproof || null,
       });
     }
@@ -2879,7 +3012,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             resolve(null);
             return;
           }
-          const owner = normalizeAuthenticatedReceizOwner(row.owner) || readLocalReceizIdentity();
+          const owner = normalizeAuthenticatedReceizOwner(row.owner);
           if (!owner) {
             resolve(null);
             return;
@@ -5079,8 +5212,220 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
     }
 
+    async function deriveOfflinePortableOwnershipContinuity(document) {
+      const ownership = document.ownership;
+      const provenance = document.provenance;
+      const ownershipAppends = provenance.appends.filter(
+        (append) => append.type === "receiz.ownership.bearer-claim.v108"
+      );
+      const genesisOwnerReceizId = ownershipAppends.length > 0
+        ? ownershipAppends[0].fromOwnerReceizId
+        : ownership.ownerReceizId;
+      let expectedOwnerReceizId = genesisOwnerReceizId;
+      let historyDigestSha256 = await sha256Hex(canonicalizeJson({
+        schema: "receiz.ownership.genesis.v1",
+        artifactId: document.payload.sha256,
+        namespace: provenance.root,
+        ownerReceizId: genesisOwnerReceizId
+      }));
+      for (const append of ownershipAppends) {
+        if (
+          append.fromOwnerReceizId !== expectedOwnerReceizId
+          || append.priorHistoryDigestSha256 !== historyDigestSha256
+          || typeof append.priorHeadReference !== "string"
+          || !append.priorHeadReference
+          || typeof append.sourceArtifactSha256 !== "string"
+          || !/^[0-9a-f]{64}$/.test(append.sourceArtifactSha256)
+        ) throw new Error("continuity_append_mismatch");
+        historyDigestSha256 = await sha256Hex(canonicalizeJson({
+          schema: "receiz.ownership.append.v1",
+          priorHistoryDigestSha256: append.priorHistoryDigestSha256,
+          sourceArtifactSha256: append.sourceArtifactSha256,
+          priorHeadReference: append.priorHeadReference,
+          fromOwnerReceizId: append.fromOwnerReceizId,
+          toOwnerReceizId: append.toOwnerReceizId
+        }));
+        expectedOwnerReceizId = append.toOwnerReceizId;
+      }
+      if (expectedOwnerReceizId !== ownership.ownerReceizId) {
+        throw new Error("continuity_append_mismatch");
+      }
+      return {
+        artifactId: document.payload.sha256,
+        namespace: provenance.root,
+        genesisOwnerReceizId,
+        ownerReceizId: ownership.ownerReceizId,
+        historyDigestSha256,
+        appendCount: ownershipAppends.length
+      };
+    }
+
+    async function appendOfflinePortableOwnership({
+      basisBytes,
+      ownerReceizId,
+      priorHeadReference,
+      sourceArtifactSha256
+    }) {
+      let document = null;
+      try {
+        document = JSON.parse(new TextDecoder().decode(basisBytes));
+      } catch {
+        return null;
+      }
+      if (!isRecord(document) || document.schema !== "receiz.portable_asset.v1") return null;
+      const classified = await classifyPortableAssetContinuity(basisBytes);
+      if (classified.state !== "verified") {
+        throw new Error(classified.error || "continuity_offline_verification_failed");
+      }
+      const priorContinuity = await deriveOfflinePortableOwnershipContinuity(document);
+      const transferred = {
+        ...document,
+        ownership: {
+          ownerReceizId,
+          custody: "bearer",
+          proofRef: priorHeadReference
+        },
+        provenance: {
+          ...document.provenance,
+          appends: [...document.provenance.appends, {
+            type: "receiz.ownership.bearer-claim.v108",
+            fromOwnerReceizId: document.ownership.ownerReceizId,
+            toOwnerReceizId: ownerReceizId,
+            priorHeadReference,
+            sourceArtifactSha256,
+            priorHistoryDigestSha256: priorContinuity.historyDigestSha256
+          }]
+        }
+      };
+      const transferredBytes = new TextEncoder().encode(canonicalizeJson(transferred));
+      return {
+        basisBytes: transferredBytes,
+        continuity: await deriveOfflinePortableOwnershipContinuity(transferred)
+      };
+    }
+
+    async function buildNativeOwnershipContinuity({
+      basisSha256,
+      ownerReceizId,
+      headReference,
+      predecessorArtifactSha256,
+      predecessorBundle,
+      portableContinuity
+    }) {
+      if (portableContinuity) {
+        return {
+          schema: "receiz.native_ownership_continuity.v1",
+          ...portableContinuity,
+          headReference
+        };
+      }
+      const predecessorSeal = predecessorBundle && isRecord(predecessorBundle.nativeRecordSeal)
+        ? predecessorBundle.nativeRecordSeal
+        : null;
+      const predecessor = predecessorSeal && isRecord(predecessorSeal.ownershipContinuity)
+        ? predecessorSeal.ownershipContinuity
+        : null;
+      if (!predecessorBundle || !predecessor) {
+        const namespace = `receiz.native-proof:${basisSha256}`;
+        const historyDigestSha256 = await sha256Hex(canonicalizeJson({
+          schema: "receiz.ownership.genesis.v1",
+          artifactId: basisSha256,
+          namespace,
+          ownerReceizId
+        }));
+        return {
+          schema: "receiz.native_ownership_continuity.v1",
+          artifactId: basisSha256,
+          namespace,
+          genesisOwnerReceizId: ownerReceizId,
+          ownerReceizId,
+          headReference,
+          historyDigestSha256,
+          appendCount: 0,
+          history: [{
+            schema: "receiz.native_ownership_genesis.v1",
+            index: 0,
+            ownerReceizId,
+            headReference,
+            historyDigestSha256
+          }]
+        };
+      }
+      if (
+        !predecessorSeal
+        || !predecessor
+        || predecessorSeal.ownerReceizId !== predecessor.ownerReceizId
+        || !isRecord(predecessorSeal.payload)
+        || predecessorSeal.payload.sha256 !== basisSha256
+        || predecessor.artifactId !== basisSha256
+        || predecessor.headReference !== predecessorBundle.receizClaimId
+        || typeof predecessor.historyDigestSha256 !== "string"
+        || !/^[0-9a-f]{64}$/.test(predecessor.historyDigestSha256)
+        || !Number.isSafeInteger(predecessor.appendCount)
+        || predecessor.appendCount < 0
+        || typeof predecessorArtifactSha256 !== "string"
+        || !/^[0-9a-f]{64}$/.test(predecessorArtifactSha256)
+      ) {
+        throw new Error("receiz_proof_predecessor_ownership_required");
+      }
+      if (!Array.isArray(predecessor.history) || predecessor.history.length !== predecessor.appendCount + 1) {
+        throw new Error("receiz_proof_predecessor_history_required");
+      }
+      const historyDigestSha256 = await sha256Hex(canonicalizeJson({
+        schema: "receiz.ownership.append.v1",
+        priorHistoryDigestSha256: predecessor.historyDigestSha256,
+        sourceArtifactSha256: predecessorArtifactSha256,
+        priorHeadReference: predecessor.headReference,
+        fromOwnerReceizId: predecessor.ownerReceizId,
+        toOwnerReceizId: ownerReceizId
+      }));
+      return {
+        schema: "receiz.native_ownership_continuity.v1",
+        artifactId: predecessor.artifactId,
+        namespace: predecessor.namespace,
+        genesisOwnerReceizId: predecessor.genesisOwnerReceizId,
+        ownerReceizId,
+        headReference,
+        historyDigestSha256,
+        appendCount: Number(predecessor.appendCount) + 1,
+        history: [
+          ...predecessor.history,
+          {
+            schema: "receiz.native_ownership_transfer.v1",
+            index: Number(predecessor.appendCount) + 1,
+            fromOwnerReceizId: predecessor.ownerReceizId,
+            toOwnerReceizId: ownerReceizId,
+            priorHeadReference: predecessor.headReference,
+            sourceArtifactSha256: predecessorArtifactSha256,
+            headReference,
+            historyDigestSha256
+          }
+        ],
+        predecessor: {
+          headReference: predecessor.headReference,
+          artifactSha256: predecessorArtifactSha256,
+          ownerReceizId: predecessor.ownerReceizId,
+          historyDigestSha256: predecessor.historyDigestSha256,
+          appendCount: Number(predecessor.appendCount)
+        }
+      };
+    }
+
+    async function verifyOfflineProofPredecessor(filename, bytes) {
+      const verifier = globalThis.receizCanonicalOfflineVerifier;
+      if (!verifier || typeof verifier.verifyBytes !== "function") {
+        throw new Error("receiz_canonical_offline_verifier_unavailable");
+      }
+      const verified = await verifier.verifyBytes(filename, bytes, "");
+      if (!verified || !verified.ok || !verified.bundle) {
+        throw new Error("receiz_proof_predecessor_verification_required");
+      }
+      return verified;
+    }
+
     async function sealFileOffline(file) {
       if (!file) throw new Error("file_required");
+      const nativeCapture = nativeCaptureFileOptions.get(file) || null;
       let signer = await activeSignerFromEnrollment();
       if (!signer) signer = (await provisionTrustedSignerForOfflineUse()).signer;
       if (!signer || !signer.owner) throw new Error("receiz_identity_required");
@@ -5099,7 +5444,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const sourceMimeRaw = (file.type || "").trim();
       const sourceMime = sourceMimeRaw || "application/octet-stream";
       const fileBytes = new Uint8Array(await file.arrayBuffer());
-      const priorHeadReference = readOfflineContinuityHead(signer.owner.receizId);
       const sourceFormat = detectDocumentFormat(fileBytes, { filename: sourceFilename, mime: sourceMime });
       const preferredExtension = extensionFromFilename(sourceFilename) || extensionForFormat(sourceFormat) || "bin";
 
@@ -5150,6 +5494,35 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         contentType = sourceMimeRaw || mimeForFormat(sourceFormat) || "application/octet-stream";
       }
 
+      if (nativeCapture && nativeCapture.encloseSourceBytes) {
+        if (sourceFormat !== "png") throw new Error("native_capture_caption_carrier_required");
+        const withoutPriorSource = stripPngTextChunksByKeyword(basisBytes, RECEIZ_NATIVE_CAPTURE_SOURCE_CHUNK_KEY).pngBytes;
+        basisBytes = insertPngTextChunks(withoutPriorSource, [{
+          keyword: RECEIZ_NATIVE_CAPTURE_SOURCE_CHUNK_KEY,
+          text: base64UrlEncode(nativeCapture.sourceBytes),
+        }]);
+      }
+
+      let predecessorBundle = null;
+      let predecessorArtifactSha256 = null;
+      if (strippedExistingProofs > 0) {
+        const predecessorVerification = await verifyOfflineProofPredecessor(sourceFilename, fileBytes);
+        predecessorBundle = predecessorVerification.bundle;
+        predecessorArtifactSha256 = predecessorVerification.fileHash;
+      }
+      let portableContinuity = null;
+      if (predecessorBundle) {
+        const portableTransfer = await appendOfflinePortableOwnership({
+          basisBytes,
+          ownerReceizId: signer.owner.receizId,
+          priorHeadReference: predecessorBundle.receizClaimId,
+          sourceArtifactSha256: predecessorArtifactSha256
+        });
+        if (portableTransfer) {
+          basisBytes = portableTransfer.basisBytes;
+          portableContinuity = portableTransfer.continuity;
+        }
+      }
       const artifactBasis = sourceFormat === "jpeg"
         ? { algorithm: "sha256", normalization: JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION }
         : null;
@@ -5175,7 +5548,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         artifactSha256Basis: basisSha256,
       });
 
-      const unsignedBundle = await buildReceizProofBundle({
+      const builtBundle = await buildReceizProofBundle({
         payloadVersion: "v2",
         createdAtMs,
         ts,
@@ -5193,6 +5566,62 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         artifactSha256Basis: basisSha256,
         ...(artifactBasis ? { artifactBasis } : {}),
       });
+      const embeddedNativeCapture = nativeCapture
+        ? await buildEmbeddedNativeCaptureAppend({
+            ...nativeCapture,
+            ownerReceizId: signer.owner.receizId,
+            coordinates: { slug, code, pulse, verifyPath },
+          })
+        : null;
+      const nativeCaptureSource = embeddedNativeCapture && nativeCapture.encloseSourceBytes
+        ? {
+            schema: "receiz.native_capture_source.v1",
+            carrier: "png.iTXt",
+            sourceBytesSha256: embeddedNativeCapture.sourceSha256,
+          }
+        : null;
+      const nativeRecordSeal = predecessorBundle
+        ? {
+            schema: "receiz.native_record_seal.v1",
+            ownerReceizId: signer.owner.receizId,
+            recordId: isRecord(predecessorBundle.nativeRecordSeal)
+              && typeof predecessorBundle.nativeRecordSeal.recordId === "string"
+              ? predecessorBundle.nativeRecordSeal.recordId
+              : `native:${basisSha256}`,
+            payload: {
+              filename: sourceFilename,
+              mimeType: sourceMime,
+              sha256: basisSha256
+            },
+            ownershipContinuity: await buildNativeOwnershipContinuity({
+              basisSha256,
+              ownerReceizId: signer.owner.receizId,
+              headReference: builtBundle.receizClaimId,
+              predecessorArtifactSha256,
+              predecessorBundle,
+              portableContinuity
+            }),
+            ...(predecessorArtifactSha256 ? {
+              proofPredecessor: {
+                headReference: predecessorBundle.receizClaimId,
+                artifactSha256: predecessorArtifactSha256
+              }
+            } : {})
+          }
+        : null;
+      const nativeCaptureClaim = nativeCapture && nativeCapture.claimText
+        ? { text: nativeCapture.claimText, sha256: await sha256Hex(nativeCapture.claimText) }
+        : null;
+      const nativeCaptureProofFields = buildNativeCaptureProofFields({
+        embeddedNativeCapture,
+        nativeCaptureSource,
+        nativeCaptureClaim,
+      });
+      const unsignedBundle = {
+        ...builtBundle,
+        ...(predecessorBundle ? { nativeRecordSeal: nativeRecordSeal } : {}),
+        ...nativeCaptureProofFields,
+      };
 
       const proofbundle = await ensureTrustedSignature(unsignedBundle);
       const encodedBundle = await encodeReceizProofBundle(proofbundle);
@@ -5221,10 +5650,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         sealEmbedding === "trailer"
           ? "application/octet-stream"
           : contentType || "application/octet-stream";
-      writeOfflineContinuityHead(signer.owner.receizId, proofbundle.receizClaimId);
-
       return {
         blob: new Blob([artifactBytes], { type: downloadContentType }),
+        artifactBytes,
+        outputMime: downloadContentType,
+        nativeFileOptions: { sourceFormat, sealEmbedding },
         filename,
         ts,
         code,
@@ -5235,8 +5665,413 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         sealEmbedding,
         strippedExistingProofs,
         ownerReceizId: signer.owner.receizId,
-        priorHeadReference,
+        priorHeadReference: predecessorBundle ? predecessorBundle.receizClaimId : "genesis",
       };
+    }
+
+    async function verifyNativeCaptureAppend(nativeCapture, sourceBytes, coordinates) {
+      if (!isRecord(nativeCapture) || nativeCapture.schema !== "receiz.native_capture.v1" || nativeCapture.source !== "camera") return null;
+      const expectedKeys = [
+        "schema", "source", "mediaKind", "sourceSha256", "mimeType", "width", "height", "durationMs",
+        "requestedFacingMode", "captureSessionCommitment", "capturedAt", "kaiUpulse", "ownerReceizId",
+        "coordinates", "commitmentSha256",
+      ];
+      if (Object.keys(nativeCapture).length !== expectedKeys.length || !expectedKeys.every((key) => Object.prototype.hasOwnProperty.call(nativeCapture, key))) return null;
+      if (nativeCapture.mediaKind !== "photo" && nativeCapture.mediaKind !== "video") return null;
+      if (!/^[0-9a-f]{64}$/.test(nativeCapture.sourceSha256) || !/^[0-9a-f]{64}$/.test(nativeCapture.captureSessionCommitment) || !/^[0-9a-f]{64}$/.test(nativeCapture.commitmentSha256)) return null;
+      if (typeof nativeCapture.mimeType !== "string" || typeof nativeCapture.capturedAt !== "string" || !nativeCapture.capturedAt || typeof nativeCapture.kaiUpulse !== "string" || !nativeCapture.kaiUpulse || typeof nativeCapture.ownerReceizId !== "string" || !nativeCapture.ownerReceizId) return null;
+      for (const dimension of [nativeCapture.width, nativeCapture.height, nativeCapture.durationMs]) {
+        if (dimension !== null && (!Number.isSafeInteger(dimension) || dimension < 0)) return null;
+      }
+      if (nativeCapture.requestedFacingMode !== "environment" && nativeCapture.requestedFacingMode !== "user" && nativeCapture.requestedFacingMode !== null) return null;
+      if (nativeCapture.sourceSha256 !== await sha256Hex(sourceBytes)) return null;
+      if (!isRecord(nativeCapture.coordinates)) return null;
+      if (Object.keys(nativeCapture.coordinates).length !== 4) return null;
+      for (const key of ["slug", "code", "pulse", "verifyPath"]) {
+        if (nativeCapture.coordinates[key] !== coordinates[key]) return null;
+      }
+      const { commitmentSha256, ...commitmentBody } = nativeCapture;
+      if (typeof commitmentSha256 !== "string" || commitmentSha256 !== await sha256Hex(canonicalizeJson(commitmentBody))) return null;
+      return nativeCapture;
+    }
+
+    async function buildEmbeddedNativeCaptureAppend(input) {
+      if (!input || input.source !== "camera") throw new Error("native_capture_camera_ceremony_required");
+      const append = {
+        schema: "receiz.native_capture.v1",
+        source: "camera",
+        mediaKind: input.mediaKind,
+        sourceSha256: await sha256Hex(input.sourceBytes),
+        mimeType: typeof input.mimeType === "string" ? input.mimeType : "",
+        width: Number.isFinite(input.width) && input.width >= 0 ? Math.floor(input.width) : null,
+        height: Number.isFinite(input.height) && input.height >= 0 ? Math.floor(input.height) : null,
+        durationMs: Number.isFinite(input.durationMs) && input.durationMs >= 0 ? Math.floor(input.durationMs) : null,
+        requestedFacingMode: input.requestedFacingMode === "environment" || input.requestedFacingMode === "user"
+          ? input.requestedFacingMode
+          : null,
+        captureSessionCommitment: input.captureSessionCommitment,
+        capturedAt: input.capturedAt,
+        kaiUpulse: input.kaiUpulse,
+        ownerReceizId: input.ownerReceizId,
+        coordinates: {
+          slug: input.coordinates.slug,
+          code: input.coordinates.code,
+          pulse: input.coordinates.pulse,
+          verifyPath: input.coordinates.verifyPath,
+        },
+        commitmentSha256: "",
+      };
+      delete append.commitmentSha256;
+      append.commitmentSha256 = await sha256Hex(canonicalizeJson(append));
+      const verified = await verifyNativeCaptureAppend(append, input.sourceBytes, input.coordinates);
+      if (!verified) throw new Error("native_capture_verification_failed");
+      return verified;
+    }
+
+    function nativeCaptureSeal(bundle) {
+      if (!isRecord(bundle)) return null;
+      if (isRecord(bundle.nativeCapture)) {
+        return {
+          nativeCapture: bundle.nativeCapture,
+          ...(isRecord(bundle.nativeCaptureSource) ? { nativeCaptureSource: bundle.nativeCaptureSource } : {}),
+        };
+      }
+      return isRecord(bundle.nativeRecordSeal) ? bundle.nativeRecordSeal : null;
+    }
+
+    function buildNativeCaptureProofFields({ embeddedNativeCapture, nativeCaptureSource, nativeCaptureClaim }) {
+      if (!embeddedNativeCapture) return {};
+      return {
+        nativeCapture: embeddedNativeCapture,
+        ...(nativeCaptureSource ? { nativeCaptureSource } : {}),
+        ...(nativeCaptureClaim ? { nativeCaptureClaim } : {}),
+      };
+    }
+
+    function readNativeCaptureSourcePngChunk(pngBytes) {
+      assertPngSignature(pngBytes);
+      let offset = PNG_SIGNATURE.length;
+      let sourceText = null;
+      while (offset + 8 <= pngBytes.length) {
+        const length = readUint32BE(pngBytes, offset);
+        const type = chunkType(pngBytes, offset + 4);
+        const dataStart = offset + 8;
+        const dataEnd = dataStart + length;
+        if (dataEnd + 4 > pngBytes.length) break;
+        if (type === "iTXt") {
+          const parsed = parseITxtData(pngBytes.slice(dataStart, dataEnd));
+          if (parsed && parsed.keyword === RECEIZ_NATIVE_CAPTURE_SOURCE_CHUNK_KEY) {
+            if (sourceText !== null) throw new Error("native_capture_source_duplicate");
+            sourceText = parsed.text;
+          }
+        }
+        offset = dataEnd + 4;
+        if (type === "IEND") break;
+      }
+      if (sourceText === null) throw new Error("native_capture_source_missing");
+      return base64UrlDecode(sourceText);
+    }
+
+    async function recoverNativeCaptureSourceBytes(bundle, basisBytes) {
+      const seal = nativeCaptureSeal(bundle);
+      const nativeCapture = seal && isRecord(seal.nativeCapture) ? seal.nativeCapture : null;
+      if (!nativeCapture) throw new Error("native_capture_missing");
+      const envelope = seal && isRecord(seal.nativeCaptureSource) ? seal.nativeCaptureSource : null;
+      let sourceBytes = basisBytes;
+      if (envelope) {
+        if (
+          envelope.schema !== "receiz.native_capture_source.v1"
+          || envelope.carrier !== "png.iTXt"
+          || envelope.sourceBytesSha256 !== nativeCapture.sourceSha256
+        ) throw new Error("native_capture_source_envelope_invalid");
+        sourceBytes = readNativeCaptureSourcePngChunk(basisBytes);
+      }
+      if (await sha256Hex(sourceBytes) !== nativeCapture.sourceSha256) {
+        throw new Error("native_capture_source_sha256_mismatch");
+      }
+      return sourceBytes;
+    }
+
+    function nativeCaptureBasisBytes(filename, artifactBytes) {
+      const format = detectDocumentFormat(artifactBytes, { filename, mime: "" });
+      if (format === "png") {
+        return stripPngTextChunksByKeyword(artifactBytes, RECEIZ_PROOF_BUNDLE_CHUNK_KEY).pngBytes;
+      }
+      if (format === "pdf") return stripReceizSealUpdatesFromPdf(artifactBytes).pdfBytes;
+      if (format === "heic") {
+        const parsed = parseReceizHeicProof(artifactBytes);
+        if (parsed.parseError) throw new Error(parsed.parseError);
+        return parsed.basisBytes;
+      }
+      if (format === "svg") return parseReceizSvgProof(artifactBytes).basisBytes;
+      if (format === "json") return parseReceizJsonProof(artifactBytes).basisBytes;
+      return stripReceizTrailer(artifactBytes).basisBytes;
+    }
+
+    async function verifyEmbeddedNativeCapture(verifiedArtifact, filename, artifactBytes) {
+      if (!verifiedArtifact || !verifiedArtifact.ok || !isRecord(verifiedArtifact.bundle)) return null;
+      const bundle = verifiedArtifact.bundle;
+      const seal = nativeCaptureSeal(bundle);
+      const nativeCapture = seal && isRecord(seal.nativeCapture) ? seal.nativeCapture : null;
+      if (!nativeCapture) return null;
+      const sourceBytes = await recoverNativeCaptureSourceBytes(bundle, nativeCaptureBasisBytes(filename, artifactBytes));
+      return verifyNativeCaptureAppend(nativeCapture, sourceBytes, {
+        slug: bundle.slug,
+        code: bundle.code,
+        pulse: bundle.kaiPulseEternal,
+        verifyPath: bundle.verifyPath,
+      });
+    }
+
+    async function readImageCaptureMetadata(file) {
+      if (typeof createImageBitmap === "function") {
+        try {
+          const bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
+          const metadata = { width: bitmap.width, height: bitmap.height };
+          bitmap.close();
+          return metadata;
+        } catch {
+          // Fall through to the browser image decoder.
+        }
+      }
+      const objectUrl = URL.createObjectURL(file);
+      try {
+        return await new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => resolve({ width: image.naturalWidth || null, height: image.naturalHeight || null });
+          image.onerror = () => reject(new Error("native_capture_image_metadata_failed"));
+          image.src = objectUrl;
+        });
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+    }
+
+    async function readVideoCaptureMetadata(file) {
+      const objectUrl = URL.createObjectURL(file);
+      try {
+        return await new Promise((resolve, reject) => {
+          const video = document.createElement("video");
+          video.preload = "metadata";
+          video.muted = true;
+          video.playsInline = true;
+          video.onloadedmetadata = () => resolve({
+            width: video.videoWidth || null,
+            height: video.videoHeight || null,
+            durationMs: Number.isFinite(video.duration) && video.duration >= 0 ? Math.round(video.duration * 1000) : null,
+          });
+          video.onerror = () => reject(new Error("native_capture_video_metadata_failed"));
+          video.src = objectUrl;
+        });
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+    }
+
+    async function readNativeCaptureSelection(input) {
+      const file = input && input.files && input.files.length ? input.files[0] : null;
+      const session = nativeCaptureSession;
+      if (!file) {
+        input.value = "";
+        nativeCaptureSession = null;
+        return null;
+      }
+      if (!session) throw new Error("native_capture_session_required");
+      const captureSessionCommitment = session.captureSessionCommitment
+        || await session.captureSessionCommitmentPromise;
+      if (!/^[0-9a-f]{64}$/.test(captureSessionCommitment)) {
+        throw new Error("native_capture_session_commitment_required");
+      }
+      const mimeType = (file.type || "").trim();
+      const mediaKind = mimeType.startsWith("image/")
+        ? "photo"
+        : mimeType.startsWith("video/")
+          ? "video"
+          : null;
+      if (!mediaKind) throw new Error("native_capture_media_type_required");
+      const admittedAtMs = Date.now();
+      const capturedAt = new Date(admittedAtMs).toISOString();
+      const kaiUpulse = String(buildKaiKlockResponseFromEpochMs(BigInt(admittedAtMs)).kaiPulseEternal);
+      input.value = "";
+      nativeCaptureSession = null;
+      const sourceBytes = new Uint8Array(await file.arrayBuffer());
+      const metadata = mediaKind === "video"
+        ? await readVideoCaptureMetadata(file)
+        : await readImageCaptureMetadata(file);
+      return {
+        source: "camera",
+        file,
+        sourceBytes,
+        mediaKind,
+        mimeType,
+        width: metadata.width,
+        height: metadata.height,
+        durationMs: mediaKind === "video" ? metadata.durationMs : null,
+        requestedFacingMode: session.requestedFacingMode,
+        captureSessionCommitment,
+        capturedAt,
+        kaiUpulse,
+      };
+    }
+
+    async function renderCaptionedPhotoCapture(selection, claimText) {
+      const objectUrl = URL.createObjectURL(selection.file);
+      try {
+        const image = await new Promise((resolve, reject) => {
+          const element = new Image();
+          element.onload = () => resolve(element);
+          element.onerror = () => reject(new Error("native_capture_photo_decode_failed"));
+          element.src = objectUrl;
+        });
+        const maxWidth = 4096;
+        const scale = Math.min(1, maxWidth / Math.max(1, image.naturalWidth));
+        const width = Math.max(1, Math.round(image.naturalWidth * scale));
+        const photoHeight = Math.max(1, Math.round(image.naturalHeight * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = photoHeight;
+        const context = canvas.getContext("2d");
+        if (!context) throw new Error("native_capture_caption_canvas_unavailable");
+        context.font = `600 ${Math.max(24, Math.round(width / 26))}px system-ui, sans-serif`;
+        const words = claimText.split(/\s+/).filter(Boolean);
+        const lines = [];
+        let line = "";
+        const maxLineWidth = width - Math.max(48, Math.round(width * 0.08));
+        for (const word of words) {
+          const candidate = line ? `${line} ${word}` : word;
+          if (line && context.measureText(candidate).width > maxLineWidth) {
+            lines.push(line);
+            line = word;
+          } else {
+            line = candidate;
+          }
+        }
+        if (line) lines.push(line);
+        const lineHeight = Math.max(32, Math.round(width / 20));
+        const captionPadding = Math.max(24, Math.round(width * 0.04));
+        const captionHeight = Math.max(160, captionPadding * 2 + lineHeight * lines.length);
+        canvas.height = photoHeight + captionHeight;
+        context.drawImage(image, 0, 0, width, photoHeight);
+        context.fillStyle = "#102145";
+        context.fillRect(0, photoHeight, width, captionHeight);
+        context.fillStyle = "#ffffff";
+        context.font = `600 ${Math.max(24, Math.round(width / 26))}px system-ui, sans-serif`;
+        context.textBaseline = "middle";
+        const startY = photoHeight + captionPadding + lineHeight / 2;
+        lines.forEach((lineText, index) => context.fillText(lineText, captionPadding, startY + index * lineHeight));
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob((value) => value ? resolve(value) : reject(new Error("native_capture_caption_encode_failed")), "image/png");
+        });
+        const stem = String(selection.file.name || "capture").replace(/\.[^.]+$/, "");
+        return new File([blob], `${stem}.caption.png`, { type: "image/png" });
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+    }
+
+    async function buildPhotoCaptureArtifact(selection) {
+      nativeCaptureFileOptions.set(selection.file, selection);
+      return sealFileOffline(selection.file);
+    }
+
+    async function buildCaptionedPhotoCaptureArtifact(selection, claimText) {
+      const carrierFile = await renderCaptionedPhotoCapture(selection, claimText);
+      nativeCaptureFileOptions.set(carrierFile, { ...selection, claimText, encloseSourceBytes: true });
+      return sealFileOffline(carrierFile);
+    }
+
+    async function buildVideoCaptureArtifact(selection) {
+      nativeCaptureFileOptions.set(selection.file, selection);
+      return sealFileOffline(selection.file);
+    }
+
+    async function buildCaptionedVideoCaptureArtifact(selection, claimText) {
+      nativeCaptureFileOptions.set(selection.file, { ...selection, claimText });
+      return sealFileOffline(selection.file);
+    }
+
+    const nativeCaptureArtifactBuilders = {
+      "text": buildRecordArtifact,
+      "photo": buildPhotoCaptureArtifact,
+      "photo-caption": buildCaptionedPhotoCaptureArtifact,
+      "video": buildVideoCaptureArtifact,
+      "video-caption": buildCaptionedVideoCaptureArtifact,
+    };
+
+    async function buildNativeCaptureArtifact(selection, rawClaimText) {
+      const claimText = normalizeClaimTextForRecord(rawClaimText || "");
+      const kind = selection.mediaKind === "photo"
+        ? (claimText ? "photo-caption" : "photo")
+        : (claimText ? "video-caption" : "video");
+      const builder = nativeCaptureArtifactBuilders[kind];
+      return builder(selection, claimText);
+    }
+
+    async function onNativeCaptureInput(input) {
+      let selection;
+      try {
+        selection = await readNativeCaptureSelection(input);
+      } catch (err) {
+        const code = err instanceof Error ? err.message : String(err || "native_capture_failed");
+        setStatus(`Capture failed: ${code}`, "bad");
+        return;
+      }
+      if (!selection) return;
+      ui.recordNativeCaptureBtn.disabled = true;
+      hideDownloadLink();
+      clearResult(ui.recordResult);
+      setStatus(`Sealing native ${selection.mediaKind} capture...`, "warn");
+      try {
+        const result = await buildNativeCaptureArtifact(selection, ui.recordClaimInput ? ui.recordClaimInput.value : "");
+        const verifier = globalThis.receizCanonicalOfflineVerifier;
+        if (!verifier || typeof verifier.verifyBytes !== "function") throw new Error("receiz_canonical_offline_verifier_unavailable");
+        const verified = await verifier.verifyBytes(result.filename, result.artifactBytes, result.verifyPath);
+        if (!verified || verified.ok !== true) throw new Error("Captured proof object did not pass canonical verification.");
+        if (!await verifyEmbeddedNativeCapture(verified, result.filename, result.artifactBytes)) {
+          throw new Error("native_capture_embedded_verification_failed");
+        }
+        const outputBlob = new Blob([result.artifactBytes], { type: result.outputMime });
+        const saved = await saveOfflineProofBlobAsFile(outputBlob, result.filename, {
+          title: "Receiz Native Capture",
+          text: "Save this offline-verifiable Receiz proof object.",
+          ...result.nativeFileOptions,
+        });
+        showDownloadLink(outputBlob, result.filename, result.nativeFileOptions);
+        showResult(ui.recordResult, [
+          { k: "capture", v: selection.mediaKind },
+          { k: "source sha", v: await sha256Hex(selection.sourceBytes) },
+          { k: "format", v: `${result.sourceFormat} (${result.sealEmbedding})` },
+          { k: "verify path", v: result.verifyPath },
+          { k: "owner", v: result.ownerReceizId },
+        ]);
+        setStatus(
+          saved
+            ? "Native capture complete. Proof object handed to the native save sheet."
+            : "Native capture complete. Tap Save to open the native save sheet.",
+          saved ? "ok" : "warn",
+        );
+      } catch (err) {
+        const code = err instanceof Error ? err.message : String(err || "native_capture_failed");
+        setStatus(`Capture failed: ${code}`, "bad");
+      } finally {
+        ui.recordNativeCaptureBtn.disabled = false;
+      }
+    }
+
+    async function beginNativeCapture() {
+      const input = ui.recordNativeCaptureInput;
+      const randomBytes = new Uint8Array(32);
+      crypto.getRandomValues(randomBytes);
+      const session = {
+        requestedFacingMode: "environment",
+        captureSessionCommitment: "",
+        captureSessionCommitmentPromise: sha256Hex(randomBytes),
+      };
+      nativeCaptureSession = session;
+      input.value = "";
+      input.click();
+      session.captureSessionCommitment = await session.captureSessionCommitmentPromise;
+      delete session.captureSessionCommitmentPromise;
     }
 
     async function onRecordClick() {
@@ -5248,8 +6083,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       try {
         const claimText = ui.recordClaimInput ? ui.recordClaimInput.value : "";
         const result = await mintOfflineRecordMoment(claimText);
-        triggerDownload(result.blob, result.filename);
-        showDownloadLink(result.blob, result.filename);
+        const saved = await saveOfflineProofBlobAsFile(result.blob, result.filename, {
+          title: "Receiz Moment Record",
+          text: "Save this offline-verifiable Receiz proof object.",
+          sourceFormat: "png",
+          sealEmbedding: "png",
+        });
+        showDownloadLink(result.blob, result.filename, {
+          sourceFormat: "png",
+          sealEmbedding: "png",
+        });
         showResult(ui.recordResult, [
           { k: "timestamp", v: result.ts },
           { k: "code", v: result.code },
@@ -5260,7 +6103,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "kai", v: result.kaiKlok },
           { k: "artifact sha", v: result.artifactSha256Basis },
         ]);
-        setStatus("Record complete. Artifact downloaded.", "ok");
+        setStatus(
+          saved
+            ? "Record complete. Proof object handed to the native save sheet."
+            : "Record complete. Tap Save to open the native save sheet.",
+          saved ? "ok" : "warn",
+        );
       } catch (err) {
         const code = err instanceof Error ? err.message : String(err || "record_failed");
         if (code === OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED) {
@@ -5376,7 +6224,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-local-receiz-id-v11";
+      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v2";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -5413,9 +6261,755 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       });
     }
 
+    const LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY = "receiz.pbi.authorship.publication-outbox.v1";
+    const LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA = "receiz.pbi.authorship.publication-outbox.v1";
+    const LOCAL_PBI_CREDENTIAL_JSON_KEYS = ["pbi:presencebound:credential", "presencebound:credential"];
+    const OFFLINE_IDENTITY_SESSION_REGISTER_STORAGE_KEY = "receiz.auth.offline-identity-session.register.v1";
+    const OFFLINE_IDENTITY_SESSION_DURABLE_STORAGE_KEY = "receiz.auth.offline-identity-session.durable.v1";
+    const DURABLE_LOCAL_TRUTH_SCHEMA = "receiz.local.truth.v1";
+    const OFFLINE_IDENTITY_SESSION_REGISTER_SCHEMA = "receiz.offline.identity.session.register.v1";
+    const OFFLINE_IDENTITY_SESSION_SCHEMA = "receiz.offline.identity.session.v1";
+    const VERIFIED_REGISTER_BLOCK_RANK = 80;
+    const PBI_RP_ID = "receiz.com";
+    const PBI_ALLOWED_ORIGINS = new Set(["https://receiz.com", "https://www.receiz.com"]);
+    const HEX64_RE = /^[0-9a-f]{64}$/;
+    const BASE64URL_RE = /^[A-Za-z0-9_-]+$/;
+
+    function readClientStorageValue(key) {
+      for (const storage of [window.localStorage, window.sessionStorage]) {
+        try {
+          const value = storage.getItem(key);
+          if (typeof value === "string" && value.trim()) return value;
+        } catch {}
+      }
+      return null;
+    }
+
+    function normalizeHeldPbiCredential(value) {
+      if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+      const credIdB64Url = typeof value.credIdB64Url === "string" ? value.credIdB64Url.trim() : "";
+      const pubKeyPem = typeof value.pubKeyPem === "string" ? value.pubKeyPem.trim() : "";
+      if (!BASE64URL_RE.test(credIdB64Url) || !pubKeyPem.includes("BEGIN PUBLIC KEY")) return null;
+      return { credIdB64Url, pubKeyPem };
+    }
+
+    function parseDurableVerifiedRegisterPayload(raw) {
+      if (!raw) return null;
+      try {
+        const envelope = JSON.parse(raw);
+        if (
+          !envelope
+          || typeof envelope !== "object"
+          || Array.isArray(envelope)
+          || envelope.schema !== DURABLE_LOCAL_TRUTH_SCHEMA
+          || !Number.isFinite(envelope.rank)
+          || envelope.rank < VERIFIED_REGISTER_BLOCK_RANK
+          || typeof envelope.payload !== "string"
+        ) {
+          return null;
+        }
+        return JSON.parse(envelope.payload);
+      } catch {
+        return null;
+      }
+    }
+
+    function credentialFromDurableOfflineIdentity() {
+      const register = parseDurableVerifiedRegisterPayload(
+        readClientStorageValue(OFFLINE_IDENTITY_SESSION_REGISTER_STORAGE_KEY),
+      );
+      if (
+        register
+        && register.schema === OFFLINE_IDENTITY_SESSION_REGISTER_SCHEMA
+        && typeof register.activeKeyId === "string"
+        && register.sessions
+        && typeof register.sessions === "object"
+        && !Array.isArray(register.sessions)
+      ) {
+        const activeSession = register.sessions[register.activeKeyId];
+        if (activeSession && activeSession.schema === OFFLINE_IDENTITY_SESSION_SCHEMA) {
+          const credential = normalizeHeldPbiCredential(activeSession.pbiCredential);
+          if (credential) return credential;
+        }
+      }
+
+      const activeSession = parseDurableVerifiedRegisterPayload(
+        readClientStorageValue(OFFLINE_IDENTITY_SESSION_DURABLE_STORAGE_KEY),
+      );
+      if (activeSession && activeSession.schema === OFFLINE_IDENTITY_SESSION_SCHEMA) {
+        return normalizeHeldPbiCredential(activeSession.pbiCredential);
+      }
+      return null;
+    }
+
+    function peekPresenceBoundClientCredential() {
+      for (const key of LOCAL_PBI_CREDENTIAL_JSON_KEYS) {
+        const value = readClientStorageValue(key);
+        if (!value) continue;
+        try {
+          const credential = normalizeHeldPbiCredential(JSON.parse(value));
+          if (credential) return credential;
+        } catch {}
+      }
+      return credentialFromDurableOfflineIdentity();
+    }
+
+    function pemToSpkiBytes(pubKeyPem) {
+      try {
+        return base64StdDecode(
+          String(pubKeyPem || "")
+            .replace(/-----BEGIN PUBLIC KEY-----/g, "")
+            .replace(/-----END PUBLIC KEY-----/g, "")
+            .replace(/\s+/g, ""),
+        );
+      } catch {
+        return null;
+      }
+    }
+
+    function derToRawEs256Signature(signature) {
+      if (signature.length < 8 || signature[0] !== 0x30 || signature[1] + 2 !== signature.length) return null;
+      let offset = 2;
+      if (signature[offset] !== 0x02) return null;
+      const rLength = signature[offset + 1];
+      offset += 2;
+      const r = signature.slice(offset, offset + rLength);
+      offset += rLength;
+      if (signature[offset] !== 0x02) return null;
+      const sLength = signature[offset + 1];
+      offset += 2;
+      const s = signature.slice(offset, offset + sLength);
+      const rValue = r[0] === 0 ? r.slice(1) : r;
+      const sValue = s[0] === 0 ? s.slice(1) : s;
+      if (rValue.length > 32 || sValue.length > 32) return null;
+      const raw = new Uint8Array(64);
+      raw.set(rValue, 32 - rValue.length);
+      raw.set(sValue, 64 - sValue.length);
+      return raw;
+    }
+
+    async function verifyLocalPbiAssertion({ challengeB64Url, assertion }) {
+      try {
+        if (
+          !BASE64URL_RE.test(challengeB64Url)
+          || !BASE64URL_RE.test(assertion.authenticatorDataB64Url)
+          || !BASE64URL_RE.test(assertion.clientDataJSONB64Url)
+          || !BASE64URL_RE.test(assertion.signatureB64Url)
+          || !BASE64URL_RE.test(assertion.credIdB64Url)
+        ) return false;
+        const clientDataBytes = base64UrlDecode(assertion.clientDataJSONB64Url);
+        const clientData = JSON.parse(textDecoder.decode(clientDataBytes));
+        if (
+          clientData.type !== "webauthn.get"
+          || clientData.challenge !== challengeB64Url
+          || !PBI_ALLOWED_ORIGINS.has(clientData.origin)
+          || clientData.crossOrigin === true
+        ) return false;
+        const authenticatorData = base64UrlDecode(assertion.authenticatorDataB64Url);
+        if (authenticatorData.length < 37) return false;
+        const expectedRpIdHash = await sha256Bytes(PBI_RP_ID);
+        if (!equalByteChunks(authenticatorData.slice(0, 32), expectedRpIdHash)) return false;
+        const flags = authenticatorData[32] || 0;
+        if ((flags & 0x01) !== 0x01 || (flags & 0x04) !== 0x04) return false;
+        const spki = pemToSpkiBytes(assertion.pubKeyPem);
+        if (!spki) return false;
+        const publicKey = await crypto.subtle.importKey(
+          "spki",
+          toArrayBuffer(spki),
+          { name: "ECDSA", namedCurve: "P-256" },
+          false,
+          ["verify"],
+        );
+        const signature = base64UrlDecode(assertion.signatureB64Url);
+        const signedPayload = concatByteChunks([authenticatorData, await sha256Bytes(clientDataBytes)]);
+        const verify = (candidate) => crypto.subtle.verify(
+          { name: "ECDSA", hash: "SHA-256" },
+          publicKey,
+          toArrayBuffer(candidate),
+          toArrayBuffer(signedPayload),
+        ).catch(() => false);
+        if (await verify(signature)) return true;
+        const rawSignature = derToRawEs256Signature(signature);
+        return rawSignature ? verify(rawSignature) : false;
+      } catch {
+        return false;
+      }
+    }
+
+    function canonicalLocalPbiProofObjectAuthorshipAction(input) {
+      return [
+        "RECEIZ_PBI_PROOF_OBJECT_AUTHORSHIP_V115",
+        `slug=${input.slug}`,
+        `code=${input.code}`,
+        `pulse=${input.pulse}`,
+        `claimHashHex=${input.claimHashHex}`,
+        `predecessorArtifactSha256=${input.proofObjectScope.predecessorArtifactSha256}`,
+        `predecessorProofHead=${input.proofObjectScope.predecessorProofHead}`,
+        `receizId=${input.proofObjectScope.receizId}`,
+        `authorshipPosition=${input.proofObjectScope.authorshipPosition}`,
+        `kaiUpulse=${input.proofObjectScope.kaiUpulse}`,
+        "scope=PROOF_OBJECT_AUTHORSHIP_APPEND",
+      ].join("\n");
+    }
+
+    async function createVerifiedLocalPbiProofObjectAuthorship(args) {
+      const credential = peekPresenceBoundClientCredential();
+      if (!credential) {
+        throw new Error("No held PBI credential is available on this device.");
+      }
+      const input = {
+        slug: args.bundle.slug,
+        code: args.bundle.code,
+        pulse: args.bundle.kaiPulseEternal,
+        claimHashHex: args.bundle.artifactSha256Basis,
+        proofObjectScope: args.scope,
+      };
+      const actionHashHex = await sha256Hex(canonicalLocalPbiProofObjectAuthorshipAction(input));
+      const now = Date.now();
+      const nonceB64Url = base64UrlEncode(crypto.getRandomValues(new Uint8Array(24)));
+      const challengeB64Url = base64UrlEncode(textEncoder.encode(canonicalizeJson({
+        schema: "receiz.pbi.authorship.local-challenge.v1",
+        actionHashHex,
+        purpose: "ACTION_COMMIT",
+        nonceB64Url,
+        createdAt: new Date(now).toISOString(),
+      })));
+      const challengeId = `local-pbi-authorship:${actionHashHex}:${nonceB64Url}`;
+      let publicKeyCredential;
+      try {
+        publicKeyCredential = await navigator.credentials.get({
+          publicKey: {
+            rpId: PBI_RP_ID,
+            challenge: toArrayBuffer(base64UrlDecode(challengeB64Url)),
+            userVerification: "required",
+            timeout: 60_000,
+            allowCredentials: [{
+              id: toArrayBuffer(base64UrlDecode(credential.credIdB64Url)),
+              type: "public-key",
+            }],
+          },
+        });
+      } catch (error) {
+        const name = error && typeof error === "object" && "name" in error ? String(error.name || "") : "";
+        if (name === "NotAllowedError" || name === "AbortError") {
+          throw new Error("PBI authorship was canceled. No successor was created.");
+        }
+        throw error;
+      }
+      if (!publicKeyCredential || !publicKeyCredential.response) {
+        throw new Error("PBI authorship did not return a device assertion.");
+      }
+      const assertion = {
+        authenticatorDataB64Url: base64UrlEncode(new Uint8Array(publicKeyCredential.response.authenticatorData)),
+        clientDataJSONB64Url: base64UrlEncode(new Uint8Array(publicKeyCredential.response.clientDataJSON)),
+        signatureB64Url: base64UrlEncode(new Uint8Array(publicKeyCredential.response.signature)),
+        credIdB64Url: base64UrlEncode(new Uint8Array(publicKeyCredential.rawId)),
+        pubKeyPem: credential.pubKeyPem,
+      };
+      if (
+        assertion.credIdB64Url !== credential.credIdB64Url
+        || !await verifyLocalPbiAssertion({ challengeB64Url, assertion })
+      ) {
+        throw new Error("PBI authorship assertion did not verify locally.");
+      }
+      const receipt = {
+        ver: "pbi-receipt-1.0",
+        challengeId,
+        challenge: challengeB64Url,
+        actionHash: actionHashHex,
+        aud: "receiz",
+        purpose: "ACTION_COMMIT",
+        authorSig: {
+          alg: "webauthn-es256",
+          credId: assertion.credIdB64Url,
+          authenticatorData: assertion.authenticatorDataB64Url,
+          clientDataJSON: assertion.clientDataJSONB64Url,
+          signature: assertion.signatureB64Url,
+        },
+      };
+      const pbiReceiptHash = await sha256Hex(canonicalizeJson(receipt));
+      const localPbiProof = {
+        schema: "receiz.pbi.authorship.local-proof.v1",
+        input,
+        actionHashHex,
+        challengeId,
+        challengeB64Url,
+        assertion,
+        receipt,
+        pbiReceiptHash,
+        verifiedAt: new Date(now).toISOString(),
+      };
+      return { localPbiProof, receipt, pbiReceiptHash };
+    }
+
+    async function verifyReceizPbiProofObjectAuthorshipChainV1(history) {
+      try {
+        if (!Array.isArray(history)) return false;
+        let previous = null;
+        const artifactHashes = new Set();
+        const appendHeads = new Set();
+        for (let position = 0; position < history.length; position += 1) {
+          const append = history[position];
+          if (
+            !isRecord(append)
+            || Object.keys(append).length !== 18
+            || append.schema !== "receiz.pbi.proof-object-authorship.v1"
+            || append.position !== position
+            || !HEX64_RE.test(append.predecessorArtifactSha256)
+            || !HEX64_RE.test(append.predecessorProofHead)
+            || !HEX64_RE.test(append.claimHashHex)
+            || !HEX64_RE.test(append.receizId)
+            || !HEX64_RE.test(append.pbiReceiptHash)
+            || !HEX64_RE.test(append.actionHashSha256)
+            || !HEX64_RE.test(append.appendHeadSha256)
+            || !/^(0|[1-9][0-9]*)$/.test(append.kaiUpulse)
+            || artifactHashes.has(append.predecessorArtifactSha256)
+            || appendHeads.has(append.appendHeadSha256)
+            || append.previousAppendHeadSha256 !== (previous ? previous.appendHeadSha256 : null)
+            || previous && append.predecessorProofHead !== previous.appendHeadSha256
+            || previous && (
+              append.claimHashHex !== previous.claimHashHex
+              || append.slug !== previous.slug
+              || append.code !== previous.code
+              || append.pulse !== previous.pulse
+              || BigInt(append.kaiUpulse) <= BigInt(previous.kaiUpulse)
+            )
+          ) return false;
+          const { actionHashSha256, appendHeadSha256, ...action } = append;
+          if (await sha256Hex(canonicalizeJson(action)) !== actionHashSha256) return false;
+          if (
+            await sha256Hex(canonicalizeJson({
+              actionHashSha256,
+              previousAppendHeadSha256: append.previousAppendHeadSha256,
+            })) !== appendHeadSha256
+          ) return false;
+          artifactHashes.add(append.predecessorArtifactSha256);
+          appendHeads.add(append.appendHeadSha256);
+          previous = append;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
+    async function appendReceizPbiProofObjectAuthorshipV1(args) {
+      if (!await verifyReceizPbiProofObjectAuthorshipChainV1(args.history)) {
+        throw new Error("Existing PBI authorship history is invalid.");
+      }
+      const action = {
+        schema: "receiz.pbi.proof-object-authorship.v1",
+        position: args.history.length,
+        predecessorArtifactSha256: args.predecessorArtifactSha256,
+        predecessorProofHead: args.predecessorProofHead,
+        previousAppendHeadSha256: args.history.length ? args.history[args.history.length - 1].appendHeadSha256 : null,
+        claimHashHex: args.claimHashHex,
+        slug: args.slug,
+        code: args.code,
+        pulse: args.pulse,
+        receizId: args.receizId,
+        credentialId: args.localPbiProof.assertion.credIdB64Url,
+        credentialPublicKeyPem: args.localPbiProof.assertion.pubKeyPem,
+        pbiReceipt: JSON.parse(canonicalizeJson(args.localPbiProof.receipt)),
+        pbiReceiptHash: args.localPbiProof.pbiReceiptHash,
+        signedAt: args.localPbiProof.verifiedAt,
+        kaiUpulse: args.kaiUpulse,
+      };
+      const actionHashSha256 = await sha256Hex(canonicalizeJson(action));
+      const appendHeadSha256 = await sha256Hex(canonicalizeJson({
+        actionHashSha256,
+        previousAppendHeadSha256: action.previousAppendHeadSha256,
+      }));
+      const append = { ...action, actionHashSha256, appendHeadSha256 };
+      if (!await verifyReceizPbiProofObjectAuthorshipChainV1([...args.history, append])) {
+        throw new Error("PBI authorship append did not verify.");
+      }
+      return append;
+    }
+
+    function exactPbiAuthorshipCarrierBasis(bytes, format) {
+      if (format === "png") return stripPngTextChunksByKeyword(bytes, RECEIZ_PROOF_BUNDLE_CHUNK_KEY).pngBytes;
+      if (format === "pdf") return stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
+      if (format === "heic") return parseReceizHeicProof(bytes).basisBytes;
+      if (format === "svg") return stripReceizSvgProofTags(bytes).basisBytes;
+      if (format === "json") return stripReceizJsonProof(bytes).basisBytes;
+      return stripReceizTrailer(bytes).basisBytes;
+    }
+
+    async function carryPbiAuthorshipSuccessor({ predecessorBytes, predecessorFilename, bundle }) {
+      const format = detectDocumentFormat(predecessorBytes, { filename: predecessorFilename, mime: "" });
+      const basisBytes = exactPbiAuthorshipCarrierBasis(predecessorBytes, format);
+      const encodedBundle = await encodeReceizProofBundle(bundle);
+      let successorBytes;
+      let sealEmbedding;
+      if (format === "png") {
+        successorBytes = insertPngTextChunks(basisBytes, [{ keyword: RECEIZ_PROOF_BUNDLE_CHUNK_KEY, text: encodedBundle }]);
+        sealEmbedding = "png";
+      } else if (format === "pdf") {
+        successorBytes = embedReceizProofBundleIntoPdf({ pdfBytes: basisBytes, encodedBundle });
+        sealEmbedding = "pdf";
+      } else if (format === "heic") {
+        successorBytes = appendReceizHeicProof({ basisBytes, bundle });
+        sealEmbedding = "heic";
+      } else if (format === "svg") {
+        successorBytes = embedReceizProofBundleIntoSvg({ svgBytes: basisBytes, encodedBundle }).svgBytes;
+        sealEmbedding = "svg";
+      } else if (format === "json") {
+        successorBytes = embedReceizProofBundleIntoJson({ jsonBytes: basisBytes, encodedBundle }).jsonBytes;
+        sealEmbedding = "json";
+      } else {
+        successorBytes = appendReceizTrailer({ basisBytes, bundle });
+        sealEmbedding = "trailer";
+      }
+      return {
+        successorBytes,
+        filename: buildReceizedDownloadName({
+          filename: predecessorFilename || "proof-object",
+          forcedExtension: extensionFromFilename(predecessorFilename) || extensionForFormat(format) || "bin",
+        }),
+        mime: sealEmbedding === "trailer" ? "application/octet-stream" : mimeForFormat(format),
+        nativeFileOptions: { sourceFormat: format, sealEmbedding },
+      };
+    }
+
+    function parseLocalPbiAuthorshipOutboxRawStrict(raw) {
+      const empty = () => ({
+        schema: LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA,
+        updatedAtMs: 0,
+        entries: {},
+        reconciliationReceipts: {},
+        reconciliationQuarantine: {},
+      });
+      if (raw === null) {
+        return {
+          outbox: empty(),
+          payload: null,
+          revision: 0,
+        };
+      }
+      const outer = JSON.parse(raw);
+      let payload;
+      let revision;
+      if (isRecord(outer) && outer.schema === "receiz.local.truth.v1") {
+        if (
+          typeof outer.payload !== "string"
+          || !Number.isSafeInteger(outer.revision)
+          || outer.revision < 0
+        ) {
+          throw new Error("local_pbi_authorship_outbox_envelope_corrupt");
+        }
+        payload = outer.payload;
+        revision = outer.revision;
+      } else if (isRecord(outer) && outer.schema === LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA) {
+        payload = raw;
+        revision = 0;
+      } else {
+        throw new Error("local_pbi_authorship_outbox_envelope_corrupt");
+      }
+      const parsed = JSON.parse(payload);
+      if (!isRecord(parsed) || parsed.schema !== LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA || !isRecord(parsed.entries)) {
+        throw new Error("local_pbi_authorship_outbox_payload_corrupt");
+      }
+      if (
+        parsed.reconciliationReceipts !== undefined
+        && !isRecord(parsed.reconciliationReceipts)
+      ) {
+        throw new Error("local_pbi_authorship_outbox_payload_corrupt");
+      }
+      if (
+        parsed.reconciliationQuarantine !== undefined
+        && !isRecord(parsed.reconciliationQuarantine)
+      ) {
+        throw new Error("local_pbi_authorship_outbox_payload_corrupt");
+      }
+      return {
+        outbox: {
+          ...parsed,
+          reconciliationReceipts: isRecord(parsed.reconciliationReceipts)
+            ? parsed.reconciliationReceipts
+            : {},
+          reconciliationQuarantine: isRecord(parsed.reconciliationQuarantine)
+            ? parsed.reconciliationQuarantine
+            : {},
+        },
+        payload,
+        revision,
+      };
+    }
+
+    async function transformLocalPbiAuthorshipOutboxAtomically(update) {
+      if (!navigator.locks || typeof navigator.locks.request !== "function") {
+        throw new Error("durable_local_truth_atomic_lock_unavailable");
+      }
+      const lockName = `receiz:durable-local-truth:${LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY}`;
+      return navigator.locks.request(lockName, async () => {
+        for (let attempt = 1; attempt <= 4; attempt += 1) {
+          const observedRaw = localStorage.getItem(LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY);
+          const observed = parseLocalPbiAuthorshipOutboxRawStrict(observedRaw);
+          const observedRevision = observed.revision;
+          const observedDigest = await sha256Hex(JSON.stringify({
+            present: observedRaw !== null,
+            raw: observedRaw,
+          }));
+          const next = update(observed.outbox);
+          const observedPayload = observed.payload;
+          const nextPayload = JSON.stringify(next);
+          const latestRaw = localStorage.getItem(LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY);
+          const latestOuter = latestRaw ? JSON.parse(latestRaw) : null;
+          const latestRevision = Number.isSafeInteger(latestOuter?.revision)
+            && latestOuter.revision >= 0
+            ? latestOuter.revision
+            : 0;
+          const latestDigest = await sha256Hex(JSON.stringify({
+            present: latestRaw !== null,
+            raw: latestRaw,
+          }));
+          if (
+            latestRevision !== observedRevision
+            || latestDigest !== observedDigest
+            || latestRaw !== observedRaw
+          ) {
+            continue;
+          }
+          if (nextPayload === observedPayload) return true;
+          const now = Date.now();
+          const serialized = JSON.stringify({
+            schema: "receiz.local.truth.v1",
+            storedAtMs: now,
+            revision: observedRevision + 1,
+            rank: 80,
+            source: "local-pbi-authorship-publication-outbox",
+            payload: nextPayload,
+          });
+          localStorage.setItem(LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY, serialized);
+          if (localStorage.getItem(LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY) === serialized) {
+            return true;
+          }
+        }
+        throw new Error("durable_local_truth_atomic_conflict");
+      });
+    }
+
+    async function enqueueLocalPbiProofObjectAuthorshipReconciliation(args) {
+      try {
+        const proof = args.localPbiProof;
+        return await transformLocalPbiAuthorshipOutboxAtomically((outbox) => {
+          if (
+            outbox.reconciliationReceipts[proof.actionHashHex]
+            || outbox.reconciliationQuarantine[proof.actionHashHex]
+          ) return outbox;
+          const existing = outbox.entries[proof.actionHashHex];
+          const reconciliation = {
+            kind: "proof-object-authorship-reconciliation",
+            artifactDigestLocator: args.artifactDigestLocator,
+            predecessorArtifactSha256: args.predecessorArtifactSha256,
+            appendHeadSha256: args.append.appendHeadSha256,
+            pbiReceiptHash: proof.pbiReceiptHash,
+            receizId: args.append.receizId,
+            createdAt: proof.verifiedAt,
+            authorshipHistory: args.authorshipHistory,
+          };
+          if (
+            existing
+            && canonicalizeJson(existing.proof) !== canonicalizeJson(proof)
+          ) {
+            throw new Error("local_pbi_proof_object_authorship_reconciliation_conflict");
+          }
+          if (existing && existing.proofObjectAuthorshipReconciliation) {
+            if (
+              canonicalizeJson(existing.proofObjectAuthorshipReconciliation)
+              !== canonicalizeJson(reconciliation)
+            ) {
+              throw new Error("local_pbi_proof_object_authorship_reconciliation_conflict");
+            }
+            return outbox;
+          }
+          const now = Date.now();
+          const entry = {
+            ...(existing || {
+              actionHashHex: proof.actionHashHex,
+              status: "pending",
+              proof,
+              createdAtMs: now,
+              publicationAttempts: 0,
+              lastPublicationStatus: null,
+              lastError: null,
+              artifactPublishedAtMs: null,
+              downloadUrl: null,
+              signedArtifact: null,
+            }),
+            updatedAtMs: now,
+            proofObjectAuthorshipReconciliation: reconciliation,
+          };
+          return {
+            schema: LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA,
+            updatedAtMs: now,
+            entries: { ...outbox.entries, [proof.actionHashHex]: entry },
+            reconciliationReceipts: outbox.reconciliationReceipts,
+            reconciliationQuarantine: outbox.reconciliationQuarantine,
+          };
+        });
+      } catch {
+        return false;
+      }
+    }
+
+    async function appendPbiAuthorshipToVerifiedArtifact({ predecessor, setVerifiedArtifact }) {
+      if (!predecessor || !predecessor.bundle || !predecessor.bytes || !predecessor.filename) {
+        throw new Error("Canonical predecessor verification is required before PBI authorship.");
+      }
+      const verifier = globalThis.receizCanonicalOfflineVerifier;
+      if (!verifier || typeof verifier.verifyBytes !== "function") {
+        throw new Error("Canonical offline verifier is unavailable.");
+      }
+      const predecessorResult = await verifier.verifyBytes(predecessor.filename, predecessor.bytes, "");
+      if (!predecessorResult || !predecessorResult.ok || !predecessorResult.bundle) {
+        throw new Error("Canonical predecessor verification is required before PBI authorship.");
+      }
+      const predecessorArtifactSha256 = String(predecessorResult.fileHash || "").toLowerCase();
+      const localIdentity = readLocalReceizIdentity();
+      if (!HEX64_RE.test(predecessorArtifactSha256) || !localIdentity || !HEX64_RE.test(localIdentity.receizId)) {
+        throw new Error("A held local Receiz identity is required for PBI authorship.");
+      }
+      const heldCarrierSigner = await activeSignerFromEnrollment();
+      if (!heldCarrierSigner) {
+        throw new Error("A held local Signature V4 signer is required for offline PBI authorship.");
+      }
+      if (
+        !heldCarrierSigner.owner
+        || heldCarrierSigner.owner.receizId !== localIdentity.receizId
+      ) {
+        throw new Error("The held Signature V4 signer does not match the active local Receiz identity.");
+      }
+      const history = Array.isArray(predecessorResult.bundle.pbiAuthorshipHistory)
+        ? predecessorResult.bundle.pbiAuthorshipHistory
+        : [];
+      if (!await verifyReceizPbiProofObjectAuthorshipChainV1(history)) {
+        throw new Error("Existing PBI authorship history is invalid.");
+      }
+      const baseProofHead = history.length
+        ? history[history.length - 1].appendHeadSha256
+        : String(predecessorResult.bundle.groth16ProofDigest || "").toLowerCase();
+      if (!HEX64_RE.test(baseProofHead)) throw new Error("Canonical predecessor proof head is unavailable.");
+      const currentUpulse = BigInt(Date.now()) * 1000n;
+      const priorUpulse = history.length ? BigInt(history[history.length - 1].kaiUpulse) : -1n;
+      const kaiUpulse = String(currentUpulse > priorUpulse ? currentUpulse : priorUpulse + 1n);
+      const scope = {
+        predecessorArtifactSha256,
+        predecessorProofHead: baseProofHead,
+        receizId: localIdentity.receizId,
+        authorshipPosition: history.length,
+        kaiUpulse,
+      };
+
+      // navigator.onLine === false must not block verified local authorship settlement.
+      const localProof = await createVerifiedLocalPbiProofObjectAuthorship({
+        bundle: predecessorResult.bundle,
+        scope,
+      });
+      if (!await verifyLocalPbiAssertion({
+        challengeB64Url: localProof.localPbiProof.challengeB64Url,
+        assertion: localProof.localPbiProof.assertion,
+      })) {
+        throw new Error("PBI authorship proof did not verify locally.");
+      }
+      const append = await appendReceizPbiProofObjectAuthorshipV1({
+        history,
+        predecessorArtifactSha256,
+        predecessorProofHead: baseProofHead,
+        claimHashHex: predecessorResult.bundle.artifactSha256Basis,
+        slug: predecessorResult.bundle.slug,
+        code: predecessorResult.bundle.code,
+        pulse: predecessorResult.bundle.kaiPulseEternal,
+        receizId: localIdentity.receizId,
+        localPbiProof: localProof.localPbiProof,
+        kaiUpulse,
+      });
+      const verifiedAppend = { append, localPbiProof: localProof.localPbiProof };
+      const signingIdentity = readLocalReceizIdentity();
+      if (
+        !signingIdentity
+        || signingIdentity.receizId !== localIdentity.receizId
+        || heldCarrierSigner.owner.receizId !== signingIdentity.receizId
+      ) {
+        throw new Error("The held Signature V4 signer no longer matches the active local Receiz identity.");
+      }
+      const {
+        signatureV3: _priorSignatureV3,
+        signatureV4: _priorSignatureV4,
+        ...predecessorUnsigned
+      } = predecessorResult.bundle;
+      const unsignedSuccessorBundle = {
+        ...predecessorUnsigned,
+        pbiAuthorshipHistory: [...history, verifiedAppend.append],
+      };
+      const successorSignatureV4 = await maybeSignReceizBundleV4(
+        unsignedSuccessorBundle,
+        heldCarrierSigner,
+      );
+      if (!successorSignatureV4) {
+        throw new Error("The held local Signature V4 signer could not sign the PBI authorship successor.");
+      }
+      const signedSuccessorBundle = {
+        ...unsignedSuccessorBundle,
+        signatureV4: successorSignatureV4,
+      };
+      const carried = await carryPbiAuthorshipSuccessor({
+        predecessorBytes: predecessor.bytes,
+        predecessorFilename: predecessor.filename,
+        bundle: signedSuccessorBundle,
+      });
+      const successorResult = await verifier.verifyBytes(
+        carried.filename,
+        carried.successorBytes,
+        predecessorResult.bundle.verifyPath || "",
+      );
+      if (!successorResult || !successorResult.ok || !successorResult.bundle) {
+        throw new Error("Canonical successor verification failed. No successor was settled.");
+      }
+      if (!await verifyReceizPbiProofObjectAuthorshipChainV1(successorResult.bundle.pbiAuthorshipHistory)) {
+        throw new Error("Canonical successor PBI authorship history is invalid.");
+      }
+      for (const field of ["nativeRecordSeal", "nativeCapture", "nativeCaptureSource", "nativeCaptureClaim"]) {
+        if (canonicalizeJson(predecessorResult.bundle[field] ?? null) !== canonicalizeJson(successorResult.bundle[field] ?? null)) {
+          throw new Error(`PBI authorship changed protected ${field} truth.`);
+        }
+      }
+      const successorArtifactSha256 = String(successorResult.fileHash || "").toLowerCase();
+      if (!HEX64_RE.test(successorArtifactSha256) || successorArtifactSha256 === predecessorArtifactSha256) {
+        throw new Error("Canonical successor artifact identity is invalid.");
+      }
+      const blob = new Blob([carried.successorBytes], { type: carried.mime });
+      setVerifiedArtifact(successorResult, carried.successorBytes, carried.filename);
+      showDownloadLink(blob, carried.filename, carried.nativeFileOptions);
+      await enqueueLocalPbiProofObjectAuthorshipReconciliation({
+        localPbiProof: localProof.localPbiProof,
+        append,
+        artifactDigestLocator: successorArtifactSha256,
+        predecessorArtifactSha256,
+        authorshipHistory: successorResult.bundle.pbiAuthorshipHistory,
+      });
+      return { successorResult, ...carried, append };
+    }
+
+    function installPbiAuthorshipRuntime() {
+      Object.defineProperty(globalThis, "receizOfflineStudioPbiAuthorship", {
+        value: Object.freeze({ appendVerifiedArtifact: appendPbiAuthorshipToVerifiedArtifact }),
+        configurable: false,
+        enumerable: false,
+        writable: false,
+      });
+    }
+
     function bindEvents() {
       ui.recordBtn.addEventListener("click", () => {
         void onRecordClick();
+      });
+      ui.recordNativeCaptureBtn.addEventListener("click", () => {
+        void beginNativeCapture();
+      });
+      ui.recordNativeCaptureInput.addEventListener("change", () => {
+        void onNativeCaptureInput(ui.recordNativeCaptureInput);
       });
       if (ui.recordClaimInput) {
         ui.recordClaimInput.addEventListener("input", updateRecordClaimCounter);
@@ -5434,6 +7028,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       installPwaInstallHooks();
     }
 
+    installPbiAuthorshipRuntime();
     bindEvents();
     void preflight();
   })();
@@ -5520,6 +7115,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       factPath: document.getElementById("factPath"),
       factHash: document.getElementById("factHash"),
       factAnchor: document.getElementById("factAnchor"),
+      factCurrentOwner: document.getElementById("factCurrentOwner"),
+      factCurrentOwnerRow: document.getElementById("factCurrentOwnerRow"),
+      factPreviousOwner: document.getElementById("factPreviousOwner"),
+      factPreviousOwnerRow: document.getElementById("factPreviousOwnerRow"),
+      factGenesisOwner: document.getElementById("factGenesisOwner"),
+      factGenesisOwnerRow: document.getElementById("factGenesisOwnerRow"),
+      factOwnershipCount: document.getElementById("factOwnershipCount"),
+      factOwnershipCountRow: document.getElementById("factOwnershipCountRow"),
+      factNativeCapture: document.getElementById("factNativeCapture"),
+      factNativeCaptureRow: document.getElementById("factNativeCaptureRow"),
+      factPbiAuthorshipCount: document.getElementById("factPbiAuthorshipCount"),
+      factPbiAuthorshipCountRow: document.getElementById("factPbiAuthorshipCountRow"),
+      ownershipHistoryPanel: document.getElementById("ownershipHistoryPanel"),
+      ownershipHistoryJson: document.getElementById("ownershipHistoryJson"),
+      pbiAuthorshipHistoryPanel: document.getElementById("pbiAuthorshipHistoryPanel"),
+      pbiAuthorshipHistoryJson: document.getElementById("pbiAuthorshipHistoryJson"),
+      appendPbiAuthorshipPanel: document.getElementById("appendPbiAuthorshipPanel"),
+      appendPbiAuthorshipBtn: document.getElementById("appendPbiAuthorshipBtn"),
       factPreset: document.getElementById("factPreset"),
       factPresetRow: document.getElementById("factPresetRow"),
       bundleJson: document.getElementById("bundleJson"),
@@ -5527,6 +7140,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     };
 
     let selectedFiles = [];
+    let verifiedArtifact = null;
+
+    function setVerifiedArtifact(result, bytes, filename) {
+      verifiedArtifact = result && result.ok && result.bundle && bytes && filename
+        ? {
+            ...result,
+            bytes: bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes),
+            filename: String(filename),
+          }
+        : null;
+      if (ui.appendPbiAuthorshipPanel) ui.appendPbiAuthorshipPanel.hidden = !verifiedArtifact;
+    }
 
     function setStatus(kind, title, note) {
       ui.statusBox.className = `status ${kind}`;
@@ -5573,6 +7198,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     function writeFacts(result) {
+      const continuity = result?.bundle?.nativeRecordSeal?.ownershipContinuity;
+      const history = continuity && Array.isArray(continuity.history) ? continuity.history : [];
+      const latestTransfer = history.length > 1 ? history[history.length - 1] : null;
+      const nativeCapture = result?.ok ? result.nativeCapture : null;
+      const pbiAuthorshipHistory = result?.ok && Array.isArray(result.pbiAuthorshipHistory)
+        ? result.pbiAuthorshipHistory
+        : [];
       if (!result || !result.bundle) {
         ui.factsGrid.hidden = true;
         ui.factTs.textContent = "-";
@@ -5581,6 +7213,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.factPath.textContent = "-";
         ui.factHash.textContent = "-";
         ui.factAnchor.textContent = "-";
+        ui.factCurrentOwnerRow.hidden = true;
+        ui.factPreviousOwnerRow.hidden = true;
+        ui.factGenesisOwnerRow.hidden = true;
+        ui.factOwnershipCountRow.hidden = true;
+        ui.ownershipHistoryPanel.hidden = true;
+        ui.ownershipHistoryJson.textContent = "(none)";
+        ui.factNativeCaptureRow.hidden = true;
+        ui.factNativeCapture.textContent = "-";
+        ui.factPbiAuthorshipCountRow.hidden = true;
+        ui.factPbiAuthorshipCount.textContent = "-";
+        ui.pbiAuthorshipHistoryPanel.hidden = true;
+        ui.pbiAuthorshipHistoryJson.textContent = "(none)";
         ui.factPreset.textContent = "-";
         ui.factPresetRow.hidden = true;
         return;
@@ -5595,6 +7239,39 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.factHash.textContent = result.fileHash || "-";
       const bundleAnchorId = asString(result.bundle.anchorId);
       ui.factAnchor.textContent = result.anchor?.anchorId || derivedAnchor?.anchorId || bundleAnchorId || "none";
+      const hasOwnership = result.ok && continuity && typeof continuity.ownerReceizId === "string";
+      ui.factCurrentOwnerRow.hidden = !hasOwnership;
+      ui.factPreviousOwnerRow.hidden = !hasOwnership;
+      ui.factGenesisOwnerRow.hidden = !hasOwnership;
+      ui.factOwnershipCountRow.hidden = !hasOwnership;
+      ui.factCurrentOwner.textContent = hasOwnership ? continuity.ownerReceizId : "-";
+      ui.factPreviousOwner.textContent = hasOwnership
+        ? (latestTransfer?.fromOwnerReceizId || continuity.genesisOwnerReceizId || "-")
+        : "-";
+      ui.factGenesisOwner.textContent = hasOwnership ? (continuity.genesisOwnerReceizId || "-") : "-";
+      ui.factOwnershipCount.textContent = hasOwnership ? String(history.length) : "-";
+      ui.ownershipHistoryPanel.hidden = !hasOwnership || history.length === 0;
+      ui.ownershipHistoryJson.textContent = history.length > 0
+        ? safeJson({ proofPredecessor: result.bundle.nativeRecordSeal?.proofPredecessor || null, ownershipHistory: history })
+        : "(none)";
+      ui.factNativeCaptureRow.hidden = !nativeCapture;
+      ui.factNativeCapture.textContent = nativeCapture
+        ? `${nativeCapture.mediaKind} · ${nativeCapture.sourceSha256}`
+        : "-";
+      ui.factPbiAuthorshipCountRow.hidden = !result.ok;
+      ui.factPbiAuthorshipCount.textContent = result.ok ? String(pbiAuthorshipHistory.length) : "-";
+      ui.pbiAuthorshipHistoryPanel.hidden = pbiAuthorshipHistory.length === 0;
+      ui.pbiAuthorshipHistoryJson.textContent = pbiAuthorshipHistory.length > 0
+        ? safeJson(pbiAuthorshipHistory.map((entry) => ({
+            position: entry.position,
+            credentialId: entry.credentialId,
+            receizId: entry.receizId,
+            pbiReceiptHash: entry.pbiReceiptHash,
+            predecessorDigest: entry.predecessorArtifactSha256,
+            signingTime: entry.signedAt,
+            appendHead: entry.appendHeadSha256
+          })))
+        : "(none)";
       if (result.anchor?.contextPreset) {
         ui.factPreset.textContent = result.anchor.contextPreset;
         ui.factPresetRow.hidden = false;
@@ -5758,7 +7435,22 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       try {
         const result = await verifySelectedFiles(selectedFiles, "");
         renderResult(result);
+        if (
+          result.ok
+          && result.bundle
+          && !result.packageSummary
+          && !result.folderScanSummary
+          && selectedFiles.length === 1
+        ) {
+          const file = selectedFiles[0];
+          const bytes = new Uint8Array(await file.arrayBuffer());
+          const digest = await sha256Hex(bytes);
+          setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+        } else {
+          setVerifiedArtifact(null);
+        }
       } catch (err) {
+        setVerifiedArtifact(null);
         const msg = err instanceof Error ? err.message : String(err);
         setStatus("bad", "Verification failed", msg || "Unknown error.");
         addCheck("bad", msg || "Unexpected error.");
@@ -7091,7 +8783,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -7248,6 +8940,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           : null,
         isRecord(slim.artifactBasis) ? slim.artifactBasis.normalization || "" : "",
       ];
+      if (isRecord(slim.nativeCapture) || isRecord(slim.nativeCaptureSource) || isRecord(slim.nativeCaptureClaim)) {
+        compact.push(slim.nativeCapture || null, slim.nativeCaptureSource || null, slim.nativeCaptureClaim || null);
+      }
+      if (Array.isArray(slim.pbiAuthorshipHistory)) {
+        while (compact.length < 21) compact.push(null);
+        compact.push(slim.pbiAuthorshipHistory);
+      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
@@ -7456,6 +9155,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
         ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
+        ...(bundle.nativeCapture ? { nativeCapture: bundle.nativeCapture } : {}),
+        ...(bundle.nativeCaptureSource ? { nativeCaptureSource: bundle.nativeCaptureSource } : {}),
+        ...(bundle.nativeCaptureClaim ? { nativeCaptureClaim: bundle.nativeCaptureClaim } : {}),
+        ...(bundle.pbiAuthorshipHistory ? { pbiAuthorshipHistory: bundle.pbiAuthorshipHistory } : {}),
+        ...(bundle.nativeRecordSeal ? { nativeRecordSeal: bundle.nativeRecordSeal } : {}),
         wireproof: bundle.wireproof || null
       };
       return jcsCanonicalize(canonical);
@@ -8353,6 +10057,42 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
     }
 
+    async function verifyNativeOwnershipContinuity(bundle, basisSha256) {
+      if (!bundle || !isRecord(bundle.nativeRecordSeal)) return true;
+      const seal = bundle.nativeRecordSeal;
+      if (!isRecord(seal.ownershipContinuity)) return true;
+      const continuity = seal.ownershipContinuity;
+      if (typeof continuity.namespace !== "string" || !continuity.namespace.startsWith("receiz.native-proof:")) return true;
+      if (!isRecord(seal.payload) || seal.payload.sha256 !== basisSha256 || continuity.artifactId !== basisSha256 || continuity.namespace !== `receiz.native-proof:${basisSha256}` || continuity.ownerReceizId !== seal.ownerReceizId || continuity.headReference !== bundle.receizClaimId || !Number.isSafeInteger(continuity.appendCount) || continuity.appendCount < 0) return false;
+      if (Array.isArray(continuity.history)) {
+        if (continuity.history.length !== continuity.appendCount + 1) return false;
+        const genesis = continuity.history[0];
+        if (!isRecord(genesis) || genesis.schema !== "receiz.native_ownership_genesis.v1" || genesis.index !== 0 || genesis.ownerReceizId !== continuity.genesisOwnerReceizId) return false;
+        let expectedOwner = genesis.ownerReceizId;
+        let expectedHead = genesis.headReference;
+        let expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: expectedOwner }));
+        if (genesis.historyDigestSha256 !== expectedDigest) return false;
+        for (let index = 1; index < continuity.history.length; index += 1) {
+          const entry = continuity.history[index];
+          if (!isRecord(entry) || entry.schema !== "receiz.native_ownership_transfer.v1" || entry.index !== index || entry.fromOwnerReceizId !== expectedOwner || entry.priorHeadReference !== expectedHead) return false;
+          expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: expectedDigest, sourceArtifactSha256: entry.sourceArtifactSha256, priorHeadReference: entry.priorHeadReference, fromOwnerReceizId: entry.fromOwnerReceizId, toOwnerReceizId: entry.toOwnerReceizId }));
+          if (entry.historyDigestSha256 !== expectedDigest) return false;
+          expectedOwner = entry.toOwnerReceizId;
+          expectedHead = entry.headReference;
+        }
+        if (expectedOwner !== continuity.ownerReceizId || expectedHead !== continuity.headReference || expectedDigest !== continuity.historyDigestSha256) return false;
+      }
+      if (continuity.appendCount === 0) {
+        if (continuity.predecessor) return false;
+        const expectedGenesis = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: continuity.ownerReceizId }));
+        return continuity.genesisOwnerReceizId === continuity.ownerReceizId && continuity.historyDigestSha256 === expectedGenesis;
+      }
+      const predecessor = continuity.predecessor;
+      if (!isRecord(predecessor) || !Number.isSafeInteger(predecessor.appendCount) || continuity.appendCount !== predecessor.appendCount + 1) return false;
+      const expectedAppend = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: predecessor.historyDigestSha256, sourceArtifactSha256: predecessor.artifactSha256, priorHeadReference: predecessor.headReference, fromOwnerReceizId: predecessor.ownerReceizId, toOwnerReceizId: continuity.ownerReceizId }));
+      return continuity.historyDigestSha256 === expectedAppend;
+    }
+
     async function validateBundleAgainstBasis({
       bundle,
       basisBytes,
@@ -8727,6 +10467,180 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return found;
     }
 
+    async function verifyReceizNativeCaptureV1(value, expected) {
+      const captureKeys = new Set([
+        "schema", "source", "mediaKind", "sourceSha256", "mimeType", "width", "height",
+        "durationMs", "requestedFacingMode", "captureSessionCommitment", "capturedAt",
+        "kaiUpulse", "ownerReceizId", "coordinates", "commitmentSha256"
+      ]);
+      const coordinateKeys = new Set(["slug", "code", "pulse", "verifyPath"]);
+      const exactKeys = (candidate, keys) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return false;
+        const ownKeys = Object.keys(candidate);
+        return ownKeys.length === keys.size && ownKeys.every((key) => keys.has(key));
+      };
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const integerOrNull = (candidate) => candidate === null
+        || (typeof candidate === "number" && Number.isSafeInteger(candidate) && candidate >= 0);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const coordinates = value && value.coordinates;
+      if (
+        !exactKeys(value, captureKeys)
+        || value.schema !== "receiz.native_capture.v1"
+        || value.source !== "camera"
+        || (value.mediaKind !== "photo" && value.mediaKind !== "video")
+        || !hex64(value.sourceSha256)
+        || !nonempty(value.mimeType)
+        || !integerOrNull(value.width)
+        || !integerOrNull(value.height)
+        || !integerOrNull(value.durationMs)
+        || !["user", "environment", null].includes(value.requestedFacingMode)
+        || !hex64(value.captureSessionCommitment)
+        || !nonempty(value.capturedAt)
+        || !nonempty(value.kaiUpulse)
+        || !nonempty(value.ownerReceizId)
+        || !exactKeys(coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => nonempty(coordinates[key]))
+        || !hex64(value.commitmentSha256)
+        || !expected
+        || !(expected.sourceBytes instanceof Uint8Array)
+        || !exactKeys(expected.coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => coordinates[key] === expected.coordinates[key])
+      ) return null;
+      if (await sha256Hex(expected.sourceBytes) !== value.sourceSha256) return null;
+      const { commitmentSha256: _commitmentSha256, ...body } = value;
+      return await sha256Hex(jcsCanonicalize(body)) === value.commitmentSha256 ? value : null;
+    }
+
+    async function verifyReceizPbiProofObjectAuthorshipChainV1(history) {
+      const appendKeys = new Set([
+        "schema", "position", "predecessorArtifactSha256", "predecessorProofHead",
+        "previousAppendHeadSha256", "claimHashHex", "slug", "code", "pulse", "receizId",
+        "credentialId", "credentialPublicKeyPem", "pbiReceipt", "pbiReceiptHash", "signedAt",
+        "kaiUpulse", "actionHashSha256", "appendHeadSha256"
+      ]);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const portable = (candidate, ancestors = new Set(), state = { nodes: 0 }, depth = 0) => {
+        state.nodes += 1;
+        if (depth > 64 || state.nodes > 100000) return false;
+        if (candidate === null || typeof candidate === "string" || typeof candidate === "boolean") return true;
+        if (typeof candidate === "number") return Number.isFinite(candidate);
+        if (typeof candidate !== "object" || ancestors.has(candidate)) return false;
+        ancestors.add(candidate);
+        try {
+          if (Array.isArray(candidate)) {
+            const keys = Object.keys(candidate);
+            return keys.length === candidate.length
+              && keys.every((key, index) => key === String(index))
+              && candidate.every((entry) => portable(entry, ancestors, state, depth + 1));
+          }
+          const prototype = Object.getPrototypeOf(candidate);
+          if (prototype !== Object.prototype && prototype !== null) return false;
+          return Reflect.ownKeys(Object.getOwnPropertyDescriptors(candidate)).every((key) => {
+            const descriptor = Object.getOwnPropertyDescriptor(candidate, key);
+            return typeof key === "string"
+              && Boolean(descriptor?.enumerable)
+              && Object.prototype.hasOwnProperty.call(descriptor, "value")
+              && portable(descriptor.value, ancestors, state, depth + 1);
+          });
+        } finally {
+          ancestors.delete(candidate);
+        }
+      };
+      const exactAppend = (candidate) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate) || "toJSON" in candidate) return false;
+        const descriptors = Object.getOwnPropertyDescriptors(candidate);
+        const ownKeys = Reflect.ownKeys(candidate);
+        return ownKeys.length === appendKeys.size
+          && ownKeys.every((key) => typeof key === "string"
+            && appendKeys.has(key)
+            && descriptors[key]?.enumerable === true
+            && Object.prototype.hasOwnProperty.call(descriptors[key], "value"));
+      };
+      const canonicalChronos = (candidate) => {
+        if (typeof candidate !== "string") return false;
+        try { return new Date(candidate).toISOString() === candidate; } catch { return false; }
+      };
+      const actionBody = (candidate) => ({
+        schema: candidate.schema,
+        position: candidate.position,
+        predecessorArtifactSha256: candidate.predecessorArtifactSha256,
+        predecessorProofHead: candidate.predecessorProofHead,
+        previousAppendHeadSha256: candidate.previousAppendHeadSha256,
+        claimHashHex: candidate.claimHashHex,
+        slug: candidate.slug,
+        code: candidate.code,
+        pulse: candidate.pulse,
+        receizId: candidate.receizId,
+        credentialId: candidate.credentialId,
+        credentialPublicKeyPem: candidate.credentialPublicKeyPem,
+        pbiReceipt: candidate.pbiReceipt,
+        pbiReceiptHash: candidate.pbiReceiptHash,
+        signedAt: candidate.signedAt,
+        kaiUpulse: candidate.kaiUpulse
+      });
+      try {
+        if (!Array.isArray(history)) return false;
+        const appendHeads = new Set();
+        const predecessorArtifacts = new Set();
+        let previous = null;
+        for (const [position, candidate] of history.entries()) {
+          if (
+            !exactAppend(candidate)
+            || candidate.schema !== "receiz.pbi.proof-object-authorship.v1"
+            || !Number.isSafeInteger(candidate.position)
+            || candidate.position < 0
+            || !hex64(candidate.predecessorArtifactSha256)
+            || !hex64(candidate.predecessorProofHead)
+            || (candidate.previousAppendHeadSha256 !== null && !hex64(candidate.previousAppendHeadSha256))
+            || !hex64(candidate.claimHashHex)
+            || !nonempty(candidate.slug)
+            || !nonempty(candidate.code)
+            || !nonempty(candidate.pulse)
+            || !hex64(candidate.receizId)
+            || !nonempty(candidate.credentialId)
+            || !nonempty(candidate.credentialPublicKeyPem)
+            || !portable(candidate.pbiReceipt)
+            || !hex64(candidate.pbiReceiptHash)
+            || !canonicalChronos(candidate.signedAt)
+            || typeof candidate.kaiUpulse !== "string"
+            || !/^(0|[1-9][0-9]*)$/.test(candidate.kaiUpulse)
+            || !hex64(candidate.actionHashSha256)
+            || !hex64(candidate.appendHeadSha256)
+          ) return false;
+          const expectedPreviousHead = previous?.appendHeadSha256 || null;
+          if (
+            candidate.position !== position
+            || candidate.previousAppendHeadSha256 !== expectedPreviousHead
+            || (previous && candidate.predecessorProofHead !== previous.appendHeadSha256)
+            || (previous && candidate.claimHashHex !== previous.claimHashHex)
+            || (previous && candidate.slug !== previous.slug)
+            || (previous && candidate.code !== previous.code)
+            || (previous && candidate.pulse !== previous.pulse)
+            || (previous && BigInt(candidate.kaiUpulse) <= BigInt(previous.kaiUpulse))
+            || appendHeads.has(candidate.appendHeadSha256)
+            || predecessorArtifacts.has(candidate.predecessorArtifactSha256)
+          ) return false;
+          const actionHashSha256 = await sha256Hex(jcsCanonicalize(actionBody(candidate)));
+          const appendHeadSha256 = await sha256Hex(jcsCanonicalize({
+            actionHashSha256,
+            previousAppendHeadSha256: candidate.previousAppendHeadSha256
+          }));
+          if (
+            actionHashSha256 !== candidate.actionHashSha256
+            || appendHeadSha256 !== candidate.appendHeadSha256
+          ) return false;
+          appendHeads.add(candidate.appendHeadSha256);
+          predecessorArtifacts.add(candidate.predecessorArtifactSha256);
+          previous = candidate;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
     async function verifyReceizBytes(fileName, bytes, optionalLink) {
       const errors = [];
       const warnings = [];
@@ -8778,7 +10692,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const proofEncoded = chunkMap.get(PROOF_KEY) || null;
         if (!proofEncoded) {
           checks.push({ state: "bad", message: "Proof bundle chunk present" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle chunk present" });
 
@@ -8789,7 +10703,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
 
@@ -8827,7 +10741,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               : "Missing embedded PDF proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
@@ -8840,7 +10754,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
@@ -8855,7 +10769,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 : "Missing embedded HEIC proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         bundle = parsed.bundle;
         basisBytes = parsed.basisBytes;
@@ -8885,7 +10799,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("SVG proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -8897,7 +10811,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -8925,7 +10839,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("JSON proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -8937,7 +10851,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -8952,14 +10866,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 : "Missing trailer proof bundle."
             );
             checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
           if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
             errors.push("Trailer proof bundle is malformed.");
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
 
           bundle = trailerParsed.bundle;
@@ -8968,12 +10882,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
           errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
       }
 
       if (!bundle || !basisBytes || !isRecord(bundle)) {
-        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary };
+        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
       }
 
       if (!anchor) {
@@ -8990,9 +10904,80 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         errors,
         warnings
       });
+      if (!await verifyNativeOwnershipContinuity(bundle, String(bundle.artifactSha256Basis || "").toLowerCase())) {
+        errors.push("continuity_ownership_attestation_mismatch");
+      }
 
+      let nativeCapture = null;
+      let pbiAuthorshipHistory = [];
+      if (errors.length === 0) {
+        const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
+          ? bundle.nativeRecordSeal
+          : bundle;
+        const rawNativeCapture = captureCarrier.nativeCapture;
+        try {
+          if (rawNativeCapture) {
+            let sourceBytes = basisBytes;
+            if (captureCarrier.nativeCaptureSource) {
+              const sourceDescriptor = captureCarrier.nativeCaptureSource;
+              const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
+              if (
+                sourceDescriptorKeys.length !== 3
+                || !sourceDescriptorKeys.includes("schema")
+                || !sourceDescriptorKeys.includes("carrier")
+                || !sourceDescriptorKeys.includes("sourceBytesSha256")
+                || sourceDescriptor.schema !== "receiz.native_capture_source.v1"
+                || sourceDescriptor.carrier !== "png.iTXt"
+                || typeof sourceDescriptor.sourceBytesSha256 !== "string"
+              ) throw new Error("native_capture_source_descriptor_invalid");
+              const sourceChunks = readPngTextChunks(basisBytes)
+                .filter((entry) => entry.keyword === "receiz.native_capture.source.v1");
+              if (sourceChunks.length !== 1) throw new Error("native_capture_source_chunk_invalid");
+              sourceBytes = base64UrlDecode(sourceChunks[0].text);
+            }
+            nativeCapture = await verifyReceizNativeCaptureV1(rawNativeCapture, {
+              sourceBytes,
+              coordinates: {
+                slug: bundle.slug,
+                code: bundle.code,
+                pulse: bundle.kaiPulseEternal,
+                verifyPath: bundle.verifyPath
+              }
+            });
+            if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
+            if (
+              captureCarrier.nativeCaptureSource
+              && captureCarrier.nativeCaptureSource.sourceBytesSha256 !== nativeCapture.sourceSha256
+            ) throw new Error("native_capture_source_binding_failed");
+            checks.push({ state: "ok", message: "Native Capture Verified" });
+          } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+            throw new Error("native_capture_append_missing");
+          }
+        } catch (error) {
+          nativeCapture = null;
+          errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+          checks.push({ state: "bad", message: "Native Capture verification" });
+        }
+
+        const rawHistory = bundle.pbiAuthorshipHistory;
+        if (
+          typeof rawHistory !== "undefined"
+          && (!Array.isArray(rawHistory)
+            || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
+        ) {
+          errors.push("pbi_authorship_history_verification_failed");
+          checks.push({ state: "bad", message: "PBI authorship history verification" });
+        } else {
+          pbiAuthorshipHistory = rawHistory || [];
+          if (pbiAuthorshipHistory.length > 0) {
+            checks.push({ state: "ok", message: "PBI authorship history verified" });
+          }
+        }
+      }
+
+      const ok = errors.length === 0;
       return {
-        ok: errors.length === 0,
+        ok,
         errors,
         warnings,
         checks,
@@ -9001,7 +10986,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         fileHash,
         chunkSummary,
         packageSummary,
-        assetContinuity
+        assetContinuity,
+        nativeCapture: ok ? nativeCapture : null,
+        pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
       };
     }
 
@@ -9422,6 +11409,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.dropZone.classList.remove("is-over");
         const files = event.dataTransfer && event.dataTransfer.files ? Array.from(event.dataTransfer.files) : [];
         if (!files.length) return;
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = false;
@@ -9436,6 +11424,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
         const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = selectedFiles.length === 0;
@@ -9444,16 +11433,51 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.verifyBtn.addEventListener("click", () => {
         void onVerifyClick();
       });
+
+      if (ui.appendPbiAuthorshipBtn) ui.appendPbiAuthorshipBtn.addEventListener("click", () => {
+        if (!verifiedArtifact) return;
+        const runtime = globalThis.receizOfflineStudioPbiAuthorship;
+        if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
+          setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
+          return;
+        }
+        ui.appendPbiAuthorshipBtn.disabled = true;
+        setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
+        void runtime.appendVerifiedArtifact({ predecessor: verifiedArtifact, setVerifiedArtifact })
+          .then(({ successorResult }) => {
+            renderResult(successorResult);
+            setStatus("ok", "PBI authorship verified", "The canonical successor is settled locally and ready to save.");
+          })
+          .catch((error) => {
+            const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
+            setStatus("bad", "PBI authorship not appended", message);
+          })
+          .finally(() => {
+            ui.appendPbiAuthorshipBtn.disabled = false;
+          });
+      });
     }
 
     function init() {
       installEvents();
       installDnD();
       setFileMeta([]);
+      setVerifiedArtifact(null);
       ui.bundleJson.textContent = "(none)";
       ui.chunkJson.textContent = "(none)";
       writeFacts(null);
     }
+
+    Object.defineProperty(globalThis, "receizCanonicalOfflineVerifier", {
+      value: Object.freeze({
+        verifyBytes: verifyReceizBytes,
+        verifyNativeCapture: verifyReceizNativeCaptureV1,
+        verifyPbiAuthorshipHistory: verifyReceizPbiProofObjectAuthorshipChainV1,
+      }),
+      configurable: false,
+      enumerable: false,
+      writable: false
+    });
 
     init();
   })();
