@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v115.0.0] - 2026-07-29
+
+### Changed
+
+- Advanced standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker identity to `115.0.0`.
+- Published the complete v115 release book, 79-law registry, performance findings, invariant register, and local/upstream history boundary.
+- Locked Native Capture camera-ceremony provenance, canonical predecessor/successor verification, ordered PBI authorship, local-first settlement, fail-closed durable outbox reads, complete pending proof memory, and bounded active-flush quiescence.
+- Advanced registry identity to `69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246` with compatibility `>=115.0.0 <116.0.0`.
+
+### Kept
+
+- The enclosing artifact remains authority; capture and authorship are subordinate appends.
+- Frozen v114 profile/economy, ownership, carrier, first-paint, and verification laws remain intact.
+- Physical Face ID/native chooser qualification remains unclaimed.
+- Three SQL migrations, attestation, publication, remote Git, deployment, production work, and GitHub release publication remain external or unchecked.
+
 ## [v114.0.0] - 2026-07-27
 
 ### Changed

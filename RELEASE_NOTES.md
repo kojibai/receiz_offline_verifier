@@ -1,5 +1,35 @@
 # Release Notes
 
+## v115.0.0
+Release date: 2026-07-29
+
+`v115.0.0` adds Native Capture provenance and verified offline PBI authorship as scoped proof-object appends beneath the canonically verified enclosing artifact.
+
+Canonical full release note: [docs/releases/v115.0.0.md](docs/releases/v115.0.0.md)
+Product-truth freeze: [docs/releases/v115.0.0-product-truth.md](docs/releases/v115.0.0-product-truth.md)
+Release checklist: [docs/releases/v115.0.0-checklist.md](docs/releases/v115.0.0-checklist.md)
+Release process: [docs/releases/v115.0.0-process.md](docs/releases/v115.0.0-process.md)
+Regression lessons: [docs/releases/v115.0.0-regression-lessons.md](docs/releases/v115.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v115.0.0-performance-findings.md](docs/releases/v115.0.0-performance-findings.md)
+Invariant register: [docs/releases/v115.0.0-invariant-register.md](docs/releases/v115.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v115.0.0-commit-history.md](docs/releases/v115.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v115.0.0-constitution-registry.json](docs/releases/v115.0.0-constitution-registry.json)
+
+### Authority
+
+- Native Capture binds the dedicated camera ceremony and exact returned media; it is not physical-sensor certification.
+- PBI authorship requires canonical predecessor verification, preserves deterministic order, and never transfers ownership.
+- Local proof settlement precedes optional publication, and the outbox preserves complete pending truth.
+- Registry digest is `69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246`; compatibility is `>=115.0.0 <116.0.0`.
+- Frozen v114 profile/economy proof objects and verifier behavior remain unchanged.
+
+### Evidence and operational boundary
+
+- WebKit evidence covers two format-preserving PDF successors with zero network calls and two verified PBI appends.
+- Physical Face ID/native chooser qualification remains unclaimed.
+- Three SQL migrations remain unapplied.
+- Attestation, package publication, remote tag/push, deployment, production work, and GitHub release publication remain external.
+
 ## v114.0.0
 Release date: 2026-07-27
 

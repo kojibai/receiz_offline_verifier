@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-07-27";
+const releaseDate = "2026-07-29";
 
 const requiredFiles = [
   "README.md",
@@ -26,8 +26,6 @@ const requiredFiles = [
   `docs/releases/${releaseVersion}-performance-findings.md`,
   `docs/releases/${releaseVersion}-invariant-register.md`,
   `docs/releases/${releaseVersion}-commit-history.md`,
-  "docs/releases/v114-profile-economy-composite-proof.md",
-  "docs/releases/v114-profile-economy-composite-checklist.md",
   `docs/releases/${releaseVersion}-constitution-registry.json`,
   `docs/releases/${releaseVersion}-constitution-registry.digest`,
   "site/index.html",
@@ -107,9 +105,7 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}.md`, `release:lock`],
   [`docs/releases/${releaseVersion}.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}.md`, `${releaseVersion}-invariant-register.md`],
-  [`docs/releases/${releaseVersion}.md`, "v114-profile-economy-composite-proof.md"],
-  [`docs/releases/${releaseVersion}.md`, "v114-profile-economy-composite-checklist.md"],
-  [`docs/releases/${releaseVersion}.md`, "original composer screenshot"],
+  [`docs/releases/${releaseVersion}.md`, "Physical Face ID/native iOS chooser"],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-regression-lessons.md`],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-invariant-register.md`],
@@ -118,8 +114,6 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}-checklist.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}-checklist.md`, `${releaseVersion}-invariant-register.md`],
   [`docs/releases/${releaseVersion}-checklist.md`, `${releaseVersion}-commit-history.md`],
-  [`docs/releases/${releaseVersion}-checklist.md`, "v114-profile-economy-composite-proof.md"],
-  [`docs/releases/${releaseVersion}-checklist.md`, "v114-profile-economy-composite-checklist.md"],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-regression-lessons.md`],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-invariant-register.md`],
@@ -128,14 +122,11 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}-performance-findings.md`, "Release-Lock Requirement"],
   [`docs/releases/${releaseVersion}-invariant-register.md`, "Release-Lock Requirement"],
   [`docs/releases/${releaseVersion}-commit-history.md`, "Release-Lock Requirement"],
-  ["docs/releases/v114-profile-economy-composite-proof.md", "sealed composite proof object"],
-  ["docs/releases/v114-profile-economy-composite-proof.md", "Exact evidence limitations"],
-  ["docs/releases/v114-profile-economy-composite-checklist.md", "Authenticated mobile cold profile media paint"],
   [`docs/releases/${releaseVersion}-constitution-registry.json`, `"version": "${bareVersion}"`],
-  [`docs/releases/${releaseVersion}-constitution-registry.json`, `"previousRegistryDigest": "4c4aa85f9785d205dcf7e4e5109837a83f8c3bf8e166130ae7e87353f299c637"`],
-  [`docs/releases/${releaseVersion}-constitution-registry.digest`, "ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a"],
-  ["README.md", "ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a"],
-  ["README.md", ">=114.0.0 <115.0.0"]
+  [`docs/releases/${releaseVersion}-constitution-registry.json`, `"previousRegistryDigest": "ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a"`],
+  [`docs/releases/${releaseVersion}-constitution-registry.digest`, "69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246"],
+  ["README.md", "69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246"],
+  ["README.md", ">=115.0.0 <116.0.0"]
 ];
 
 const errors = [];
