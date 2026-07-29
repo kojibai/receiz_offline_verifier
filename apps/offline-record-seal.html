@@ -242,6 +242,52 @@
       vertical-align: -3px;
     }
 
+    .capture-selection {
+      margin-top: 10px;
+      overflow: hidden;
+      border: 1px solid #a8c2eb;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fafdff, #eef5ff);
+      box-shadow: 0 12px 24px -22px rgba(12, 34, 76, 0.72);
+    }
+
+    .capture-selection[hidden] {
+      display: none;
+    }
+
+    .capture-selection-head {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px 8px 12px;
+      color: #17396e;
+      font: 700 12px/1.25 "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
+    }
+
+    .capture-selection-remove {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+    }
+
+    .capture-selection img,
+    .capture-selection video {
+      display: block;
+      width: 100%;
+      max-height: 260px;
+      object-fit: contain;
+      background: #08152c;
+    }
+
+    .capture-selection img[hidden],
+    .capture-selection video[hidden] {
+      display: none;
+    }
+
     .visually-hidden {
       position: absolute;
       width: 1px;
@@ -715,6 +761,14 @@
           <button id="recordNativeCaptureBtn" type="button" class="capture-action" aria-controls="recordNativeCaptureInput">Native Capture</button>
         </div>
         <input id="recordNativeCaptureInput" class="visually-hidden" type="file" accept="image/*,video/*" capture="environment" />
+        <div id="recordCaptureSelection" class="capture-selection" hidden aria-live="polite">
+          <div class="capture-selection-head">
+            <span id="recordCaptureSelectionLabel"></span>
+            <button id="recordCaptureClearBtn" class="capture-selection-remove" type="button">Remove</button>
+          </div>
+          <img id="recordCapturePreviewImage" alt="Attached native photo" hidden />
+          <video id="recordCapturePreviewVideo" controls muted playsinline hidden></video>
+        </div>
         <div class="btn-row">
           <button id="recordBtn" type="button">Record Moment</button>
         </div>
@@ -789,9 +843,9 @@
         <section id="appendPbiAuthorshipPanel" class="authorship-panel" hidden>
           <div>
             <strong>Append PBI Authorship</strong>
-            <span>Bind your verified presence to this exact proof object.</span>
+            <span>Creates or reopens your local PBI with Face ID, then binds it to this exact proof object.</span>
           </div>
-          <button id="appendPbiAuthorshipBtn" type="button">Sign with Face ID</button>
+          <button id="appendPbiAuthorshipBtn" type="button">Sign with PBI</button>
         </section>
 
         <details>
@@ -1488,6 +1542,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       recordClaimCount: document.getElementById("recordClaimCount"),
       recordNativeCaptureBtn: document.getElementById("recordNativeCaptureBtn"),
       recordNativeCaptureInput: document.getElementById("recordNativeCaptureInput"),
+      recordCaptureSelection: document.getElementById("recordCaptureSelection"),
+      recordCaptureSelectionLabel: document.getElementById("recordCaptureSelectionLabel"),
+      recordCaptureClearBtn: document.getElementById("recordCaptureClearBtn"),
+      recordCapturePreviewImage: document.getElementById("recordCapturePreviewImage"),
+      recordCapturePreviewVideo: document.getElementById("recordCapturePreviewVideo"),
       sealInput: document.getElementById("sealInput"),
       sealDrop: document.getElementById("sealDrop"),
       sealSelected: document.getElementById("sealSelected"),
@@ -1501,6 +1560,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     let selectedSealFile = null;
     let nativeCaptureSession = null;
+    let selectedNativeCapture = null;
+    let nativeCapturePreviewUrl = null;
     const nativeCaptureFileOptions = new WeakMap();
     let deferredInstallPrompt = null;
     let trustedSignerProvisionPromise = null;
@@ -6007,6 +6068,46 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return builder(selection, claimText);
     }
 
+    function clearSelectedNativeCapture() {
+      if (nativeCapturePreviewUrl) {
+        URL.revokeObjectURL(nativeCapturePreviewUrl);
+        nativeCapturePreviewUrl = null;
+      }
+      selectedNativeCapture = null;
+      if (ui.recordCaptureSelection) ui.recordCaptureSelection.setAttribute("hidden", "");
+      if (ui.recordCaptureSelectionLabel) ui.recordCaptureSelectionLabel.textContent = "";
+      if (ui.recordCapturePreviewImage) {
+        ui.recordCapturePreviewImage.removeAttribute("src");
+        ui.recordCapturePreviewImage.setAttribute("hidden", "");
+      }
+      if (ui.recordCapturePreviewVideo) {
+        ui.recordCapturePreviewVideo.pause();
+        ui.recordCapturePreviewVideo.removeAttribute("src");
+        ui.recordCapturePreviewVideo.load();
+        ui.recordCapturePreviewVideo.setAttribute("hidden", "");
+      }
+    }
+
+    function setSelectedNativeCapture(selection) {
+      clearSelectedNativeCapture();
+      selectedNativeCapture = selection;
+      const kindLabel = selection.mediaKind === "video" ? "Video" : "Photo";
+      const fileName = String(selection.file && selection.file.name || `${kindLabel.toLowerCase()} capture`);
+      const labelTarget = ui.recordCaptureSelectionLabel || ui.recordCaptureSelection;
+      if (labelTarget) labelTarget.textContent = `${kindLabel} attached · ${fileName}`;
+      if (ui.recordCaptureSelection) ui.recordCaptureSelection.removeAttribute("hidden");
+      if (typeof URL !== "undefined" && typeof URL.createObjectURL === "function") {
+        nativeCapturePreviewUrl = URL.createObjectURL(selection.file);
+        if (selection.mediaKind === "video" && ui.recordCapturePreviewVideo) {
+          ui.recordCapturePreviewVideo.src = nativeCapturePreviewUrl;
+          ui.recordCapturePreviewVideo.removeAttribute("hidden");
+        } else if (selection.mediaKind === "photo" && ui.recordCapturePreviewImage) {
+          ui.recordCapturePreviewImage.src = nativeCapturePreviewUrl;
+          ui.recordCapturePreviewImage.removeAttribute("hidden");
+        }
+      }
+    }
+
     async function onNativeCaptureInput(input) {
       let selection;
       try {
@@ -6017,45 +6118,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         return;
       }
       if (!selection) return;
-      ui.recordNativeCaptureBtn.disabled = true;
       hideDownloadLink();
       clearResult(ui.recordResult);
-      setStatus(`Sealing native ${selection.mediaKind} capture...`, "warn");
-      try {
-        const result = await buildNativeCaptureArtifact(selection, ui.recordClaimInput ? ui.recordClaimInput.value : "");
-        const verifier = globalThis.receizCanonicalOfflineVerifier;
-        if (!verifier || typeof verifier.verifyBytes !== "function") throw new Error("receiz_canonical_offline_verifier_unavailable");
-        const verified = await verifier.verifyBytes(result.filename, result.artifactBytes, result.verifyPath);
-        if (!verified || verified.ok !== true) throw new Error("Captured proof object did not pass canonical verification.");
-        if (!await verifyEmbeddedNativeCapture(verified, result.filename, result.artifactBytes)) {
-          throw new Error("native_capture_embedded_verification_failed");
-        }
-        const outputBlob = new Blob([result.artifactBytes], { type: result.outputMime });
-        const saved = await saveOfflineProofBlobAsFile(outputBlob, result.filename, {
-          title: "Receiz Native Capture",
-          text: "Save this offline-verifiable Receiz proof object.",
-          ...result.nativeFileOptions,
-        });
-        showDownloadLink(outputBlob, result.filename, result.nativeFileOptions);
-        showResult(ui.recordResult, [
-          { k: "capture", v: selection.mediaKind },
-          { k: "source sha", v: await sha256Hex(selection.sourceBytes) },
-          { k: "format", v: `${result.sourceFormat} (${result.sealEmbedding})` },
-          { k: "verify path", v: result.verifyPath },
-          { k: "owner", v: result.ownerReceizId },
-        ]);
-        setStatus(
-          saved
-            ? "Native capture complete. Proof object handed to the native save sheet."
-            : "Native capture complete. Tap Save to open the native save sheet.",
-          saved ? "ok" : "warn",
-        );
-      } catch (err) {
-        const code = err instanceof Error ? err.message : String(err || "native_capture_failed");
-        setStatus(`Capture failed: ${code}`, "bad");
-      } finally {
-        ui.recordNativeCaptureBtn.disabled = false;
-      }
+      setSelectedNativeCapture(selection);
+      const kindLabel = selection.mediaKind === "video" ? "Video" : "Photo";
+      setStatus(`${kindLabel} attached. Add optional text, then tap Record Moment.`, "ok");
     }
 
     async function beginNativeCapture() {
@@ -6075,13 +6142,51 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function onRecordClick() {
+      const recordingNativeCapture = selectedNativeCapture !== null;
       ui.recordBtn.disabled = true;
       hideDownloadLink();
       clearResult(ui.recordResult);
-      setStatus("Recording moment...", "warn");
+      setStatus(recordingNativeCapture ? "Sealing attached native capture..." : "Recording moment...", "warn");
 
       try {
         const claimText = ui.recordClaimInput ? ui.recordClaimInput.value : "";
+        if (selectedNativeCapture) {
+          const selection = selectedNativeCapture;
+          const result = await buildNativeCaptureArtifact(selection, claimText);
+          const verifier = globalThis.receizCanonicalOfflineVerifier;
+          if (!verifier || typeof verifier.verifyBytes !== "function") {
+            throw new Error("receiz_canonical_offline_verifier_unavailable");
+          }
+          const verified = await verifier.verifyBytes(result.filename, result.artifactBytes, result.verifyPath);
+          if (!verified || verified.ok !== true) {
+            throw new Error("Captured proof object did not pass canonical verification.");
+          }
+          if (!await verifyEmbeddedNativeCapture(verified, result.filename, result.artifactBytes)) {
+            throw new Error("native_capture_embedded_verification_failed");
+          }
+          const outputBlob = new Blob([result.artifactBytes], { type: result.outputMime });
+          const saved = await saveOfflineProofBlobAsFile(outputBlob, result.filename, {
+            title: "Receiz Native Capture",
+            text: "Save this offline-verifiable Receiz proof object.",
+            ...result.nativeFileOptions,
+          });
+          showDownloadLink(outputBlob, result.filename, result.nativeFileOptions);
+          showResult(ui.recordResult, [
+            { k: "capture", v: selection.mediaKind },
+            { k: "source sha", v: await sha256Hex(selection.sourceBytes) },
+            { k: "format", v: `${result.sourceFormat} (${result.sealEmbedding})` },
+            { k: "verify path", v: result.verifyPath },
+            { k: "owner", v: result.ownerReceizId },
+          ]);
+          clearSelectedNativeCapture();
+          setStatus(
+            saved
+              ? "Native capture complete. Proof object handed to the native save sheet."
+              : "Native capture complete. Tap Save to open the native save sheet.",
+            saved ? "ok" : "warn",
+          );
+          return;
+        }
         const result = await mintOfflineRecordMoment(claimText);
         const saved = await saveOfflineProofBlobAsFile(result.blob, result.filename, {
           title: "Receiz Moment Record",
@@ -6116,7 +6221,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } else if (code.includes("groth16")) {
           setStatus(`Groth16 runtime unavailable: ${code}`, "bad");
         } else {
-          setStatus(`Record failed: ${code}`, "bad");
+          setStatus(`${recordingNativeCapture ? "Capture" : "Record"} failed: ${code}`, "bad");
         }
       } finally {
         ui.recordBtn.disabled = false;
@@ -6224,7 +6329,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v2";
+      const OFFLINE_STANDALONE_SW_VERSION = "115.0.0-native-capture-pbi-v3";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -6283,6 +6388,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } catch {}
       }
       return null;
+    }
+
+    function writeClientStorageValue(key, value) {
+      for (const storage of [window.localStorage, window.sessionStorage]) {
+        try {
+          storage.setItem(key, value);
+        } catch {}
+      }
     }
 
     function normalizeHeldPbiCredential(value) {
@@ -6352,6 +6465,187 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } catch {}
       }
       return credentialFromDurableOfflineIdentity();
+    }
+
+    function decodePbiCbor(input) {
+      const reader = { data: input, offset: 0 };
+      const readUint = (length) => {
+        let value = 0;
+        for (let index = 0; index < length; index += 1) {
+          if (reader.offset >= reader.data.length) throw new Error("pbi_attestation_cbor_truncated");
+          value = value * 256 + reader.data[reader.offset];
+          reader.offset += 1;
+        }
+        return value;
+      };
+      const readLength = (info) => {
+        if (info < 24) return info;
+        if (info === 24) return readUint(1);
+        if (info === 25) return readUint(2);
+        if (info === 26) return readUint(4);
+        if (info === 27) return readUint(4) * 2 ** 32 + readUint(4);
+        throw new Error("pbi_attestation_cbor_length_unsupported");
+      };
+      const readValue = () => {
+        if (reader.offset >= reader.data.length) throw new Error("pbi_attestation_cbor_truncated");
+        const initial = reader.data[reader.offset];
+        reader.offset += 1;
+        const major = initial >> 5;
+        const info = initial & 0x1f;
+        if (major === 0) return readLength(info);
+        if (major === 1) return -1 - readLength(info);
+        if (major === 2 || major === 3) {
+          const length = readLength(info);
+          const start = reader.offset;
+          reader.offset += length;
+          if (reader.offset > reader.data.length) throw new Error("pbi_attestation_cbor_truncated");
+          const bytes = reader.data.slice(start, reader.offset);
+          return major === 2 ? bytes : textDecoder.decode(bytes);
+        }
+        if (major === 4) {
+          const length = readLength(info);
+          return Array.from({ length }, () => readValue());
+        }
+        if (major === 5) {
+          const length = readLength(info);
+          const value = new Map();
+          for (let index = 0; index < length; index += 1) {
+            value.set(readValue(), readValue());
+          }
+          return value;
+        }
+        if (major === 7 && info === 20) return false;
+        if (major === 7 && info === 21) return true;
+        if (major === 7 && info === 22) return null;
+        throw new Error("pbi_attestation_cbor_value_unsupported");
+      };
+      return readValue();
+    }
+
+    function pbiCoseValue(key, label) {
+      if (key instanceof Map) return key.get(label);
+      return key && typeof key === "object" ? key[label] ?? key[String(label)] : null;
+    }
+
+    function pbiCoseBytes(value) {
+      if (value instanceof Uint8Array) return value;
+      if (value instanceof ArrayBuffer) return new Uint8Array(value);
+      if (Array.isArray(value)) return new Uint8Array(value);
+      throw new Error("pbi_attestation_coordinate_invalid");
+    }
+
+    function pbiCredentialPublicKeyFromAttestation(response) {
+      if (response && typeof response.getPublicKey === "function") {
+        const publicKey = response.getPublicKey();
+        if (publicKey) return Promise.resolve(new Uint8Array(publicKey));
+      }
+      const attestationObject = response && response.attestationObject
+        ? new Uint8Array(response.attestationObject)
+        : null;
+      if (!attestationObject) throw new Error("pbi_attestation_public_key_missing");
+      const decoded = decodePbiCbor(attestationObject);
+      const authData = decoded instanceof Map ? decoded.get("authData") : null;
+      if (!(authData instanceof Uint8Array) || authData.length < 55 || (authData[32] & 0x40) !== 0x40) {
+        throw new Error("pbi_attestation_auth_data_invalid");
+      }
+      const credentialIdLength = new DataView(
+        authData.buffer,
+        authData.byteOffset,
+        authData.byteLength,
+      ).getUint16(53, false);
+      const coseOffset = 55 + credentialIdLength;
+      if (coseOffset >= authData.length) throw new Error("pbi_attestation_public_key_missing");
+      const cose = decodePbiCbor(authData.slice(coseOffset));
+      const x = pbiCoseBytes(pbiCoseValue(cose, -2));
+      const y = pbiCoseBytes(pbiCoseValue(cose, -3));
+      if (x.length !== 32 || y.length !== 32) throw new Error("pbi_attestation_coordinate_invalid");
+      return crypto.subtle
+        .importKey(
+          "jwk",
+          {
+            kty: "EC",
+            crv: "P-256",
+            x: base64UrlEncode(x),
+            y: base64UrlEncode(y),
+            ext: true,
+          },
+          { name: "ECDSA", namedCurve: "P-256" },
+          true,
+          [],
+        )
+        .then((key) => crypto.subtle.exportKey("spki", key))
+        .then((spki) => new Uint8Array(spki));
+    }
+
+    function pbiPublicKeyPem(spki) {
+      const base64Url = base64UrlEncode(spki);
+      const base64 = base64Url
+        .replace(/-/g, "+")
+        .replace(/_/g, "/")
+        .padEnd(Math.ceil(base64Url.length / 4) * 4, "=");
+      const lines = base64.match(/.{1,64}/g) || [];
+      return `-----BEGIN PUBLIC KEY-----\n${lines.join("\n")}\n-----END PUBLIC KEY-----`;
+    }
+
+    function pbiUserIdBytes(receizId) {
+      if (!HEX64_RE.test(receizId)) throw new Error("pbi_receiz_identity_required");
+      const bytes = new Uint8Array(32);
+      for (let index = 0; index < bytes.length; index += 1) {
+        bytes[index] = Number.parseInt(receizId.slice(index * 2, index * 2 + 2), 16);
+      }
+      return bytes;
+    }
+
+    async function registerOfflinePbiCredential(receizId) {
+      if (!navigator.credentials || typeof navigator.credentials.create !== "function") {
+        throw new Error("PBI Face ID ceremony is unavailable on this device.");
+      }
+      let created;
+      try {
+        created = await navigator.credentials.create({
+          publicKey: {
+            rp: { id: PBI_RP_ID, name: "Receiz" },
+            user: {
+              id: toArrayBuffer(pbiUserIdBytes(receizId)),
+              name: `${receizId.slice(0, 16)}@receiz.local`,
+              displayName: "Receiz PBI",
+            },
+            challenge: toArrayBuffer(crypto.getRandomValues(new Uint8Array(32))),
+            pubKeyCredParams: [{ type: "public-key", alg: -7 }],
+            authenticatorSelection: {
+              authenticatorAttachment: "platform",
+              residentKey: "required",
+              requireResidentKey: true,
+              userVerification: "required",
+            },
+            timeout: 60_000,
+            attestation: "none",
+          },
+        });
+      } catch (error) {
+        const name = error && typeof error === "object" && "name" in error ? String(error.name || "") : "";
+        if (name === "NotAllowedError" || name === "AbortError") {
+          throw new Error("PBI authorship was canceled. No successor was created.");
+        }
+        throw error;
+      }
+      if (!created || !created.rawId || !created.response) {
+        throw new Error("PBI Face ID ceremony did not establish local authorship custody.");
+      }
+      const credential = normalizeHeldPbiCredential({
+        credIdB64Url: base64UrlEncode(new Uint8Array(created.rawId)),
+        pubKeyPem: pbiPublicKeyPem(await pbiCredentialPublicKeyFromAttestation(created.response)),
+      });
+      if (!credential) throw new Error("PBI Face ID ceremony returned invalid local authorship custody.");
+      const encoded = JSON.stringify(credential);
+      for (const key of LOCAL_PBI_CREDENTIAL_JSON_KEYS) {
+        writeClientStorageValue(key, encoded);
+      }
+      return credential;
+    }
+
+    async function ensureOfflinePbiCredential(receizId) {
+      return peekPresenceBoundClientCredential() || registerOfflinePbiCredential(receizId);
     }
 
     function pemToSpkiBytes(pubKeyPem) {
@@ -6453,10 +6747,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function createVerifiedLocalPbiProofObjectAuthorship(args) {
-      const credential = peekPresenceBoundClientCredential();
-      if (!credential) {
-        throw new Error("No held PBI credential is available on this device.");
-      }
+      const credential = await ensureOfflinePbiCredential(args.scope.receizId);
       const input = {
         slug: args.bundle.slug,
         code: args.bundle.code,
@@ -7011,6 +7302,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.recordNativeCaptureInput.addEventListener("change", () => {
         void onNativeCaptureInput(ui.recordNativeCaptureInput);
       });
+      if (ui.recordCaptureClearBtn) {
+        ui.recordCaptureClearBtn.addEventListener("click", () => {
+          clearSelectedNativeCapture();
+          setStatus("Native capture removed.", "warn");
+        });
+      }
       if (ui.recordClaimInput) {
         ui.recordClaimInput.addEventListener("input", updateRecordClaimCounter);
         updateRecordClaimCounter();
