@@ -1,5 +1,37 @@
 # Release Notes
 
+## v116.0.0
+Release date: 2026-07-30
+
+`v116.0.0` seals the current proven product baseline without adding a new authority model or orchestration layer.
+
+Canonical full release note: [docs/releases/v116.0.0.md](docs/releases/v116.0.0.md)
+Product-truth freeze: [docs/releases/v116.0.0-product-truth.md](docs/releases/v116.0.0-product-truth.md)
+Release checklist: [docs/releases/v116.0.0-checklist.md](docs/releases/v116.0.0-checklist.md)
+Release process: [docs/releases/v116.0.0-process.md](docs/releases/v116.0.0-process.md)
+Regression lessons: [docs/releases/v116.0.0-regression-lessons.md](docs/releases/v116.0.0-regression-lessons.md)
+Performance findings: [docs/releases/v116.0.0-performance-findings.md](docs/releases/v116.0.0-performance-findings.md)
+Invariant register: [docs/releases/v116.0.0-invariant-register.md](docs/releases/v116.0.0-invariant-register.md)
+Commit-history boundary: [docs/releases/v116.0.0-commit-history.md](docs/releases/v116.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v116.0.0-constitution-registry.json](docs/releases/v116.0.0-constitution-registry.json)
+Deferred orchestration plan: [docs/releases/v117.0.0-planning.md](docs/releases/v117.0.0-planning.md)
+
+### Product continuity
+
+- First use opens Composer before optional Twin setup.
+- Accepted PBI proof remains visible beneath returning-owner refresh.
+- Signed subscription terms reach Business Creator execution.
+- Paid credits reconcile through checkout, refunds, dispute loss, and idempotent restoration.
+- Registry digest is `9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80`; compatibility is `>=116.0.0 <117.0.0`.
+
+### Evidence and operational boundary
+
+- Dispute-credit SQL is installed; Supabase migration history does not record the July migration files.
+- Twelve other July migrations remain unchecked.
+- Missing upstream dependencies leave upstream release and governance gates unchecked.
+- Publication, remote tag/push, deployment, and production smoke remain external.
+- The v117 planning record adds no v116 orchestration behavior or authority.
+
 ## v115.0.0
 Release date: 2026-07-29
 

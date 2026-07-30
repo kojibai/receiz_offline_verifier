@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v116.0.0] - 2026-07-30
+
+### Changed
+
+- Advanced standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker identity to `116.0.0`.
+- Published the complete v116 baseline, 79-law registry, performance findings, invariant register, local/upstream history boundary, and v117 orchestration deferral.
+- Locked Composer-first setup, known-PBI-proof-first paint, signed Business Creator terms, non-expiring credit reconciliation, and idempotent dispute loss/win handling.
+- Advanced registry identity to `9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80` with compatibility `>=116.0.0 <117.0.0`.
+
+### Kept
+
+- Existing artifact, identity, ownership, provenance, settlement, verification, and append-only history authority remain unchanged.
+- Installed dispute-credit SQL remains distinct from absent Supabase migration history; twelve other July migrations remain unchecked.
+- Missing upstream dependencies keep upstream product/release/governance/attestation/visual gates unchecked.
+- Publication, remote Git, deployment, production smoke, and v117 implementation remain external.
+
 ## [v115.0.0] - 2026-07-29
 
 ### Changed

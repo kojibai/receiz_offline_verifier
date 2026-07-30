@@ -5,7 +5,7 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-07-29";
+const releaseDate = "2026-07-30";
 
 const requiredFiles = [
   "README.md",
@@ -28,6 +28,7 @@ const requiredFiles = [
   `docs/releases/${releaseVersion}-commit-history.md`,
   `docs/releases/${releaseVersion}-constitution-registry.json`,
   `docs/releases/${releaseVersion}-constitution-registry.digest`,
+  "docs/releases/v117.0.0-planning.md",
   "site/index.html",
   "apps/offline-verifier.html",
   "apps/offline-record-seal.html",
@@ -105,7 +106,8 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}.md`, `release:lock`],
   [`docs/releases/${releaseVersion}.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}.md`, `${releaseVersion}-invariant-register.md`],
-  [`docs/releases/${releaseVersion}.md`, "Physical Face ID/native iOS chooser"],
+  [`docs/releases/${releaseVersion}.md`, "v117.0.0-planning.md"],
+  [`docs/releases/${releaseVersion}.md`, "Supabase migration history"],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-regression-lessons.md`],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}-product-truth.md`, `${releaseVersion}-invariant-register.md`],
@@ -118,15 +120,17 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-performance-findings.md`],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-invariant-register.md`],
   [`docs/releases/${releaseVersion}-process.md`, `${releaseVersion}-commit-history.md`],
+  [`docs/releases/${releaseVersion}-process.md`, "dependency tree was removed"],
   [`docs/releases/${releaseVersion}-regression-lessons.md`, "Release-Lock Requirement"],
   [`docs/releases/${releaseVersion}-performance-findings.md`, "Release-Lock Requirement"],
   [`docs/releases/${releaseVersion}-invariant-register.md`, "Release-Lock Requirement"],
   [`docs/releases/${releaseVersion}-commit-history.md`, "Release-Lock Requirement"],
+  ["docs/releases/v117.0.0-planning.md", "V116 contains no new orchestration layer"],
   [`docs/releases/${releaseVersion}-constitution-registry.json`, `"version": "${bareVersion}"`],
-  [`docs/releases/${releaseVersion}-constitution-registry.json`, `"previousRegistryDigest": "ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a"`],
-  [`docs/releases/${releaseVersion}-constitution-registry.digest`, "69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246"],
-  ["README.md", "69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246"],
-  ["README.md", ">=115.0.0 <116.0.0"]
+  [`docs/releases/${releaseVersion}-constitution-registry.json`, `"previousRegistryDigest": "69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246"`],
+  [`docs/releases/${releaseVersion}-constitution-registry.digest`, "9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80"],
+  ["README.md", "9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80"],
+  ["README.md", ">=116.0.0 <117.0.0"]
 ];
 
 const errors = [];

@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v115.0.0`
+Current release: `v116.0.0`
 
-## What changed in v115.0.0
+## What changed in v116.0.0
 
-- Current standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker surfaces align at `115.0.0`.
-- The complete release is recorded at [docs/releases/v115.0.0.md](docs/releases/v115.0.0.md), with [product truth](docs/releases/v115.0.0-product-truth.md), [checklist](docs/releases/v115.0.0-checklist.md), [process](docs/releases/v115.0.0-process.md), [regression lessons](docs/releases/v115.0.0-regression-lessons.md), [performance findings](docs/releases/v115.0.0-performance-findings.md), [invariant register](docs/releases/v115.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v115.0.0-commit-history.md).
-- Native Capture binds exact camera-ceremony photo/video source bytes beneath the enclosing sealed artifact; ordinary uploads cannot mint that provenance.
-- Verified offline PBI authorship appends deterministic signer history only after canonical predecessor verification and cannot transfer ownership or rewrite media, provenance, or prior history.
-- Canonical successor verification gates download, while accepted authorship settles locally before optional weaker publication.
-- The durable outbox fails closed on corrupt state, preserves every pending proof, drains same-run admissions under bounded quiescence, and compacts only exact acknowledgements.
-- Frozen v114 profile/economy proof objects, ownership, carriers, deterministic first paint, and verifier behavior remain verifiable and unchanged.
-- The v115 registry digest is `69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246`, chained to v114 digest `ae912154d97b695464c3a19361bceb9440bc5d703a1d9129edac92c64192e29a`.
-- The compatibility interval is `>=115.0.0 <116.0.0`; broader SDK orchestration remains deferred to v116.
+- Current standalone package, verifier, Sports verifier, studio, settlement, documentation, and service-worker surfaces align at `116.0.0`.
+- The sealed baseline is recorded at [docs/releases/v116.0.0.md](docs/releases/v116.0.0.md), with [product truth](docs/releases/v116.0.0-product-truth.md), [checklist](docs/releases/v116.0.0-checklist.md), [process](docs/releases/v116.0.0-process.md), [regression lessons](docs/releases/v116.0.0-regression-lessons.md), [performance findings](docs/releases/v116.0.0-performance-findings.md), [invariant register](docs/releases/v116.0.0-invariant-register.md), and [commit-history boundary](docs/releases/v116.0.0-commit-history.md).
+- V116 promotes the proven product baseline without adding an authority model, orchestration layer, issuer, verifier hierarchy, or proof chain.
+- First use begins with Composer; optional Twin setup is not required to publish a verified Original.
+- Accepted PBI identity proof survives returning-owner refresh because known verified truth paints first and weaker projection may append but not erase.
+- Active signed terms reach Business Creator execution; purchased credits remain non-expiring and reconcile across checkout, refunds, dispute loss, and idempotent restoration.
+- Core creation, identity, proof, ownership, verification, and sharing remain free; Premium powers Creator/Live Twin AI and Business adds production API execution.
+- The v116 registry digest is `9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80`, chained to v115 digest `69b553d5ff8c1287ff33bfb2f3197ea3ec9bccf6a6ce9d3c47107d0819d3f246`.
+- Compatibility is `>=116.0.0 <117.0.0`; broader orchestration is explicitly deferred to the [v117 planning boundary](docs/releases/v117.0.0-planning.md).
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,9 +22,9 @@ Current release: `v115.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v115.0.0-checklist.md](docs/releases/v115.0.0-checklist.md).
-- Real WebKit evidence covers two offline PDF successors; physical Face ID/native iOS chooser qualification remains unclaimed.
-- Three timestamped SQL migrations remain unapplied. Attestation, publication, remote Git, deployment, production mutation/smoke, and GitHub release publication remain external or unchecked.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v116.0.0-checklist.md](docs/releases/v116.0.0-checklist.md).
+- Dispute-credit SQL is installed, but Supabase migration history does not record the July files; twelve other July migrations remain unchecked.
+- The upstream dependency tree is unavailable, so product/focused/full-freeze/governance/attestation/visual gates remain unchecked. Publication, remote Git, deployment, and production smoke remain external.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -42,7 +42,7 @@ Current release: `v115.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v115.0.0` Native Capture and offline PBI release is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v116.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
