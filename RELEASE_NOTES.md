@@ -1,5 +1,39 @@
 # Release Notes
 
+## v118.0.0
+Release date: 2026-08-01
+
+`v118.0.0` makes the coordinated application, SDK, MCP, constitutional
+verifier, AI skills, registry, ruleset, operation matrix, package ranges, and
+packed runtime one release identity while the standalone verifier distribution
+advances without changing artifact verification authority.
+
+Canonical release note: [docs/releases/v118.0.0.md](docs/releases/v118.0.0.md)
+Product truth: [docs/releases/v118.0.0-product-truth.md](docs/releases/v118.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v118.0.0-checklist.md](docs/releases/v118.0.0-checklist.md)
+Release process: [docs/releases/v118.0.0-process.md](docs/releases/v118.0.0-process.md)
+Regression lessons: [docs/releases/v118.0.0-regression-lessons.md](docs/releases/v118.0.0-regression-lessons.md)
+Full arc: [docs/releases/v118.0.0-full-arc.md](docs/releases/v118.0.0-full-arc.md)
+Lineage: [docs/releases/v118.0.0-lineage.md](docs/releases/v118.0.0-lineage.md)
+Compatibility matrix: [docs/releases/v118.0.0-compatibility-matrix.md](docs/releases/v118.0.0-compatibility-matrix.md)
+Commit ledger: [docs/releases/v118.0.0-commit-history.md](docs/releases/v118.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v118.0.0-constitution-registry.json](docs/releases/v118.0.0-constitution-registry.json)
+Deferred orchestration plan: [docs/releases/v119.0.0-planning.md](docs/releases/v119.0.0-planning.md)
+
+### Proof and identity continuity
+
+- The exact transaction proof object remains embedded in and stronger than the collected `/v/` image artifact.
+- The unchanged offline verifier accepts the artifact and rejects embedded transaction tampering.
+- Registry digest is `c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360`; matrix digest is `153b2472830567ec3b445c2c1b4102e4c036ed4c45cc374d40d0079096a40f54`.
+- Compatibility is `>=118.0.0 <119.0.0`; durable proof memory remains first admission only, then append forever.
+
+### Evidence and operational boundary
+
+- The coordinated release commit `05e9ddc051cbfacb255fcc1e25d38a6be6c59407` is present on its `origin/main`.
+- This repository qualifies its standalone static distribution and archival mirror only.
+- npm publication, GitHub signing, deployment, production mutation, and production smoke are not independently established here.
+- V119 planning adds no v118 orchestration behavior or authority.
+
 ## v117.0.0
 Release date: 2026-08-01
 

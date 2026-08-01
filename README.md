@@ -2,16 +2,17 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v117.0.0`
+Current release: `v118.0.0`
 
-## What changed in v117.0.0
+## What changed in v118.0.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement, documentation, and service-worker surfaces align at `117.0.0`.
-- The coordinated release book is recorded at [docs/releases/v117.0.0.md](docs/releases/v117.0.0.md), with [product truth](docs/releases/v117.0.0-product-truth.md), [checklist](docs/releases/v117.0.0-checklist.md), [process](docs/releases/v117.0.0-process.md), [regression lessons](docs/releases/v117.0.0-regression-lessons.md), and [commit-history boundary](docs/releases/v117.0.0-commit-history.md).
-- V117 preserves the complete v116 constitutional law inventory while locking implemented Contacts, PWA, Profile, Sports, Wallet, Glyph Settlement, `/t/`, and `/v/` continuity outcomes in the coordinated application release.
-- The standalone verifier continues to project sealed artifact truth directly; no app, SDK, MCP, AI, server, database, session, metadata, or service-worker state becomes proof authority.
-- The v117 registry digest is `598ee0fa4dc31b8394fdd2b7b8fe713c8ee8c4b33e6ecdd92101a1a93d8787a8`, chained to v116 digest `9bf61fcf4541edf565bb2ded252e35a976a3ca7c9176dea0f1ffac74ce192a80`.
-- Compatibility is `>=117.0.0 <118.0.0`; the unimplemented orchestration proposal is explicitly deferred to the [v118 planning boundary](docs/releases/v118.0.0-planning.md).
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement, documentation, and service-worker surfaces align at `118.0.0`.
+- The complete release book is recorded at [docs/releases/v118.0.0.md](docs/releases/v118.0.0.md), with [product truth](docs/releases/v118.0.0-product-truth.md), [checklist](docs/releases/v118.0.0-checklist.md), [process](docs/releases/v118.0.0-process.md), [regression lessons](docs/releases/v118.0.0-regression-lessons.md), [full v110–v118 arc](docs/releases/v118.0.0-full-arc.md), [lineage](docs/releases/v118.0.0-lineage.md), [compatibility matrix](docs/releases/v118.0.0-compatibility-matrix.md), [80-law registry](docs/releases/v118.0.0-constitution-registry.json), and [452-commit ledger](docs/releases/v118.0.0-commit-history.md).
+- V118 makes app, SDK, MCP, constitutional verifier, AI skills, registry, ruleset, operation matrix, package ranges, and packed runtime one indivisible coordinated identity.
+- The existing offline verifier accepts the transaction-carrying `/v/` image artifact without a verifier change and rejects tampered embedded transaction truth.
+- The v118 registry digest is `c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360`, chained to v117 digest `598ee0fa4dc31b8394fdd2b7b8fe713c8ee8c4b33e6ecdd92101a1a93d8787a8`.
+- The operation matrix digest is `153b2472830567ec3b445c2c1b4102e4c036ed4c45cc374d40d0079096a40f54`; compatibility is `>=118.0.0 <119.0.0`.
+- The 15-task orchestration program is explicitly deferred to the [v119 planning boundary](docs/releases/v119.0.0-planning.md).
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -19,8 +20,8 @@ Current release: `v117.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v117.0.0-checklist.md](docs/releases/v117.0.0-checklist.md).
-- Application/package release-freeze, coordinated-package, browser, governance, and attestation gates are not established by this standalone archive. Publication, remote Git, deployment, database mutation, and production smoke remain external.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v118.0.0-checklist.md](docs/releases/v118.0.0-checklist.md).
+- The coordinated release commit is present on the application repository's `origin/main`; npm publication, GitHub signing, deployment, production mutation, and production smoke remain external to this standalone archive.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -38,7 +39,7 @@ Current release: `v117.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v117.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v118.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

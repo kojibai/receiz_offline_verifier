@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v118.0.0] - 2026-08-01
+
+### Added
+
+- Added the complete v110–v118 architectural arc, 452-commit ledger, lineage, compatibility matrix, 80-law registry mirror, and v119 orchestration deferral.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement, documentation, and service-worker identity to `118.0.0`.
+- Advanced registry identity to `c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360`, operation matrix identity to `153b2472830567ec3b445c2c1b4102e4c036ed4c45cc374d40d0079096a40f54`, and compatibility to `>=118.0.0 <119.0.0`.
+- Preserved the existing verifier contract while recording exact transaction-proof embedding and tamper rejection beneath the enclosing artifact.
+
+### Evidence boundary
+
+- The coordinated application release commit is present on its `origin/main`; this repository records it without modifying the application repository.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, and Git integrity are the local qualification surface.
+- npm publication, GitHub signing, deployment, production mutation, and production smoke remain separate and unclaimed here.
+
 ## [v117.0.0] - 2026-08-01
 
 ### Added
