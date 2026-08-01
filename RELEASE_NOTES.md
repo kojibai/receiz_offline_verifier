@@ -1,5 +1,36 @@
 # Release Notes
 
+## v117.0.0
+Release date: 2026-08-01
+
+`v117.0.0` locks the implemented post-v116 product and package work while the
+standalone distribution advances its verifier, Studio, Sports, settlement,
+documentation, registry, and service-worker identity without changing proof
+authority.
+
+Canonical full release note: [docs/releases/v117.0.0.md](docs/releases/v117.0.0.md)
+Product truth: [docs/releases/v117.0.0-product-truth.md](docs/releases/v117.0.0-product-truth.md)
+Release checklist: [docs/releases/v117.0.0-checklist.md](docs/releases/v117.0.0-checklist.md)
+Release process: [docs/releases/v117.0.0-process.md](docs/releases/v117.0.0-process.md)
+Regression lessons: [docs/releases/v117.0.0-regression-lessons.md](docs/releases/v117.0.0-regression-lessons.md)
+Commit-history boundary: [docs/releases/v117.0.0-commit-history.md](docs/releases/v117.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v117.0.0-constitution-registry.json](docs/releases/v117.0.0-constitution-registry.json)
+Deferred orchestration plan: [docs/releases/v118.0.0-planning.md](docs/releases/v118.0.0-planning.md)
+
+### Proof continuity
+
+- The 79-law constitutional inventory remains additive and unchanged from v116.
+- Exact sealed artifacts and verified append-only history remain stronger than app, SDK, MCP, AI, server, database, session, metadata, or service-worker state.
+- Coordinated Contacts, PWA, Profile, Sports, Wallet, Glyph Settlement, `/t/`, and `/v/` outcomes remain named as proof, settlement, or public witness primitives.
+- Registry digest is `598ee0fa4dc31b8394fdd2b7b8fe713c8ee8c4b33e6ecdd92101a1a93d8787a8`; compatibility is `>=117.0.0 <118.0.0`.
+
+### Evidence and operational boundary
+
+- The application release commit `bc74831885e2a69b50ecc8388ce311e75e4c6803` is present on its `origin/main`.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- npm publication, application tag, deployment, database mutation, production smoke verification, and signed attestation are not independently established here.
+- The v118 planning record adds no v117 orchestration behavior or authority.
+
 ## v116.0.0
 Release date: 2026-07-30
 

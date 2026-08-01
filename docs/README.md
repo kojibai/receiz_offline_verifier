@@ -1,24 +1,23 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v116.0.0`.
+This directory is the public documentation set for Receiz `v117.0.0`.
 
 ## Start Here
 
-- [releases/v116.0.0.md](releases/v116.0.0.md): canonical sealed current-product baseline.
-- [releases/v116.0.0-product-truth.md](releases/v116.0.0-product-truth.md): unchanged authority and product-continuity truth.
-- [releases/v116.0.0-checklist.md](releases/v116.0.0-checklist.md): product, release, SQL/history, and external boundaries.
-- [releases/v116.0.0-process.md](releases/v116.0.0-process.md): baseline promotion and qualification limitations.
-- [releases/v116.0.0-regression-lessons.md](releases/v116.0.0-regression-lessons.md): PBI, credit, entitlement, and first-use regression lock.
-- [releases/v116.0.0-performance-findings.md](releases/v116.0.0-performance-findings.md): known-proof-first paint and settlement reconciliation findings.
-- [releases/v116.0.0-invariant-register.md](releases/v116.0.0-invariant-register.md): product, proof, credit, registry, SQL, and evidence lock.
-- [releases/v116.0.0-commit-history.md](releases/v116.0.0-commit-history.md): upstream baseline and standalone-verifier history boundary.
-- [releases/v116.0.0-constitution-registry.digest](releases/v116.0.0-constitution-registry.digest): canonical v116 registry digest.
-- [releases/v116.0.0-constitution-registry.json](releases/v116.0.0-constitution-registry.json): deterministic 79-law v116 constitutional registry.
-- [releases/v117.0.0-planning.md](releases/v117.0.0-planning.md): deferred orchestration planning boundary with no v116 implementation effect.
+- [releases/v117.0.0.md](releases/v117.0.0.md): canonical coordinated release record and standalone boundary.
+- [releases/v117.0.0-product-truth.md](releases/v117.0.0-product-truth.md): additive proof, identity, settlement, and first-paint truth.
+- [releases/v117.0.0-checklist.md](releases/v117.0.0-checklist.md): coordinated and standalone evidence boundaries.
+- [releases/v117.0.0-process.md](releases/v117.0.0-process.md): upstream/local baseline distinction and qualification method.
+- [releases/v117.0.0-regression-lessons.md](releases/v117.0.0-regression-lessons.md): continuity and release-law regression lock.
+- [releases/v117.0.0-commit-history.md](releases/v117.0.0-commit-history.md): coordinated history and standalone archive baseline.
+- [releases/v117.0.0-constitution-registry.digest](releases/v117.0.0-constitution-registry.digest): canonical v117 registry digest.
+- [releases/v117.0.0-constitution-registry.json](releases/v117.0.0-constitution-registry.json): deterministic 79-law v117 constitutional registry.
+- [releases/v117.0.0-planning.md](releases/v117.0.0-planning.md): historical relocation pointer.
+- [releases/v118.0.0-planning.md](releases/v118.0.0-planning.md): deferred orchestration boundary with no v117 implementation effect.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v116.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v117.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

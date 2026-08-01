@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v117.0.0] - 2026-08-01
+
+### Added
+
+- Added the coordinated v117 release archive, 79-law registry mirror, local/upstream history distinction, and v118 orchestration deferral.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement, documentation, and service-worker identity to `117.0.0`.
+- Advanced registry identity to `598ee0fa4dc31b8394fdd2b7b8fe713c8ee8c4b33e6ecdd92101a1a93d8787a8` with compatibility `>=117.0.0 <118.0.0`.
+- Carried forward deterministic file proof, verified local truth, proof-native settlement, identity continuity, and append-only history without changing verifier semantics.
+
+### Evidence boundary
+
+- The coordinated application release commit is present on its `origin/main`; this repository records that fact without modifying the application repository.
+- Standalone release lock, lint/build, archive parity, relative links, registry chain, and Git integrity are the local qualification surface.
+- npm publication, application tag, deployment, database mutation, production smoke verification, and signed attestation remain separate and unclaimed here.
+
 ## [v116.0.0] - 2026-07-30
 
 ### Changed

@@ -1,6 +1,6 @@
 # Literal Product Law
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v116.0.0`
+Status: Canonical reference from `v70.0.0`; carried forward for `v117.0.0`
 
 Receiz doctrine is statute, not suggestion.
 
