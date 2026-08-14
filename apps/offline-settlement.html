@@ -438,20 +438,25 @@
   </style>
 </head>
 <body>
+  <script>
+    if (location.protocol === "http:" || location.protocol === "https:") {
+      location.replace("/offline-settlement");
+    }
+  </script>
   <main class="shell">
     <section class="hero">
       <div class="brand-row">
         <div class="mark">R</div>
         <div class="wordmark">Receiz</div>
-        <div class="tag">Offline Settlement</div>
+        <div class="tag">Offline Settlement · v119.0.0</div>
       </div>
       <h1>Offline settlement bundle builder</h1>
       <p class="sub">
-        Add offline settlement note artifacts, derive deterministic pulse ordering, then export a single offline-settlement claim bundle (PNG or JSON).
-        Upload that bundle on <a class="inline-link" href="/ledger" target="_blank" rel="noreferrer noopener">/ledger</a> and import it to execute claims globally.
+        This standalone file assembles already-settled Note evidence and computes deterministic Kai Pulse ordering without creating transition authority. The accepted local claim at its deterministic Kai Pulse is Settlement. It does not activate, consume, transfer, or reseal a Note.
+        If wider discovery or account projection is wanted, upload that already-settled bundle on <a class="inline-link" href="/ledger" target="_blank" rel="noreferrer noopener">/ledger</a>. The import publishes verified additions; it does not execute or reopen Settlement.
       </p>
       <p class="policy-note">
-        <strong>Settlement policy:</strong> Claim offline only notes bound to your @username. Bound notes preserve claimant authority while you are offline, and binding is enforced when the settlement claim is processed on the ledger. Unbound notes are first-claim instruments and may be claimed by another account before your settlement claim is processed on the ledger.
+        <strong>Exact boundary:</strong> Canonical Note verification and qualified Cash Send use the shared Receiz runtime at <a class="inline-link" href="/offline-settlement">/offline-settlement</a>. This downloadable evidence assembler never invents a second verifier or a second custody authority. Optional later ledger publication coordinates discovery only; it does not create, confirm, complete, or revoke local Settlement.
       </p>
 
       <div class="row" id="summaryPills">
@@ -481,6 +486,7 @@
         <button class="btn-soft" id="importBundleBtn" type="button">Import Existing Bundle</button>
         <button id="clearBtn" type="button">Clear List</button>
         <button id="downloadPageBtn" type="button">Download This Tool</button>
+        <a class="inline-link" href="/offline-settlement">Open canonical Verify + Cash Send</a>
       </div>
       <div class="table-wrap">
         <table>
@@ -510,7 +516,7 @@
         <a class="inline-link" href="/ledger" target="_blank" rel="noreferrer noopener">Open /ledger import</a>
       </div>
       <p class="footer-note">
-        This page is fully local and does not require network calls. Settlement claim processing occurs when you upload the exported bundle on `/ledger`. Receiz v118.0.0.
+        This page is fully local and does not require network calls. Each Note’s carried Settlement predates this evidence bundle. Uploading the exported bundle on `/ledger` is optional global publication and account projection only.
       </p>
     </section>
 
@@ -1301,7 +1307,7 @@
 
         ctx.fillStyle = "#274d7a";
         ctx.font = '500 28px "Avenir Next", "Segoe UI", sans-serif';
-        ctx.fillText("Deterministic pulse ordering for ledger import and global claim posting.", 126, 354);
+        ctx.fillText("Deterministic Kai Pulse ordering of carried Settlement evidence.", 126, 354);
 
         drawRoundedRect(ctx, 122, 404, width - 244, 360, 26);
         const panel = ctx.createLinearGradient(0, 404, 0, 764);
@@ -1335,7 +1341,7 @@
         ctx.fillStyle = "#345d8b";
         ctx.font = '600 16px "Avenir Next", "Segoe UI", sans-serif';
         ctx.fillText("Payload chunk: receiz.ledger_claim_batch", 126, 850);
-        ctx.fillText("Upload this PNG on /ledger Import Bundle to execute all bundled claims.", 126, 884);
+        ctx.fillText("Optional: publish this already-settled bundle on /ledger for wider discovery.", 126, 884);
         return canvas;
       }
 

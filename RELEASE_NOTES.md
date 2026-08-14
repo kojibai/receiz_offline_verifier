@@ -1,5 +1,36 @@
 # Release Notes
 
+## v119.0.0
+Release date: 2026-08-13
+
+`v119.0.0` closes qualified Offline Note custody at the proof-object boundary
+and advances the standalone verifier distribution without changing canonical
+artifact-verification authority.
+
+Canonical release note: [docs/releases/v119.0.0.md](docs/releases/v119.0.0.md)
+Product truth: [docs/releases/v119.0.0-product-truth.md](docs/releases/v119.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v119.0.0-checklist.md](docs/releases/v119.0.0-checklist.md)
+Release process: [docs/releases/v119.0.0-process.md](docs/releases/v119.0.0-process.md)
+Regression lessons: [docs/releases/v119.0.0-regression-lessons.md](docs/releases/v119.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v119.0.0-compatibility-matrix.md](docs/releases/v119.0.0-compatibility-matrix.md)
+Commit history: [docs/releases/v119.0.0-commit-history.md](docs/releases/v119.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v119.0.0-constitution-registry.json](docs/releases/v119.0.0-constitution-registry.json)
+
+### Offline custody continuity
+
+- One qualified local issuance composes a canonically verified Reserve subtraction and an equal whole-value held-bound Note genesis.
+- Offline Send consumes the exact current Note head once, and receiver activation completes local Settlement.
+- Server, database, chain, session, and publication remain projection or distribution beneath the artifact and custody proof.
+- Unqualified installations retain canonical verification and fail closed for transferable Offline Note creation, receipt, activation, and Offline Send.
+- Registry digest is `49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9`; immutable predecessor is `c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360`.
+- Application matrix digest is `53cf9d6862b2396e2fe7864f8607c00c4e3b6e31b082ab5c5c8dff088fcb52c1`; compatibility is `>=119.0.0 <120.0.0`.
+
+### Evidence and operational boundary
+
+- The coordinated application candidate is `dbf016285c048476c03e629c0430a9b175162683`; it remains local and 29 commits ahead of its `origin/main` at qualification time.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- Package publication, upstream push/tag, deployment, production smoke, production physical-profile qualification, and signed attestation remain unclaimed until separately observed.
+
 ## v118.0.0
 Release date: 2026-08-01
 

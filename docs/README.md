@@ -1,26 +1,23 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v118.0.0`.
+This directory is the public documentation set for Receiz `v119.0.0`.
 
 ## Start Here
 
-- [releases/v118.0.0.md](releases/v118.0.0.md): indivisible coordinated release identity and standalone boundary.
-- [releases/v118.0.0-product-truth.md](releases/v118.0.0-product-truth.md): transaction-proof, settlement, identity, and historical continuity truth.
-- [releases/v118.0.0-checklist.md](releases/v118.0.0-checklist.md): coordinated and standalone evidence boundaries.
-- [releases/v118.0.0-process.md](releases/v118.0.0-process.md): construction, package qualification, environment, and local-history boundaries.
-- [releases/v118.0.0-regression-lessons.md](releases/v118.0.0-regression-lessons.md): package drift, transaction artifact, settlement, and planning locks.
-- [releases/v118.0.0-full-arc.md](releases/v118.0.0-full-arc.md): complete v110–v118 architectural story.
-- [releases/v118.0.0-lineage.md](releases/v118.0.0-lineage.md): immutable release and registry lineage.
-- [releases/v118.0.0-compatibility-matrix.md](releases/v118.0.0-compatibility-matrix.md): exact current package and operation compatibility.
-- [releases/v118.0.0-commit-history.md](releases/v118.0.0-commit-history.md): complete 452-commit coordinated ledger and standalone baseline.
-- [releases/v118.0.0-constitution-registry.digest](releases/v118.0.0-constitution-registry.digest): canonical v118 registry digest.
-- [releases/v118.0.0-constitution-registry.json](releases/v118.0.0-constitution-registry.json): deterministic 80-law v118 constitutional registry.
-- [releases/v118.0.0-planning.md](releases/v118.0.0-planning.md): historical v118 planning boundary.
-- [releases/v119.0.0-planning.md](releases/v119.0.0-planning.md): deferred 15-task orchestration program with no v118 implementation effect.
+- [releases/v119.0.0.md](releases/v119.0.0.md): irreversible Offline Note custody release identity and standalone evidence boundary.
+- [releases/v119.0.0-product-truth.md](releases/v119.0.0-product-truth.md): Reserve, Note, exact-head custody, receiver Settlement, and historical continuity truth.
+- [releases/v119.0.0-checklist.md](releases/v119.0.0-checklist.md): coordinated and standalone evidence boundaries.
+- [releases/v119.0.0-process.md](releases/v119.0.0-process.md): construction and qualification boundaries.
+- [releases/v119.0.0-regression-lessons.md](releases/v119.0.0-regression-lessons.md): custody, projection, qualification, and release lessons.
+- [releases/v119.0.0-compatibility-matrix.md](releases/v119.0.0-compatibility-matrix.md): exact current package, registry, matrix, and qualification compatibility.
+- [releases/v119.0.0-commit-history.md](releases/v119.0.0-commit-history.md): coordinated candidate and standalone baseline boundary.
+- [releases/v119.0.0-constitution-registry.digest](releases/v119.0.0-constitution-registry.digest): canonical v119 registry digest.
+- [releases/v119.0.0-constitution-registry.json](releases/v119.0.0-constitution-registry.json): deterministic 85-law v119 constitutional registry.
+- [releases/v119.0.0-planning.md](releases/v119.0.0-planning.md): complete v119 implementation-plan record.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v118.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v119.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

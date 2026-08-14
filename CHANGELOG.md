@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v119.0.0] - 2026-08-13
+
+### Added
+
+- Added the complete v119 irreversible Offline Note custody archive, 85-law constitutional registry mirror, compatibility matrix, implementation-plan record, and explicit standalone evidence boundary.
+- Added standalone lock coverage for exact Reserve subtraction, equal whole-value held-bound Note genesis, exact-head single consumption, receiver-local Settlement, and unqualified-installation failure behavior.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `119.0.0`.
+- Advanced registry identity to `49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9`, operation matrix identity to `53cf9d6862b2396e2fe7864f8607c00c4e3b6e31b082ab5c5c8dff088fcb52c1`, and compatibility to `>=119.0.0 <120.0.0`.
+- Kept the downloadable settlement assembler beneath canonical Verify and Cash Send; it assembles already-settled evidence and cannot create transition or custody authority.
+
+### Evidence boundary
+
+- The coordinated application candidate `dbf016285c048476c03e629c0430a9b175162683` remains local and 29 commits ahead of its `origin/main`; this archive does not claim an upstream release.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, and Git integrity are the local qualification surface.
+- Package publication, upstream push/tag, deployment, production smoke, production physical-profile qualification, and signed attestation remain separate and unclaimed here.
+
 ## [v118.0.0] - 2026-08-01
 
 ### Added
