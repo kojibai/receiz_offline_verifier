@@ -2,17 +2,18 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v119.0.0`
+Current release: `v120.0.0`
 
-## What changed in v119.0.0
+## What changed in v120.0.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `119.0.0`.
-- The complete release book is recorded at [docs/releases/v119.0.0.md](docs/releases/v119.0.0.md), with [product truth](docs/releases/v119.0.0-product-truth.md), [checklist](docs/releases/v119.0.0-checklist.md), [process](docs/releases/v119.0.0-process.md), [regression lessons](docs/releases/v119.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v119.0.0-compatibility-matrix.md), [85-law registry](docs/releases/v119.0.0-constitution-registry.json), and [commit history](docs/releases/v119.0.0-commit-history.md).
-- V119 closes qualified Offline Note custody at the proof-object boundary: verified Reserve subtraction and equal whole-value held-bound Note genesis compose locally, each exact held Note head is consumed once, and receiver activation completes local Settlement.
-- Server, database, chain, session, and global publication remain projection or distribution beneath exact artifact, custody, and Settlement truth.
-- Unqualified installations fail closed for transferable Offline Note creation, receipt, activation, and Offline Send while canonical verification remains available.
-- The v119 registry digest is `49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9`, chained to immutable v118 digest `c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360`.
-- The operation matrix digest is `53cf9d6862b2396e2fe7864f8607c00c4e3b6e31b082ab5c5c8dff088fcb52c1`; compatibility is `>=119.0.0 <120.0.0`.
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `120.0.0`.
+- The complete release book is recorded at [docs/releases/v120.0.0.md](docs/releases/v120.0.0.md), with [product truth](docs/releases/v120.0.0-product-truth.md), [checklist](docs/releases/v120.0.0-checklist.md), [process](docs/releases/v120.0.0-process.md), [regression lessons](docs/releases/v120.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v120.0.0-compatibility-matrix.md), [conformance](docs/releases/v120.0.0-conformance.md), [migration law](docs/releases/v120.0.0-migration.md), [97-law registry](docs/releases/v120.0.0-constitution-registry.json), and [commit history](docs/releases/v120.0.0-commit-history.md).
+- V120 makes creatures, characters, vehicles, agents, collectibles, and other proof-native beings first-class living subjects with immutable identity, complete proof history, portable mind, event-derived memory, relationships, inventory, mandates, and deterministic world participation.
+- Canonical head, complete history, Kai/Merkle/Fibonacci indexes, and exact primary proof-object bytes remain stronger than bounded reasoning windows, summaries, model output, animation, speech, or provider state.
+- Consequential action requires validated typed commands and deterministic atomic admission; model intentions and performance remain non-authoritative.
+- Bearer transfer preserves the same subject identity and complete history while enforcing exact-head, one-time claim, revocation, pending custody, and zero-write failure boundaries.
+- The v120 registry digest is `0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073`, chained to immutable v119 digest `49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9`.
+- The operation matrix digest is `1c779ee5ade4b877ae9c6922ab02ba96fffffeb7580f1cf105a59fbb4424f351`; compatibility is `>=120.0.0 <121.0.0`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -20,8 +21,8 @@ Current release: `v119.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v119.0.0-checklist.md](docs/releases/v119.0.0-checklist.md).
-- The coordinated application candidate `dbf016285c048476c03e629c0430a9b175162683` remains local and 29 commits ahead of its `origin/main`; this standalone archive does not claim that it was pushed, tagged, published, deployed, attested, production-qualified, or smoke-tested.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v120.0.0-checklist.md](docs/releases/v120.0.0-checklist.md).
+- The coordinated application source is present on `origin/main` at merge commit `f2fd8003d5603a322376e9465f4b5c70553a44a3`; no application `v120.0.0` tag, package publication, deployment, signed attestation, generated narration audio, or production smoke is inferred by this standalone archive.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -39,7 +40,7 @@ Current release: `v119.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v119.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v120.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

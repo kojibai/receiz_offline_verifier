@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v120.0.0] - 2026-08-16
+
+### Added
+
+- Added the complete v120 Living Proof Subjects archive, 97-law constitutional registry mirror, compatibility matrix, conformance record, migration law, and explicit standalone evidence boundary.
+- Added standalone lock coverage for immutable subject identity, complete proof history, bounded exact-object retrieval, deterministic command admission, atomic multi-subject effects, mandate revalidation, bearer transfer, narration readiness, and historical artifact compatibility.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `120.0.0`.
+- Advanced registry identity to `0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073`, operation matrix identity to `1c779ee5ade4b877ae9c6922ab02ba96fffffeb7580f1cf105a59fbb4424f351`, and compatibility to `>=120.0.0 <121.0.0`.
+- Preserved canonical artifact verification and evidence-only settlement behavior while recording living-subject runtime truth as coordinated application evidence rather than standalone implementation.
+
+### Evidence boundary
+
+- The coordinated application source is pushed at `origin/main` merge commit `f2fd8003d5603a322376e9465f4b5c70553a44a3`; no application `v120.0.0` tag was observed during standalone qualification.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, current surfaces, and Git integrity are the local qualification surface.
+- Package publication, deployment, production smoke, generated narration audio, production writes, and signed attestation remain separate and unclaimed here.
+
 ## [v119.0.0] - 2026-08-13
 
 ### Added

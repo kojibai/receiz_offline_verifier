@@ -1,23 +1,24 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v119.0.0`.
+This directory is the public documentation set for Receiz `v120.0.0`.
 
 ## Start Here
 
-- [releases/v119.0.0.md](releases/v119.0.0.md): irreversible Offline Note custody release identity and standalone evidence boundary.
-- [releases/v119.0.0-product-truth.md](releases/v119.0.0-product-truth.md): Reserve, Note, exact-head custody, receiver Settlement, and historical continuity truth.
-- [releases/v119.0.0-checklist.md](releases/v119.0.0-checklist.md): coordinated and standalone evidence boundaries.
-- [releases/v119.0.0-process.md](releases/v119.0.0-process.md): construction and qualification boundaries.
-- [releases/v119.0.0-regression-lessons.md](releases/v119.0.0-regression-lessons.md): custody, projection, qualification, and release lessons.
-- [releases/v119.0.0-compatibility-matrix.md](releases/v119.0.0-compatibility-matrix.md): exact current package, registry, matrix, and qualification compatibility.
-- [releases/v119.0.0-commit-history.md](releases/v119.0.0-commit-history.md): coordinated candidate and standalone baseline boundary.
-- [releases/v119.0.0-constitution-registry.digest](releases/v119.0.0-constitution-registry.digest): canonical v119 registry digest.
-- [releases/v119.0.0-constitution-registry.json](releases/v119.0.0-constitution-registry.json): deterministic 85-law v119 constitutional registry.
-- [releases/v119.0.0-planning.md](releases/v119.0.0-planning.md): complete v119 implementation-plan record.
+- [releases/v120.0.0.md](releases/v120.0.0.md): Living Proof Subjects release identity and standalone evidence boundary.
+- [releases/v120.0.0-product-truth.md](releases/v120.0.0-product-truth.md): immutable subject identity, complete proof brain, deterministic world action, transfer, narration, and Showcase truth.
+- [releases/v120.0.0-checklist.md](releases/v120.0.0-checklist.md): coordinated and standalone evidence boundaries.
+- [releases/v120.0.0-process.md](releases/v120.0.0-process.md): construction and qualification boundaries.
+- [releases/v120.0.0-regression-lessons.md](releases/v120.0.0-regression-lessons.md): history, model-authority, atomicity, transfer, narration, and release lessons.
+- [releases/v120.0.0-compatibility-matrix.md](releases/v120.0.0-compatibility-matrix.md): exact current package, registry, matrix, reducer, schema, and range compatibility.
+- [releases/v120.0.0-conformance.md](releases/v120.0.0-conformance.md): living-subject and application conformance evidence.
+- [releases/v120.0.0-migration.md](releases/v120.0.0-migration.md): additive v119-to-v120 migration law.
+- [releases/v120.0.0-commit-history.md](releases/v120.0.0-commit-history.md): coordinated source and standalone baseline boundary.
+- [releases/v120.0.0-constitution-registry.digest](releases/v120.0.0-constitution-registry.digest): canonical v120 registry digest.
+- [releases/v120.0.0-constitution-registry.json](releases/v120.0.0-constitution-registry.json): deterministic 97-law v120 constitutional registry.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v119.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v120.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

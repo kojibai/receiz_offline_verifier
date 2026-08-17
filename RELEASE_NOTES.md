@@ -1,5 +1,39 @@
 # Release Notes
 
+## v120.0.0
+Release date: 2026-08-16
+
+`v120.0.0` seals the Living Proof Subjects release archive and advances the
+standalone verifier distribution without changing canonical artifact-verifier
+authority.
+
+Canonical release note: [docs/releases/v120.0.0.md](docs/releases/v120.0.0.md)
+Product truth: [docs/releases/v120.0.0-product-truth.md](docs/releases/v120.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v120.0.0-checklist.md](docs/releases/v120.0.0-checklist.md)
+Release process: [docs/releases/v120.0.0-process.md](docs/releases/v120.0.0-process.md)
+Regression lessons: [docs/releases/v120.0.0-regression-lessons.md](docs/releases/v120.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v120.0.0-compatibility-matrix.md](docs/releases/v120.0.0-compatibility-matrix.md)
+Conformance: [docs/releases/v120.0.0-conformance.md](docs/releases/v120.0.0-conformance.md)
+Migration: [docs/releases/v120.0.0-migration.md](docs/releases/v120.0.0-migration.md)
+Commit history: [docs/releases/v120.0.0-commit-history.md](docs/releases/v120.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v120.0.0-constitution-registry.json](docs/releases/v120.0.0-constitution-registry.json)
+
+### Living-subject continuity
+
+- Immutable subject identity carries complete append-only proof history, portable mind, event-derived memory, relationships, inventory, mandates, and application namespaces across owners, devices, applications, and providers.
+- The proof brain resolves canonical head to complete history to Kai/Merkle/Fibonacci indexes to exact primary proof-object bytes before cited reasoning.
+- Model speech, intentions, emotions, animation, and audio remain non-authoritative; validated typed commands and deterministic reducers alone admit world events.
+- Multi-subject effects advance every affected head atomically or write nothing.
+- Bearer transfer preserves identity and history while enforcing exact-head, one-time claim, cancellation, expiry, pending custody, former-owner revocation, and zero-write failure.
+- Registry digest is `0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073`; immutable predecessor is `49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9`.
+- Application matrix digest is `1c779ee5ade4b877ae9c6922ab02ba96fffffeb7580f1cf105a59fbb4424f351`; compatibility is `>=120.0.0 <121.0.0`.
+
+### Evidence and operational boundary
+
+- Coordinated application source is present on pushed `origin/main` at `f2fd8003d5603a322376e9465f4b5c70553a44a3`; no application `v120.0.0` tag was observed during standalone qualification.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- Package publication, deployment, production smoke, generated narration audio, production writes, and signed attestation remain unclaimed until separately observed.
+
 ## v119.0.0
 Release date: 2026-08-13
 

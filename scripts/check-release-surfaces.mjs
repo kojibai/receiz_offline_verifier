@@ -5,13 +5,13 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-08-13";
-const expectedDigest = "49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9";
-const expectedPredecessor = "c284bd39a891c1a828b532523bd548507570819c32e307d79b8043f06d2d3360";
-const expectedMatrix = "53cf9d6862b2396e2fe7864f8607c00c4e3b6e31b082ab5c5c8dff088fcb52c1";
-const expectedCompatibility = ">=119.0.0 <120.0.0";
-const upstreamCandidate = "dbf016285c048476c03e629c0430a9b175162683";
-const standalonePredecessor = "f34aab02da8487da9f02303eac77ba0d6a71d8f8";
+const releaseDate = "2026-08-16";
+const expectedDigest = "0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073";
+const expectedPredecessor = "49c167a437ec7c0e486412dd62c54af4abdf94eda1ebc18d263a027d105cecd9";
+const expectedMatrix = "1c779ee5ade4b877ae9c6922ab02ba96fffffeb7580f1cf105a59fbb4424f351";
+const expectedCompatibility = ">=120.0.0 <121.0.0";
+const upstreamReleaseCommit = "f2fd8003d5603a322376e9465f4b5c70553a44a3";
+const standalonePredecessor = "7058530b5264703d1888764de57ba2bb2b71ef89";
 
 const releaseSuffixes = [
   ".md",
@@ -21,7 +21,8 @@ const releaseSuffixes = [
   "-regression-lessons.md",
   "-commit-history.md",
   "-compatibility-matrix.md",
-  "-planning.md",
+  "-conformance.md",
+  "-migration.md",
   "-constitution-registry.json",
   "-constitution-registry.digest"
 ];
@@ -56,11 +57,11 @@ const currentReleasePointers = [
   ["README.md", expectedPredecessor],
   ["README.md", expectedMatrix],
   ["README.md", expectedCompatibility],
-  ["README.md", upstreamCandidate],
+  ["README.md", upstreamReleaseCommit],
   ["AGENTS.md", `Release law: \`${releaseVersion}\``],
   ["RELEASE_NOTES.md", `## ${releaseVersion}`],
-  ["RELEASE_NOTES.md", upstreamCandidate],
-  ["RELEASE_NOTES.md", "receiver activation completes local Settlement"],
+  ["RELEASE_NOTES.md", upstreamReleaseCommit],
+  ["RELEASE_NOTES.md", "Model speech, intentions, emotions, animation, and audio remain non-authoritative"],
   ["CHANGELOG.md", `## [${releaseVersion}] - ${releaseDate}`],
   ["docs/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/README.md", `releases/${releaseVersion}.md`],
@@ -86,27 +87,27 @@ const currentReleasePointers = [
   ["apps/offline-settlement.html", "already-settled Note evidence"],
   ["apps/offline-settlement.html", "Optional later ledger publication coordinates discovery only"],
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
-  [`docs/releases/${releaseVersion}.md`, "Irreversible Offline Custody"],
+  [`docs/releases/${releaseVersion}.md`, "Living Proof Subjects"],
   [`docs/releases/${releaseVersion}.md`, "Standalone repository boundary"],
   [`docs/releases/${releaseVersion}-product-truth.md`, expectedPredecessor],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "equal whole-value qualified held-bound Note genesis"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "The enclosing sealed proof object remains the strongest truth"],
   [`docs/releases/${releaseVersion}-checklist.md`, "Standalone repository evidence"],
-  [`docs/releases/${releaseVersion}-process.md`, upstreamCandidate],
+  [`docs/releases/${releaseVersion}-process.md`, upstreamReleaseCommit],
   [`docs/releases/${releaseVersion}-process.md`, standalonePredecessor],
   [`docs/releases/${releaseVersion}-process.md`, "Standalone qualification boundary"],
-  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Settlement"],
-  [`docs/releases/${releaseVersion}-commit-history.md`, upstreamCandidate],
-  [`docs/releases/${releaseVersion}-commit-history.md`, "Standalone archive baseline"],
+  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Model fluency cannot become world authority"],
+  [`docs/releases/${releaseVersion}-commit-history.md`, upstreamReleaseCommit],
+  [`docs/releases/${releaseVersion}-commit-history.md`, "Standalone archive boundary"],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedCompatibility],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedMatrix],
-  [`docs/releases/${releaseVersion}-planning.md`, "### Task 15:"],
-  [`docs/releases/${releaseVersion}-planning.md`, "first admission only, then append forever"]
+  [`docs/releases/${releaseVersion}-conformance.md`, "No model statement becomes an event without typed command admission"],
+  [`docs/releases/${releaseVersion}-migration.md`, expectedDigest]
 ];
 
 const errors = [];
 
-if (bareVersion !== "119.0.0") {
-  errors.push(`package.json version is ${bareVersion}, expected 119.0.0`);
+if (bareVersion !== "120.0.0") {
+  errors.push(`package.json version is ${bareVersion}, expected 120.0.0`);
 }
 
 for (const file of requiredFiles) {
@@ -136,7 +137,7 @@ if (existsSync(registryPath) && existsSync(digestPath)) {
   const digest = readFileSync(digestPath, "utf8").trim();
   if (registry.version !== bareVersion) errors.push("Registry version mismatch");
   if (registry.previousRegistryDigest !== expectedPredecessor) errors.push("Registry predecessor mismatch");
-  if (!Array.isArray(registry.laws) || registry.laws.length !== 85) errors.push("Registry must contain 85 laws");
+  if (!Array.isArray(registry.laws) || registry.laws.length !== 97) errors.push("Registry must contain 97 laws");
   if (digest !== expectedDigest) errors.push("Registry digest record mismatch");
 }
 
