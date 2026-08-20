@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v121.0.0] - 2026-08-19
+
+### Added
+
+- Added the complete v121 Source-First Continuity archive, 105-law constitutional registry mirror, compatibility matrix, conformance record, migration law, and explicit standalone evidence boundary.
+- Added standalone lock coverage for sealed-source authority, monotonic strongest-field merge, durable cold-load truth, complete identity projection, immediate Settlement/Reserve first paint, composite publication, and compatible historical proof behavior.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `121.0.0`.
+- Advanced registry identity to `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`, operation matrix identity to `208553829ba78a5536524b864577ce59989e2d0a994fad9598d39ae3d557c4f5`, and compatibility to `>=121.0.0 <122.0.0`.
+- Preserved canonical artifact verification and evidence-only settlement behavior while recording coordinated application publication and projection truth without turning representations into authority.
+
+### Evidence boundary
+
+- The coordinated application source is pushed at `origin/main` commit `030af97a9b4ced783351d9d13ce1602553021b24`; no application `v121.0.0` tag was observed during standalone qualification.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, current surfaces, and Git integrity are the local qualification surface.
+- Package publication, deployment, production mutation, production smoke, and signed attestation remain separate and unclaimed here.
+
 ## [v120.0.0] - 2026-08-16
 
 ### Added

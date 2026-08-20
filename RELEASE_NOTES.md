@@ -1,5 +1,39 @@
 # Release Notes
 
+## v121.0.0
+Release date: 2026-08-19
+
+`v121.0.0` seals the Source-First Continuity release archive and advances the
+standalone verifier distribution without changing canonical artifact-verifier
+authority.
+
+Canonical release note: [docs/releases/v121.0.0.md](docs/releases/v121.0.0.md)
+Product truth: [docs/releases/v121.0.0-product-truth.md](docs/releases/v121.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v121.0.0-checklist.md](docs/releases/v121.0.0-checklist.md)
+Release process: [docs/releases/v121.0.0-process.md](docs/releases/v121.0.0-process.md)
+Regression lessons: [docs/releases/v121.0.0-regression-lessons.md](docs/releases/v121.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v121.0.0-compatibility-matrix.md](docs/releases/v121.0.0-compatibility-matrix.md)
+Conformance: [docs/releases/v121.0.0-conformance.md](docs/releases/v121.0.0-conformance.md)
+Migration: [docs/releases/v121.0.0-migration.md](docs/releases/v121.0.0-migration.md)
+Commit history: [docs/releases/v121.0.0-commit-history.md](docs/releases/v121.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v121.0.0-constitution-registry.json](docs/releases/v121.0.0-constitution-registry.json)
+
+### Source-first continuity
+
+- Sealed proof objects, stable Receiz ID identity, and lawful Settlement/Reserve state remain authority above every server, database, session, cache, or public-index representation.
+- Successful profile seals project into the settled profile immediately while verified global composite publication retries durably beneath that surface.
+- Stronger known media SHA-256, PBI, signature, stable identity, Showcase head, Settlement, and Reserve fields merge monotonically and cannot be erased by smaller responses.
+- Verified hydration becomes durable cold-load truth; later lawful objects append and visibility changes do not rewrite history.
+- Accepted identity proof projects a complete account immediately, and missing ownership projection cannot veto creation of a new unowned coordinate while an existing conflicting owner still blocks it.
+- Registry digest is `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`; immutable predecessor is `0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073`.
+- Application matrix digest is `208553829ba78a5536524b864577ce59989e2d0a994fad9598d39ae3d557c4f5`; compatibility is `>=121.0.0 <122.0.0`.
+
+### Evidence and operational boundary
+
+- Coordinated application source is present on pushed `origin/main` at `030af97a9b4ced783351d9d13ce1602553021b24`; no application `v121.0.0` tag was observed during standalone qualification.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- Package publication, deployment, production mutation, production smoke, and signed attestation remain unclaimed until separately observed.
+
 ## v120.0.0
 Release date: 2026-08-16
 
