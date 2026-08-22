@@ -5,13 +5,13 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-08-19";
-const expectedDigest = "29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413";
-const expectedPredecessor = "0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073";
-const expectedMatrix = "208553829ba78a5536524b864577ce59989e2d0a994fad9598d39ae3d557c4f5";
-const expectedCompatibility = ">=121.0.0 <122.0.0";
-const upstreamReleaseCommit = "030af97a9b4ced783351d9d13ce1602553021b24";
-const standalonePredecessor = "09dda2dcf2ff478138fd3760f6186baa9a15b2d3";
+const releaseDate = "2026-08-21";
+const expectedDigest = "ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896";
+const expectedPredecessor = "29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413";
+const expectedMatrix = "bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325";
+const expectedCompatibility = ">=122.0.0 <123.0.0";
+const upstreamReleaseCommit = "e5c156800b5b27cf9b16a9f9d9b6ba2b97105124";
+const standalonePredecessor = "d5ce67805d721d73ca300a22647872abffbdaeb9";
 
 const releaseSuffixes = [
   ".md",
@@ -61,7 +61,7 @@ const currentReleasePointers = [
   ["AGENTS.md", `Release law: \`${releaseVersion}\``],
   ["RELEASE_NOTES.md", `## ${releaseVersion}`],
   ["RELEASE_NOTES.md", upstreamReleaseCommit],
-  ["RELEASE_NOTES.md", "Sealed proof objects, stable Receiz ID identity, and lawful Settlement/Reserve state remain authority"],
+  ["RELEASE_NOTES.md", "The enclosing proof object and complete authenticated edge-held state remain authority"],
   ["CHANGELOG.md", `## [${releaseVersion}] - ${releaseDate}`],
   ["docs/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/README.md", `releases/${releaseVersion}.md`],
@@ -87,27 +87,27 @@ const currentReleasePointers = [
   ["apps/offline-settlement.html", "already-settled Note evidence"],
   ["apps/offline-settlement.html", "Optional later ledger publication coordinates discovery only"],
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
-  [`docs/releases/${releaseVersion}.md`, "Source-First Continuity"],
+  [`docs/releases/${releaseVersion}.md`, "remote durable proof-object subjects"],
   [`docs/releases/${releaseVersion}.md`, "Standalone repository boundary"],
-  [`docs/releases/${releaseVersion}-product-truth.md`, expectedPredecessor],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "Representations never outrank their source"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "The enclosing proof object is authority"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "Phi is the moved value authority"],
   [`docs/releases/${releaseVersion}-checklist.md`, "Standalone repository evidence"],
   [`docs/releases/${releaseVersion}-process.md`, upstreamReleaseCommit],
   [`docs/releases/${releaseVersion}-process.md`, standalonePredecessor],
   [`docs/releases/${releaseVersion}-process.md`, "Standalone qualification boundary"],
-  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Stronger truth must merge monotonically"],
+  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Private plaintext stays at the edge"],
   [`docs/releases/${releaseVersion}-commit-history.md`, upstreamReleaseCommit],
   [`docs/releases/${releaseVersion}-commit-history.md`, "Standalone archive boundary"],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedCompatibility],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedMatrix],
-  [`docs/releases/${releaseVersion}-conformance.md`, "pnpm test:v121-release-lock"],
-  [`docs/releases/${releaseVersion}-migration.md`, "No proof-object migration or rewrite is required"]
+  [`docs/releases/${releaseVersion}-conformance.md`, "pnpm test:v122-release-lock"],
+  [`docs/releases/${releaseVersion}-migration.md`, "The proof object is authority"]
 ];
 
 const errors = [];
 
-if (bareVersion !== "121.0.0") {
-  errors.push(`package.json version is ${bareVersion}, expected 121.0.0`);
+if (bareVersion !== "122.0.0") {
+  errors.push(`package.json version is ${bareVersion}, expected 122.0.0`);
 }
 
 for (const file of requiredFiles) {
@@ -137,7 +137,7 @@ if (existsSync(registryPath) && existsSync(digestPath)) {
   const digest = readFileSync(digestPath, "utf8").trim();
   if (registry.version !== bareVersion) errors.push("Registry version mismatch");
   if (registry.previousRegistryDigest !== expectedPredecessor) errors.push("Registry predecessor mismatch");
-  if (!Array.isArray(registry.laws) || registry.laws.length !== 105) errors.push("Registry must contain 105 laws");
+  if (!Array.isArray(registry.laws) || registry.laws.length !== 109) errors.push("Registry must contain 109 laws");
   if (digest !== expectedDigest) errors.push("Registry digest record mismatch");
 }
 

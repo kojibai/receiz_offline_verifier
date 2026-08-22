@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v121.0.0`
+Current release: `v122.0.0`
 
-## What changed in v121.0.0
+## What changed in v122.0.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `121.0.0`.
-- The complete release book is recorded at [docs/releases/v121.0.0.md](docs/releases/v121.0.0.md), with [product truth](docs/releases/v121.0.0-product-truth.md), [checklist](docs/releases/v121.0.0-checklist.md), [process](docs/releases/v121.0.0-process.md), [regression lessons](docs/releases/v121.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v121.0.0-compatibility-matrix.md), [conformance](docs/releases/v121.0.0-conformance.md), [migration law](docs/releases/v121.0.0-migration.md), [105-law registry](docs/releases/v121.0.0-constitution-registry.json), and [commit history](docs/releases/v121.0.0-commit-history.md).
-- V121 locks source-first continuity: sealed proof objects, verified identity, and lawful Settlement/Reserve state remain authority while server, database, session, cache, and public indexes distribute and restore that truth.
-- Profile publication settles locally without reload and appends verified public objects to the global composite head beneath the settled proof surface.
-- Weaker partial projections cannot erase stronger media SHA-256, PBI, signature, stable proof identity, Showcase head, Settlement, or Reserve truth.
-- Verified hydration becomes durable cold-load truth; later lawful proof objects append and visibility changes do not rewrite history.
-- Accepted Receiz identity proof projects the complete account immediately, and a missing ownership projection cannot veto creation of a new unowned coordinate.
-- The v121 registry digest is `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`, chained to immutable v120 digest `0728651789b26e1d10c1991ec1c06c1ea4a576f0c6520537b250b171f8857073`.
-- The operation matrix digest is `208553829ba78a5536524b864577ce59989e2d0a994fad9598d39ae3d557c4f5`; compatibility is `>=121.0.0 <122.0.0`.
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `122.0.0`.
+- The complete release book is recorded at [docs/releases/v122.0.0.md](docs/releases/v122.0.0.md), with [product truth](docs/releases/v122.0.0-product-truth.md), [checklist](docs/releases/v122.0.0-checklist.md), [process](docs/releases/v122.0.0-process.md), [regression lessons](docs/releases/v122.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v122.0.0-compatibility-matrix.md), [conformance](docs/releases/v122.0.0-conformance.md), [migration law](docs/releases/v122.0.0-migration.md), [109-law registry](docs/releases/v122.0.0-constitution-registry.json), and [commit history](docs/releases/v122.0.0-commit-history.md).
+- V122 archives remote durable proof-object subjects, edge-encrypted private world additions, exact outcome recovery, mandates, atomic multi-world work, and explicit Phi Settlement and Reserve developer rails.
+- The enclosing proof object and complete authenticated edge-held state remain authority; API, database, SDK, MCP, AI, session, index, receipt, and display layers remain subordinate coordination and recovery mechanics.
+- Private plaintext remains at the edge, verified conflicts write zero, and unknown execution outcomes are resolved before retry.
+- Phi moves only through one named Settlement or Reserve rail; USD remains deterministic display projection.
+- Settled Receiz application behavior and deterministic first paint remain unchanged, and this standalone release does not add the production v122 API/database implementation.
+- The v122 registry digest is `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`, chained to immutable v121 digest `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`.
+- The operation matrix digest is `bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325`; compatibility is `>=122.0.0 <123.0.0`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,8 +22,8 @@ Current release: `v121.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v121.0.0-checklist.md](docs/releases/v121.0.0-checklist.md).
-- The coordinated application source is present on `origin/main` at commit `030af97a9b4ced783351d9d13ce1602553021b24`; no application `v121.0.0` tag, package publication, deployment, signed attestation, production mutation, or production smoke is inferred by this standalone archive.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v122.0.0-checklist.md](docs/releases/v122.0.0-checklist.md).
+- The coordinated application source is present on `origin/main` at commit `e5c156800b5b27cf9b16a9f9d9b6ba2b97105124`; no application `v122.0.0` tag, package publication, deployment, signed attestation, production mutation, or production smoke is inferred by this standalone archive.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -41,7 +41,7 @@ Current release: `v121.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v121.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v122.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

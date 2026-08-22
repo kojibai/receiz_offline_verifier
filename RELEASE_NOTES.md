@@ -1,5 +1,39 @@
 # Release Notes
 
+## v122.0.0
+Release date: 2026-08-21
+
+`v122.0.0` seals the Remote Proof-Native Developer Runtime release archive and
+advances the standalone verifier distribution without changing canonical
+artifact-verifier behavior or settled first paint.
+
+Canonical release note: [docs/releases/v122.0.0.md](docs/releases/v122.0.0.md)
+Product truth: [docs/releases/v122.0.0-product-truth.md](docs/releases/v122.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v122.0.0-checklist.md](docs/releases/v122.0.0-checklist.md)
+Release process: [docs/releases/v122.0.0-process.md](docs/releases/v122.0.0-process.md)
+Regression lessons: [docs/releases/v122.0.0-regression-lessons.md](docs/releases/v122.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v122.0.0-compatibility-matrix.md](docs/releases/v122.0.0-compatibility-matrix.md)
+Conformance: [docs/releases/v122.0.0-conformance.md](docs/releases/v122.0.0-conformance.md)
+Migration: [docs/releases/v122.0.0-migration.md](docs/releases/v122.0.0-migration.md)
+Commit history: [docs/releases/v122.0.0-commit-history.md](docs/releases/v122.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v122.0.0-constitution-registry.json](docs/releases/v122.0.0-constitution-registry.json)
+
+### Remote proof-native developer runtime
+
+- The enclosing proof object and complete authenticated edge-held state remain authority above API, database, SDK, MCP, AI, session, index, receipt, and display projections.
+- V122 records remote subject admission, private encrypted world additions, exact outcome recovery, strict validation, bounded mandates, and atomic multi-world coordination.
+- Private plaintext remains at the edge and verified transaction conflicts remain zero-write.
+- Phi moves through exactly one named Settlement or Reserve rail; USD remains deterministic display only.
+- Settled Receiz application experience and deterministic first paint remain unchanged.
+- Registry digest is `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`; immutable predecessor is `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`.
+- Application matrix digest is `bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325`; compatibility is `>=122.0.0 <123.0.0`.
+
+### Evidence and operational boundary
+
+- Coordinated application source is present on `origin/main` at `e5c156800b5b27cf9b16a9f9d9b6ba2b97105124`.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- Application tagging, package publication, migration execution, deployment, production smoke, push, and signed attestation remain unclaimed until separately observed.
+
 ## v121.0.0
 Release date: 2026-08-19
 

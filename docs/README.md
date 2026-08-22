@@ -1,24 +1,24 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v121.0.0`.
+This directory is the public documentation set for Receiz `v122.0.0`.
 
 ## Start Here
 
-- [releases/v121.0.0.md](releases/v121.0.0.md): Source-First Continuity release identity and standalone evidence boundary.
-- [releases/v121.0.0-product-truth.md](releases/v121.0.0-product-truth.md): sealed source, identity, composite publication, profile, Settlement, Reserve, and first-paint truth.
-- [releases/v121.0.0-checklist.md](releases/v121.0.0-checklist.md): coordinated and standalone evidence boundaries.
-- [releases/v121.0.0-process.md](releases/v121.0.0-process.md): construction and qualification boundaries.
-- [releases/v121.0.0-regression-lessons.md](releases/v121.0.0-regression-lessons.md): source/representation ordering, strongest-field merge, hydration, identity, and custody lessons.
-- [releases/v121.0.0-compatibility-matrix.md](releases/v121.0.0-compatibility-matrix.md): historical artifact, identity, protocol, package, Showcase, private-proof, Settlement, and domain compatibility.
-- [releases/v121.0.0-conformance.md](releases/v121.0.0-conformance.md): source-first continuity qualification commands and external evidence boundaries.
-- [releases/v121.0.0-migration.md](releases/v121.0.0-migration.md): compatible v120-to-v121 coordination law.
-- [releases/v121.0.0-commit-history.md](releases/v121.0.0-commit-history.md): coordinated source and standalone baseline boundary.
-- [releases/v121.0.0-constitution-registry.digest](releases/v121.0.0-constitution-registry.digest): canonical v121 registry digest.
-- [releases/v121.0.0-constitution-registry.json](releases/v121.0.0-constitution-registry.json): deterministic 105-law v121 constitutional registry.
+- [releases/v122.0.0.md](releases/v122.0.0.md): remote proof-native developer runtime release identity and standalone evidence boundary.
+- [releases/v122.0.0-product-truth.md](releases/v122.0.0-product-truth.md): proof-object, edge-held subject, private world, outcome, mandate, multi-world, Settlement, and Reserve truth.
+- [releases/v122.0.0-checklist.md](releases/v122.0.0-checklist.md): coordinated and standalone evidence boundaries.
+- [releases/v122.0.0-process.md](releases/v122.0.0-process.md): construction and qualification boundaries.
+- [releases/v122.0.0-regression-lessons.md](releases/v122.0.0-regression-lessons.md): proof authority, private edge state, retry, zero-write, and Phi rail lessons.
+- [releases/v122.0.0-compatibility-matrix.md](releases/v122.0.0-compatibility-matrix.md): package, application, database, value, registry, and operation-matrix compatibility.
+- [releases/v122.0.0-conformance.md](releases/v122.0.0-conformance.md): institutional v122 qualification commands and external evidence boundaries.
+- [releases/v122.0.0-migration.md](releases/v122.0.0-migration.md): append-only remote coordination storage and production execution boundary.
+- [releases/v122.0.0-commit-history.md](releases/v122.0.0-commit-history.md): coordinated source and standalone baseline boundary.
+- [releases/v122.0.0-constitution-registry.digest](releases/v122.0.0-constitution-registry.digest): canonical v122 registry digest.
+- [releases/v122.0.0-constitution-registry.json](releases/v122.0.0-constitution-registry.json): deterministic 109-law v122 constitutional registry.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v121.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v122.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

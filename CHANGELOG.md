@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v122.0.0] - 2026-08-21
+
+### Added
+
+- Added the complete v122 remote proof-native developer runtime archive, 109-law constitutional registry mirror, compatibility matrix, conformance record, migration law, and explicit standalone evidence boundary.
+- Added standalone lock coverage for edge-held subject authority, encrypted private world additions, exact outcome recovery, zero-write validation, mandates, atomic multi-world work, and explicit Phi Settlement/Reserve rail identity.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `122.0.0`.
+- Advanced registry identity to `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`, operation matrix identity to `bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325`, and compatibility to `>=122.0.0 <123.0.0`.
+- Preserved canonical artifact verification, settled first paint, and evidence-only settlement behavior while recording coordinated remote runtime truth without turning service responses, rows, receipts, or USD display into authority.
+
+### Evidence boundary
+
+- Coordinated application source is present on `origin/main` at `e5c156800b5b27cf9b16a9f9d9b6ba2b97105124`.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, current surfaces, and Git integrity are the local qualification surface.
+- Application tagging, package publication, migration execution, deployment, production smoke, push, and signed attestation remain separate and unclaimed here.
+
 ## [v121.0.0] - 2026-08-19
 
 ### Added
