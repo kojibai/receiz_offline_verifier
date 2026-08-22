@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v123.0.0] - 2026-08-22
+
+### Added
+
+- Added the complete v123 Intent Becomes Lawful Action archive, 115-law constitutional registry mirror, compatibility matrix, conformance record, migration guide, and explicit standalone evidence boundary.
+- Added standalone lock coverage for proof-authority exchange, explicit consent, narrow grants, canonical planning, exact-head namespaces, distinct Settlement/Reserve execution, and lookup-before-retry outcome recovery.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `123.0.0`.
+- Advanced registry identity to `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`, 36-operation matrix identity to `e08cec3e3ad22c20ddd6c08169ece19f094c366214d6d6b4dc432cd97558e2c5`, and compatibility to `>=123.0.0 <124.0.0`.
+- Preserved canonical artifact verification, settled first paint, protocol-compatible v122 method names, and evidence-only settlement behavior while keeping tokens, rows, receipts, MCP, AI, and USD display beneath proof authority.
+
+### Evidence boundary
+
+- Latest committed application candidate is `1b3d9ad2a7739f5bc2ffff28103ffd3bc4f30e59`, above pushed base `fc6ef96cedd3ed6b30da7576a53a5c2977645f82`; no push of the later fix is claimed.
+- Standalone release lock, lint/build, archive parity, relative links, registry/matrix identity, current surfaces, and Git integrity are the local qualification surface.
+- Application tagging, package publication, migration execution, deployment, production smoke, push, and signed attestation remain separate and unclaimed here.
+
 ## [v122.0.0] - 2026-08-21
 
 ### Added

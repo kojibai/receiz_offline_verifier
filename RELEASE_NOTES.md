@@ -1,5 +1,40 @@
 # Release Notes
 
+## v123.0.0
+Release date: 2026-08-22
+
+`v123.0.0` seals the Intent Becomes Lawful Action release archive and advances
+the standalone verifier distribution without changing canonical artifact
+verification or settled first paint.
+
+Canonical release note: [docs/releases/v123.0.0.md](docs/releases/v123.0.0.md)
+Product truth: [docs/releases/v123.0.0-product-truth.md](docs/releases/v123.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v123.0.0-checklist.md](docs/releases/v123.0.0-checklist.md)
+Release process: [docs/releases/v123.0.0-process.md](docs/releases/v123.0.0-process.md)
+Regression lessons: [docs/releases/v123.0.0-regression-lessons.md](docs/releases/v123.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v123.0.0-compatibility-matrix.md](docs/releases/v123.0.0-compatibility-matrix.md)
+Conformance: [docs/releases/v123.0.0-conformance.md](docs/releases/v123.0.0-conformance.md)
+Migration: [docs/releases/v123.0.0-migration.md](docs/releases/v123.0.0-migration.md)
+Commit history: [docs/releases/v123.0.0-commit-history.md](docs/releases/v123.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v123.0.0-constitution-registry.json](docs/releases/v123.0.0-constitution-registry.json)
+
+### Intent becomes lawful action
+
+- The object is authority; edge verification precedes explicit consent, narrow application-bound authority, canonical SDK planning, exact execution, and outcome recovery.
+- Grants remain short-lived, non-refreshable, scope-bound, and subordinate to the verified identity artifact.
+- Exact execution reports committed, zero-write, or unknown, and lookup precedes ambiguous retry.
+- Settlement and Reserve remain separate; Phi moves and USD displays.
+- Stable v122 protocol names stay unchanged where they identify compatible wire contracts.
+- Existing Receiz application first paint and proof-native user surfaces remain unchanged.
+- Registry digest is `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`; immutable predecessor is `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`.
+- Application matrix digest is `e08cec3e3ad22c20ddd6c08169ece19f094c366214d6d6b4dc432cd97558e2c5`; compatibility is `>=123.0.0 <124.0.0`.
+
+### Evidence and operational boundary
+
+- Latest committed application candidate is `1b3d9ad2a7739f5bc2ffff28103ffd3bc4f30e59`, above pushed base `fc6ef96cedd3ed6b30da7576a53a5c2977645f82`; this archive does not claim the later fix is pushed.
+- This repository qualifies only its standalone static distribution and archival mirror.
+- Application tagging, package publication, migration execution, deployment, production smoke, push, and signed attestation remain unclaimed until separately observed.
+
 ## v122.0.0
 Release date: 2026-08-21
 

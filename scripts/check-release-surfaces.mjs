@@ -5,13 +5,14 @@ const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const bareVersion = pkg.version;
 const releaseVersion = `v${bareVersion}`;
-const releaseDate = "2026-08-21";
-const expectedDigest = "ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896";
-const expectedPredecessor = "29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413";
-const expectedMatrix = "bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325";
-const expectedCompatibility = ">=122.0.0 <123.0.0";
-const upstreamReleaseCommit = "e5c156800b5b27cf9b16a9f9d9b6ba2b97105124";
-const standalonePredecessor = "d5ce67805d721d73ca300a22647872abffbdaeb9";
+const releaseDate = "2026-08-22";
+const expectedDigest = "945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb";
+const expectedPredecessor = "ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896";
+const expectedMatrix = "e08cec3e3ad22c20ddd6c08169ece19f094c366214d6d6b4dc432cd97558e2c5";
+const expectedCompatibility = ">=123.0.0 <124.0.0";
+const upstreamReleaseCommit = "1b3d9ad2a7739f5bc2ffff28103ffd3bc4f30e59";
+const upstreamPushedBase = "fc6ef96cedd3ed6b30da7576a53a5c2977645f82";
+const standalonePredecessor = "64ca5dc3884234f1e1c146f042819eca05ff95c3";
 
 const releaseSuffixes = [
   ".md",
@@ -58,10 +59,12 @@ const currentReleasePointers = [
   ["README.md", expectedMatrix],
   ["README.md", expectedCompatibility],
   ["README.md", upstreamReleaseCommit],
+  ["README.md", upstreamPushedBase],
   ["AGENTS.md", `Release law: \`${releaseVersion}\``],
   ["RELEASE_NOTES.md", `## ${releaseVersion}`],
   ["RELEASE_NOTES.md", upstreamReleaseCommit],
-  ["RELEASE_NOTES.md", "The enclosing proof object and complete authenticated edge-held state remain authority"],
+  ["RELEASE_NOTES.md", upstreamPushedBase],
+  ["RELEASE_NOTES.md", "The object is authority; edge verification precedes explicit consent"],
   ["CHANGELOG.md", `## [${releaseVersion}] - ${releaseDate}`],
   ["docs/README.md", `Receiz \`${releaseVersion}\``],
   ["docs/README.md", `releases/${releaseVersion}.md`],
@@ -87,27 +90,28 @@ const currentReleasePointers = [
   ["apps/offline-settlement.html", "already-settled Note evidence"],
   ["apps/offline-settlement.html", "Optional later ledger publication coordinates discovery only"],
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
-  [`docs/releases/${releaseVersion}.md`, "remote durable proof-object subjects"],
+  [`docs/releases/${releaseVersion}.md`, "Intent Becomes Lawful Action"],
   [`docs/releases/${releaseVersion}.md`, "Standalone repository boundary"],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "The enclosing proof object is authority"],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "Phi is the moved value authority"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "The object is authority"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "Phi moves"],
   [`docs/releases/${releaseVersion}-checklist.md`, "Standalone repository evidence"],
   [`docs/releases/${releaseVersion}-process.md`, upstreamReleaseCommit],
   [`docs/releases/${releaseVersion}-process.md`, standalonePredecessor],
   [`docs/releases/${releaseVersion}-process.md`, "Standalone qualification boundary"],
-  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Private plaintext stays at the edge"],
+  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Timeout is not failure"],
   [`docs/releases/${releaseVersion}-commit-history.md`, upstreamReleaseCommit],
   [`docs/releases/${releaseVersion}-commit-history.md`, "Standalone archive boundary"],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedCompatibility],
   [`docs/releases/${releaseVersion}-compatibility-matrix.md`, expectedMatrix],
-  [`docs/releases/${releaseVersion}-conformance.md`, "pnpm test:v122-release-lock"],
-  [`docs/releases/${releaseVersion}-migration.md`, "The proof object is authority"]
+  [`docs/releases/${releaseVersion}-compatibility-matrix.md`, "36 operations"],
+  [`docs/releases/${releaseVersion}-conformance.md`, "Existing receiz.com first-paint"],
+  [`docs/releases/${releaseVersion}-migration.md`, "Do not move USD"]
 ];
 
 const errors = [];
 
-if (bareVersion !== "122.0.0") {
-  errors.push(`package.json version is ${bareVersion}, expected 122.0.0`);
+if (bareVersion !== "123.0.0") {
+  errors.push(`package.json version is ${bareVersion}, expected 123.0.0`);
 }
 
 for (const file of requiredFiles) {
@@ -137,7 +141,7 @@ if (existsSync(registryPath) && existsSync(digestPath)) {
   const digest = readFileSync(digestPath, "utf8").trim();
   if (registry.version !== bareVersion) errors.push("Registry version mismatch");
   if (registry.previousRegistryDigest !== expectedPredecessor) errors.push("Registry predecessor mismatch");
-  if (!Array.isArray(registry.laws) || registry.laws.length !== 109) errors.push("Registry must contain 109 laws");
+  if (!Array.isArray(registry.laws) || registry.laws.length !== 115) errors.push("Registry must contain 115 laws");
   if (digest !== expectedDigest) errors.push("Registry digest record mismatch");
 }
 

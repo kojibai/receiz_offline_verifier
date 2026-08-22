@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v122.0.0`
+Current release: `v123.0.0`
 
-## What changed in v122.0.0
+## What changed in v123.0.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `122.0.0`.
-- The complete release book is recorded at [docs/releases/v122.0.0.md](docs/releases/v122.0.0.md), with [product truth](docs/releases/v122.0.0-product-truth.md), [checklist](docs/releases/v122.0.0-checklist.md), [process](docs/releases/v122.0.0-process.md), [regression lessons](docs/releases/v122.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v122.0.0-compatibility-matrix.md), [conformance](docs/releases/v122.0.0-conformance.md), [migration law](docs/releases/v122.0.0-migration.md), [109-law registry](docs/releases/v122.0.0-constitution-registry.json), and [commit history](docs/releases/v122.0.0-commit-history.md).
-- V122 archives remote durable proof-object subjects, edge-encrypted private world additions, exact outcome recovery, mandates, atomic multi-world work, and explicit Phi Settlement and Reserve developer rails.
-- The enclosing proof object and complete authenticated edge-held state remain authority; API, database, SDK, MCP, AI, session, index, receipt, and display layers remain subordinate coordination and recovery mechanics.
-- Private plaintext remains at the edge, verified conflicts write zero, and unknown execution outcomes are resolved before retry.
-- Phi moves only through one named Settlement or Reserve rail; USD remains deterministic display projection.
-- Settled Receiz application behavior and deterministic first paint remain unchanged, and this standalone release does not add the production v122 API/database implementation.
-- The v122 registry digest is `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`, chained to immutable v121 digest `29a793a5bcc0195ab41d30614d37ac51df66023af354fa4335460764eb0af413`.
-- The operation matrix digest is `bd1d7ccf1543e2484df68e3025c7376f8ae37cafe1ca0d7c9cd9f52f6342b325`; compatibility is `>=122.0.0 <123.0.0`.
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `123.0.0`.
+- The complete release book is recorded at [docs/releases/v123.0.0.md](docs/releases/v123.0.0.md), with [product truth](docs/releases/v123.0.0-product-truth.md), [checklist](docs/releases/v123.0.0-checklist.md), [process](docs/releases/v123.0.0-process.md), [regression lessons](docs/releases/v123.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v123.0.0-compatibility-matrix.md), [conformance](docs/releases/v123.0.0-conformance.md), [migration law](docs/releases/v123.0.0-migration.md), [115-law registry](docs/releases/v123.0.0-constitution-registry.json), and [commit history](docs/releases/v123.0.0-commit-history.md).
+- V123 archives the universal path from held proof object through edge verification, explicit application-scoped consent, narrow authority, canonical planning, exact remote execution, and lookup-before-retry outcome recovery.
+- The object remains authority; tokens, server, database, receipts, MCP results, AI prose, session, index, and UI remain subordinate execution, projection, sync, and recovery mechanics.
+- Settlement and Reserve retain separate scopes and execution paths. Phi is moved value; USD remains canonical deterministic display only.
+- Stable v122 world planning names remain unchanged because they are protocol identities, not stale release branding.
+- Existing application identity, ownership, settlement, public-proof, offline-verification, and deterministic first-paint behavior remains unchanged.
+- The v123 registry digest is `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`, chained to immutable v122 digest `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`.
+- The 36-operation matrix digest is `e08cec3e3ad22c20ddd6c08169ece19f094c366214d6d6b4dc432cd97558e2c5`; compatibility is `>=123.0.0 <124.0.0`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,8 +22,8 @@ Current release: `v122.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v122.0.0-checklist.md](docs/releases/v122.0.0-checklist.md).
-- The coordinated application source is present on `origin/main` at commit `e5c156800b5b27cf9b16a9f9d9b6ba2b97105124`; no application `v122.0.0` tag, package publication, deployment, signed attestation, production mutation, or production smoke is inferred by this standalone archive.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v123.0.0-checklist.md](docs/releases/v123.0.0-checklist.md).
+- The latest committed application candidate is `1b3d9ad2a7739f5bc2ffff28103ffd3bc4f30e59`, above pushed base `fc6ef96cedd3ed6b30da7576a53a5c2977645f82`; no push of that fix, application `v123.0.0` tag, package publication, migration execution, deployment, signed attestation, production mutation, or production smoke is inferred by this standalone archive.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -41,7 +41,7 @@ Current release: `v122.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v122.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v123.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
