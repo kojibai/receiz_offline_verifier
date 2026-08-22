@@ -868,7 +868,7 @@
 
     <p class="footer">
       <span>Receiz Offline Studio · record, seal, and verify from artifact bytes.</span>
-      <span class="footer-version">v123.0.0</span>
+      <span class="footer-version">v124.0.0</span>
     </p>
 
     <section class="offline-tools" aria-label="Offline HTML downloads">
@@ -1565,6 +1565,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     const nativeCaptureFileOptions = new WeakMap();
     let deferredInstallPrompt = null;
     let trustedSignerProvisionPromise = null;
+    let localProofPrimitivesPromise = null;
 
     const textEncoder = new TextEncoder();
     const textDecoder = new TextDecoder();
@@ -1652,6 +1653,32 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         enrolled: false,
         reason: enrollment.reason || "not_enrolled",
       };
+    }
+
+    async function ensureCanonicalSignatureV4Enrollment() {
+      const result = await provisionTrustedSignerForOfflineUse({
+        pendingText: "Enrolling canonical Signature V4 once...",
+        readyText: "Ready. Canonical Signature V4 is enrolled on this device.",
+        alreadyReadyText: "Ready. Canonical Signature V4 is enrolled on this device.",
+        unavailableText:
+          "Connect once to enroll canonical Signature V4. After enrollment, Record, Seal, and Verify work offline.",
+      });
+      if (!result.signer) {
+        throw new Error(result.reason || OFFLINE_SIGNATURE_V4_ENROLLMENT_REQUIRED);
+      }
+    }
+
+    async function ensureLocalProofPrimitives() {
+      if (!localProofPrimitivesPromise) {
+        localProofPrimitivesPromise = (async () => {
+          await ensureUnsignedLocalReceizId();
+          await ensureCanonicalSignatureV4Enrollment();
+        })().catch((error) => {
+          localProofPrimitivesPromise = null;
+          throw error;
+        });
+      }
+      await localProofPrimitivesPromise;
     }
 
     async function onInstallPwaClick() {
@@ -2948,6 +2975,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         payload: JSON.stringify(identity),
       }));
       return { userId: localUid, username, receizId };
+    }
+
+    async function ensureUnsignedLocalReceizId() {
+      const identity = await ensureLocalReceizIdentity();
+      return identity.receizId;
     }
 
     function buildCertIdentityPayload(cert) {
@@ -6318,7 +6350,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "123.0.0-baseline-v1";
+      const OFFLINE_STANDALONE_SW_VERSION = "124.0.0-local-proof-primitives-v1";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -6346,13 +6378,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function preflight() {
-      await provisionTrustedSignerForOfflineUse({
-        pendingText: "Enrolling canonical Signature V4 once...",
-        readyText: "Ready. Canonical Signature V4 is enrolled on this device.",
-        alreadyReadyText: "Ready. Canonical Signature V4 is enrolled on this device.",
-        unavailableText:
-          "Connect once to enroll canonical Signature V4. After enrollment, Record, Seal, and Verify work offline.",
-      });
+      await ensureLocalProofPrimitives();
     }
 
     const LOCAL_PBI_AUTHORSHIP_OUTBOX_STORAGE_KEY = "receiz.pbi.authorship.publication-outbox.v1";
@@ -7369,7 +7395,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     installPbiAuthorshipRuntime();
     bindEvents();
-    void preflight();
+    void preflight().catch(() => {});
   })();
   </script>
   <script>

@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v124.0.0] - 2026-08-22
+
+### Added
+
+- Added the complete 17-record v124 Reality Becomes Infrastructure archive, 124-law constitutional registry mirror, compatibility, conformance, security, deployment, integration, runbook, governance, evidence-status, migration, and standalone boundary records.
+- Added standalone lock coverage for the 53-operation matrix, live Kai law, authenticated heads, durable execution/replay, private-access filtering, atomic domains, recipient privacy, capability evidence, and expanded archive parity.
+- Included the existing Offline Studio local Receiz ID and canonical Signature V4 preparation, with failed preflight contained after interface binding.
+
+### Changed
+
+- Advanced standalone verifier, Record and Seal Studio, Sports verifier, settlement evidence assembler, documentation, governance, and service-worker identity to `124.0.0`.
+- Advanced registry identity to `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`, 53-operation matrix identity to `540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5`, and compatibility to `>=124.0.0 <125.0.0`.
+- Preserved sealed artifact verification, exact-head authority, deterministic first paint, existing application admission, and historical v123 whole-pulse meaning.
+
+### Evidence boundary
+
+- The canonical v124 record book is byte-identical to immutable qualification commit `906376897c968afa0de88e4cdfca8ea4c11d58c9` on its dedicated release lineage.
+- Standalone release lock, lint/build, Offline Studio primitive inspection, archive parity, relative links, registry/matrix identity, current surfaces, and Git integrity are the local qualification surface.
+- Upstream merge/tag, package publication, migration, deployment, production smoke, scale, adoption, push, and signed attestation remain separate and unclaimed here.
+
 ## [v123.0.0] - 2026-08-22
 
 ### Added

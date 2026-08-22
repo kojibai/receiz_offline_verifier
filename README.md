@@ -2,19 +2,19 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v123.0.0`
+Current release: `v124.0.0`
 
-## What changed in v123.0.0
+## What changed in v124.0.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `123.0.0`.
-- The complete release book is recorded at [docs/releases/v123.0.0.md](docs/releases/v123.0.0.md), with [product truth](docs/releases/v123.0.0-product-truth.md), [checklist](docs/releases/v123.0.0-checklist.md), [process](docs/releases/v123.0.0-process.md), [regression lessons](docs/releases/v123.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v123.0.0-compatibility-matrix.md), [conformance](docs/releases/v123.0.0-conformance.md), [migration law](docs/releases/v123.0.0-migration.md), [115-law registry](docs/releases/v123.0.0-constitution-registry.json), and [commit history](docs/releases/v123.0.0-commit-history.md).
-- V123 archives the universal path from held proof object through edge verification, explicit application-scoped consent, narrow authority, canonical planning, exact remote execution, and lookup-before-retry outcome recovery.
-- The object remains authority; tokens, server, database, receipts, MCP results, AI prose, session, index, and UI remain subordinate execution, projection, sync, and recovery mechanics.
-- Settlement and Reserve retain separate scopes and execution paths. Phi is moved value; USD remains canonical deterministic display only.
-- Stable v122 world planning names remain unchanged because they are protocol identities, not stale release branding.
-- Existing application identity, ownership, settlement, public-proof, offline-verification, and deterministic first-paint behavior remains unchanged.
-- The v123 registry digest is `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`, chained to immutable v122 digest `ed65956a16dd5f0d76d04db2f4a651fc43eb0a71cef64afd53576aa782dc9896`.
-- The 36-operation matrix digest is `e08cec3e3ad22c20ddd6c08169ece19f094c366214d6d6b4dc432cd97558e2c5`; compatibility is `>=123.0.0 <124.0.0`.
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at `124.0.0`.
+- The expanded release book is recorded at [docs/releases/v124.0.0.md](docs/releases/v124.0.0.md), with [product truth](docs/releases/v124.0.0-product-truth.md), [checklist](docs/releases/v124.0.0-checklist.md), [process](docs/releases/v124.0.0-process.md), [regression lessons](docs/releases/v124.0.0-regression-lessons.md), [compatibility matrix](docs/releases/v124.0.0-compatibility-matrix.md), [conformance](docs/releases/v124.0.0-conformance.md), [migration](docs/releases/v124.0.0-migration.md), [security](docs/releases/v124.0.0-security.md), [deployment](docs/releases/v124.0.0-deployment.md), [integration](docs/releases/v124.0.0-integration.md), [runbook](docs/releases/v124.0.0-runbook.md), [governance](docs/releases/v124.0.0-governance.md), [evidence status](docs/releases/v124.0.0-evidence-status.md), [124-law registry](docs/releases/v124.0.0-constitution-registry.json), and [commit history](docs/releases/v124.0.0-commit-history.md).
+- V124 archives the production runtime for universal proof-native primitives: live Kai, proof-authority challenges, request-bound sessions, durable plans, verified replay/checkpoints, access-filtered private additions, atomic multi-domain execution, privacy-safe recipient resolution, and operational capability evidence.
+- The sealed proof object remains portable storage and continuity authority; exact authenticated heads remain execution and replay authority.
+- Hosted journals, plans, sessions, server/database rows, SDK projections, and network operators remain subordinate coordination, synchronization, and recovery mechanics.
+- Offline Studio prepares its local Receiz ID and canonical Signature V4 enrollment without inserting network enrollment into deterministic first paint.
+- Live Kai derives from canonical genesis through the phi-exact ties-to-even bridge; UTC remains an elapsed-time observation rather than authority.
+- The v124 registry digest is `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`, chained to immutable v123 digest `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`.
+- The 53-operation matrix digest is `540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5`; compatibility is `>=124.0.0 <125.0.0`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,8 +22,8 @@ Current release: `v123.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v123.0.0-checklist.md](docs/releases/v123.0.0-checklist.md).
-- The latest committed application candidate is `1b3d9ad2a7739f5bc2ffff28103ffd3bc4f30e59`, above pushed base `fc6ef96cedd3ed6b30da7576a53a5c2977645f82`; no push of that fix, application `v123.0.0` tag, package publication, migration execution, deployment, signed attestation, production mutation, or production smoke is inferred by this standalone archive.
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v124.0.0-checklist.md](docs/releases/v124.0.0-checklist.md).
+- The canonical v124 record book is byte-identical to immutable qualification commit `906376897c968afa0de88e4cdfca8ea4c11d58c9` on its dedicated release lineage; no merge to application `main`, upstream `v124.0.0` tag, package publication, migration execution, deployment, signed attestation, production mutation, smoke, scale, or adoption evidence is inferred by this standalone archive.
 - Verifier semantics remain unchanged relative to `v60.0.0`.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -41,7 +41,7 @@ Current release: `v123.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v123.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v124.0.0` sealed product baseline is documented in the release note and can be vendored here on the next snapshot refresh.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

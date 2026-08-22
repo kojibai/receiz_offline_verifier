@@ -1,5 +1,44 @@
 # Release Notes
 
+## v124.0.0
+Release date: 2026-08-22
+
+`v124.0.0` seals the Reality Becomes Infrastructure release archive and advances
+the standalone verifier distribution while preserving canonical artifact
+verification and deterministic first paint.
+
+Canonical release note: [docs/releases/v124.0.0.md](docs/releases/v124.0.0.md)
+Product truth: [docs/releases/v124.0.0-product-truth.md](docs/releases/v124.0.0-product-truth.md)
+Evidence checklist: [docs/releases/v124.0.0-checklist.md](docs/releases/v124.0.0-checklist.md)
+Release process: [docs/releases/v124.0.0-process.md](docs/releases/v124.0.0-process.md)
+Regression lessons: [docs/releases/v124.0.0-regression-lessons.md](docs/releases/v124.0.0-regression-lessons.md)
+Compatibility matrix: [docs/releases/v124.0.0-compatibility-matrix.md](docs/releases/v124.0.0-compatibility-matrix.md)
+Conformance: [docs/releases/v124.0.0-conformance.md](docs/releases/v124.0.0-conformance.md)
+Migration: [docs/releases/v124.0.0-migration.md](docs/releases/v124.0.0-migration.md)
+Security: [docs/releases/v124.0.0-security.md](docs/releases/v124.0.0-security.md)
+Deployment: [docs/releases/v124.0.0-deployment.md](docs/releases/v124.0.0-deployment.md)
+Integration: [docs/releases/v124.0.0-integration.md](docs/releases/v124.0.0-integration.md)
+Runbook: [docs/releases/v124.0.0-runbook.md](docs/releases/v124.0.0-runbook.md)
+Governance: [docs/releases/v124.0.0-governance.md](docs/releases/v124.0.0-governance.md)
+Evidence status: [docs/releases/v124.0.0-evidence-status.md](docs/releases/v124.0.0-evidence-status.md)
+Commit history: [docs/releases/v124.0.0-commit-history.md](docs/releases/v124.0.0-commit-history.md)
+Constitutional registry: [docs/releases/v124.0.0-constitution-registry.json](docs/releases/v124.0.0-constitution-registry.json)
+
+### Reality becomes infrastructure
+
+- The sealed proof object remains portable storage and continuity authority; exact authenticated heads remain execution and replay authority.
+- Live Kai, proof-authority challenges, request-bound sessions, durable plans, replay/checkpoint verification, private-access filtering, atomic execution, recipient privacy, and operational capability evidence form one universal runtime contract.
+- Server, database, session, hosted journal, SDK projection, and network state remain subordinate coordination and recovery mechanics.
+- Offline Studio prepares local Receiz ID and canonical Signature V4 enrollment after interface binding; failed enrollment remains contained and does not replace known proof first paint.
+- Registry digest is `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`; immutable predecessor is `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`.
+- The 53-operation application matrix digest is `540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5`; compatibility is `>=124.0.0 <125.0.0`.
+
+### Evidence and operational boundary
+
+- All 17 canonical records match immutable qualification commit `906376897c968afa0de88e4cdfca8ea4c11d58c9` on the dedicated v124 release lineage.
+- This repository qualifies only its standalone static distribution, local-proof preparation, and archival mirrors.
+- Upstream merge/tag, package publication, migration, deployment, smoke, scale, adoption, push, and signed attestation remain unclaimed until separately observed.
+
 ## v123.0.0
 Release date: 2026-08-22
 
