@@ -1,5 +1,27 @@
 # Release Notes
 
+## v124.0.1
+Release date: 2026-08-23
+
+`v124.0.1` aligns the standalone distribution to the corrective V124 package
+release while preserving the frozen `124.0.0` constitutional ruleset and exact
+file-authoritative verifier behavior.
+
+- Canonical release note: [docs/releases/v124.0.1.md](docs/releases/v124.0.1.md)
+- Product truth: [docs/releases/v124.0.1-product-truth.md](docs/releases/v124.0.1-product-truth.md)
+- Evidence checklist: [docs/releases/v124.0.1-checklist.md](docs/releases/v124.0.1-checklist.md)
+- Release process: [docs/releases/v124.0.1-process.md](docs/releases/v124.0.1-process.md)
+- Regression lessons: [docs/releases/v124.0.1-regression-lessons.md](docs/releases/v124.0.1-regression-lessons.md)
+- Migration boundary: [docs/releases/v124.0.1-migration.md](docs/releases/v124.0.1-migration.md)
+- Commit history: [docs/releases/v124.0.1-commit-history.md](docs/releases/v124.0.1-commit-history.md)
+
+The application source was inspected read-only at committed candidate and final
+observed `origin/main` boundary `b4efb56c72780bd9b5013ef466fdea998701b96b`.
+The sealed proof object remains
+portable storage and continuity authority. No package publication, production
+deployment, database mutation, production smoke, remote push, or signed
+attestation is claimed.
+
 ## v124.0.0
 Release date: 2026-08-22
 

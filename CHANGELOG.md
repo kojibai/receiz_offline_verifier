@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v124.0.1] - 2026-08-23
+
+### Changed
+
+- Advanced standalone package, public verifier labels, documentation pointers, and cache epochs to `124.0.1`.
+- Added seven canonical corrective V124 release records and byte-identical archival mirrors.
+- Bound the archive to the read-only application source candidate while distinguishing local committed evidence from pushed evidence.
+
+### Preserved
+
+- Exact-file verification behavior, fail-closed proof authority, and Offline Studio local proof primitives.
+- Frozen V124 ruleset `124.0.0`, registry digest, 124-law inventory, operation matrix, and compatibility interval.
+
+### Boundary
+
+- No main `/receiz` write, package publication, deployment, database mutation, production smoke, remote push, or signed attestation was performed.
+
 ## [v124.0.0] - 2026-08-22
 
 ### Added
