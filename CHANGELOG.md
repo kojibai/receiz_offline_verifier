@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v124.0.2] - 2026-08-23
+
+### Added
+
+- Added local proof-URL opening for fully inline `rma2` material and bounded `rmc1` ordered append custody.
+- Added verified native image, audio, video, PDF, text, and binary reconstruction beneath the enclosing sealed proof object.
+- Added `rpb2/nativeRecordSeal` compact-token projection to the canonical standalone verifier and embedded Offline Studio verifier.
+
+### Changed
+
+- Advanced standalone package, visible release labels, documentation pointers, and cache epochs to `124.0.2`.
+- Added six canonical portable-proof-media release records and byte-identical archival mirrors.
+- Bound standalone source files to the read-only application candidate by SHA-256.
+
+### Preserved
+
+- Ruleset `124.0.0`, the V124 registry digest and 124-law inventory, operation-matrix digest, and compatibility `>=124.0.0 <125.0.0`.
+- Exact sealed bytes, verified history, and authenticated heads above URL, storage, SDK, MCP, AI, server, database, and display projections.
+
+### Boundary
+
+- No main `/receiz` write, coordinated package publication, deployment, database mutation, production smoke, remote push, or signed attestation was performed.
+
 ## [v124.0.1] - 2026-08-23
 
 ### Changed

@@ -386,6 +386,28 @@
       line-height: 1.5;
     }
 
+    .result a {
+      color: #174f80;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .result-link-actions {
+      display: flex;
+      min-width: 0;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .result-copy-link {
+      min-height: 30px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      line-height: 1;
+    }
+
     .kv {
       margin-top: 8px;
       display: grid;
@@ -714,6 +736,53 @@
       line-height: 1.45;
     }
 
+    .proof-url-input {
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      border: 1px solid #b9cbea;
+      border-radius: 14px;
+      padding: 12px;
+      background: #f9fbff;
+      color: #10284f;
+      font: 500 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .proof-url-player {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid #b9cbea;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #10284f, #173b69);
+      color: #fff;
+      box-shadow: 0 18px 42px rgba(20, 52, 94, .2);
+    }
+
+    .proof-url-player .player-proof-state {
+      color: #9ef0d0;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .proof-url-player img,
+    .proof-url-player video,
+    .proof-url-player iframe {
+      width: 100%;
+      max-height: 460px;
+      border: 0;
+      border-radius: 14px;
+      background: #08172d;
+      object-fit: contain;
+    }
+
+    .proof-url-player audio { width: 100%; }
+    .proof-url-player pre { max-height: 360px; overflow: auto; white-space: pre-wrap; }
+    .proof-url-player a { color: #fff; font-weight: 800; }
+
     .hidden { display: none !important; }
 
     @media (max-width: 350px) {
@@ -789,6 +858,18 @@
           <button id="sealBtn" type="button" disabled>Seal File</button>
         </div>
         <div id="sealResult" class="result hidden"></div>
+      </article>
+
+      <article class="card">
+        <h2>Open Proof URL</h2>
+        <p class="hint">Consumes any content-bearing Receiz proof URL, reconstructs its proof-object append segments when present, verifies the sealed proof object locally, and renders the native material inline.</p>
+        <label class="field-label" for="proofUrlInput">Proof object URL</label>
+        <textarea id="proofUrlInput" class="proof-url-input" inputmode="url" spellcheck="false" placeholder="https://receiz.com/v/...#material=..."></textarea>
+        <div class="btn-row">
+          <button id="openProofUrlBtn" type="button">Verify + Open</button>
+        </div>
+        <div id="proofUrlResult" class="result hidden" aria-live="polite"></div>
+        <div id="proofUrlPlayer" class="proof-url-player hidden"></div>
       </article>
 
       <article class="card verify-card">
@@ -868,7 +949,7 @@
 
     <p class="footer">
       <span>Receiz Offline Studio · record, seal, and verify from artifact bytes.</span>
-      <span class="footer-version">v124.0.1</span>
+      <span class="footer-version">v124.0.2</span>
     </p>
 
     <section class="offline-tools" aria-label="Offline HTML downloads">
@@ -1555,6 +1636,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       downloadLink: document.getElementById("downloadLink"),
       recordResult: document.getElementById("recordResult"),
       sealResult: document.getElementById("sealResult"),
+      proofUrlInput: document.getElementById("proofUrlInput"),
+      openProofUrlBtn: document.getElementById("openProofUrlBtn"),
+      proofUrlResult: document.getElementById("proofUrlResult"),
+      proofUrlPlayer: document.getElementById("proofUrlPlayer"),
       installPwaBtn: document.getElementById("installPwaBtn"),
     };
 
@@ -1562,6 +1647,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     let nativeCaptureSession = null;
     let selectedNativeCapture = null;
     let nativeCapturePreviewUrl = null;
+    let proofUrlPlaybackObjectUrl = null;
     const nativeCaptureFileOptions = new WeakMap();
     let deferredInstallPrompt = null;
     let trustedSignerProvisionPromise = null;
@@ -1833,9 +1919,37 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     function showResult(target, lines) {
       target.classList.remove("hidden");
       const kv = lines
-        .map((row) => `<div><b>${escapeHtml(row.k)}</b><code>${escapeHtml(row.v)}</code></div>`)
+        .map((row) => row.href
+          ? `<div><b>${escapeHtml(row.k)}</b><span class="result-link-actions"><a href="${escapeHtml(row.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.v)}</a>${row.copyHref ? `<button type="button" class="result-copy-link" data-copy-playback-url="${escapeHtml(row.copyHref)}" aria-label="Copy playback URL">Copy URL</button>` : ""}</span></div>`
+          : `<div><b>${escapeHtml(row.k)}</b><code>${escapeHtml(row.v)}</code></div>`)
         .join("");
       target.innerHTML = `<div class="kv">${kv}</div>`;
+      target.querySelectorAll("[data-copy-playback-url]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const playbackUrl = button.getAttribute("data-copy-playback-url") || "";
+          if (!playbackUrl) return;
+          try {
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+              await navigator.clipboard.writeText(playbackUrl);
+            } else {
+              const textarea = document.createElement("textarea");
+              textarea.value = playbackUrl;
+              textarea.setAttribute("readonly", "");
+              textarea.style.position = "fixed";
+              textarea.style.opacity = "0";
+              document.body.appendChild(textarea);
+              textarea.select();
+              document.execCommand("copy");
+              textarea.remove();
+            }
+            button.textContent = "Copied";
+            setTimeout(() => { button.textContent = "Copy URL"; }, 1400);
+          } catch {
+            button.textContent = "Copy unavailable";
+            setTimeout(() => { button.textContent = "Copy URL"; }, 1400);
+          }
+        });
+      });
     }
 
     function clearResult(target) {
@@ -2145,10 +2259,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
-    async function makeOfflineRecordQrDataUrl(url) {
+    async function makeOfflineRecordQrDataUrl(url, renderSize = 196) {
       if (typeof window.receizMakeQrSvgTagSafe === "function") {
         try {
-          const svg = window.receizMakeQrSvgTagSafe(url, 92, PROOF_QR_GENERATION_MARGIN);
+          const svg = window.receizMakeQrSvgTagSafe(url, renderSize, PROOF_QR_GENERATION_MARGIN);
           return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
         } catch {}
       }
@@ -2646,7 +2760,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...proofbundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2769,7 +2883,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const compact = [
-        "rpb1",
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -2813,12 +2927,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
+      if (slim.nativeRecordSeal) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
       const raw = textEncoder.encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_ENCODE_BYTES) {
         throw new Error("compact_proof_token_too_large");
       }
       const compressed = compactProofTokenDeflate(raw);
-      const legacy = `rpb1:${base64UrlEncode(compressed)}`;
+      const legacy = `${slim.nativeRecordSeal ? "rpb2" : "rpb1"}:${base64UrlEncode(compressed)}`;
       const binary = buildBinaryCompactReceizProofToken(proofbundle);
       return binary && binary.length < legacy.length ? binary : legacy;
     }
@@ -2831,6 +2949,257 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       url.searchParams.delete("ms");
       url.searchParams.set("c", token);
       return `${url.pathname}${url.search}${url.hash}`;
+    }
+
+    function encodeReceizNativeMaterialCapsuleBytes({ artifactBytes, filename, mimeType }) {
+      if (!(artifactBytes instanceof Uint8Array) || artifactBytes.byteLength === 0) {
+        throw new Error("receiz_material_capsule_empty");
+      }
+      if (artifactBytes.byteLength > 500 * 1024 * 1024) {
+        throw new Error("receiz_material_capsule_address_space_exceeded");
+      }
+      const filenameBytes = textEncoder.encode(String(filename || "sealed-material.bin").trim() || "sealed-material.bin");
+      const mimeBytes = textEncoder.encode(String(mimeType || "application/octet-stream").trim() || "application/octet-stream");
+      if (!filenameBytes.byteLength || filenameBytes.byteLength > 1024 || !mimeBytes.byteLength || mimeBytes.byteLength > 256) {
+        throw new Error("receiz_material_capsule_projection_invalid");
+      }
+      const payload = new Uint8Array(filenameBytes.byteLength + mimeBytes.byteLength + artifactBytes.byteLength);
+      payload.set(filenameBytes, 0);
+      payload.set(mimeBytes, filenameBytes.byteLength);
+      payload.set(artifactBytes, filenameBytes.byteLength + mimeBytes.byteLength);
+      const compressed = fflate.deflateSync(payload, { level: 9 });
+      const carried = new Uint8Array(12 + compressed.byteLength);
+      carried.set([0x52, 0x4d, 0x41, 0x32], 0);
+      const view = new DataView(carried.buffer);
+      view.setUint32(4, artifactBytes.byteLength, false);
+      view.setUint16(8, filenameBytes.byteLength, false);
+      view.setUint16(10, mimeBytes.byteLength, false);
+      carried.set(compressed, 12);
+      return carried;
+    }
+
+    function decodeReceizNativeMaterialCapsuleBytes(carried) {
+      if (!(carried instanceof Uint8Array) || carried.byteLength <= 12 || carried[0] !== 0x52 || carried[1] !== 0x4d || carried[2] !== 0x41 || carried[3] !== 0x32) {
+        throw new Error("RECEIZ_MATERIAL_CAPSULE_HEADER_INVALID");
+      }
+      const view = new DataView(carried.buffer, carried.byteOffset, carried.byteLength);
+      const artifactLength = view.getUint32(4, false);
+      const filenameLength = view.getUint16(8, false);
+      const mimeLength = view.getUint16(10, false);
+      if (!artifactLength || artifactLength > 500 * 1024 * 1024 || !filenameLength || filenameLength > 1024 || !mimeLength || mimeLength > 256) {
+        throw new Error("RECEIZ_MATERIAL_CAPSULE_PROJECTION_INVALID");
+      }
+      const projectedLength = artifactLength + filenameLength + mimeLength;
+      const opened = fflate.inflateSync(carried.subarray(12), { out: new Uint8Array(projectedLength + 1) });
+      if (opened.byteLength !== projectedLength) throw new Error("RECEIZ_MATERIAL_CAPSULE_LENGTH_MISMATCH");
+      return Object.freeze({
+        artifactBytes: opened.slice(filenameLength + mimeLength),
+        filename: textDecoder.decode(opened.slice(0, filenameLength)),
+        mimeType: textDecoder.decode(opened.slice(filenameLength, filenameLength + mimeLength)),
+      });
+    }
+
+    async function receizCompositeCanonicalDigest(value) {
+      return sha256Hex(textEncoder.encode(canonicalizeJson(value)));
+    }
+
+    async function receizCompositeLeafDigest(segment) {
+      return receizCompositeCanonicalDigest({ kind: "receiz.material.url-segment-leaf.v1", ...segment });
+    }
+
+    async function receizCompositeMerkleRoot(leaves) {
+      if (!leaves.length) throw new Error("RECEIZ_MATERIAL_COMPOSITE_MERKLE_INVALID");
+      let layer = leaves.slice();
+      while (layer.length > 1) {
+        const next = [];
+        for (let index = 0; index < layer.length; index += 2) {
+          next.push(await receizCompositeCanonicalDigest({
+            kind: "receiz.material.url-segment-parent.v1",
+            left: layer[index],
+            right: layer[index + 1] || layer[index],
+          }));
+        }
+        layer = next;
+      }
+      return layer[0];
+    }
+
+    function receizCompositeFibonacciState(leaves) {
+      const distances = [];
+      let current = 1;
+      let next = 2;
+      while (current <= leaves.length) {
+        distances.push(current);
+        const following = current + next;
+        current = next;
+        next = following;
+      }
+      return {
+        basis: "sparse-checkpoint/v1",
+        operationCount: leaves.length,
+        checkpoints: distances.map((distance) => ({
+          distance,
+          operationCount: leaves.length - distance,
+          artifactDigest: leaves[leaves.length - distance],
+        })),
+      };
+    }
+
+    async function buildReceizMaterialCompositeTransport({ capsuleBytes, artifactBytes, filename, mimeType, proofBearingVerifyPath }) {
+      const segmentByteBoundary = 1024 * 1024;
+      const proofUrl = new URL(proofBearingVerifyPath, "https://receiz.com");
+      const routeParts = proofUrl.pathname.split("/").filter(Boolean);
+      const pulse = routeParts.length === 4 && routeParts[0] === "v" ? routeParts[3] : "";
+      if (!/^(0|[1-9][0-9]*)$/.test(pulse)) throw new Error("RECEIZ_MATERIAL_COMPOSITE_KAI_INVALID");
+      const segments = [];
+      const descriptors = [];
+      for (let index = 0, offset = 0; offset < capsuleBytes.byteLength; index += 1, offset += segmentByteBoundary) {
+        const bytes = capsuleBytes.slice(offset, Math.min(capsuleBytes.byteLength, offset + segmentByteBoundary));
+        const basis = { index, offset, byteLength: bytes.byteLength, sha256: await sha256Hex(bytes) };
+        segments.push(bytes);
+        descriptors.push({ ...basis, leafDigest: await receizCompositeLeafDigest(basis) });
+      }
+      const leaves = descriptors.map((segment) => segment.leafDigest);
+      const authority = {
+        transportIsProofAuthority: false,
+        manifestIsProofAuthority: false,
+        segmentIsProofAuthority: false,
+        storageIsProofAuthority: false,
+        strongerTruth: "sealed-receiz-proof-object",
+      };
+      const withoutDigest = {
+        schema: "receiz.material.url-composite.v1",
+        capsuleSha256: await sha256Hex(capsuleBytes),
+        capsuleByteLength: capsuleBytes.byteLength,
+        sealedArtifactSha256: await sha256Hex(artifactBytes),
+        sealedArtifactByteLength: artifactBytes.byteLength,
+        sealedFilename: String(filename || "sealed-material.bin").trim() || "sealed-material.bin",
+        sealedMimeType: String(mimeType || "application/octet-stream").trim() || "application/octet-stream",
+        verifyPath: proofUrl.pathname,
+        issuedAtKaiPulse: pulse,
+        issuedAtKaiUPulse: (BigInt(pulse) * 1000000n).toString(),
+        predecessorPackageDigest: null,
+        segmentByteBoundary,
+        segmentCount: descriptors.length,
+        merkle: { algorithm: "sha256/ordered-pair/v1", root: await receizCompositeMerkleRoot(leaves) },
+        fibonacci: receizCompositeFibonacciState(leaves),
+        segments: descriptors,
+        authority,
+      };
+      const packageDigest = await receizCompositeCanonicalDigest({ kind: "receiz.material.url-composite-package.v1", ...withoutDigest });
+      return { manifest: { ...withoutDigest, packageDigest }, segments, token: `rmc1:${packageDigest}` };
+    }
+
+    function openReceizMaterialAppendDatabase() {
+      return new Promise((resolve, reject) => {
+        if (!globalThis.indexedDB) return reject(new Error("RECEIZ_MATERIAL_APPEND_STORAGE_UNAVAILABLE"));
+        const request = indexedDB.open("receiz-proof-object-append-segments-v1", 1);
+        request.onupgradeneeded = () => {
+          const db = request.result;
+          if (!db.objectStoreNames.contains("manifests")) db.createObjectStore("manifests", { keyPath: "packageDigest" });
+          if (!db.objectStoreNames.contains("segments")) db.createObjectStore("segments", { keyPath: "key" });
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error || new Error("RECEIZ_MATERIAL_APPEND_STORAGE_UNAVAILABLE"));
+      });
+    }
+
+    async function persistReceizMaterialAppendSegments(manifest, segments) {
+      try {
+        if (navigator.storage && typeof navigator.storage.persist === "function") await navigator.storage.persist();
+        const db = await openReceizMaterialAppendDatabase();
+        await new Promise((resolve, reject) => {
+          const transaction = db.transaction(["manifests", "segments"], "readwrite");
+          transaction.objectStore("manifests").put({ packageDigest: manifest.packageDigest, manifest });
+          segments.forEach((bytes, index) => transaction.objectStore("segments").put({
+            key: `${manifest.packageDigest}:${index}`,
+            packageDigest: manifest.packageDigest,
+            index,
+            bytes,
+          }));
+          transaction.oncomplete = () => resolve();
+          transaction.onerror = () => reject(transaction.error || new Error("RECEIZ_MATERIAL_APPEND_STORAGE_FAILED"));
+          transaction.onabort = () => reject(transaction.error || new Error("RECEIZ_MATERIAL_APPEND_STORAGE_FAILED"));
+        });
+        db.close();
+      } catch {
+        // The sealed file is authority. Durable local append storage is additive.
+      }
+    }
+
+    async function readHeldReceizMaterialAppendPackage(packageDigest) {
+      try {
+        const db = await openReceizMaterialAppendDatabase();
+        const manifest = await new Promise((resolve, reject) => {
+          const request = db.transaction("manifests", "readonly").objectStore("manifests").get(packageDigest);
+          request.onsuccess = () => resolve(request.result?.manifest || null);
+          request.onerror = () => reject(request.error);
+        });
+        if (!manifest || !Array.isArray(manifest.segments)) {
+          db.close();
+          return null;
+        }
+        const segments = [];
+        for (const descriptor of manifest.segments) {
+          const held = await new Promise((resolve, reject) => {
+            const request = db.transaction("segments", "readonly").objectStore("segments").get(`${packageDigest}:${descriptor.index}`);
+            request.onsuccess = () => resolve(request.result?.bytes || null);
+            request.onerror = () => reject(request.error);
+          });
+          if (!(held instanceof Uint8Array) && !(held instanceof ArrayBuffer)) {
+            db.close();
+            return null;
+          }
+          segments.push(held instanceof Uint8Array ? held : new Uint8Array(held));
+        }
+        db.close();
+        return { manifest, segments };
+      } catch {
+        return null;
+      }
+    }
+
+    async function publishReceizMaterialCompositeTransport(transport) {
+      const initResponse = await fetch("https://receiz.com/api/proof-material/packages/init", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ manifest: transport.manifest }),
+        cache: "no-store",
+      });
+      const initialized = await initResponse.json();
+      if (!initResponse.ok || !initialized.ok || !initialized.publicationId || !Array.isArray(initialized.uploads)) {
+        throw new Error("RECEIZ_MATERIAL_COMPOSITE_PUBLICATION_INIT_FAILED");
+      }
+      for (const upload of initialized.uploads) {
+        const segment = transport.segments[upload.index];
+        if (!segment || segment.byteLength !== upload.byteLength) throw new Error("RECEIZ_MATERIAL_COMPOSITE_PUBLICATION_PLAN_INVALID");
+        const uploadResponse = await fetch(upload.signedUrl, {
+          method: "PUT",
+          headers: { "content-type": "application/octet-stream" },
+          body: segment,
+          cache: "no-store",
+        });
+        if (!uploadResponse.ok) throw new Error("RECEIZ_MATERIAL_COMPOSITE_SEGMENT_UPLOAD_FAILED");
+      }
+      const finalizeResponse = await fetch("https://receiz.com/api/proof-material/packages/finalize", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ publicationId: initialized.publicationId, manifest: transport.manifest }),
+        cache: "no-store",
+      });
+      const finalized = await finalizeResponse.json();
+      if (!finalizeResponse.ok || !finalized.ok || finalized.materialToken !== transport.token) {
+        throw new Error("RECEIZ_MATERIAL_COMPOSITE_PUBLICATION_FINALIZE_FAILED");
+      }
+      await persistReceizMaterialAppendSegments(transport.manifest, transport.segments);
+      return finalized.materialToken;
+    }
+
+    function buildReceizNativeMaterialUrl({ artifactBytes, filename, mimeType, proofBearingVerifyPath }) {
+      const carried = encodeReceizNativeMaterialCapsuleBytes({ artifactBytes, filename, mimeType });
+      const publicUrl = new URL(proofBearingVerifyPath, "https://receiz.com");
+      publicUrl.hash = new URLSearchParams({ material: `rma2:${base64UrlEncode(carried)}` }).toString();
+      return publicUrl.toString();
     }
 
     function encodeReceizBundleEnvelope(args) {
@@ -4955,6 +5324,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16ProofDigest,
         sigilClaimSeed,
         claimText,
+        qrProofBearingVerifyPath,
       } = params;
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
@@ -5051,11 +5421,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ctx.fillStyle = "#666666";
       ctx.fillText(printablePath, centerX, timestampY + 186);
       if (anchorId) {
-        const qrDataUrl = await makeOfflineRecordQrDataUrl(`https://${printablePath}`);
+        const qrTargetUrl = new URL(qrProofBearingVerifyPath || `https://${printablePath}`, "https://receiz.com").toString();
+        const qrDataUrl = await makeOfflineRecordQrDataUrl(qrTargetUrl, 196);
         if (qrDataUrl) {
           const qrImage = await loadImageElement(qrDataUrl);
-          const QR_SIZE = 92;
-          const PAD = 9;
+          const QR_SIZE = 196;
+          const PAD = 10;
           const BOX = QR_SIZE + PAD * 2;
           const boxX = canvas.width - 52 - BOX;
           const boxY = canvas.height - 64 - BOX;
@@ -5183,6 +5554,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ...bundleInput,
         artifactSha256Basis: EMPTY_ARTIFACT_SHA256_BASIS,
       });
+      const signedProvisional = await ensureTrustedSignature(provisionalBundle);
+      const qrProofBearingVerifyPath = await buildProofBearingReceizVPath(anchoredVerifyPath, signedProvisional);
 
       const baseBlob = await renderRecordPng({
         ts: record.ts,
@@ -5196,10 +5569,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         groth16ProofDigest: zk.groth16ProofDigest,
         sigilClaimSeed: provisionalBundle.sigilClaimSeed,
         claimText: normalizeClaimTextForRecord(record.claim?.text || ""),
+        qrProofBearingVerifyPath,
       });
 
       const basePng = stripPngTextChunksByKeyword(new Uint8Array(await baseBlob.arrayBuffer()), RECEIZ_PROOF_BUNDLE_CHUNK_KEY).pngBytes;
-      const signedProvisional = await ensureTrustedSignature(provisionalBundle);
 
       const firstPass = insertPngTextChunks(basePng, [
         { keyword: RECEIZ_GROTH16_NOTICE_CHUNK_KEY, text: JSON.stringify(OFFLINE_GROTH16_NOTICE) },
@@ -5743,6 +6116,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         sealEmbedding === "trailer"
           ? "application/octet-stream"
           : contentType || "application/octet-stream";
+      const materialUrl = buildReceizNativeMaterialUrl({
+        artifactBytes,
+        filename,
+        mimeType: contentType || sourceMime,
+        proofBearingVerifyPath,
+      });
       return {
         blob: new Blob([artifactBytes], { type: downloadContentType }),
         artifactBytes,
@@ -5753,6 +6132,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         code,
         pulse,
         verifyPath: proofBearingVerifyPath,
+        materialUrl,
         basisSha256,
         sourceFormat,
         sealEmbedding,
@@ -6197,6 +6577,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             { k: "source sha", v: await sha256Hex(selection.sourceBytes) },
             { k: "format", v: `${result.sourceFormat} (${result.sealEmbedding})` },
             { k: "verify path", v: result.verifyPath },
+            { k: "playback proof", v: "Open sealed material", href: result.materialUrl, copyHref: result.materialUrl },
             { k: "owner", v: result.ownerReceizId },
           ]);
           clearSelectedNativeCapture();
@@ -6219,11 +6600,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           sourceFormat: "png",
           sealEmbedding: "png",
         });
+        const proofUrl = buildReceizNativeMaterialUrl({
+          artifactBytes: new Uint8Array(await result.blob.arrayBuffer()),
+          filename: result.filename,
+          mimeType: "image/png",
+          proofBearingVerifyPath: result.verifyPath,
+        });
         showResult(ui.recordResult, [
           { k: "timestamp", v: result.ts },
           { k: "code", v: result.code },
           { k: "pulse", v: result.pulse },
           { k: "verify path", v: result.verifyPath },
+          { k: "proof URL", v: "Open recorded proof object", href: proofUrl, copyHref: proofUrl },
           { k: "anchor", v: result.anchorId || "—" },
           { k: "claim", v: result.claimText || "—" },
           { k: "kai", v: result.kaiKlok },
@@ -6274,6 +6662,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "code", v: result.code },
           { k: "pulse", v: result.pulse },
           { k: "verify path", v: result.verifyPath },
+          { k: "playback proof", v: "Open sealed material", href: result.materialUrl, copyHref: result.materialUrl },
           { k: "basis sha", v: result.basisSha256 },
           { k: "owner", v: result.ownerReceizId },
           { k: "prior head", v: result.priorHeadReference },
@@ -6350,7 +6739,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "124.0.1-local-proof-primitives-v1";
+      const OFFLINE_STANDALONE_SW_VERSION = "124.0.2-local-proof-primitives-v1";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -7360,6 +7749,183 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       });
     }
 
+    async function resolveReceizMaterialCompositeCapsule(materialToken, proofUrl) {
+      const packageDigest = materialToken.slice("rmc1:".length);
+      if (!/^[0-9a-f]{64}$/.test(packageDigest)) throw new Error("RECEIZ_MATERIAL_COMPOSITE_TOKEN_INVALID");
+      const transportOrigin = "https://receiz.com";
+      const heldPackage = await readHeldReceizMaterialAppendPackage(packageDigest);
+      let manifest = heldPackage?.manifest || null;
+      if (!manifest) {
+        const manifestResponse = await fetch(`${transportOrigin}/api/proof-material/packages/${packageDigest}/manifest`, { cache: "force-cache" });
+        if (!manifestResponse.ok) throw new Error("RECEIZ_MATERIAL_COMPOSITE_MANIFEST_UNAVAILABLE");
+        manifest = await manifestResponse.json();
+      }
+      if (
+        !isRecord(manifest)
+        || manifest.schema !== "receiz.material.url-composite.v1"
+        || manifest.packageDigest !== packageDigest
+        || manifest.verifyPath !== proofUrl.pathname
+        || !/^[0-9a-f]{64}$/.test(String(manifest.capsuleSha256 || ""))
+        || !/^[0-9a-f]{64}$/.test(String(manifest.sealedArtifactSha256 || ""))
+        || !Number.isSafeInteger(manifest.capsuleByteLength)
+        || manifest.capsuleByteLength < 1
+        || manifest.capsuleByteLength > 500 * 1024 * 1024
+        || !Number.isSafeInteger(manifest.segmentCount)
+        || manifest.segmentCount < 1
+        || manifest.segmentCount > 4096
+        || !Array.isArray(manifest.segments)
+        || manifest.segments.length !== manifest.segmentCount
+        || manifest.authority?.transportIsProofAuthority !== false
+        || manifest.authority?.manifestIsProofAuthority !== false
+        || manifest.authority?.segmentIsProofAuthority !== false
+        || manifest.authority?.storageIsProofAuthority !== false
+        || manifest.authority?.strongerTruth !== "sealed-receiz-proof-object"
+      ) throw new Error("RECEIZ_MATERIAL_COMPOSITE_MANIFEST_INVALID");
+
+      let expectedOffset = 0;
+      const leaves = [];
+      for (let index = 0; index < manifest.segments.length; index += 1) {
+        const segment = manifest.segments[index];
+        const basis = { index, offset: segment.offset, byteLength: segment.byteLength, sha256: segment.sha256 };
+        if (
+          !isRecord(segment)
+          || segment.index !== index
+          || segment.offset !== expectedOffset
+          || !Number.isSafeInteger(segment.byteLength)
+          || segment.byteLength < 1
+          || !/^[0-9a-f]{64}$/.test(String(segment.sha256 || ""))
+          || segment.leafDigest !== await receizCompositeLeafDigest(basis)
+        ) throw new Error("RECEIZ_MATERIAL_COMPOSITE_SEGMENT_INVALID");
+        expectedOffset += segment.byteLength;
+        leaves.push(segment.leafDigest);
+      }
+      if (
+        expectedOffset !== manifest.capsuleByteLength
+        || manifest.merkle?.algorithm !== "sha256/ordered-pair/v1"
+        || manifest.merkle.root !== await receizCompositeMerkleRoot(leaves)
+        || canonicalizeJson(manifest.fibonacci) !== canonicalizeJson(receizCompositeFibonacciState(leaves))
+      ) throw new Error("RECEIZ_MATERIAL_COMPOSITE_COMMITMENT_INVALID");
+      const { packageDigest: ignoredDigest, ...withoutDigest } = manifest;
+      const recomputedPackageDigest = await receizCompositeCanonicalDigest({ kind: "receiz.material.url-composite-package.v1", ...withoutDigest });
+      if (recomputedPackageDigest !== packageDigest) throw new Error("RECEIZ_MATERIAL_COMPOSITE_PACKAGE_DIGEST_INVALID");
+
+      const capsuleBytes = new Uint8Array(manifest.capsuleByteLength);
+      const resolvedSegments = [];
+      for (const segment of manifest.segments) {
+        let bytes = heldPackage?.segments?.[segment.index] || null;
+        if (!bytes) {
+          const response = await fetch(
+            `${transportOrigin}/api/proof-material/packages/${packageDigest}/segments/${segment.index}?sha256=${segment.sha256}`,
+            { cache: "force-cache" },
+          );
+          if (!response.ok) throw new Error("RECEIZ_MATERIAL_COMPOSITE_SEGMENT_UNAVAILABLE");
+          bytes = new Uint8Array(await response.arrayBuffer());
+        }
+        if (bytes.byteLength !== segment.byteLength || await sha256Hex(bytes) !== segment.sha256) {
+          throw new Error("RECEIZ_MATERIAL_COMPOSITE_SEGMENT_BYTES_INVALID");
+        }
+        capsuleBytes.set(bytes, segment.offset);
+        resolvedSegments.push(bytes);
+      }
+      if (await sha256Hex(capsuleBytes) !== manifest.capsuleSha256) {
+        throw new Error("RECEIZ_MATERIAL_COMPOSITE_CAPSULE_DIGEST_INVALID");
+      }
+      if (!heldPackage) await persistReceizMaterialAppendSegments(manifest, resolvedSegments);
+      return { capsuleBytes, manifest };
+    }
+
+    function renderVerifiedProofUrlMaterial(capsule, proofUrl, verification) {
+      if (proofUrlPlaybackObjectUrl) URL.revokeObjectURL(proofUrlPlaybackObjectUrl);
+      proofUrlPlaybackObjectUrl = URL.createObjectURL(new Blob([capsule.artifactBytes], { type: capsule.mimeType }));
+      ui.proofUrlPlayer.textContent = "";
+      ui.proofUrlPlayer.classList.remove("hidden");
+      const state = document.createElement("div");
+      state.className = "player-proof-state";
+      state.textContent = "Verified sealed proof object";
+      const title = document.createElement("strong");
+      title.textContent = capsule.filename;
+      ui.proofUrlPlayer.append(state, title);
+      let media;
+      if (capsule.mimeType.startsWith("image/")) {
+        media = document.createElement("img");
+        media.alt = capsule.filename;
+        media.src = proofUrlPlaybackObjectUrl;
+      } else if (capsule.mimeType.startsWith("video/")) {
+        media = document.createElement("video");
+        media.controls = true;
+        media.playsInline = true;
+        media.preload = "metadata";
+        media.src = proofUrlPlaybackObjectUrl;
+      } else if (capsule.mimeType.startsWith("audio/")) {
+        media = document.createElement("audio");
+        media.controls = true;
+        media.preload = "metadata";
+        media.src = proofUrlPlaybackObjectUrl;
+      } else if (capsule.mimeType === "application/pdf") {
+        media = document.createElement("iframe");
+        media.title = capsule.filename;
+        media.src = proofUrlPlaybackObjectUrl;
+      } else if (capsule.mimeType.startsWith("text/") || capsule.mimeType.includes("json")) {
+        media = document.createElement("pre");
+        media.textContent = textDecoder.decode(capsule.artifactBytes);
+      } else {
+        media = document.createElement("a");
+        media.href = proofUrlPlaybackObjectUrl;
+        media.download = capsule.filename;
+        media.textContent = "Download verified material";
+      }
+      ui.proofUrlPlayer.append(media);
+      showResult(ui.proofUrlResult, [
+        { k: "proof", v: "Canonical verification passed" },
+        { k: "format", v: capsule.mimeType },
+        { k: "bytes", v: String(capsule.artifactBytes.byteLength) },
+        { k: "pulse", v: String(verification.bundle?.kaiPulseEternal || "") },
+        { k: "proof URL", v: "Copy playable proof URL", href: proofUrl.toString(), copyHref: proofUrl.toString() },
+      ]);
+    }
+
+    async function onOpenProofUrlClick() {
+      ui.openProofUrlBtn.disabled = true;
+      clearResult(ui.proofUrlResult);
+      ui.proofUrlPlayer.classList.add("hidden");
+      setStatus("Reconstructing proof-object append segments...", "warn");
+      try {
+        const proofUrl = new URL(String(ui.proofUrlInput.value || "").trim());
+        const fragment = proofUrl.hash.startsWith("#") ? proofUrl.hash.slice(1) : proofUrl.hash;
+        const materialToken = new URLSearchParams(fragment).get("material") || "";
+        let capsuleBytes;
+        let manifest = null;
+        if (materialToken.startsWith("rma2:")) {
+          capsuleBytes = base64UrlDecode(materialToken.slice("rma2:".length));
+        } else if (materialToken.startsWith("rmc1:")) {
+          const resolved = await resolveReceizMaterialCompositeCapsule(materialToken, proofUrl);
+          capsuleBytes = resolved.capsuleBytes;
+          manifest = resolved.manifest;
+        } else {
+          throw new Error("RECEIZ_MATERIAL_URL_CAPSULE_MISSING");
+        }
+        const capsule = decodeReceizNativeMaterialCapsuleBytes(capsuleBytes);
+        if (manifest && (
+          capsule.artifactBytes.byteLength !== manifest.sealedArtifactByteLength
+          || await sha256Hex(capsule.artifactBytes) !== manifest.sealedArtifactSha256
+        )) throw new Error("RECEIZ_MATERIAL_COMPOSITE_ARTIFACT_BINDING_INVALID");
+        const verifier = globalThis.receizCanonicalOfflineVerifier;
+        if (!verifier || typeof verifier.verifyBytes !== "function") throw new Error("RECEIZ_CANONICAL_OFFLINE_VERIFIER_UNAVAILABLE");
+        const verification = await verifier.verifyBytes(capsule.filename, capsule.artifactBytes, proofUrl.toString());
+        if (!verification || verification.ok !== true || !verification.bundle || verification.bundle.verifyPath !== proofUrl.pathname) {
+          throw new Error("RECEIZ_MATERIAL_URL_ARTIFACT_REJECTED");
+        }
+        renderVerifiedProofUrlMaterial(capsule, proofUrl, verification);
+        setStatus("Proof object verified. Native material reconstructed locally.", "ok");
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error || "proof_url_open_failed");
+        showResult(ui.proofUrlResult, [{ k: "status", v: message }]);
+        setStatus(`Proof URL rejected: ${message}`, "bad");
+      } finally {
+        ui.openProofUrlBtn.disabled = false;
+      }
+    }
+
     function bindEvents() {
       ui.recordBtn.addEventListener("click", () => {
         void onRecordClick();
@@ -7387,6 +7953,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
       ui.sealBtn.addEventListener("click", () => {
         void onSealClick();
+      });
+      ui.openProofUrlBtn.addEventListener("click", () => {
+        void onOpenProofUrlClick();
       });
       installSealDrop();
       installServiceWorkerWarm();
@@ -9366,7 +9935,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -9488,7 +10057,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const compact = [
-        "rpb1",
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -9530,11 +10099,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
+      if (slim.nativeRecordSeal) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
       try {
-        const legacy = `rpb1:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        const legacy = `${slim.nativeRecordSeal ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
         const binary = buildBinaryCompactReceizProofToken(bundle);
         return binary && binary.length < legacy.length ? binary : legacy;
       } catch {

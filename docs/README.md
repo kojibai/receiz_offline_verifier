@@ -1,23 +1,23 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v124.0.1`.
+This directory is the public documentation set for Receiz `v124.0.2`.
 
 ## Start Here
 
-- [releases/v124.0.1.md](releases/v124.0.1.md): corrective Reality Becomes Infrastructure release identity and standalone boundary.
-- [releases/v124.0.1-product-truth.md](releases/v124.0.1-product-truth.md): frozen proof, identity, capability, MCP, receipt, and constitutional truth.
-- [releases/v124.0.1-checklist.md](releases/v124.0.1-checklist.md): application-observation, standalone, and external evidence boundaries.
-- [releases/v124.0.1-process.md](releases/v124.0.1-process.md): corrective package process and standalone qualification sequence.
-- [releases/v124.0.1-regression-lessons.md](releases/v124.0.1-regression-lessons.md): scope, inventory, receipt, and patch/ruleset separation locks.
-- [releases/v124.0.1-migration.md](releases/v124.0.1-migration.md): explicit no-new-migration adoption boundary.
-- [releases/v124.0.1-commit-history.md](releases/v124.0.1-commit-history.md): read-only application provenance and standalone archive boundary.
+- [releases/v124.0.2.md](releases/v124.0.2.md): portable-proof-media and exact-Kai release identity and standalone boundary.
+- [releases/v124.0.2-product-truth.md](releases/v124.0.2-product-truth.md): sealed material, reconstruction, presentation, identity-pulse, and constitutional truth.
+- [releases/v124.0.2-checklist.md](releases/v124.0.2-checklist.md): source-observation, standalone, and external evidence boundaries.
+- [releases/v124.0.2-process.md](releases/v124.0.2-process.md): material-transport process and standalone qualification sequence.
+- [releases/v124.0.2-regression-lessons.md](releases/v124.0.2-regression-lessons.md): carried-material, verifier-parity, and bounded-runtime locks.
+- [releases/v124.0.2-commit-history.md](releases/v124.0.2-commit-history.md): application lineage and standalone archive boundary.
+- [releases/v124.0.1.md](releases/v124.0.1.md): prior corrective V124 package release.
 - [releases/v124.0.0.md](releases/v124.0.0.md): immutable V124 constitutional release record.
 - [releases/v124.0.0-constitution-registry.digest](releases/v124.0.0-constitution-registry.digest): canonical v124 registry digest.
 - [releases/v124.0.0-constitution-registry.json](releases/v124.0.0-constitution-registry.json): deterministic 124-law v124 constitutional registry.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v124.0.1`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v124.0.2`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

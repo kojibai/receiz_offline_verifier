@@ -1,6 +1,6 @@
 # PBI Recovery And Receiz ID Binding
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v124.0.1`
+Status: Canonical reference from `v70.0.0`; carried forward for `v124.0.2`
 Release date: April 24, 2026
 
 Receiz ID is the primary everyday login rail. PBI, Identity Record, Identity Seal, and Receiz Key proof remain recovery and interoperability rails that bind back into local identity instead of replacing it.

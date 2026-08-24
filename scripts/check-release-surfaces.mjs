@@ -1,5 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const root = process.cwd();
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
@@ -12,11 +13,13 @@ const expectedDigest = "d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c882
 const expectedPredecessor = "945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb";
 const expectedMatrix = "540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5";
 const expectedCompatibility = ">=124.0.0 <125.0.0";
-const upstreamCandidate = "b4efb56c72780bd9b5013ef466fdea998701b96b";
-const upstreamPushedBoundary = "b4efb56c72780bd9b5013ef466fdea998701b96b";
-const standalonePredecessor = "35d3a440e2252dd8146e0b7f443824b19c0cf852";
+const upstreamCandidate = "7e7c4297b5ecf95236ace3eb87bb0b97cbc9cd8f";
+const upstreamPushedBoundary = "eed426781b6dbb4138e29c9cbcbcf896ec890b11";
+const standalonePredecessor = "86bd34c7ebb9c4b1e0db5d5020b9443c085fc275";
+const expectedOfflineVerifierDigest = "1737d982c7f5149b68369cea9e55d34c2a81f1321767fb8b52eff3873cb0c4d9";
+const expectedOfflineStudioDigest = "3fb9592540e6026cd172d52df7c117417e8f02105a8d13010dcf09fc4df4d723";
 
-const releaseSuffixes = [".md", "-product-truth.md", "-checklist.md", "-process.md", "-regression-lessons.md", "-commit-history.md", "-migration.md"];
+const releaseSuffixes = [".md", "-product-truth.md", "-checklist.md", "-process.md", "-regression-lessons.md", "-commit-history.md"];
 
 const requiredFiles = [
   "README.md", "AGENTS.md", "RELEASE_NOTES.md", "CHANGELOG.md", "docs/README.md",
@@ -56,6 +59,11 @@ const currentReleasePointers = [
   ["apps/offline-record-seal.html", `${bareVersion}-local-proof-primitives-v1`],
   ["apps/offline-record-seal.html", "ensureLocalProofPrimitives"],
   ["apps/offline-record-seal.html", "void preflight().catch(() => {})"],
+  ["apps/offline-record-seal.html", "onOpenProofUrlClick"],
+  ["apps/offline-record-seal.html", 'materialToken.startsWith("rma2:")'],
+  ["apps/offline-record-seal.html", 'materialToken.startsWith("rmc1:")'],
+  ["apps/offline-record-seal.html", 'slim.nativeRecordSeal ? "rpb2" : "rpb1"'],
+  ["apps/offline-verifier.html", 'slim.nativeRecordSeal ? "rpb2" : "rpb1"'],
   ["apps/offline-sports-card-verifier.html", releaseVersion],
   ["apps/offline-sports-card-verifier.html", `${bareVersion}-official-release-v1`],
   ["apps/offline-settlement.html", releaseVersion],
@@ -65,26 +73,28 @@ const currentReleasePointers = [
   [`docs/releases/${releaseVersion}.md`, "Reality Becomes Infrastructure"],
   [`docs/releases/${releaseVersion}.md`, "Standalone Repository Boundary"],
   [`docs/releases/${releaseVersion}.md`, upstreamCandidate],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "Package/application patch identity is `124.0.1`"],
-  [`docs/releases/${releaseVersion}-product-truth.md`, "The standalone verifier carries the patch release identity"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "Package identity is `124.0.2`"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, "Standalone Projection"],
+  [`docs/releases/${releaseVersion}-product-truth.md`, expectedOfflineVerifierDigest],
+  [`docs/releases/${releaseVersion}-product-truth.md`, expectedOfflineStudioDigest],
   [`docs/releases/${releaseVersion}-checklist.md`, "Standalone Repository Evidence"],
   [`docs/releases/${releaseVersion}-process.md`, upstreamCandidate],
   [`docs/releases/${releaseVersion}-process.md`, upstreamPushedBoundary],
   [`docs/releases/${releaseVersion}-process.md`, standalonePredecessor],
   [`docs/releases/${releaseVersion}-process.md`, "Standalone Qualification Boundary"],
-  [`docs/releases/${releaseVersion}-regression-lessons.md`, "One universal OIDC scope catalog"],
+  [`docs/releases/${releaseVersion}-regression-lessons.md`, "Never require a database or media server"],
   [`docs/releases/${releaseVersion}-regression-lessons.md`, "Standalone Lock"],
   [`docs/releases/${releaseVersion}-commit-history.md`, upstreamCandidate],
   [`docs/releases/${releaseVersion}-commit-history.md`, upstreamPushedBoundary],
   [`docs/releases/${releaseVersion}-commit-history.md`, standalonePredecessor],
+  [`docs/releases/${releaseVersion}-commit-history.md`, "Observed commit count: 23 commits"],
   [`docs/releases/${releaseVersion}-commit-history.md`, "Standalone Archive Boundary"],
-  [`docs/releases/${releaseVersion}-migration.md`, "No new database schema migration"],
   [`docs/releases/${frozenRegistryVersion}-compatibility-matrix.md`, expectedCompatibility],
   [`docs/releases/${frozenRegistryVersion}-compatibility-matrix.md`, expectedMatrix]
 ];
 
 const errors = [];
-if (bareVersion !== "124.0.1") errors.push(`package.json version is ${bareVersion}, expected 124.0.1`);
+if (bareVersion !== "124.0.2") errors.push(`package.json version is ${bareVersion}, expected 124.0.2`);
 
 for (const file of requiredFiles) {
   if (!existsSync(join(root, file))) errors.push(`Missing required release file: ${file}`);
@@ -102,6 +112,14 @@ for (const suffix of releaseSuffixes) {
   const archivePath = join(root, `releases/${releaseVersion}${suffix}`);
   if (!existsSync(docsPath) || !existsSync(archivePath)) continue;
   if (!readFileSync(docsPath).equals(readFileSync(archivePath))) errors.push(`Release archive mirror mismatch for ${releaseVersion}${suffix}`);
+}
+
+const sha256File = (file) => createHash("sha256").update(readFileSync(join(root, file))).digest("hex");
+if (sha256File("apps/offline-verifier.html") !== expectedOfflineVerifierDigest) {
+  errors.push("Canonical standalone verifier bytes do not match the v124.0.2 source digest");
+}
+if (sha256File("apps/offline-record-seal.html") !== expectedOfflineStudioDigest) {
+  errors.push("Offline Studio bytes do not match the v124.0.2 source digest");
 }
 
 const registryPath = join(root, `docs/releases/${frozenRegistryVersion}-constitution-registry.json`);

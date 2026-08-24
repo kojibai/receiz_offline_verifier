@@ -1,5 +1,30 @@
 # Release Notes
 
+## v124.0.2
+Release date: 2026-08-23
+
+`v124.0.2` advances the standalone distribution for portable proof media and
+exact sealed-Kai projection while preserving the immutable `124.0.0`
+constitutional ruleset.
+
+- Canonical release note: [docs/releases/v124.0.2.md](docs/releases/v124.0.2.md)
+- Product truth: [docs/releases/v124.0.2-product-truth.md](docs/releases/v124.0.2-product-truth.md)
+- Evidence checklist: [docs/releases/v124.0.2-checklist.md](docs/releases/v124.0.2-checklist.md)
+- Release process: [docs/releases/v124.0.2-process.md](docs/releases/v124.0.2-process.md)
+- Regression lessons: [docs/releases/v124.0.2-regression-lessons.md](docs/releases/v124.0.2-regression-lessons.md)
+- Commit history: [docs/releases/v124.0.2-commit-history.md](docs/releases/v124.0.2-commit-history.md)
+
+The canonical verifier now accepts the `rpb2/nativeRecordSeal` compact
+projection, and Offline Studio reconstructs `rma2` inline or `rmc1` ordered
+append custody before rendering native material. The enclosing sealed proof
+object remains authority.
+
+The application source was inspected read-only at local candidate
+`7e7c4297b5ecf95236ace3eb87bb0b97cbc9cd8f`, with observed pushed boundary
+`eed426781b6dbb4138e29c9cbcbcf896ec890b11`. No package publication,
+application deployment, database mutation, production smoke, remote push, or
+signed attestation is claimed.
+
 ## v124.0.1
 Release date: 2026-08-23
 

@@ -1,6 +1,6 @@
 # Artifact format (verifier-visible)
 
-This document defines the verifier-visible data contract for `v124.0.1`.
+This document defines the verifier-visible data contract for `v124.0.2`.
 
 ## Supported artifact carriers
 - PNG with text chunks.
