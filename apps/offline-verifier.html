@@ -4916,6 +4916,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         return this;
       }
 
+      clone() {
+        const copy = new ReceizStreamingSha256();
+        copy.h.set(this.h);
+        copy.buffer.set(this.buffer);
+        copy.bufferLength = this.bufferLength;
+        copy.bytesHashed = this.bytesHashed;
+        copy.finished = this.finished;
+        return copy;
+      }
+
       hex() {
         if (!this.finished) {
           const bitLength = this.bytesHashed * 8;
@@ -4956,6 +4966,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return true;
     }
 
+    function countReceizTrailerPrefixes(bytes) {
+      let count = 0;
+      let offset = bytes.indexOf(TRAILER_PREFIX_BYTES[0]);
+      while (offset >= 0) {
+        if (receizBytesMatchAt(bytes, TRAILER_PREFIX_BYTES, offset)) count += 1;
+        offset = bytes.indexOf(TRAILER_PREFIX_BYTES[0], offset + 1);
+      }
+      return count;
+    }
+
     async function verifyLargeReceizTrailerFile(file, optionalLink) {
       const errors = [];
       const warnings = [];
@@ -4989,22 +5009,27 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       const basisByteLength = tailStart + prefixOffset;
-      const artifactHash = new ReceizStreamingSha256();
       const basisHash = new ReceizStreamingSha256();
+      let artifactHash = null;
       let prefixCount = 0;
       let carry = new Uint8Array();
       const chunkBytes = 1024 * 1024;
       for (let offset = 0; offset < file.size; offset += chunkBytes) {
         const chunk = new Uint8Array(await file.slice(offset, Math.min(file.size, offset + chunkBytes)).arrayBuffer());
-        artifactHash.update(chunk);
-        if (offset < basisByteLength) {
-          const take = Math.min(chunk.length, basisByteLength - offset);
+        if (artifactHash) {
+          artifactHash.update(chunk);
+        } else {
+          const take = Math.min(chunk.length, Math.max(0, basisByteLength - offset));
           if (take > 0) basisHash.update(chunk.subarray(0, take));
+          if (offset + chunk.length >= basisByteLength) {
+            artifactHash = basisHash.clone();
+            if (take < chunk.length) artifactHash.update(chunk.subarray(take));
+          }
         }
         const scan = new Uint8Array(carry.length + chunk.length);
         scan.set(carry);
         scan.set(chunk, carry.length);
-        prefixCount += countTrailerPrefixes(scan);
+        prefixCount += countReceizTrailerPrefixes(scan);
         const carryLength = Math.min(TRAILER_PREFIX_BYTES.length - 1, scan.length);
         carry = scan.slice(scan.length - carryLength);
       }
@@ -5012,6 +5037,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         return { ok: false, errors: [prefixCount > 1 ? "Duplicate trailer proof bundles detected." : "Missing trailer proof bundle."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
       }
 
+      if (!artifactHash) {
+        return { ok: false, errors: ["Artifact stream ended before its declared byte length."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
       const fileHash = artifactHash.hex();
       const basisSha256 = basisHash.hex();
       const anchor = deriveAnchorBundleFromProofBundle(bundle);
@@ -5082,7 +5110,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function verifyReceizFile(file, optionalLink) {
-      if (file.size > 16 * 1024 * 1024) {
+      const nativeTrailerMedia = /^(?:video|audio)\//i.test(file.type || "")
+        || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "");
+      if (file.size > 16 * 1024 * 1024 && nativeTrailerMedia) {
         return verifyLargeReceizTrailerFile(file, optionalLink);
       }
       const bytes = new Uint8Array(await file.arrayBuffer());
