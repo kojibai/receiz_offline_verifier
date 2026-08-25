@@ -4843,6 +4843,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
         ]);
         this.buffer = new Uint8Array(64);
+        this.w = new Uint32Array(64);
         this.bufferLength = 0;
         this.bytesHashed = 0;
         this.finished = false;
@@ -4854,7 +4855,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       compress(chunk, offset = 0) {
         const k = ReceizStreamingSha256.K;
-        const w = new Uint32Array(64);
+        const w = this.w;
         const view = new DataView(chunk.buffer, chunk.byteOffset + offset, 64);
         for (let index = 0; index < 16; index += 1) w[index] = view.getUint32(index * 4, false);
         for (let index = 16; index < 64; index += 1) {
