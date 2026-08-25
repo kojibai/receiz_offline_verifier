@@ -2614,7 +2614,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2736,7 +2736,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const compact = [
-        slim.nativeRecordSeal ? "rpb2" : "rpb1",
+        "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -2778,15 +2778,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
-      if (slim.nativeRecordSeal) {
-        while (compact.length < 22) compact.push(null);
-        compact.push(slim.nativeRecordSeal);
-      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
       try {
-        const legacy = `${slim.nativeRecordSeal ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        const legacy = `rpb1:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
         const binary = buildBinaryCompactReceizProofToken(bundle);
         return binary && binary.length < legacy.length ? binary : legacy;
       } catch {
@@ -3928,10 +3924,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return continuity.historyDigestSha256 === expectedAppend;
     }
 
-    async function validateBundleAgainstBasis({
-      bundle,
-      basisBytes,
-      anchor,
+   async function validateBundleAgainstBasis({
+     bundle,
+     basisBytes,
+      basisSha256,
+     anchor,
       optionalLink,
       checks,
       errors,
@@ -4007,8 +4004,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           checks.push({ state: "bad", message: "Artifact binding" });
         } else {
           try {
-            const identityBasisBytes = artifactIdentityBasisBytes(bundle, basisBytes);
-            const computedBasis = (await sha256Hex(identityBasisBytes)).toLowerCase();
+            let computedBasis;
+            if (basisSha256) {
+              if (bundle.artifactBasis) throw new Error("precomputed_normalized_basis_forbidden");
+              computedBasis = String(basisSha256).trim().toLowerCase();
+              if (!/^[0-9a-f]{64}$/.test(computedBasis)) throw new Error("precomputed_basis_hash_invalid");
+            } else {
+              const identityBasisBytes = artifactIdentityBasisBytes(bundle, basisBytes);
+              computedBasis = (await sha256Hex(identityBasisBytes)).toLowerCase();
+            }
             if (computedBasis !== artifactSha256Basis) {
               errors.push("Artifact binding mismatch");
               checks.push({ state: "bad", message: "Artifact binding" });
@@ -4338,12 +4342,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         || !Array.from(coordinateKeys).every((key) => nonempty(coordinates[key]))
         || !hex64(value.commitmentSha256)
         || !expected
-        || !(expected.sourceBytes instanceof Uint8Array)
+        || (!(expected.sourceBytes instanceof Uint8Array) && !hex64(expected.sourceSha256))
         || !exactKeys(expected.coordinates, coordinateKeys)
         || !Array.from(coordinateKeys).every((key) => coordinates[key] === expected.coordinates[key])
       ) return null;
       if (
-        await sha256Hex(expected.sourceBytes) !== value.sourceSha256
+        (expected.sourceSha256 || await sha256Hex(expected.sourceBytes)) !== value.sourceSha256
         && expected.verifiedIosCameraRollProjection !== true
       ) return null;
       const { commitmentSha256: _commitmentSha256, ...body } = value;
@@ -4832,7 +4836,255 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
+    class ReceizStreamingSha256 {
+      constructor() {
+        this.h = new Uint32Array([
+          0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+          0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+        ]);
+        this.buffer = new Uint8Array(64);
+        this.bufferLength = 0;
+        this.bytesHashed = 0;
+        this.finished = false;
+      }
+
+      static rotr(value, bits) {
+        return (value >>> bits) | (value << (32 - bits));
+      }
+
+      compress(chunk, offset = 0) {
+        const k = ReceizStreamingSha256.K;
+        const w = new Uint32Array(64);
+        const view = new DataView(chunk.buffer, chunk.byteOffset + offset, 64);
+        for (let index = 0; index < 16; index += 1) w[index] = view.getUint32(index * 4, false);
+        for (let index = 16; index < 64; index += 1) {
+          const x = w[index - 15];
+          const y = w[index - 2];
+          const s0 = ReceizStreamingSha256.rotr(x, 7) ^ ReceizStreamingSha256.rotr(x, 18) ^ (x >>> 3);
+          const s1 = ReceizStreamingSha256.rotr(y, 17) ^ ReceizStreamingSha256.rotr(y, 19) ^ (y >>> 10);
+          w[index] = (w[index - 16] + s0 + w[index - 7] + s1) >>> 0;
+        }
+        let [a, b, c, d, e, f, g, h] = this.h;
+        for (let index = 0; index < 64; index += 1) {
+          const s1 = ReceizStreamingSha256.rotr(e, 6) ^ ReceizStreamingSha256.rotr(e, 11) ^ ReceizStreamingSha256.rotr(e, 25);
+          const choose = (e & f) ^ (~e & g);
+          const temp1 = (h + s1 + choose + k[index] + w[index]) >>> 0;
+          const s0 = ReceizStreamingSha256.rotr(a, 2) ^ ReceizStreamingSha256.rotr(a, 13) ^ ReceizStreamingSha256.rotr(a, 22);
+          const majority = (a & b) ^ (a & c) ^ (b & c);
+          const temp2 = (s0 + majority) >>> 0;
+          h = g;
+          g = f;
+          f = e;
+          e = (d + temp1) >>> 0;
+          d = c;
+          c = b;
+          b = a;
+          a = (temp1 + temp2) >>> 0;
+        }
+        this.h[0] = (this.h[0] + a) >>> 0;
+        this.h[1] = (this.h[1] + b) >>> 0;
+        this.h[2] = (this.h[2] + c) >>> 0;
+        this.h[3] = (this.h[3] + d) >>> 0;
+        this.h[4] = (this.h[4] + e) >>> 0;
+        this.h[5] = (this.h[5] + f) >>> 0;
+        this.h[6] = (this.h[6] + g) >>> 0;
+        this.h[7] = (this.h[7] + h) >>> 0;
+      }
+
+      update(bytes) {
+        if (this.finished) throw new Error("sha256_already_finalized");
+        this.bytesHashed += bytes.byteLength;
+        let offset = 0;
+        if (this.bufferLength > 0) {
+          const take = Math.min(64 - this.bufferLength, bytes.byteLength);
+          this.buffer.set(bytes.subarray(0, take), this.bufferLength);
+          this.bufferLength += take;
+          offset += take;
+          if (this.bufferLength === 64) {
+            this.compress(this.buffer);
+            this.bufferLength = 0;
+          }
+        }
+        while (offset + 64 <= bytes.byteLength) {
+          this.compress(bytes, offset);
+          offset += 64;
+        }
+        if (offset < bytes.byteLength) {
+          this.buffer.set(bytes.subarray(offset), 0);
+          this.bufferLength = bytes.byteLength - offset;
+        }
+        return this;
+      }
+
+      hex() {
+        if (!this.finished) {
+          const bitLength = this.bytesHashed * 8;
+          this.buffer[this.bufferLength] = 0x80;
+          this.bufferLength += 1;
+          if (this.bufferLength > 56) {
+            this.buffer.fill(0, this.bufferLength, 64);
+            this.compress(this.buffer);
+            this.bufferLength = 0;
+          }
+          this.buffer.fill(0, this.bufferLength, 56);
+          const view = new DataView(this.buffer.buffer);
+          view.setUint32(56, Math.floor(bitLength / 0x100000000), false);
+          view.setUint32(60, bitLength >>> 0, false);
+          this.compress(this.buffer);
+          this.finished = true;
+        }
+        return Array.from(this.h).map((value) => value.toString(16).padStart(8, "0")).join("");
+      }
+    }
+
+    ReceizStreamingSha256.K = new Uint32Array([
+      0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+      0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+      0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+      0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+      0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+    ]);
+
+    function receizBytesMatchAt(bytes, pattern, offset) {
+      if (offset < 0 || offset + pattern.length > bytes.length) return false;
+      for (let index = 0; index < pattern.length; index += 1) {
+        if (bytes[offset + index] !== pattern[index]) return false;
+      }
+      return true;
+    }
+
+    async function verifyLargeReceizTrailerFile(file, optionalLink) {
+      const errors = [];
+      const warnings = [];
+      const checks = [];
+      const maxArtifactBytes = 500 * 1024 * 1024;
+      const tailLimit = 4 * 1024 * 1024;
+      if (!Number.isSafeInteger(file.size) || file.size <= 0 || file.size > maxArtifactBytes) {
+        return { ok: false, errors: [file.size > maxArtifactBytes ? "ARTIFACT_TOO_LARGE" : "Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      const tailStart = Math.max(0, file.size - tailLimit);
+      const tail = new Uint8Array(await file.slice(tailStart).arrayBuffer());
+      const prefixOffset = lastIndexOfBytes(tail, TRAILER_PREFIX_BYTES);
+      const suffixOffset = tail.length - TRAILER_SUFFIX_BYTES.length;
+      if (
+        prefixOffset < 0
+        || suffixOffset <= prefixOffset + TRAILER_PREFIX_BYTES.length
+        || !receizBytesMatchAt(tail, TRAILER_SUFFIX_BYTES, suffixOffset)
+      ) {
+        return { ok: false, errors: ["Missing or malformed trailer proof bundle."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      let bundle = null;
+      try {
+        bundle = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(
+          tail.subarray(prefixOffset + TRAILER_PREFIX_BYTES.length, suffixOffset)
+        ));
+      } catch {
+        return { ok: false, errors: ["Trailer proof bundle is malformed."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      if (!isRecord(bundle)) {
+        return { ok: false, errors: ["Trailer proof bundle schema is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+
+      const basisByteLength = tailStart + prefixOffset;
+      const artifactHash = new ReceizStreamingSha256();
+      const basisHash = new ReceizStreamingSha256();
+      let prefixCount = 0;
+      let carry = new Uint8Array();
+      const chunkBytes = 1024 * 1024;
+      for (let offset = 0; offset < file.size; offset += chunkBytes) {
+        const chunk = new Uint8Array(await file.slice(offset, Math.min(file.size, offset + chunkBytes)).arrayBuffer());
+        artifactHash.update(chunk);
+        if (offset < basisByteLength) {
+          const take = Math.min(chunk.length, basisByteLength - offset);
+          if (take > 0) basisHash.update(chunk.subarray(0, take));
+        }
+        const scan = new Uint8Array(carry.length + chunk.length);
+        scan.set(carry);
+        scan.set(chunk, carry.length);
+        prefixCount += countTrailerPrefixes(scan);
+        const carryLength = Math.min(TRAILER_PREFIX_BYTES.length - 1, scan.length);
+        carry = scan.slice(scan.length - carryLength);
+      }
+      if (prefixCount !== 1) {
+        return { ok: false, errors: [prefixCount > 1 ? "Duplicate trailer proof bundles detected." : "Missing trailer proof bundle."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+
+      const fileHash = artifactHash.hex();
+      const basisSha256 = basisHash.hex();
+      const anchor = deriveAnchorBundleFromProofBundle(bundle);
+      checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+      checks.push({ state: "ok", message: "Proof bundle decode" });
+      await validateBundleAgainstBasis({
+        bundle,
+        basisSha256,
+        anchor,
+        optionalLink,
+        checks,
+        errors,
+        warnings
+      });
+      if (!await verifyNativeOwnershipContinuity(bundle, basisSha256)) {
+        errors.push("continuity_ownership_attestation_mismatch");
+      }
+
+      let nativeCapture = null;
+      const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
+        ? bundle.nativeRecordSeal
+        : bundle;
+      try {
+        if (captureCarrier.nativeCapture) {
+          nativeCapture = await verifyReceizNativeCaptureV1(captureCarrier.nativeCapture, {
+            sourceSha256: basisSha256,
+            coordinates: {
+              slug: bundle.slug,
+              code: bundle.code,
+              pulse: bundle.kaiPulseEternal,
+              verifyPath: bundle.verifyPath
+            }
+          });
+          if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
+          checks.push({ state: "ok", message: "Native Capture Verified" });
+        } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+          throw new Error("native_capture_append_missing");
+        }
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+        checks.push({ state: "bad", message: "Native Capture verification" });
+      }
+
+      const rawHistory = bundle.pbiAuthorshipHistory;
+      const pbiAuthorshipHistory = Array.isArray(rawHistory) ? rawHistory : [];
+      if (
+        typeof rawHistory !== "undefined"
+        && (!Array.isArray(rawHistory) || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
+      ) {
+        errors.push("pbi_authorship_history_verification_failed");
+        checks.push({ state: "bad", message: "PBI authorship history verification" });
+      }
+      const ok = errors.length === 0;
+      return {
+        ok,
+        errors,
+        warnings,
+        checks,
+        bundle,
+        anchor,
+        fileHash,
+        chunkSummary: [{ keyword: "receiz.trailer.v1", bytes: file.size - basisByteLength }],
+        packageSummary: null,
+        assetContinuity: { state: "not_applicable" },
+        nativeCapture: ok ? nativeCapture : null,
+        pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
+      };
+    }
+
     async function verifyReceizFile(file, optionalLink) {
+      if (file.size > 16 * 1024 * 1024) {
+        return verifyLargeReceizTrailerFile(file, optionalLink);
+      }
       const bytes = new Uint8Array(await file.arrayBuffer());
       return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
     }
