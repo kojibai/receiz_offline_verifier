@@ -2822,7 +2822,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const compact = [
-        "rpb1",
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -2866,12 +2866,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
+      if (slim.nativeRecordSeal) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
       const raw = textEncoder.encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_ENCODE_BYTES) {
         throw new Error("compact_proof_token_too_large");
       }
       const compressed = compactProofTokenDeflate(raw);
-      const legacy = `rpb1:${base64UrlEncode(compressed)}`;
+      const legacy = `${slim.nativeRecordSeal ? "rpb2" : "rpb1"}:${base64UrlEncode(compressed)}`;
       const binary = buildBinaryCompactReceizProofToken(proofbundle);
       return binary && binary.length < legacy.length ? binary : legacy;
     }
@@ -7059,6 +7063,66 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
+    async function carryPbiAuthorshipFileSuccessor({ predecessorFile, predecessorBundle, bundle }) {
+      if (
+        typeof File === "undefined"
+        || !(predecessorFile instanceof File)
+        || !(/^(?:video|audio)\//i.test(predecessorFile.type || "")
+          || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(predecessorFile.name || ""))
+      ) {
+        throw new Error("canonical_trailer_media_required");
+      }
+      const maxTrailerBytes = 4 * 1024 * 1024;
+      const tailStart = Math.max(0, predecessorFile.size - maxTrailerBytes);
+      const tail = new Uint8Array(await predecessorFile.slice(tailStart).arrayBuffer());
+      const prefixOffset = lastIndexOfBytes(tail, TRAILER_PREFIX_BYTES);
+      const suffixOffset = tail.length - TRAILER_SUFFIX_BYTES.length;
+      let suffixMatches = suffixOffset >= 0;
+      for (let index = 0; suffixMatches && index < TRAILER_SUFFIX_BYTES.length; index += 1) {
+        suffixMatches = tail[suffixOffset + index] === TRAILER_SUFFIX_BYTES[index];
+      }
+      if (
+        prefixOffset < 0
+        || suffixOffset <= prefixOffset + TRAILER_PREFIX_BYTES.length
+        || !suffixMatches
+      ) {
+        throw new Error("canonical_predecessor_trailer_invalid");
+      }
+      let carriedPredecessor;
+      try {
+        carriedPredecessor = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(
+          tail.subarray(prefixOffset + TRAILER_PREFIX_BYTES.length, suffixOffset),
+        ));
+      } catch {
+        throw new Error("canonical_predecessor_trailer_invalid");
+      }
+      if (canonicalizeJson(carriedPredecessor) !== canonicalizeJson(predecessorBundle)) {
+        throw new Error("verified_predecessor_bundle_mismatch");
+      }
+      const payloadByteLength = tailStart + prefixOffset;
+      const trailerBytes = appendReceizTrailer({ basisBytes: new Uint8Array(), bundle });
+      if (trailerBytes.length > maxTrailerBytes) {
+        throw new Error("canonical_successor_trailer_too_large");
+      }
+      const exactTrailerBytes = Uint8Array.from(trailerBytes);
+      const filename = buildReceizedDownloadName({
+        filename: predecessorFile.name || "proof-object",
+        keepExtension: true,
+      });
+      const mime = predecessorFile.type || "application/octet-stream";
+      return {
+        file: new File(
+          [predecessorFile.slice(0, payloadByteLength), exactTrailerBytes.buffer],
+          filename,
+          { type: mime, lastModified: 0 },
+        ),
+        successorBytes: null,
+        filename,
+        mime,
+        nativeFileOptions: { sourceFormat: "trailer", sealEmbedding: "trailer" },
+      };
+    }
+
     function parseLocalPbiAuthorshipOutboxRawStrict(raw) {
       const empty = () => ({
         schema: LOCAL_PBI_AUTHORSHIP_OUTBOX_SCHEMA,
@@ -7242,11 +7306,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     }
 
     async function appendPbiAuthorshipToVerifiedArtifact({ predecessor, setVerifiedArtifact }) {
+      const predecessorFile = typeof File !== "undefined" && predecessor && predecessor.file instanceof File
+        ? predecessor.file
+        : null;
       if (
         !predecessor
         || predecessor.ok !== true
         || !predecessor.bundle
-        || !predecessor.bytes
+        || (!predecessor.bytes && !predecessorFile)
         || !predecessor.filename
       ) {
         throw new Error("Canonical predecessor verification is required before PBI authorship.");
@@ -7254,6 +7321,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const verifier = globalThis.receizCanonicalOfflineVerifier;
       if (!verifier || typeof verifier.verifyBytes !== "function") {
         throw new Error("Canonical offline verifier is unavailable.");
+      }
+      if (predecessorFile && typeof verifier.verifyFile !== "function") {
+        throw new Error("Canonical streaming offline verifier is unavailable.");
       }
       const predecessorResult = predecessor;
       const predecessorArtifactSha256 = String(predecessorResult.fileHash || "").toLowerCase();
@@ -7337,9 +7407,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const predecessorSeal = isRecord(predecessorResult.bundle.nativeRecordSeal)
         ? predecessorResult.bundle.nativeRecordSeal
         : null;
-      const sourceFormat = detectDocumentFormat(predecessor.bytes, {
+      const sourceHead = predecessor.bytes || new Uint8Array(await predecessorFile.slice(0, 64).arrayBuffer());
+      const sourceFormat = detectDocumentFormat(sourceHead, {
         filename: predecessor.filename,
-        mime: "",
+        mime: predecessorFile ? predecessorFile.type : "",
       });
       const nativeRecordSeal = {
         schema: "receiz.native_record_seal.v1",
@@ -7383,16 +7454,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ...unsignedSuccessorBundle,
         signatureV4: successorSignatureV4,
       };
-      const carried = await carryPbiAuthorshipSuccessor({
-        predecessorBytes: predecessor.bytes,
-        predecessorFilename: predecessor.filename,
-        bundle: signedSuccessorBundle,
-      });
-      const successorResult = await verifier.verifyBytes(
-        carried.filename,
-        carried.successorBytes,
-        predecessorResult.bundle.verifyPath || "",
-      );
+      const carried = predecessorFile
+        ? await carryPbiAuthorshipFileSuccessor({
+            predecessorFile,
+            predecessorBundle: predecessorResult.bundle,
+            bundle: signedSuccessorBundle,
+          })
+        : await carryPbiAuthorshipSuccessor({
+            predecessorBytes: predecessor.bytes,
+            predecessorFilename: predecessor.filename,
+            bundle: signedSuccessorBundle,
+          });
+      const successorResult = predecessorFile
+        ? await verifier.verifyFile(carried.file, predecessorResult.bundle.verifyPath || "")
+        : await verifier.verifyBytes(
+            carried.filename,
+            carried.successorBytes,
+            predecessorResult.bundle.verifyPath || "",
+          );
       if (!successorResult || !successorResult.ok || !successorResult.bundle) {
         throw new Error("Canonical successor verification failed. No successor was settled.");
       }
@@ -7414,13 +7493,19 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (!HEX64_RE.test(successorArtifactSha256) || successorArtifactSha256 === predecessorArtifactSha256) {
         throw new Error("Canonical successor artifact identity is invalid.");
       }
-      const blob = new Blob([carried.successorBytes], { type: carried.mime });
+      const blob = predecessorFile
+        ? carried.file
+        : new Blob([carried.successorBytes], { type: carried.mime });
       const saved = await saveOfflineProofBlobAsFile(
         blob,
         carried.filename,
         carried.nativeFileOptions,
       );
-      setVerifiedArtifact(successorResult, carried.successorBytes, carried.filename);
+      if (predecessorFile) {
+        setVerifiedArtifact(successorResult, null, carried.filename, carried.file);
+      } else {
+        setVerifiedArtifact(successorResult, carried.successorBytes, carried.filename);
+      }
       showDownloadLink(blob, carried.filename, carried.nativeFileOptions);
       await enqueueLocalPbiProofObjectAuthorshipReconciliation({
         localPbiProof: localProof.localPbiProof,
@@ -7588,11 +7673,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     let selectedFiles = [];
     let verifiedArtifact = null;
 
-    function setVerifiedArtifact(result, bytes, filename) {
-      verifiedArtifact = result && result.ok && result.bundle && bytes && filename
+    function setVerifiedArtifact(result, bytes, filename, file = null) {
+      const sourceFile = typeof File !== "undefined" && file instanceof File ? file : null;
+      verifiedArtifact = result && result.ok && result.bundle && (bytes || sourceFile) && filename
         ? {
             ...result,
-            bytes: bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes),
+            bytes: bytes ? (bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes)) : null,
+            file: sourceFile,
             filename: String(filename),
           }
         : null;
@@ -7889,9 +7976,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           && selectedFiles.length === 1
         ) {
           const file = selectedFiles[0];
-          const bytes = new Uint8Array(await file.arrayBuffer());
-          const digest = await sha256Hex(bytes);
-          setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+          const heldLargeNativeMedia = file.size > 16 * 1024 * 1024 && (
+            /^(?:video|audio)\//i.test(file.type || "")
+            || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "")
+          );
+          if (heldLargeNativeMedia) {
+            setVerifiedArtifact(result, null, file.name, file);
+          } else {
+            const bytes = new Uint8Array(await file.arrayBuffer());
+            const digest = await sha256Hex(bytes);
+            setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+          }
         } else {
           setVerifiedArtifact(null);
         }
@@ -9575,7 +9670,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const compact = [
-        "rpb1",
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -9617,11 +9712,15 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
+      if (isRecord(slim.nativeRecordSeal)) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
       try {
-        const legacy = `rpb1:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        const legacy = `${isRecord(slim.nativeRecordSeal) ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
         const binary = buildBinaryCompactReceizProofToken(bundle);
         return binary && binary.length < legacy.length ? binary : legacy;
       } catch {
