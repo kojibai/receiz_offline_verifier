@@ -441,6 +441,32 @@
       background: #ffffff;
     }
 
+    .result-proof-object-preview {
+      position: relative;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      margin: 10px 0 0;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .result-proof-object-preview__artifact {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .result-proof-qr-link--overlay {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      margin-top: 0;
+      box-shadow: 0 8px 24px rgba(18, 42, 82, 0.16);
+    }
+
     .status {
       margin-top: 12px;
       border: 1px solid #d4dff4;
@@ -2120,15 +2146,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ctx.closePath();
     }
 
-    function loadImageElement(src) {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("image_load_failed"));
-        img.src = src;
-      });
-    }
-
     function fitClaimBoxLayout(ctx, text, maxWidth, maxHeight) {
       let fontSize = 28;
       let maxLines = 4;
@@ -2177,7 +2194,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return null;
     }
 
-    async function appendOfflineProofQrLink(target, verifyPath) {
+    async function appendOfflineProofQrLink(target, verifyPath, artifactBlob = null) {
       let proofUrl;
       try {
         proofUrl = new URL(String(verifyPath || ""), "https://receiz.com");
@@ -2205,7 +2222,28 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       image.alt = "";
       image.setAttribute("aria-hidden", "true");
       link.appendChild(image);
-      target.appendChild(link);
+
+      const canProjectOverExactMoment = artifactBlob
+        && artifactBlob.type === "image/png"
+        && typeof URL.createObjectURL === "function";
+      if (!canProjectOverExactMoment) {
+        target.appendChild(link);
+        return;
+      }
+
+      const preview = document.createElement("figure");
+      preview.className = "result-proof-object-preview";
+      const artifactImage = document.createElement("img");
+      artifactImage.className = "result-proof-object-preview__artifact";
+      artifactImage.alt = "Exact saved Receiz Moment proof object";
+      const artifactUrl = URL.createObjectURL(artifactBlob);
+      artifactImage.onload = () => URL.revokeObjectURL(artifactUrl);
+      artifactImage.onerror = () => URL.revokeObjectURL(artifactUrl);
+      artifactImage.src = artifactUrl;
+      link.className = "result-proof-qr-link result-proof-qr-link--overlay";
+      preview.appendChild(artifactImage);
+      preview.appendChild(link);
+      target.appendChild(preview);
     }
 
     function updateRecordClaimCounter() {
@@ -2699,7 +2737,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...proofbundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
       const signatureV4 = slim.signatureV4 && typeof slim.signatureV4 === "object" ? slim.signatureV4 : null;
       const cert = signatureV4 && signatureV4.cert && typeof signatureV4.cert === "object" ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2876,6 +2914,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
       const compressed = compactProofTokenDeflate(raw);
       const legacy = `${slim.nativeRecordSeal ? "rpb2" : "rpb1"}:${base64UrlEncode(compressed)}`;
+      if (slim.nativeRecordSeal) return legacy;
       const binary = buildBinaryCompactReceizProofToken(proofbundle);
       return binary && binary.length < legacy.length ? binary : legacy;
     }
@@ -5107,38 +5146,6 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ctx.font = "500 18px serif";
       ctx.fillStyle = "#666666";
       ctx.fillText(printablePath, centerX, timestampY + 186);
-      if (anchorId) {
-        const qrDataUrl = await makeOfflineRecordQrDataUrl(`https://${printablePath}`);
-        if (qrDataUrl) {
-          const qrImage = await loadImageElement(qrDataUrl);
-          const QR_SIZE = 92;
-          const PAD = 9;
-          const BOX = QR_SIZE + PAD * 2;
-          const boxX = canvas.width - 52 - BOX;
-          const boxY = canvas.height - 64 - BOX;
-
-          const boxGradient = ctx.createLinearGradient(boxX, boxY, boxX, boxY + BOX);
-          boxGradient.addColorStop(0, "rgba(255,255,255,0.94)");
-          boxGradient.addColorStop(1, "rgba(252,252,252,0.92)");
-          drawRoundedRect(ctx, boxX, boxY, BOX, BOX, 12);
-          ctx.fillStyle = boxGradient;
-          ctx.fill();
-          drawRoundedRect(ctx, boxX, boxY, BOX, BOX, 12);
-          ctx.strokeStyle = "rgba(0,0,0,0.10)";
-          ctx.lineWidth = 1;
-          ctx.stroke();
-
-          const innerX = boxX + PAD;
-          const innerY = boxY + PAD;
-          drawRoundedRect(ctx, innerX, innerY, QR_SIZE, QR_SIZE, 8);
-          ctx.fillStyle = "rgba(255,255,255,0.98)";
-          ctx.fill();
-          drawRoundedRect(ctx, innerX, innerY, QR_SIZE, QR_SIZE, 8);
-          ctx.strokeStyle = "rgba(0,0,0,0.08)";
-          ctx.stroke();
-          ctx.drawImage(qrImage, innerX, innerY, QR_SIZE, QR_SIZE);
-        }
-      }
 
       return new Promise((resolve, reject) => {
         canvas.toBlob((blob) => {
@@ -6313,7 +6320,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "kai", v: result.kaiKlok },
           { k: "artifact sha", v: result.artifactSha256Basis },
         ]);
-        await appendOfflineProofQrLink(ui.recordResult, result.verifyPath);
+        await appendOfflineProofQrLink(ui.recordResult, result.verifyPath, result.blob);
         setStatus(
           saved
             ? "Record complete. Proof object handed to the native save sheet."
@@ -9548,7 +9555,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -9721,6 +9728,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
       try {
         const legacy = `${isRecord(slim.nativeRecordSeal) ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        if (isRecord(slim.nativeRecordSeal)) return legacy;
         const binary = buildBinaryCompactReceizProofToken(bundle);
         return binary && binary.length < legacy.length ? binary : legacy;
       } catch {

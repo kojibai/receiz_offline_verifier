@@ -755,11 +755,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     let selectedFiles = [];
     let verifiedArtifact = null;
 
-    function setVerifiedArtifact(result, bytes, filename) {
-      verifiedArtifact = result && result.ok && result.bundle && bytes && filename
+    function setVerifiedArtifact(result, bytes, filename, file = null) {
+      const sourceFile = typeof File !== "undefined" && file instanceof File ? file : null;
+      verifiedArtifact = result && result.ok && result.bundle && (bytes || sourceFile) && filename
         ? {
             ...result,
-            bytes: bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes),
+            bytes: bytes ? (bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes)) : null,
+            file: sourceFile,
             filename: String(filename),
           }
         : null;
@@ -1056,9 +1058,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           && selectedFiles.length === 1
         ) {
           const file = selectedFiles[0];
-          const bytes = new Uint8Array(await file.arrayBuffer());
-          const digest = await sha256Hex(bytes);
-          setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+          const heldLargeNativeMedia = file.size > 16 * 1024 * 1024 && (
+            /^(?:video|audio)\//i.test(file.type || "")
+            || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "")
+          );
+          if (heldLargeNativeMedia) {
+            setVerifiedArtifact(result, null, file.name, file);
+          } else {
+            const bytes = new Uint8Array(await file.arrayBuffer());
+            const digest = await sha256Hex(bytes);
+            setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+          }
         } else {
           setVerifiedArtifact(null);
         }
@@ -2620,7 +2630,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const slim = { ...bundle };
       delete slim.groth16Proof;
       delete slim.signatureV3;
-      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory) return "";
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const createdAtMs = Number(slim.createdAtMs);
@@ -2742,7 +2752,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
       const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
       const compact = [
-        "rpb1",
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
         slim.payloadVersion,
         slim.createdAtMs,
         slim.ts,
@@ -2784,11 +2794,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         while (compact.length < 21) compact.push(null);
         compact.push(slim.pbiAuthorshipHistory);
       }
+      if (isRecord(slim.nativeRecordSeal)) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
       const raw = new TextEncoder().encode(JSON.stringify(compact));
       if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
       if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
       try {
-        const legacy = `rpb1:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        const legacy = `${isRecord(slim.nativeRecordSeal) ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        if (isRecord(slim.nativeRecordSeal)) return legacy;
         const binary = buildBinaryCompactReceizProofToken(bundle);
         return binary && binary.length < legacy.length ? binary : legacy;
       } catch {
