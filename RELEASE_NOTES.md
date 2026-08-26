@@ -1,5 +1,33 @@
 # Release Notes
 
+## v124.0.3
+Release date: 2026-08-25
+
+`v124.0.3` reconciles source-first large-file execution, canonical streaming
+verification, exact successor export, and representation boundaries while
+preserving constitutional ruleset `124.0.0`.
+
+- Canonical release note: [docs/releases/v124.0.3.md](docs/releases/v124.0.3.md)
+- Product truth: [docs/releases/v124.0.3-product-truth.md](docs/releases/v124.0.3-product-truth.md)
+- Evidence checklist: [docs/releases/v124.0.3-checklist.md](docs/releases/v124.0.3-checklist.md)
+- Process: [docs/releases/v124.0.3-process.md](docs/releases/v124.0.3-process.md)
+- Regression lessons: [docs/releases/v124.0.3-regression-lessons.md](docs/releases/v124.0.3-regression-lessons.md)
+- Compatibility: [docs/releases/v124.0.3-compatibility-matrix.md](docs/releases/v124.0.3-compatibility-matrix.md)
+- Conformance: [docs/releases/v124.0.3-conformance.md](docs/releases/v124.0.3-conformance.md)
+- Security: [docs/releases/v124.0.3-security.md](docs/releases/v124.0.3-security.md)
+- Governance: [docs/releases/v124.0.3-governance.md](docs/releases/v124.0.3-governance.md)
+- Evidence status: [docs/releases/v124.0.3-evidence-status.md](docs/releases/v124.0.3-evidence-status.md)
+- Full arc: [docs/releases/v124.0.3-full-arc.md](docs/releases/v124.0.3-full-arc.md)
+- V125 horizon: [docs/releases/v124.0.3-v125-horizon.md](docs/releases/v124.0.3-v125-horizon.md)
+- Registry binding: [docs/releases/v124.0.3-registry-binding.json](docs/releases/v124.0.3-registry-binding.json)
+- Commit history: [docs/releases/v124.0.3-commit-history.md](docs/releases/v124.0.3-commit-history.md)
+
+The application repository was inspected read-only at release commit and
+`origin/main` `8cdd19d7e7c8a81610cc03f42606fdf6160c039e`. Its committed source is bound
+by exact verifier, Studio, and release-book digests. No package publication,
+application tag, deployment, production mutation, smoke, remote push, or
+signed attestation is claimed.
+
 ## v124.0.2
 Release date: 2026-08-23
 

@@ -634,7 +634,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v124.0.2</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v124.0.3</a>
     </p>
   </main>
 
@@ -1098,7 +1098,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
       }
 
-      if (result.ok && result.packageSummary) {
+      if (result.denial) {
+        setStatus(
+          "warn",
+          "Verification not completed",
+          `${result.denial.code} · proof validity was not evaluated.`,
+        );
+      } else if (result.ok && result.packageSummary) {
         setStatus(
           "ok",
           "Verified package",
@@ -4959,6 +4965,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
     ]);
 
+    async function hashReceizFileRange(file, end = file.size) {
+      if (!(file instanceof Blob) || !Number.isSafeInteger(end) || end < 0 || end > file.size) {
+        throw new Error("artifact_hash_range_invalid");
+      }
+      const hash = new ReceizStreamingSha256();
+      const chunkBytes = 1024 * 1024;
+      for (let offset = 0; offset < end; offset += chunkBytes) {
+        hash.update(new Uint8Array(await file.slice(offset, Math.min(end, offset + chunkBytes)).arrayBuffer()));
+      }
+      return hash.hex();
+    }
+
     function receizBytesMatchAt(bytes, pattern, offset) {
       if (offset < 0 || offset + pattern.length > bytes.length) return false;
       for (let index = 0; index < pattern.length; index += 1) {
@@ -4983,8 +5001,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const checks = [];
       const maxArtifactBytes = 500 * 1024 * 1024;
       const tailLimit = 4 * 1024 * 1024;
-      if (!Number.isSafeInteger(file.size) || file.size <= 0 || file.size > maxArtifactBytes) {
-        return { ok: false, errors: [file.size > maxArtifactBytes ? "ARTIFACT_TOO_LARGE" : "Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      if (!Number.isSafeInteger(file.size) || file.size <= 0) {
+        return { ok: false, errors: ["Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      if (file.size > maxArtifactBytes) {
+        return { ok: false, denial: { status: "operational-denial", code: "ARTIFACT_TOO_LARGE", artifactValidity: "not-evaluated" }, errors: [], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
       }
       const tailStart = Math.max(0, file.size - tailLimit);
       const tail = new Uint8Array(await file.slice(tailStart).arrayBuffer());
@@ -5407,6 +5428,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       if (files.length === 1) {
         const file = files[0];
+        const nativeTrailerMedia = /^(?:video|audio)\//i.test(file.type || "")
+          || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "");
+        if (file.size > 16 * 1024 * 1024 && nativeTrailerMedia) {
+          return verifyReceizFile(file, optionalLink);
+        }
         let bytes;
         try {
           bytes = new Uint8Array(await file.arrayBuffer());
@@ -5605,6 +5631,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     Object.defineProperty(globalThis, "receizCanonicalOfflineVerifier", {
       value: Object.freeze({
         verifyBytes: verifyReceizBytes,
+        verifyFile: verifyReceizFile,
+        hashFileRange: hashReceizFileRange,
         verifyNativeCapture: verifyReceizNativeCaptureV1,
         verifyPbiAuthorshipHistory: verifyReceizPbiProofObjectAuthorshipChainV1,
       }),

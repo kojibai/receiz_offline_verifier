@@ -419,6 +419,28 @@
       color: #22375f;
     }
 
+    .result-proof-qr-link {
+      width: 110px;
+      height: 110px;
+      margin-top: 10px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.94);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .result-proof-qr-link img {
+      width: 92px;
+      height: 92px;
+      display: block;
+      border: 0;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
     .status {
       margin-top: 12px;
       border: 1px solid #d4dff4;
@@ -868,7 +890,7 @@
 
     <p class="footer">
       <span>Receiz Offline Studio · record, seal, and verify from artifact bytes.</span>
-      <span class="footer-version">v124.0.2</span>
+      <span class="footer-version">v124.0.3</span>
     </p>
 
     <section class="offline-tools" aria-label="Offline HTML downloads">
@@ -2153,6 +2175,37 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } catch {}
       }
       return null;
+    }
+
+    async function appendOfflineProofQrLink(target, verifyPath) {
+      let proofUrl;
+      try {
+        proofUrl = new URL(String(verifyPath || ""), "https://receiz.com");
+      } catch {
+        return;
+      }
+      if (proofUrl.origin !== "https://receiz.com" || !proofUrl.pathname.startsWith("/v/") || !proofUrl.searchParams.has("c")) {
+        return;
+      }
+      const qrDataUrl = await makeOfflineRecordQrDataUrl(proofUrl.toString());
+      if (!qrDataUrl) return;
+
+      const link = document.createElement("a");
+      link.className = "result-proof-qr-link";
+      link.href = proofUrl.toString();
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", "Open self-carrying Receiz proof link");
+      link.title = "Open proof link";
+
+      const image = document.createElement("img");
+      image.src = qrDataUrl;
+      image.width = 92;
+      image.height = 92;
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      link.appendChild(image);
+      target.appendChild(link);
     }
 
     function updateRecordClaimCounter() {
@@ -6225,6 +6278,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             { k: "verify path", v: result.verifyPath },
             { k: "owner", v: result.ownerReceizId },
           ]);
+          await appendOfflineProofQrLink(ui.recordResult, result.verifyPath);
           clearSelectedNativeCapture();
           setStatus(
             saved
@@ -6255,6 +6309,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           { k: "kai", v: result.kaiKlok },
           { k: "artifact sha", v: result.artifactSha256Basis },
         ]);
+        await appendOfflineProofQrLink(ui.recordResult, result.verifyPath);
         setStatus(
           saved
             ? "Record complete. Proof object handed to the native save sheet."
@@ -6376,7 +6431,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "124.0.2-local-proof-primitives-v1";
+      const OFFLINE_STANDALONE_SW_VERSION = "124.0.3-local-proof-primitives-v1";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -7876,7 +7931,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
       }
 
-      if (result.ok && result.packageSummary) {
+      if (result.denial) {
+        setStatus(
+          "warn",
+          "Verification not completed",
+          `${result.denial.code} · proof validity was not evaluated.`,
+        );
+      } else if (result.ok && result.packageSummary) {
         setStatus(
           "ok",
           "Verified package",
@@ -11773,8 +11834,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const checks = [];
       const maxArtifactBytes = 500 * 1024 * 1024;
       const tailLimit = 4 * 1024 * 1024;
-      if (!Number.isSafeInteger(file.size) || file.size <= 0 || file.size > maxArtifactBytes) {
-        return { ok: false, errors: [file.size > maxArtifactBytes ? "ARTIFACT_TOO_LARGE" : "Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      if (!Number.isSafeInteger(file.size) || file.size <= 0) {
+        return { ok: false, errors: ["Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      if (file.size > maxArtifactBytes) {
+        return { ok: false, denial: { status: "operational-denial", code: "ARTIFACT_TOO_LARGE", artifactValidity: "not-evaluated" }, errors: [], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
       }
       const tailStart = Math.max(0, file.size - tailLimit);
       const tail = new Uint8Array(await file.slice(tailStart).arrayBuffer());
@@ -12197,6 +12261,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       if (files.length === 1) {
         const file = files[0];
+        const nativeTrailerMedia = /^(?:video|audio)\//i.test(file.type || "")
+          || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "");
+        if (file.size > 16 * 1024 * 1024 && nativeTrailerMedia) {
+          return verifyReceizFile(file, optionalLink);
+        }
         let bytes;
         try {
           bytes = new Uint8Array(await file.arrayBuffer());

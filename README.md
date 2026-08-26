@@ -2,19 +2,20 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v124.0.2`
+Current release: `v124.0.3`
 
-## What changed in v124.0.2
+## What changed in v124.0.3
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at package release `124.0.2`.
-- The portable-proof-media release book is recorded at [docs/releases/v124.0.2.md](docs/releases/v124.0.2.md), with [product truth](docs/releases/v124.0.2-product-truth.md), [checklist](docs/releases/v124.0.2-checklist.md), [process](docs/releases/v124.0.2-process.md), [regression lessons](docs/releases/v124.0.2-regression-lessons.md), and [commit history](docs/releases/v124.0.2-commit-history.md).
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at package release `124.0.3`.
+- The source-first reconciliation book is recorded at [docs/releases/v124.0.3.md](docs/releases/v124.0.3.md), with [product truth](docs/releases/v124.0.3-product-truth.md), [checklist](docs/releases/v124.0.3-checklist.md), [process](docs/releases/v124.0.3-process.md), [regression lessons](docs/releases/v124.0.3-regression-lessons.md), [compatibility](docs/releases/v124.0.3-compatibility-matrix.md), [conformance](docs/releases/v124.0.3-conformance.md), [security](docs/releases/v124.0.3-security.md), [governance](docs/releases/v124.0.3-governance.md), [evidence status](docs/releases/v124.0.3-evidence-status.md), [full arc](docs/releases/v124.0.3-full-arc.md), [V125 horizon](docs/releases/v124.0.3-v125-horizon.md), [registry binding](docs/releases/v124.0.3-registry-binding.json), and [commit history](docs/releases/v124.0.3-commit-history.md).
 - The sealed proof object remains portable storage and continuity authority; exact authenticated heads remain execution and replay authority.
-- Offline Studio verifies and reconstructs `rma2` inline material and `rmc1` ordered append custody locally, then renders native material only after the enclosing sealed proof object passes canonical verification.
-- The canonical standalone verifier and the verifier runtime embedded in Offline Studio carry matching `rpb2/nativeRecordSeal` compact-token behavior.
-- Package/application release identity is `124.0.2`, while immutable constitutional ruleset identity remains `124.0.0`.
+- Large source files hash and verify incrementally; bounded proof trailers append beneath one immutable source file without promoting memory, URL, QR, SDK, server, or UI projections into authority.
+- Offline Studio and the standalone verifier share canonical large-file streaming verification, runtime-validated bundle projection, exact ownership-continuity checks, and completed compact `?c=` proof coordinates.
+- Resource exhaustion remains an execution failure and cannot be presented as an invalid-proof verdict.
+- Package/application release identity is `124.0.3`, while immutable constitutional ruleset identity remains `124.0.0`.
 - The frozen V124 registry digest remains `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`, chained to immutable v123 digest `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`.
 - The frozen 53-operation matrix digest remains `540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5`; compatibility remains `>=124.0.0 <125.0.0`.
-- The application source was inspected read-only at local candidate `7e7c4297b5ecf95236ace3eb87bb0b97cbc9cd8f`, with observed `origin/main` boundary `eed426781b6dbb4138e29c9cbcbcf896ec890b11`.
+- The application source was inspected read-only at release commit and `origin/main` `8cdd19d7e7c8a81610cc03f42606fdf6160c039e`; its canonical verifier, Studio, and 15-record release book are additionally bound by verifier `cc225401704c9717de300d8c5d5b3777f0fe92c602e78a389776aea1f8602cf5`, Studio `0eae566796dc2ff812ccdb102d8c47f5da58456f4c6efcbcdd72d6933efdeb03`, and release-book manifest `9d9fd5b6fd915651631d29416df6e8826d15bc2170f7f747e37a459f412863fe`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -22,9 +23,9 @@ Current release: `v124.0.2`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v124.0.2-checklist.md](docs/releases/v124.0.2-checklist.md).
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v124.0.3-checklist.md](docs/releases/v124.0.3-checklist.md).
 - No application-repository write, package publication, migration execution, deployment, signed attestation, production mutation, smoke, or remote push is inferred by this standalone archive.
-- Core Signature V4, Groth16, artifact-binding, and fail-closed verification law remains unchanged; `v124.0.2` adds bounded `rpb2/nativeRecordSeal` projection and proof-material reconstruction.
+- Core Signature V4, Groth16, artifact-binding, ownership-continuity, and fail-closed verification law remains unchanged; `v124.0.3` makes large-file execution and typed projection preserve that law mechanically.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -41,7 +42,7 @@ Current release: `v124.0.2`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v124.0.2` package release and frozen `v124.0.0` constitutional baseline are documented in the release note.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v124.0.3` package release and frozen `v124.0.0` constitutional baseline are documented in the release note.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v124.0.3] - 2026-08-25
+
+### Added
+
+- Added canonical incremental large-trailer verification and source-first SHA-256 execution to the distributed standalone verifier surfaces.
+- Added runtime-validated streamed proof-bundle projection and exact native Record/Seal ownership-continuity checks.
+- Added the complete 15-record institutional release archive with machine-readable inherited-registry binding.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, archive references, and cache epochs to `124.0.3`.
+- Bound uncommitted application working-tree source through exact verifier, Offline Studio, and source release-book digests.
+- Kept execution/resource failure separate from an invalid-proof verdict.
+
+### Preserved
+
+- Immutable source bytes and the enclosing sealed proof object above stream, worker, URL, QR, segment, SDK, MCP, server, database, and UI representations.
+- Ruleset `124.0.0`, V124 registry digest and 124-law inventory, operation-matrix digest, compatibility `>=124.0.0 <125.0.0`, and historical artifact bytes.
+
+### Boundary
+
+- No main `/receiz` write, coordinated package publication, application tag, deployment, database mutation, production smoke, remote push, or signed attestation was performed.
+
 ## [v124.0.2] - 2026-08-23
 
 ### Added
