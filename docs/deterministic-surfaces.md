@@ -1,6 +1,6 @@
 # Deterministic Surface Contract
 
-Status: Canonical reference from `v70.0.0`; carried forward for `v124.0.3`
+Status: Canonical reference from `v70.0.0`; carried forward for `v124.1.0`
 
 Receiz trust surfaces must never use fake loaders.
 

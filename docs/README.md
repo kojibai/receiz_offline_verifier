@@ -1,24 +1,25 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v124.0.3`.
+This directory is the public documentation set for Receiz `v124.1.0`.
 
 ## Start Here
 
-- [releases/v124.0.3.md](releases/v124.0.3.md): source-first verifier reconciliation release identity and standalone boundary.
-- [releases/v124.0.3-product-truth.md](releases/v124.0.3-product-truth.md): immutable source, streaming verification, exact successor, and representation hierarchy.
-- [releases/v124.0.3-checklist.md](releases/v124.0.3-checklist.md): implementation, standalone, and external evidence boundaries.
-- [releases/v124.0.3-process.md](releases/v124.0.3-process.md): reconciliation procedure and standalone qualification sequence.
-- [releases/v124.0.3-regression-lessons.md](releases/v124.0.3-regression-lessons.md): memory, typed projection, exact export, and resource-failure locks.
-- [releases/v124.0.3-compatibility-matrix.md](releases/v124.0.3-compatibility-matrix.md): package, registry, proof-object, material, QR, and V125 compatibility.
-- [releases/v124.0.3-conformance.md](releases/v124.0.3-conformance.md): exact verification and presentation conformance boundary.
-- [releases/v124.0.3-security.md](releases/v124.0.3-security.md): source, successor, resource, and representation security law.
-- [releases/v124.0.3-governance.md](releases/v124.0.3-governance.md): institutional authority and release-evidence governance.
-- [releases/v124.0.3-evidence-status.md](releases/v124.0.3-evidence-status.md): implemented, local, and external evidence states.
-- [releases/v124.0.3-full-arc.md](releases/v124.0.3-full-arc.md): complete V124.0.0 through V124.0.3 progression.
-- [releases/v124.0.3-v125-horizon.md](releases/v124.0.3-v125-horizon.md): explicitly deferred closed large-material reconstruction horizon.
-- [releases/v124.0.3-registry-binding.json](releases/v124.0.3-registry-binding.json): machine-readable inherited V124 registry binding.
-- [releases/v124.0.3-migration.md](releases/v124.0.3-migration.md): no-new-migration boundary.
-- [releases/v124.0.3-commit-history.md](releases/v124.0.3-commit-history.md): application chronology and standalone archive boundary.
+- [releases/v124.1.0.md](releases/v124.1.0.md): source-carried convergence release identity and standalone boundary.
+- [releases/v124.1.0-product-truth.md](releases/v124.1.0-product-truth.md): exact source, progressive material, identity, conversation, memory, and replay authority.
+- [releases/v124.1.0-checklist.md](releases/v124.1.0-checklist.md): implementation, standalone, and external evidence boundaries.
+- [releases/v124.1.0-process.md](releases/v124.1.0-process.md): convergence procedure and standalone qualification sequence.
+- [releases/v124.1.0-regression-lessons.md](releases/v124.1.0-regression-lessons.md): source-family, playback, privacy, continuity, and resource locks.
+- [releases/v124.1.0-compatibility-matrix.md](releases/v124.1.0-compatibility-matrix.md): package, registry, proof-object, material, protocol, and V125 compatibility.
+- [releases/v124.1.0-conformance.md](releases/v124.1.0-conformance.md): exact convergence and presentation conformance boundary.
+- [releases/v124.1.0-security.md](releases/v124.1.0-security.md): source, custody, cognition, identity, and representation security law.
+- [releases/v124.1.0-governance.md](releases/v124.1.0-governance.md): institutional authority and release-evidence governance.
+- [releases/v124.1.0-evidence-status.md](releases/v124.1.0-evidence-status.md): implemented, local, and external evidence states.
+- [releases/v124.1.0-full-arc.md](releases/v124.1.0-full-arc.md): complete V120 through V124.1 convergence.
+- [releases/v124.1.0-v125-horizon.md](releases/v124.1.0-v125-horizon.md): explicitly deferred V125 constitutional horizon.
+- [releases/v124.1.0-registry-binding.json](releases/v124.1.0-registry-binding.json): machine-readable inherited V124 registry binding.
+- [releases/v124.1.0-migration.md](releases/v124.1.0-migration.md): no-rewrite coordinated upgrade boundary.
+- [releases/v124.1.0-commit-history.md](releases/v124.1.0-commit-history.md): application chronology and standalone archive boundary.
+- [releases/v124.0.3.md](releases/v124.0.3.md): prior source-first verifier reconciliation release.
 - [releases/v124.0.2.md](releases/v124.0.2.md): prior portable-proof-media release.
 - [releases/v124.0.1.md](releases/v124.0.1.md): prior corrective V124 package release.
 - [releases/v124.0.0.md](releases/v124.0.0.md): immutable V124 constitutional release record.
@@ -27,7 +28,7 @@ This directory is the public documentation set for Receiz `v124.0.3`.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v124.0.3`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v124.1.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

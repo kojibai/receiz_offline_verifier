@@ -1,5 +1,35 @@
 # Release Notes
 
+## v124.1.0
+Release date: 2026-08-27
+
+`v124.1.0` is the source-carried convergence release. Exact file, media,
+identity, conversation, memory, market, replay, and progressive-range state
+compose beneath the enclosing sealed proof object while the constitutional
+ruleset remains `124.0.0`.
+
+- Canonical release note: [docs/releases/v124.1.0.md](docs/releases/v124.1.0.md)
+- Product truth: [docs/releases/v124.1.0-product-truth.md](docs/releases/v124.1.0-product-truth.md)
+- Evidence checklist: [docs/releases/v124.1.0-checklist.md](docs/releases/v124.1.0-checklist.md)
+- Process: [docs/releases/v124.1.0-process.md](docs/releases/v124.1.0-process.md)
+- Regression lessons: [docs/releases/v124.1.0-regression-lessons.md](docs/releases/v124.1.0-regression-lessons.md)
+- Compatibility: [docs/releases/v124.1.0-compatibility-matrix.md](docs/releases/v124.1.0-compatibility-matrix.md)
+- Conformance: [docs/releases/v124.1.0-conformance.md](docs/releases/v124.1.0-conformance.md)
+- Security: [docs/releases/v124.1.0-security.md](docs/releases/v124.1.0-security.md)
+- Governance: [docs/releases/v124.1.0-governance.md](docs/releases/v124.1.0-governance.md)
+- Evidence status: [docs/releases/v124.1.0-evidence-status.md](docs/releases/v124.1.0-evidence-status.md)
+- Full arc: [docs/releases/v124.1.0-full-arc.md](docs/releases/v124.1.0-full-arc.md)
+- V125 horizon: [docs/releases/v124.1.0-v125-horizon.md](docs/releases/v124.1.0-v125-horizon.md)
+- Registry binding: [docs/releases/v124.1.0-registry-binding.json](docs/releases/v124.1.0-registry-binding.json)
+- Migration: [docs/releases/v124.1.0-migration.md](docs/releases/v124.1.0-migration.md)
+- Commit history: [docs/releases/v124.1.0-commit-history.md](docs/releases/v124.1.0-commit-history.md)
+
+The application repository was inspected read-only at release commit and
+`origin/main` `924e687d6a031c9bb4ca358fc7f92ea3de1066f5`. The exact verifier, Studio,
+and 15-record source book are digest-bound. No package publication,
+application deployment, production mutation, production smoke, remote push,
+or signed attestation is claimed by this standalone release.
+
 ## v124.0.3
 Release date: 2026-08-25
 

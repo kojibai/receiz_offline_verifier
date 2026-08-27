@@ -2,20 +2,18 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v124.0.3`
+Current release: `v124.1.0`
 
-## What changed in v124.0.3
+## What changed in v124.1.0
 
-- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at package release `124.0.3`.
-- The source-first reconciliation book is recorded at [docs/releases/v124.0.3.md](docs/releases/v124.0.3.md), with [product truth](docs/releases/v124.0.3-product-truth.md), [checklist](docs/releases/v124.0.3-checklist.md), [process](docs/releases/v124.0.3-process.md), [regression lessons](docs/releases/v124.0.3-regression-lessons.md), [compatibility](docs/releases/v124.0.3-compatibility-matrix.md), [conformance](docs/releases/v124.0.3-conformance.md), [security](docs/releases/v124.0.3-security.md), [governance](docs/releases/v124.0.3-governance.md), [evidence status](docs/releases/v124.0.3-evidence-status.md), [full arc](docs/releases/v124.0.3-full-arc.md), [V125 horizon](docs/releases/v124.0.3-v125-horizon.md), [registry binding](docs/releases/v124.0.3-registry-binding.json), and [commit history](docs/releases/v124.0.3-commit-history.md).
-- The sealed proof object remains portable storage and continuity authority; exact authenticated heads remain execution and replay authority.
-- Large source files hash and verify incrementally; bounded proof trailers append beneath one immutable source file without promoting memory, URL, QR, SDK, server, or UI projections into authority.
-- Offline Studio and the standalone verifier share canonical large-file streaming verification, runtime-validated bundle projection, exact ownership-continuity checks, and completed compact `?c=` proof coordinates.
-- Resource exhaustion remains an execution failure and cannot be presented as an invalid-proof verdict.
-- Package/application release identity is `124.0.3`, while immutable constitutional ruleset identity remains `124.0.0`.
+- Current standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, documentation, and service-worker surfaces align at package release `124.1.0`.
+- The complete source-carried convergence book is recorded at [docs/releases/v124.1.0.md](docs/releases/v124.1.0.md), with [product truth](docs/releases/v124.1.0-product-truth.md), [checklist](docs/releases/v124.1.0-checklist.md), [process](docs/releases/v124.1.0-process.md), [regression lessons](docs/releases/v124.1.0-regression-lessons.md), [compatibility](docs/releases/v124.1.0-compatibility-matrix.md), [conformance](docs/releases/v124.1.0-conformance.md), [security](docs/releases/v124.1.0-security.md), [governance](docs/releases/v124.1.0-governance.md), [evidence status](docs/releases/v124.1.0-evidence-status.md), [full arc](docs/releases/v124.1.0-full-arc.md), [V125 horizon](docs/releases/v124.1.0-v125-horizon.md), [registry binding](docs/releases/v124.1.0-registry-binding.json), [migration](docs/releases/v124.1.0-migration.md), and [commit history](docs/releases/v124.1.0-commit-history.md).
+- Exact source-carried file, media, identity, conversation, memory, market, and replay state remains reconstructable beneath the enclosing sealed proof object.
+- The verifier and Offline Studio carry exact RMA2/RMC1/RMC2/RMA3 material behavior, progressive-range verification, native Record/Seal continuity, and fail-closed artifact admission without database or media-host authority.
+- Package/application release identity is `124.1.0`, while immutable constitutional ruleset identity remains `124.0.0`.
 - The frozen V124 registry digest remains `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`, chained to immutable v123 digest `945a581d1fc49c2dc18fbe8c129771ef464b8a58b96188bce561e88ae8b6ceeb`.
 - The frozen 53-operation matrix digest remains `540d1c1bf39f1b288b257c79a6e020bdcc5e587fc9b7dbf6b7aaa5d082e20ad5`; compatibility remains `>=124.0.0 <125.0.0`.
-- The application source was inspected read-only at release commit and `origin/main` `8cdd19d7e7c8a81610cc03f42606fdf6160c039e`; its canonical verifier, Studio, and 15-record release book are additionally bound by verifier `cc225401704c9717de300d8c5d5b3777f0fe92c602e78a389776aea1f8602cf5`, Studio `0eae566796dc2ff812ccdb102d8c47f5da58456f4c6efcbcdd72d6933efdeb03`, and release-book manifest `9d9fd5b6fd915651631d29416df6e8826d15bc2170f7f747e37a459f412863fe`.
+- The application source was inspected read-only at release commit and `origin/main` `924e687d6a031c9bb4ca358fc7f92ea3de1066f5`; its canonical verifier, Studio, and 15-record release book are additionally bound by verifier `da389f3df9ffe181ce019975d45263da76fbf89f53edf08eafe6682ec9380d22`, Studio `c0fbcff2bfbad8d051ce034798dbb8c8737fdf634351be2329134131c24aa037`, and release-book manifest `92b62cc9f75d8c41b5f2337937238f3bf88e43bf0e6480b1dae3bdfe44b7fb81`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -23,9 +21,9 @@ Current release: `v124.0.3`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v124.0.3-checklist.md](docs/releases/v124.0.3-checklist.md).
+- Broader platform target environments require the checks and separately authorized actions named in [docs/releases/v124.1.0-checklist.md](docs/releases/v124.1.0-checklist.md).
 - No application-repository write, package publication, migration execution, deployment, signed attestation, production mutation, smoke, or remote push is inferred by this standalone archive.
-- Core Signature V4, Groth16, artifact-binding, ownership-continuity, and fail-closed verification law remains unchanged; `v124.0.3` makes large-file execution and typed projection preserve that law mechanically.
+- Core Signature V4, Groth16, artifact-binding, ownership-continuity, and fail-closed verification law remains unchanged; `v124.1.0` composes source-carried convergence beneath that law.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -42,7 +40,7 @@ Current release: `v124.0.3`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v124.0.3` package release and frozen `v124.0.0` constitutional baseline are documented in the release note.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs for the currently imported suites; the `v124.1.0` package release and frozen `v124.0.0` constitutional baseline are documented in the release note.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

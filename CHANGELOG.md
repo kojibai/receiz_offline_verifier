@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v124.1.0] - 2026-08-27
+
+### Added
+
+- Added the complete 15-record source-carried convergence archive with byte-identical canonical mirrors and inherited-registry binding.
+- Added exact RMC2/RMA3 material dispatch, progressive-range verification, native Record/Seal continuity, and portable proof projection from the coordinated source runtime.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, documentation, and service-worker epochs to `124.1.0`.
+- Bound the standalone verifier and Offline Studio to read-only application release commit `924e687d6a031c9bb4ca358fc7f92ea3de1066f5` and exact source digests.
+
+### Preserved
+
+- The enclosing sealed proof object above database, CDN, media host, session, SDK, MCP, AI, transport, cache, and display state.
+- Ruleset `124.0.0`, V124 registry digest and 124-law inventory, operation-matrix digest, compatibility `>=124.0.0 <125.0.0`, and historical artifact bytes.
+
+### Boundary
+
+- No main `/receiz` write, coordinated package publication, application deployment, database mutation, production smoke, remote push, or signed attestation was performed.
+
 ## [v124.0.3] - 2026-08-25
 
 ### Added
