@@ -1,0 +1,102 @@
+{
+  "schema": "receiz.release_codebase_census.v1",
+  "releaseVersion": "125.0.0",
+  "measuredAt": "2026-09-04T22:37:14Z",
+  "snapshot": {
+    "kind": "git-tree-before-release-document-closure",
+    "revision": "381019f38fc15ce3d894d9959d655636dd431f1f",
+    "baselineRevision": "a32399e29609bf290ac9d8250db941ee0ff1f52b"
+  },
+  "repository": {
+    "trackedEntries": 9065,
+    "trackedBlobBytes": 3506667507,
+    "trackedBlobGiB": 3.2658386109
+  },
+  "implementation": {
+    "recognizedCodeExtensions": [
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".cjs",
+      ".mts",
+      ".css",
+      ".sql",
+      ".py",
+      ".circom",
+      ".sol",
+      ".swift",
+      ".groovy",
+      ".sh"
+    ],
+    "codeFiles": 5297,
+    "codeLines": 1859618,
+    "productionCodeFiles": 4275,
+    "productionCodeLines": 1632870,
+    "testCodeFiles": 1022,
+    "testCodeLines": 226748,
+    "testClassification": "Path contains __tests__, test, tests, or fixtures; or filename contains .test. or .spec."
+  },
+  "documentation": {
+    "markdownFiles": 1179,
+    "markdownLines": 175148,
+    "releaseMarkdownFiles": 566,
+    "releaseMarkdownLines": 40635
+  },
+  "migrations": {
+    "trackedSqlFiles": 299,
+    "lines": 76477,
+    "trackedBlobBytes": 2964006
+  },
+  "publicImplementationSurfaces": {
+    "receizSdk": {
+      "trackedEntries": 947,
+      "trackedBlobBytes": 16386911,
+      "codeFiles": 696,
+      "codeLines": 371131,
+      "publishedUnpackedBytes": 8540264,
+      "publishedFiles": 553,
+      "capabilityInventory": 363
+    },
+    "receizMcpServer": {
+      "trackedEntries": 85,
+      "trackedBlobBytes": 1194977,
+      "codeFiles": 57,
+      "codeLines": 17202,
+      "publishedUnpackedBytes": 698635,
+      "publishedFiles": 50,
+      "toolInventory": 182,
+      "v125EconomyTools": 13
+    },
+    "receizAiSkills": {
+      "trackedEntries": 251,
+      "trackedBlobBytes": 2752406,
+      "markdownFiles": 169,
+      "markdownLines": 7213,
+      "publishedUnpackedBytes": 2752240,
+      "publishedFiles": 251,
+      "skillInventory": 42,
+      "manifestInventory": 36
+    },
+    "constitutionalVerifier": {
+      "trackedEntries": 12,
+      "trackedBlobBytes": 47245,
+      "codeFiles": 4,
+      "codeLines": 740
+    }
+  },
+  "releaseDelta": {
+    "commitsAboveBaseline": 125,
+    "filesChanged": 763,
+    "insertions": 93438,
+    "deletions": 6326
+  },
+  "method": {
+    "trackedEntriesAndBytes": "git ls-tree -r -l <revision>; bytes are Git blob sizes and include source, documentation, generated release assets, proof fixtures, media, compressed artifacts, and tracked symlink blobs.",
+    "lineCounts": "wc -l over tracked regular files at the snapshot using the declared extension and path classifications.",
+    "packageSizes": "npm registry dist.unpackedSize and dist.fileCount for exact version 125.0.0.",
+    "inventoryCounts": "pnpm test:coordinated-package-release on the v125 source tree.",
+    "publicProjection": "The separate public repository records its own allowlisted file count, per-file byte sizes, and SHA-256 tree digest in provenance/projection-manifest.json. Its size is intentionally not represented as the full private repository size."
+  }
+}

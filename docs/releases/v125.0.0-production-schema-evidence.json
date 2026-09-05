@@ -1,0 +1,50 @@
+{
+  "schema": "receiz.release_production_schema_evidence.v1",
+  "releaseVersion": "125.0.0",
+  "observedAt": "2026-09-04T22:37:14Z",
+  "environment": "Receiz production",
+  "access": "read-only catalog and aggregate inspection",
+  "migrationFiles": [
+    "20260828090000_glyph_settlement_execution_projection.sql",
+    "20260828120000_receiz_v125_lawful_action_economy.sql",
+    "20260829041358_glyph_settlement_custody_linearization.sql",
+    "20260829045843_glyph_settlement_showcase_visibility_membership.sql",
+    "20260829054629_receiz_original_creator_identity.sql",
+    "20260903110000_receiz_original_creator_identity_verified_transfer_correction.sql",
+    "20260904103000_kks_v1_temporal_authority.sql",
+    "20260904124500_profile_identity_genesis_kai.sql"
+  ],
+  "tablesPresent": [
+    "wallet_glyph_settlement_projection_heads",
+    "receiz_lawful_action_laws_v125",
+    "receiz_lawful_action_admission_appends_v125",
+    "receiz_lawful_action_membership_heads_v125",
+    "receiz_lawful_action_value_appends_v125",
+    "receiz_lawful_action_value_heads_v125",
+    "receiz_kks_v1_monotonic_heads"
+  ],
+  "columnsPresent": [
+    "receiz.creator_user_id",
+    "identity_keys.pbi_signed_kai_upulse",
+    "user_profiles.creation_kai_upulse",
+    "user_profiles.creation_kai_basis",
+    "user_profiles.creation_kai_sealed_at",
+    "wallet_ledger_entries.kai_upulse",
+    "action_ledger_entries.kai_upulse"
+  ],
+  "functionsPresent": [
+    "wallet_publish_glyph_settlement_projection_v1",
+    "receiz_lawful_action_law_register_v125",
+    "receiz_lawful_action_admit_v125",
+    "receiz_lawful_action_value_append_v125",
+    "receiz_kks_v1_live_upulse",
+    "tg_user_profiles_preserve_creation_kai"
+  ],
+  "profileIdentityGenesis": {
+    "legacyRecovered": 1910,
+    "unbound": 3,
+    "sealed": 0
+  },
+  "result": "required v125 schema outcomes present",
+  "claimBoundary": "The migrations were executed manually, so this record asserts observed schema outcomes rather than an inferred migration-history ledger. It does not prove authenticated production mutation or replace source proof objects."
+}

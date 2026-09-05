@@ -1,0 +1,49 @@
+{
+  "schema": "receiz.release.sql-compatibility-verification.v1",
+  "migrationVersion": "20260905164450",
+  "migrationName": "v125_lawful_action_transport_restore",
+  "applied": true,
+  "exactAppliedSqlMatchesRepository": true,
+  "scope": "Existing three v125 lawful-action RPCs and lawful-value reader; no profile, identity, temporal or wallet execution triggers restored.",
+  "localPostgres": "Passed registration, repeat delivery, conflicts, admission, custody successor, deterministic value append, invalid amount rejection, old-owner rejection, value-reader ownership transfer, append-only protection, grants, idempotent migration replay and restart persistence without profile or wallet projection tables.",
+  "productionCatalog": [
+    {
+      "proname": "receiz_lawful_action_admit_v125",
+      "prosecdef": true,
+      "anon_execute": false,
+      "authenticated_execute": false,
+      "service_execute": true,
+      "no_reconciliation_gate": true,
+      "no_profile_gate": true
+    },
+    {
+      "proname": "receiz_lawful_action_law_register_v125",
+      "prosecdef": true,
+      "anon_execute": false,
+      "authenticated_execute": false,
+      "service_execute": true,
+      "no_reconciliation_gate": true,
+      "no_profile_gate": true
+    },
+    {
+      "proname": "receiz_lawful_action_value_append_v125",
+      "prosecdef": true,
+      "anon_execute": false,
+      "authenticated_execute": false,
+      "service_execute": true,
+      "no_reconciliation_gate": true,
+      "no_profile_gate": true
+    },
+    {
+      "proname": "wallet_lawful_action_settlement_phi_micro_v125",
+      "prosecdef": true,
+      "anon_execute": false,
+      "authenticated_execute": false,
+      "service_execute": true,
+      "no_reconciliation_gate": true,
+      "no_profile_gate": true
+    }
+  ],
+  "productionUserDataWrites": 0,
+  "liveAuthenticatedEndpointExercise": "not performed"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "receiz.release.database-operation-history.v1",
+  "releaseVersion": "125.0.0",
+  "observedAt": "2026-09-05T15:53:49.756799+00:00",
+  "source": "Read-only supabase_migrations.schema_migrations inspection",
+  "operations": [
+    {
+      "version": "20260905102632",
+      "name": "restore_profile_creation_source_projection",
+      "path": "supabase/migrations/20260905102632_restore_profile_creation_source_projection.sql",
+      "sha256": "31fbbab79deeecbbe4f7c5a34c3e7cb0ebd38a15152c6f72f434ddd7168beb7f",
+      "bytes": 170,
+      "status": "applied"
+    },
+    {
+      "version": "20260905150959",
+      "name": "restore_pre_merge_eight_migration_behavior",
+      "path": "supabase/migrations/20260905150959_restore_pre_merge_eight_migration_behavior.sql",
+      "sha256": "981e96108ff306812443c1b80f44e96d55c24b0a5e7fdbc940133235b12cb6eb",
+      "bytes": 6883,
+      "status": "applied"
+    },
+    {
+      "version": "20260905164450",
+      "name": "v125_lawful_action_transport_restore",
+      "path": "supabase/migrations/20260905164450_v125_lawful_action_transport_restore.sql",
+      "sha256": "5c6305f5f093318ec37263e368a8ed0dd5268e1c6196b95afcf77e0e34ddad79",
+      "bytes": 20749,
+      "status": "applied",
+      "verification": "v125.0.0-sql-compatibility-verification.json"
+    }
+  ],
+  "boundary": "Records the two September 5 rollback operations and the subsequent four-function SDK/MCP transport restoration. Exact applied SQL is retained. Local PostgreSQL behavior and live catalog/permissions were verified; authenticated live SDK writes and full release qualification are separate checks."
+}

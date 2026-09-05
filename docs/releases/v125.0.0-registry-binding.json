@@ -1,0 +1,15 @@
+{
+  "schema": "receiz.release_registry_binding.v1",
+  "releaseVersion": "125.0.0",
+  "compatibilityRange": ">=125.0.0 <126.0.0",
+  "constitutionRegistrySha256": "85a24c3a7fe144c8ec03c6b5fae238d1dfda64c1ed3091b24d4264dc3862ff17",
+  "operationMatrixSha256": "17c98e99c3f54b7a18dea9f2466a49ea2ac5da4d1cf0a90c723560184a314a6c",
+  "temporalAuthorityConformanceSha256": "4289c365fdd6360b09a22b011557350da6b59b9f0b0dc95e2ed03ad286a83fc0",
+  "priorConstitutionRegistrySha256": "d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247",
+  "packageCoordinates": {
+    "sdk": "@receiz/sdk@125.0.0",
+    "mcpServer": "@receiz/mcp-server@125.0.0",
+    "aiSkills": "@receiz/ai-skills@125.0.0"
+  },
+  "historicalLaw": "Prior registry bytes and proof identities remain immutable. The v125 registry is additive and does not relabel historical artifacts."
+}

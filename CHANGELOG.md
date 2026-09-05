@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v125.0.0] - 2026-09-04
+
+### Added
+
+- Added the complete 26-record Reality-Grade Infrastructure archive, including the deterministic 133-law registry, operation matrix, temporal-authority conformance, publication, production, migration, governance, and scale evidence records.
+- Added the exact coordinated v125 verifier and Record and Seal Studio bytes from read-only application source.
+
+### Changed
+
+- Advanced standalone package, visible app labels, doctrine pointers, documentation, and service-worker epochs to `125.0.0`.
+- Rebuilt the release lock around the v125 registry, compatibility interval, operation matrix, temporal conformance, exact source digests, and 26-record mirror parity.
+
+### Preserved
+
+- The authority order: source, law, sequence, object, evidence, then reader.
+- The enclosing sealed proof object above database, server, SDK, MCP, AI, session, cache, transport, and display state.
+- Historical v119–v124.1 proof bytes, registries, wire identities, custody histories, and release law.
+
+### Boundary
+
+- The application repository was read only. This standalone release performs no package publication, migration, deployment, production mutation, signed attestation, smoke claim, or remote push.
+
 ## [v124.1.0] - 2026-08-27
 
 ### Added

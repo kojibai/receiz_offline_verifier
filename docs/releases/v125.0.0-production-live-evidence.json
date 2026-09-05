@@ -1,0 +1,35 @@
+{
+  "schema": "receiz.release_public_live_evidence.v1",
+  "releaseVersion": "125.0.0",
+  "observedAt": "2026-09-04T22:37:14Z",
+  "checks": [
+    {
+      "url": "https://receiz.com/",
+      "status": 200,
+      "responseBytes": 84771,
+      "markers": [
+        "v125.0.0",
+        "Reality Grade Infrastructure"
+      ],
+      "deploymentId": "dpl_BLNNK2ZFAkzir4a22Y3m46efr9Em",
+      "result": "pass"
+    },
+    {
+      "url": "https://receiz.com/offline-verifier.html",
+      "status": 200,
+      "responseBytes": 958631,
+      "markers": [
+        "v125.0.0"
+      ],
+      "result": "pass"
+    },
+    {
+      "url": "https://docs.receiz.com/releases/v125.0.0",
+      "status": 404,
+      "responseBytes": 10464,
+      "markers": [],
+      "result": "pending-docs-deployment"
+    }
+  ],
+  "claimBoundary": "Credential-free HTTP smoke proves route reachability and listed response markers only. It does not prove authenticated sessions, production mutation, browser/device breadth, scale, or adoption."
+}

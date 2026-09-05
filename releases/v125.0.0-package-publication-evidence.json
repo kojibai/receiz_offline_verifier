@@ -1,0 +1,61 @@
+{
+  "schema": "receiz.release_package_publication_evidence.v1",
+  "releaseVersion": "125.0.0",
+  "observedAt": "2026-09-04T22:37:14Z",
+  "registry": "https://registry.npmjs.org",
+  "packages": [
+    {
+      "name": "@receiz/ai-skills",
+      "version": "125.0.0",
+      "publishedAt": "2026-09-04T22:30:56.249Z",
+      "distTagLatest": "125.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/ai-skills/-/ai-skills-125.0.0.tgz",
+      "integrity": "sha512-ZvK7/3pS6ahz4pHmexBnqIQBpAVg335qToP5pOaZxgx9sGMA0+HBP1dU5ece2LZnFZGzdNv+adRaORWJ34U2MQ==",
+      "shasum": "f11752412c4fab8fd6feb7eed70547c4d8dcd277",
+      "unpackedSize": 2752240,
+      "fileCount": 251,
+      "dependencies": {}
+    },
+    {
+      "name": "@receiz/sdk",
+      "version": "125.0.0",
+      "publishedAt": "2026-09-04T22:24:58.516Z",
+      "distTagLatest": "125.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/sdk/-/sdk-125.0.0.tgz",
+      "integrity": "sha512-L8lacOOp4w5pq3lSEyY6oBiTtGohMvQjl8DuxpZCyyj118FMCtK4FsW7rIRHuhJRuMvSU3jy0+AeBaFiwZRD9w==",
+      "shasum": "6cce4f63c2a35c5ecb336320ce778f0f1face9da",
+      "unpackedSize": 8540264,
+      "fileCount": 553,
+      "dependencies": {
+        "@noble/hashes": "^2.3.0",
+        "@receiz/ai-skills": "125.0.0",
+        "fflate": "^0.8.3",
+        "hash-wasm": "^4.12.0",
+        "snarkjs": "^0.7.6"
+      }
+    },
+    {
+      "name": "@receiz/mcp-server",
+      "version": "125.0.0",
+      "publishedAt": "2026-09-04T22:25:14.980Z",
+      "distTagLatest": "125.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/mcp-server/-/mcp-server-125.0.0.tgz",
+      "integrity": "sha512-ATWlRk5lcsXjPrZ6a5ho+y/86ifelu6ovqTSFkZQttfnJvoOgSuT9NgdxnpxcH6YBKOa3sxZC38l5/lN8OMGFA==",
+      "shasum": "7d4d02af7707d2aea5b32ea7ed7451f261ce8cb6",
+      "unpackedSize": 698635,
+      "fileCount": 50,
+      "dependencies": {
+        "@receiz/ai-skills": "125.0.0",
+        "@receiz/sdk": "125.0.0"
+      }
+    }
+  ],
+  "cleanInstall": {
+    "command": "npm install --ignore-scripts --no-audit --no-fund @receiz/ai-skills@125.0.0 @receiz/sdk@125.0.0 @receiz/mcp-server@125.0.0",
+    "result": "pass",
+    "installedPackages": 41,
+    "elapsedSeconds": 4,
+    "workspaceDependencies": 0
+  },
+  "claimBoundary": "This record proves the observed registry coordinates, metadata, exact dependency graph, and clean external resolution. It does not prove source qualification, application deployment, database migration, Git tag, or release attestation."
+}

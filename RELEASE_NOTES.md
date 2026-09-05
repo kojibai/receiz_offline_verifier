@@ -1,5 +1,33 @@
 # Release Notes
 
+## v125.0.0
+Release date: 2026-09-04
+
+`v125.0.0` is the Reality-Grade Infrastructure release. The standalone
+distribution carries the exact canonical verifier and Record and Seal Studio,
+the 133-law constitutional registry, the operation and temporal-authority
+bindings, and the complete 26-record source release book.
+
+- Canonical release note: [docs/releases/v125.0.0.md](docs/releases/v125.0.0.md)
+- Product truth: [docs/releases/v125.0.0-product-truth.md](docs/releases/v125.0.0-product-truth.md)
+- Evidence checklist: [docs/releases/v125.0.0-checklist.md](docs/releases/v125.0.0-checklist.md)
+- Process: [docs/releases/v125.0.0-process.md](docs/releases/v125.0.0-process.md)
+- Regression lessons: [docs/releases/v125.0.0-regression-lessons.md](docs/releases/v125.0.0-regression-lessons.md)
+- Compatibility: [docs/releases/v125.0.0-compatibility-matrix.md](docs/releases/v125.0.0-compatibility-matrix.md)
+- Conformance: [docs/releases/v125.0.0-conformance.md](docs/releases/v125.0.0-conformance.md)
+- Registry binding: [docs/releases/v125.0.0-registry-binding.json](docs/releases/v125.0.0-registry-binding.json)
+- Evidence status: [docs/releases/v125.0.0-evidence-status.md](docs/releases/v125.0.0-evidence-status.md)
+- Operational update: [docs/releases/v125.0.0-operational-update-2026-09-05.md](docs/releases/v125.0.0-operational-update-2026-09-05.md)
+- Commit history: [docs/releases/v125.0.0-commit-history.md](docs/releases/v125.0.0-commit-history.md)
+
+The application repository was inspected read-only at committed `HEAD` and
+`origin/main` `ddca6196ad9f1e845d28dc6796de4d2818c7e4d3`. Exact source digests bind
+the verifier, Studio, and release book. Upstream records document coordinated
+package publication and specifically scoped production evidence; this
+standalone release does not itself perform or broaden those actions. No
+application-repository write, deployment, migration, production mutation,
+signed attestation, remote push, or standalone publication is claimed here.
+
 ## v124.1.0
 Release date: 2026-08-27
 
