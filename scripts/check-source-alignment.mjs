@@ -23,3 +23,9 @@ console.log("Committed source hashes, deployed mirrors, provenance surfaces and 
 for (const entry of manifest.assets) {
   assert.equal(createHash("sha256").update(readFileSync(entry.destination)).digest("hex"), entry.sha256, `Asset drift: ${entry.destination}`);
 }
+
+const suites = ["temporal", "market", "identity", "issuance", "signal-circuit", "game/sports", "verification", "economy", "interoperability", "world"];
+for (const file of ["README.md", "docs/conformance/README.md"]) {
+  const text = readFileSync(file, "utf8");
+  for (const suite of suites) assert.ok(text.includes(`/api/${suite}/conformance/badge`), `${file}: missing ${suite}`);
+}

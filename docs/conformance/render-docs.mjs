@@ -247,9 +247,14 @@ ${row
     )
     .join("\n");
 
-  const trustRowOrder = ["verification", "settlement", "identity", "issuance", "interoperability", "world"]
-    .map((slug) => index.suites.find((suite) => suite.slug === slug))
-    .filter(Boolean);
+  // Live suite coverage is independent of the historical snapshot inventory.
+  const trustRowOrder = [
+    ["Verification", "verify", "verification"], ["Settlement", "economy", "economy"],
+    ["Identity", "identity", "identity"], ["Issuance", "issuance", "issuance"],
+    ["Interoperability", "interoperability", "interoperability"], ["World", "world", "world"],
+    ["Market", "market", "market"], ["Sports", "game/sports", "game/sports"],
+    ["Temporal", "temporal", "temporal"], ["Signal Circuit", "signal-circuit", "signal-circuit"],
+  ].map(([name, page, api]) => ({ name, suiteUrl: `${RECEIZ_BASE_URL}/${page}/conformance`, badgeUrl: `${RECEIZ_BASE_URL}/api/${api}/conformance/badge` }));
 
   const trustRow = `<table>
   <tr>
@@ -290,13 +295,13 @@ This repo-local hub vendors the currently imported suites from [receiz.com/confo
 
 The badges below stay live. The tables and suite breakdowns on this page are pinned to the imported snapshot set \`${index.snapshotDateUtc}\`, generated between \`${index.generatedRangeUtc.start}\` and \`${index.generatedRangeUtc.end}\`.
 
-If the live trust perimeter adds suites after the imported snapshot date, those suites will not appear here until the next snapshot import.
+The live badge row includes all ten current suites. Historical tables below retain their imported snapshot scope; adding a live badge does not invent a captured result.
 
 ## Official Trust Row
 
 ${trustRow}
 
-This ordering reflects the [Powered by Receiz](${POWERED_BY_URL}) guidance captured in the imported snapshot set: brand provenance first, then verification, settlement, identity, issuance, interoperability, and world conformance.
+The live row includes the Powered by Receiz badge and all ten conformance suites. The imported snapshot tables below remain historical evidence.
 
 ## Suite Navigation
 

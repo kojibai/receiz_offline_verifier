@@ -5,7 +5,7 @@ This repo-local hub vendors the currently imported suites from [receiz.com/confo
 
 The badges below stay live. The tables and suite breakdowns on this page are pinned to the imported snapshot set `2026-03-28`, generated between `2026-03-28T00:42:58.408Z` and `2026-03-28T00:43:07.163Z`.
 
-If the live trust perimeter adds suites after the imported snapshot date, those suites will not appear here until the next snapshot import.
+The live badge row includes all ten current suites. Historical tables below retain their imported snapshot scope; adding a live badge does not invent a captured result.
 
 ## Official Trust Row
 
@@ -15,27 +15,39 @@ If the live trust perimeter adds suites after the imported snapshot date, those 
       <a href="https://receiz.com/powered-by"><img alt="Powered by Receiz" src="https://receiz.com/powered-by-receiz.svg" height="32" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/verify/conformance"><img alt="Verification Conformance Suite badge" src="https://receiz.com/api/verification/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/verify/conformance"><img alt="Verification badge" src="https://receiz.com/api/verification/conformance/badge" height="30" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/economy/conformance"><img alt="Settlement Conformance Suite badge" src="https://receiz.com/api/economy/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/economy/conformance"><img alt="Settlement badge" src="https://receiz.com/api/economy/conformance/badge" height="30" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/identity/conformance"><img alt="Identity Conformance Suite badge" src="https://receiz.com/api/identity/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/identity/conformance"><img alt="Identity badge" src="https://receiz.com/api/identity/conformance/badge" height="30" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/issuance/conformance"><img alt="Issuance Conformance Suite badge" src="https://receiz.com/api/issuance/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/issuance/conformance"><img alt="Issuance badge" src="https://receiz.com/api/issuance/conformance/badge" height="30" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/interoperability/conformance"><img alt="Interoperability Conformance Suite badge" src="https://receiz.com/api/interoperability/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/interoperability/conformance"><img alt="Interoperability badge" src="https://receiz.com/api/interoperability/conformance/badge" height="30" /></a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://receiz.com/world/conformance"><img alt="World Conformance Suite badge" src="https://receiz.com/api/world/conformance/badge" height="30" /></a>
+      <a href="https://receiz.com/world/conformance"><img alt="World badge" src="https://receiz.com/api/world/conformance/badge" height="30" /></a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://receiz.com/market/conformance"><img alt="Market badge" src="https://receiz.com/api/market/conformance/badge" height="30" /></a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://receiz.com/game/sports/conformance"><img alt="Sports badge" src="https://receiz.com/api/game/sports/conformance/badge" height="30" /></a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://receiz.com/temporal/conformance"><img alt="Temporal badge" src="https://receiz.com/api/temporal/conformance/badge" height="30" /></a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://receiz.com/signal-circuit/conformance"><img alt="Signal Circuit badge" src="https://receiz.com/api/signal-circuit/conformance/badge" height="30" /></a>
     </td>
   </tr>
 </table>
 
-This ordering reflects the [Powered by Receiz](https://receiz.com/powered-by) guidance captured in the imported snapshot set: brand provenance first, then verification, settlement, identity, issuance, interoperability, and world conformance.
+The live row includes the Powered by Receiz badge and all ten conformance suites. The imported snapshot tables below remain historical evidence.
 
 ## Suite Navigation
 

@@ -40,6 +40,10 @@ Receiz is a proof-native artifact system. Its proof objects carry verifiable sou
     <td align="center" valign="middle"><a href="https://receiz.com/issuance/conformance"><img alt="Issuance conformance badge" src="https://receiz.com/api/issuance/conformance/badge" height="30" /></a></td>
     <td align="center" valign="middle"><a href="https://receiz.com/interoperability/conformance"><img alt="Interoperability conformance badge" src="https://receiz.com/api/interoperability/conformance/badge" height="30" /></a></td>
     <td align="center" valign="middle"><a href="https://receiz.com/world/conformance"><img alt="World conformance badge" src="https://receiz.com/api/world/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/market/conformance"><img alt="Market conformance badge" src="https://receiz.com/api/market/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/game/sports/conformance"><img alt="Sports conformance badge" src="https://receiz.com/api/game/sports/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/temporal/conformance"><img alt="Temporal conformance badge" src="https://receiz.com/api/temporal/conformance/badge" height="30" /></a></td>
+    <td align="center" valign="middle"><a href="https://receiz.com/signal-circuit/conformance"><img alt="Signal Circuit conformance badge" src="https://receiz.com/api/signal-circuit/conformance/badge" height="30" /></a></td>
   </tr>
 </table>
 
