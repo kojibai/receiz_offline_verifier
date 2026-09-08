@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased — standalone source alignment
+
+- Synchronize the deployed index with the canonical verifier, including verified ownership and ordered provenance.
+- Include downloadable applications in the Pages artifact and verify their exact source hashes.
+- Place CI and Pages workflows in the executable workflow directory; gate Pages on source and release checks.
+- Record current proof-native governance separately from historical release and signing records.
+
 ## [v126.0.0] - 2026-09-07
 
 ### Added

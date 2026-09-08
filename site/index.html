@@ -554,7 +554,7 @@
 
     <section class="card" aria-labelledby="input-title">
       <h2 id="input-title">1) Load file</h2>
-      <p class="hint">Copies fail. Ask for the receiz.</p>
+      <p class="hint">Keep the complete file. Screenshots do not carry its proof.</p>
 
       <label class="drop" id="dropZone">
         <input id="fileInput" class="drop-file" type="file" multiple accept="*/*" />
@@ -593,8 +593,24 @@
         <div class="kv"><span class="k">Verify Path</span><p class="v mono" id="factPath">-</p></div>
         <div class="kv"><span class="k">Artifact SHA-256</span><p class="v mono" id="factHash">-</p></div>
         <div class="kv"><span class="k">Anchor</span><p class="v mono" id="factAnchor">-</p></div>
+        <div class="kv" id="factCurrentOwnerRow" hidden><span class="k">Current Owner</span><p class="v mono" id="factCurrentOwner">-</p></div>
+        <div class="kv" id="factPreviousOwnerRow" hidden><span class="k">Previous Owner</span><p class="v mono" id="factPreviousOwner">-</p></div>
+        <div class="kv" id="factGenesisOwnerRow" hidden><span class="k">Genesis Owner</span><p class="v mono" id="factGenesisOwner">-</p></div>
+        <div class="kv" id="factOwnershipCountRow" hidden><span class="k">Ownership Appends</span><p class="v mono" id="factOwnershipCount">-</p></div>
+        <div class="kv" id="factNativeCaptureRow" hidden><span class="k">Native Capture Verified</span><p class="v mono" id="factNativeCapture">-</p></div>
+        <div class="kv" id="factPbiAuthorshipCountRow" hidden><span class="k">PBI authorship appends</span><p class="v mono" id="factPbiAuthorshipCount">-</p></div>
         <div class="kv" id="factPresetRow" hidden><span class="k">Preset</span><p class="v mono" id="factPreset">-</p></div>
       </div>
+
+      <details id="ownershipHistoryPanel" hidden>
+        <summary>Show full verified provenance history</summary>
+        <div class="panel"><pre id="ownershipHistoryJson">(none)</pre></div>
+      </details>
+
+      <details id="pbiAuthorshipHistoryPanel" hidden>
+        <summary>Show complete ordered PBI authorship history</summary>
+        <div class="panel"><pre id="pbiAuthorshipHistoryJson">(none)</pre></div>
+      </details>
 
       <details>
         <summary>Show decoded proof bundle</summary>
@@ -712,6 +728,24 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       factPath: document.getElementById("factPath"),
       factHash: document.getElementById("factHash"),
       factAnchor: document.getElementById("factAnchor"),
+      factCurrentOwner: document.getElementById("factCurrentOwner"),
+      factCurrentOwnerRow: document.getElementById("factCurrentOwnerRow"),
+      factPreviousOwner: document.getElementById("factPreviousOwner"),
+      factPreviousOwnerRow: document.getElementById("factPreviousOwnerRow"),
+      factGenesisOwner: document.getElementById("factGenesisOwner"),
+      factGenesisOwnerRow: document.getElementById("factGenesisOwnerRow"),
+      factOwnershipCount: document.getElementById("factOwnershipCount"),
+      factOwnershipCountRow: document.getElementById("factOwnershipCountRow"),
+      factNativeCapture: document.getElementById("factNativeCapture"),
+      factNativeCaptureRow: document.getElementById("factNativeCaptureRow"),
+      factPbiAuthorshipCount: document.getElementById("factPbiAuthorshipCount"),
+      factPbiAuthorshipCountRow: document.getElementById("factPbiAuthorshipCountRow"),
+      ownershipHistoryPanel: document.getElementById("ownershipHistoryPanel"),
+      ownershipHistoryJson: document.getElementById("ownershipHistoryJson"),
+      pbiAuthorshipHistoryPanel: document.getElementById("pbiAuthorshipHistoryPanel"),
+      pbiAuthorshipHistoryJson: document.getElementById("pbiAuthorshipHistoryJson"),
+      appendPbiAuthorshipPanel: document.getElementById("appendPbiAuthorshipPanel"),
+      appendPbiAuthorshipBtn: document.getElementById("appendPbiAuthorshipBtn"),
       factPreset: document.getElementById("factPreset"),
       factPresetRow: document.getElementById("factPresetRow"),
       bundleJson: document.getElementById("bundleJson"),
@@ -719,6 +753,20 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
     };
 
     let selectedFiles = [];
+    let verifiedArtifact = null;
+
+    function setVerifiedArtifact(result, bytes, filename, file = null) {
+      const sourceFile = typeof File !== "undefined" && file instanceof File ? file : null;
+      verifiedArtifact = result && result.ok && result.bundle && (bytes || sourceFile) && filename
+        ? {
+            ...result,
+            bytes: bytes ? (bytes instanceof Uint8Array ? bytes.slice() : new Uint8Array(bytes)) : null,
+            file: sourceFile,
+            filename: String(filename),
+          }
+        : null;
+      if (ui.appendPbiAuthorshipPanel) ui.appendPbiAuthorshipPanel.hidden = !verifiedArtifact;
+    }
 
     function setStatus(kind, title, note) {
       ui.statusBox.className = `status ${kind}`;
@@ -764,8 +812,538 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.checks.appendChild(li);
     }
 
+    // BEGIN SHARED VERIFIER IDENTITY DISPLAY
+"use strict";
+var ReceizVerifierIdentityDisplay = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // app/verify/identityDisplay.ts
+  var identityDisplay_exports = {};
+  __export(identityDisplay_exports, {
+    carriedVerifierOriginal: () => carriedVerifierOriginal,
+    classifyPortableIdentityCarrier: () => classifyPortableIdentityCarrier,
+    formatVerifierIdentity: () => formatVerifierIdentity,
+    formatVerifierPbiSigners: () => formatVerifierPbiSigners,
+    projectVerifierIdentityDisplay: () => projectVerifierIdentityDisplay,
+    retainVerifierPbiAssertionResult: () => retainVerifierPbiAssertionResult,
+    verifierIdentity: () => verifierIdentity
+  });
+
+  // app/lib/profile/showcase/routeProjectionEncoding.ts
+  var PROFILE_ORIGINAL_RENDER_APPEND_TYPE = "receiz.profile-original-render.v1";
+  function record(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+  function canonicalJson(value) {
+    if (value === null || typeof value === "string" || typeof value === "boolean") {
+      return JSON.stringify(value);
+    }
+    if (typeof value === "number") {
+      if (!Number.isFinite(value)) {
+        throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+      }
+      return JSON.stringify(value);
+    }
+    if (Array.isArray(value)) {
+      return `[${value.map(canonicalJson).join(",")}]`;
+    }
+    if (!record(value)) {
+      throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+    }
+    return `{${Object.keys(value).sort().filter((key) => value[key] !== void 0).map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
+  }
+  function encodeProfileOriginalRouteProjection(projection) {
+    const encoded = canonicalJson(projection);
+    const decoded = JSON.parse(encoded);
+    if (!record(decoded) || typeof decoded.id !== "string" || typeof decoded.slug !== "string" || typeof decoded.code !== "string") {
+      throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+    }
+    return encoded;
+  }
+  function decodeProfileOriginalRouteProjectionAppend(append, renderedArtifactSha256) {
+    if (!record(append) || append.type !== PROFILE_ORIGINAL_RENDER_APPEND_TYPE || append.renderedArtifactSha256 !== renderedArtifactSha256) return null;
+    const bindSealedRecordMediaHash = (projection) => {
+      if (projection.media === null && typeof projection.recordMediaSha256Hex !== "string") {
+        return {
+          ...projection,
+          recordMediaSha256Hex: renderedArtifactSha256
+        };
+      }
+      return projection;
+    };
+    if (record(append.projection)) {
+      return bindSealedRecordMediaHash(append.projection);
+    }
+    if (typeof append.projectionJson !== "string") return null;
+    try {
+      const projection = JSON.parse(append.projectionJson);
+      if (!record(projection)) return null;
+      if (encodeProfileOriginalRouteProjection(projection) !== append.projectionJson) {
+        return null;
+      }
+      return bindSealedRecordMediaHash(projection);
+    } catch {
+      return null;
+    }
+  }
+
+  // packages/receiz-sdk/src/errors.ts
+  var PRIVATE_KEY_RE = /-----BEGIN [^-\r\n]*PRIVATE KEY-----[\s\S]*?-----END [^-\r\n]*PRIVATE KEY-----/gi;
+  var AUTHORIZATION_RE = /\bauthorization\s*:\s*(?:bearer\s+)?[^\s,;]+/gi;
+  var BEARER_RE = /\bbearer\s+[^\s,;]+/gi;
+  var SECRET_FIELD_RE = /\b(access[_-]?token|refresh[_-]?token|private[_-]?key|client[_-]?secret|webhook[_-]?secret|receiz[_-]?key)\s*[:=]\s*[^\s,;]+/gi;
+  var JWT_RE = /\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g;
+  function sanitizeReceizErrorMessage(message) {
+    return message.replace(PRIVATE_KEY_RE, "[REDACTED]").replace(AUTHORIZATION_RE, "Authorization: [REDACTED]").replace(BEARER_RE, "Bearer [REDACTED]").replace(SECRET_FIELD_RE, "$1=[REDACTED]").replace(JWT_RE, "[REDACTED]");
+  }
+  function inferredRail(code) {
+    if (code.includes("continuity")) return "continuity";
+    if (code.includes("identity") || code.includes("scope") || code.includes("unauthorized")) return "identity";
+    if (code.includes("ownership")) return "ownership";
+    if (code.includes("settlement")) return "settlement";
+    if (code.includes("webhook")) return "webhook";
+    if (code.includes("compiler") || code.includes("contract") || code.includes("project")) return "compiler";
+    if (code.includes("proof") || code.includes("artifact")) return "proof";
+    return "sdk";
+  }
+  function inferredRepair(code) {
+    if (code === "missing_scope") return "Request the missing delegated scope through Receiz Connect.";
+    if (code.includes("continuity")) return "Recreate the proof object through authenticated Receiz Record and Seal continuity.";
+    if (code.startsWith("http_5")) return "Retry the same idempotent SDK operation after the Receiz service recovers.";
+    if (code.startsWith("http_4")) return "Correct the request or delegated authorization before retrying.";
+    if (code.includes("validation")) return "Correct the invalid fields and submit the same Receiz operation again.";
+    return "Inspect the affected Receiz rail and retry only after correcting the reported condition.";
+  }
+  function descriptorFor(code, message, context = {}) {
+    const rail = context.rail ?? inferredRail(code);
+    const retryable = context.retryable ?? /^http_5\d\d$/.test(code);
+    return {
+      schema: "receiz.sdk.error.v1",
+      code,
+      message: sanitizeReceizErrorMessage(message),
+      rail,
+      retryable,
+      ...context.missingScope ? { missingScope: context.missingScope } : {},
+      documentationUrl: context.documentationUrl ?? "https://receiz.com/developers",
+      suggestedRepair: context.suggestedRepair ?? inferredRepair(code),
+      authorityBoundary: context.authorityBoundary ?? "sdk-mechanics-beneath-receiz-proof-object-truth"
+    };
+  }
+  var ReceizError = class extends Error {
+    code;
+    descriptor;
+    constructor(code, message, context = {}) {
+      const descriptor = descriptorFor(code, message, context);
+      super(descriptor.message);
+      this.name = "ReceizError";
+      this.code = code;
+      this.descriptor = descriptor;
+    }
+  };
+
+  // packages/receiz-sdk/src/portableAssetReader.ts
+  var ReceizPortableAssetError = class extends ReceizError {
+    constructor(code) {
+      super(code, code, { rail: "continuity", retryable: false });
+      this.name = "ReceizPortableAssetError";
+    }
+  };
+  var ASSET_TYPES = /* @__PURE__ */ new Set([
+    "proof_object",
+    "sports_card",
+    "signal_card",
+    "wallet_note",
+    "reserve_funding",
+    "market_certificate",
+    "profile_original",
+    "document"
+  ]);
+  var HEX64_RE = /^[0-9a-f]{64}$/;
+  var B64URL_RE = /^[A-Za-z0-9_-]*$/;
+  var OWNER_RECEIZ_ID_RE = /^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?\.receiz\.id$/;
+  var OWNERSHIP_APPEND_TYPE = "receiz.ownership.bearer-claim.v108";
+  function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+  function canonicalize(value) {
+    if (value === null || typeof value === "string" || typeof value === "boolean") return JSON.stringify(value);
+    if (typeof value === "number") return Number.isFinite(value) ? JSON.stringify(value) : "null";
+    if (Array.isArray(value)) return `[${value.map((entry) => canonicalize(entry)).join(",")}]`;
+    if (isRecord(value)) {
+      return `{${Object.keys(value).sort().filter((key) => value[key] !== void 0).map((key) => `${JSON.stringify(key)}:${canonicalize(value[key])}`).join(",")}}`;
+    }
+    throw new ReceizPortableAssetError("continuity_round_trip_failed");
+  }
+  function nonempty(value) {
+    return typeof value === "string" && value.trim() ? value.trim() : null;
+  }
+  function base64UrlDecode(value) {
+    if (!B64URL_RE.test(value)) throw new ReceizPortableAssetError("continuity_payload_missing");
+    const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+    let binary;
+    try {
+      binary = atob(padded);
+    } catch {
+      throw new ReceizPortableAssetError("continuity_payload_missing");
+    }
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    return bytes;
+  }
+  async function sha256Hex(bytes) {
+    const copy = new Uint8Array(bytes.byteLength);
+    copy.set(bytes);
+    const digest = await globalThis.crypto.subtle.digest("SHA-256", copy.buffer);
+    return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  function parseOwnership(value) {
+    if (!isRecord(value)) throw new ReceizPortableAssetError("continuity_ownership_missing");
+    const ownerReceizId = nonempty(value.ownerReceizId);
+    const custody = nonempty(value.custody);
+    const proofRef = nonempty(value.proofRef);
+    if (!ownerReceizId || !custody || !proofRef) throw new ReceizPortableAssetError("continuity_ownership_missing");
+    return { ownerReceizId, custody, proofRef };
+  }
+  function parseProvenance(value) {
+    if (!isRecord(value)) throw new ReceizPortableAssetError("continuity_provenance_missing");
+    const root = nonempty(value.root);
+    if (!root || !Array.isArray(value.appends)) throw new ReceizPortableAssetError("continuity_provenance_missing");
+    if (value.appends.some((append) => !isRecord(append))) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    return {
+      root,
+      appends: value.appends.map((append) => ({ ...append }))
+    };
+  }
+  function parseSettlement(value) {
+    if (!isRecord(value) || !nonempty(value.state)) {
+      throw new ReceizPortableAssetError("continuity_settlement_missing");
+    }
+    return { ...value };
+  }
+  async function parseReceizPortableAssetDocument(value) {
+    if (!isRecord(value) || value.schema !== "receiz.portable_asset.v1") {
+      throw new ReceizPortableAssetError("continuity_schema_unsupported");
+    }
+    if (typeof value.assetType !== "string" || !ASSET_TYPES.has(value.assetType)) {
+      throw new ReceizPortableAssetError("continuity_schema_unsupported");
+    }
+    if (!isRecord(value.payload)) throw new ReceizPortableAssetError("continuity_payload_missing");
+    const mimeType = nonempty(value.payload.mimeType);
+    const bytesBase64Url = typeof value.payload.bytesBase64Url === "string" ? value.payload.bytesBase64Url : null;
+    const claimedSha256 = typeof value.payload.sha256 === "string" ? value.payload.sha256.trim().toLowerCase() : "";
+    if (!mimeType || bytesBase64Url === null || !HEX64_RE.test(claimedSha256)) {
+      throw new ReceizPortableAssetError("continuity_payload_missing");
+    }
+    const payloadBytes = base64UrlDecode(bytesBase64Url);
+    if (await sha256Hex(payloadBytes) !== claimedSha256) {
+      throw new ReceizPortableAssetError("continuity_media_unbound");
+    }
+    let receizProofHistory;
+    if (value.receizProofHistory !== void 0) {
+      if (!isRecord(value.receizProofHistory) || value.receizProofHistory.schema !== "receiz.carried-proof-history.v113" || !isRecord(value.receizProofHistory.history) || typeof value.receizProofHistory.commitmentDigest !== "string" || !HEX64_RE.test(value.receizProofHistory.commitmentDigest) || await sha256Hex(new TextEncoder().encode(canonicalize(value.receizProofHistory.history))) !== value.receizProofHistory.commitmentDigest) {
+        throw new ReceizPortableAssetError("continuity_offline_verification_failed");
+      }
+      receizProofHistory = {
+        schema: "receiz.carried-proof-history.v113",
+        history: structuredClone(value.receizProofHistory.history),
+        commitmentDigest: value.receizProofHistory.commitmentDigest
+      };
+    }
+    canonicalize(value);
+    return {
+      ...structuredClone(value),
+      schema: "receiz.portable_asset.v1",
+      assetType: value.assetType,
+      payload: { mimeType, bytesBase64Url, sha256: claimedSha256 },
+      ownership: parseOwnership(value.ownership),
+      provenance: parseProvenance(value.provenance),
+      settlement: parseSettlement(value.settlement),
+      ...receizProofHistory ? { receizProofHistory } : {}
+    };
+  }
+  function canonicalOwnerReceizId(value) {
+    if (typeof value !== "string") return null;
+    const normalized = value.trim();
+    return OWNER_RECEIZ_ID_RE.test(normalized) ? normalized : null;
+  }
+  async function ownershipHistoryDigest(value) {
+    return sha256Hex(new TextEncoder().encode(canonicalize(value)));
+  }
+  async function deriveReceizPortableOwnershipContinuity(document) {
+    const parsed = await parseReceizPortableAssetDocument(document);
+    const currentOwnerReceizId = canonicalOwnerReceizId(parsed.ownership.ownerReceizId);
+    if (!currentOwnerReceizId) throw new ReceizPortableAssetError("continuity_identity_mismatch");
+    const provenanceAppends = parsed.provenance.appends;
+    const headBearingAppends = provenanceAppends.filter(
+      (append) => nonempty(append.priorHeadReference) !== null
+    );
+    const latestHeadBearingAppend = headBearingAppends.at(-1);
+    if (parsed.ownership.proofRef === "genesis" && headBearingAppends.length !== 0 || parsed.ownership.proofRef !== "genesis" && (!latestHeadBearingAppend || nonempty(latestHeadBearingAppend.priorHeadReference) !== parsed.ownership.proofRef)) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    const ownershipAppends = parsed.provenance.appends.filter(
+      (append) => append.type === OWNERSHIP_APPEND_TYPE
+    );
+    const firstAppend = ownershipAppends[0];
+    const genesisOwnerReceizId = firstAppend ? canonicalOwnerReceizId(firstAppend.fromOwnerReceizId) : currentOwnerReceizId;
+    if (!genesisOwnerReceizId) throw new ReceizPortableAssetError("continuity_identity_mismatch");
+    let expectedOwnerReceizId = genesisOwnerReceizId;
+    let historyDigestSha256 = await ownershipHistoryDigest({
+      schema: "receiz.ownership.genesis.v1",
+      artifactId: parsed.payload.sha256,
+      namespace: parsed.provenance.root,
+      ownerReceizId: genesisOwnerReceizId
+    });
+    const seenPriorHeads = /* @__PURE__ */ new Set();
+    const seenSourceArtifacts = /* @__PURE__ */ new Set();
+    for (const append of ownershipAppends) {
+      const fromOwnerReceizId = canonicalOwnerReceizId(append.fromOwnerReceizId);
+      const toOwnerReceizId = canonicalOwnerReceizId(append.toOwnerReceizId);
+      const priorHeadReference = nonempty(append.priorHeadReference);
+      const sourceArtifactSha256 = typeof append.sourceArtifactSha256 === "string" ? append.sourceArtifactSha256.trim().toLowerCase() : "";
+      const priorHistoryDigestSha256 = typeof append.priorHistoryDigestSha256 === "string" ? append.priorHistoryDigestSha256.trim().toLowerCase() : "";
+      if (!fromOwnerReceizId || fromOwnerReceizId !== expectedOwnerReceizId || !toOwnerReceizId || !priorHeadReference || priorHeadReference === "genesis" || seenPriorHeads.has(priorHeadReference) || !HEX64_RE.test(sourceArtifactSha256) || seenSourceArtifacts.has(sourceArtifactSha256) || priorHistoryDigestSha256 !== historyDigestSha256) {
+        throw new ReceizPortableAssetError("continuity_append_mismatch");
+      }
+      historyDigestSha256 = await ownershipHistoryDigest({
+        schema: "receiz.ownership.append.v1",
+        priorHistoryDigestSha256,
+        sourceArtifactSha256,
+        priorHeadReference,
+        fromOwnerReceizId,
+        toOwnerReceizId
+      });
+      seenPriorHeads.add(priorHeadReference);
+      seenSourceArtifacts.add(sourceArtifactSha256);
+      expectedOwnerReceizId = toOwnerReceizId;
+    }
+    if (expectedOwnerReceizId !== currentOwnerReceizId) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    return Object.freeze({
+      artifactId: parsed.payload.sha256,
+      namespace: parsed.provenance.root,
+      genesisOwnerReceizId,
+      ownerReceizId: currentOwnerReceizId,
+      historyDigestSha256,
+      appendCount: ownershipAppends.length
+    });
+  }
+
+  // app/verify/portableIdentityReader.ts
+  async function classifyPortableIdentityCarrier(originalBytes, bundle) {
+    const nativeRecordSeal = bundle?.nativeRecordSeal ?? null;
+    let parsed;
+    try {
+      parsed = JSON.parse(new TextDecoder().decode(originalBytes));
+    } catch {
+      return { state: "not_applicable" };
+    }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return { state: "not_applicable" };
+    const schema = parsed.schema;
+    if (schema === "receiz.asset_manifest.v1") return { state: "historical_missing" };
+    if (schema !== "receiz.portable_asset.v1") return { state: "not_applicable" };
+    try {
+      const document = await parseReceizPortableAssetDocument(parsed);
+      const continuity = await deriveReceizPortableOwnershipContinuity(document);
+      const signedContinuity = nativeRecordSeal?.ownershipContinuity ?? null;
+      if (nativeRecordSeal && nativeRecordSeal.ownerReceizId !== continuity.ownerReceizId) {
+        return { state: "invalid", error: "continuity_identity_mismatch" };
+      }
+      if (continuity.appendCount > 0 && !signedContinuity) {
+        return { state: "invalid", error: "continuity_ownership_attestation_missing" };
+      }
+      if (signedContinuity && (signedContinuity.artifactId !== continuity.artifactId || signedContinuity.namespace !== continuity.namespace || signedContinuity.genesisOwnerReceizId !== continuity.genesisOwnerReceizId || signedContinuity.ownerReceizId !== continuity.ownerReceizId || signedContinuity.headReference !== bundle?.receizClaimId || signedContinuity.historyDigestSha256 !== continuity.historyDigestSha256 || signedContinuity.appendCount !== continuity.appendCount)) {
+        return { state: "invalid", error: "continuity_ownership_attestation_mismatch" };
+      }
+      return {
+        state: "verified",
+        carrier: "portable_asset",
+        issuerKid: bundle?.signatureV4?.cert.issuerKid ?? null,
+        artifactId: document.payload.sha256,
+        headReference: bundle?.receizClaimId ?? document.payload.sha256,
+        ownerReceizId: continuity.ownerReceizId,
+        namespace: document.provenance.root,
+        priorHeadReference: document.ownership.proofRef,
+        genesisOwnerReceizId: continuity.genesisOwnerReceizId,
+        historyDigestSha256: continuity.historyDigestSha256,
+        appendCount: continuity.appendCount,
+        history: projectPortableOwnershipHistory(
+          document,
+          bundle?.receizClaimId ?? document.payload.sha256,
+          continuity.genesisOwnerReceizId,
+          continuity.historyDigestSha256
+        ),
+        historyComplete: true,
+        document
+      };
+    } catch (error) {
+      return {
+        state: "invalid",
+        error: error instanceof ReceizPortableAssetError ? error.code : "continuity_round_trip_failed"
+      };
+    }
+  }
+  function projectPortableOwnershipHistory(document, currentHeadReference, genesisOwnerReceizId, currentHistoryDigestSha256) {
+    const ownershipAppends = document.provenance.appends.filter(
+      (append) => append.type === "receiz.ownership.bearer-claim.v108"
+    );
+    const first = ownershipAppends[0];
+    const genesisHead = typeof first?.priorHeadReference === "string" ? first.priorHeadReference : "genesis";
+    const genesisDigest = typeof first?.priorHistoryDigestSha256 === "string" ? first.priorHistoryDigestSha256 : currentHistoryDigestSha256;
+    const history = [{
+      schema: "receiz.native_ownership_genesis.v1",
+      index: 0,
+      ownerReceizId: genesisOwnerReceizId,
+      headReference: genesisHead,
+      historyDigestSha256: genesisDigest
+    }];
+    ownershipAppends.forEach((append, index) => {
+      const next = ownershipAppends[index + 1];
+      history.push({
+        schema: "receiz.native_ownership_transfer.v1",
+        index: index + 1,
+        fromOwnerReceizId: String(append.fromOwnerReceizId),
+        toOwnerReceizId: String(append.toOwnerReceizId),
+        priorHeadReference: String(append.priorHeadReference),
+        sourceArtifactSha256: String(append.sourceArtifactSha256),
+        headReference: typeof next?.priorHeadReference === "string" ? next.priorHeadReference : currentHeadReference,
+        historyDigestSha256: index === ownershipAppends.length - 1 ? currentHistoryDigestSha256 : String(next?.priorHistoryDigestSha256)
+      });
+    });
+    return history;
+  }
+
+  // app/verify/identityDisplay.ts
+  var record2 = (value) => value !== null && typeof value === "object" && !Array.isArray(value) ? value : null;
+  var text = (value) => typeof value === "string" && value.trim() ? value : null;
+  var USERNAME = /^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?$/;
+  function verifierIdentity(value, displayName = null) {
+    const receizId = text(value);
+    const component = receizId?.endsWith(".receiz.id") ? receizId.slice(0, -10) : null;
+    return { receizId, username: component && USERNAME.test(component) ? component : null, displayName: text(displayName) };
+  }
+  var absent = () => verifierIdentity(null);
+  function carriedVerifierOriginal(value) {
+    const result = record2(value);
+    if (result?.ok !== true || record2(result.integrity)?.ok === false) return null;
+    const continuity = record2(result.assetContinuity);
+    const document = record2(continuity?.document);
+    if (continuity?.state !== "verified" || continuity.carrier !== "portable_asset" || document?.assetType !== "profile_original") return null;
+    const appends = record2(document.provenance)?.appends;
+    const digest = text(record2(document.payload)?.sha256);
+    if (!Array.isArray(appends) || !digest) return null;
+    const render = appends.filter((append) => record2(append)?.type === "receiz.profile-original-render.v1");
+    return render.length === 1 ? decodeProfileOriginalRouteProjectionAppend(render[0], digest) : null;
+  }
+  function projectVerifierIdentityDisplay(value) {
+    const result = record2(value);
+    const empty = { originalCreator: absent(), currentOwner: absent(), placementOwner: null, pbiSigners: [] };
+    if (result?.ok !== true || record2(result.integrity)?.ok === false) return empty;
+    const canonicalContinuity = record2(result.assetContinuity);
+    const native = record2(record2(result.bundle)?.nativeRecordSeal);
+    const continuity = canonicalContinuity?.state === "verified" ? canonicalContinuity : record2(native?.ownershipContinuity);
+    const owner = verifierIdentity(continuity?.ownerReceizId ?? native?.ownerReceizId);
+    const original = carriedVerifierOriginal(result);
+    const creator = record2(original?.originalCreator);
+    const creatorUsername = text(creator?.username);
+    let originalCreator = creatorUsername && USERNAME.test(creatorUsername) ? verifierIdentity(`${creatorUsername}.receiz.id`, creator?.displayName) : verifierIdentity(creator?.receizId, creator?.displayName);
+    if (!creator && (original?.ownershipKind === "creator" || !original && canonicalContinuity?.state === "verified" && canonicalContinuity.carrier === "native_record_seal")) {
+      originalCreator = verifierIdentity(continuity?.genesisOwnerReceizId ?? record2(native?.ownershipContinuity)?.genesisOwnerReceizId);
+    }
+    const nested = record2(result.identitySource);
+    const nestedDisplay = nested?.state === "verified" ? projectVerifierIdentityDisplay(nested.result) : null;
+    const imported = Boolean(original && original.ownershipKind !== "creator");
+    const accepted = record2(result.verifiedPbiAssertion);
+    const history = Array.isArray(result.pbiAuthorshipHistory) ? result.pbiAuthorshipHistory : [];
+    return {
+      originalCreator: nestedDisplay?.originalCreator.receizId ? nestedDisplay.originalCreator : originalCreator,
+      currentOwner: imported ? nestedDisplay?.currentOwner ?? { ...absent(), unavailableReason: nested?.state === "invalid" ? "Source ownership not verified by this reader" : "Source ownership verification unavailable in this reader" } : owner,
+      sourceRolesUnavailable: imported && !nestedDisplay,
+      placementOwner: imported ? owner : null,
+      pbiSigners: [...nestedDisplay?.pbiSigners ?? [], ...history.flatMap((entry) => {
+        const receizId = text(record2(entry)?.receizId);
+        return receizId ? [{ identity: verifierIdentity(receizId), assertionStatus: accepted && accepted.sourceSha256 === result.fileHash && accepted.receizId === receizId && accepted.appendHeadSha256 === record2(entry)?.appendHeadSha256 ? "verified" : "carried-unverified", accountStatus: "not-carried" }] : [];
+      })]
+    };
+  }
+  function formatVerifierIdentity(identity) {
+    if (identity.unavailableReason) return identity.unavailableReason;
+    if (!identity.receizId) return identity.displayName ? `${identity.displayName} \xB7 Receiz ID not carried` : "Not carried in this proof";
+    return [identity.displayName, identity.username ? `@${identity.username}` : null, identity.receizId].filter(Boolean).join(" \xB7 ");
+  }
+  function formatVerifierPbiSigners(display) {
+    return display.pbiSigners.length ? display.pbiSigners.map((signer) => `${formatVerifierIdentity(signer.identity)} \xB7 Assertion ${signer.assertionStatus === "verified" ? "verified" : "not verified"}; account binding not verified`).join("\n") : display.sourceRolesUnavailable ? "Source PBI signer not evaluated by this reader" : "Not carried in this proof";
+  }
+  function retainVerifierPbiAssertionResult(result, append) {
+    const carried = record2(append);
+    if (!result.ok || !result.fileHash || !text(carried?.receizId) || !text(carried?.appendHeadSha256)) return result;
+    return { ...result, verifiedPbiAssertion: { sourceSha256: result.fileHash, receizId: carried.receizId, appendHeadSha256: carried.appendHeadSha256 } };
+  }
+  return __toCommonJS(identityDisplay_exports);
+})();
+
+    function writeVerifierIdentityFacts(result) {
+      const display = ReceizVerifierIdentityDisplay.projectVerifierIdentityDisplay(result);
+      const rows = [
+        ["factOriginalCreator", "Created by · Original creator", ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.originalCreator)],
+        ["factCurrentOwner", "Owned by · Current owner", ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.currentOwner)],
+        ["factPlacementOwner", "Placement owner", display.placementOwner ? ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.placementOwner) : null],
+        ["factPbiSigner", "PBI signed by", ReceizVerifierIdentityDisplay.formatVerifierPbiSigners(display)]
+      ];
+      for (const [id, label, value] of rows) {
+        let field = document.getElementById(id);
+        if (!field) {
+          const row = ui.factCurrentOwnerRow.cloneNode(true); row.id = id + "Row";
+          field = row.lastElementChild; field.id = id;
+          if (id === "factOriginalCreator") ui.factsGrid.insertBefore(row, ui.factCurrentOwnerRow);
+          else (document.getElementById("factPlacementOwnerRow") || ui.factCurrentOwnerRow).after(row);
+        }
+        field.previousElementSibling.textContent = label;
+        field.textContent = value || "-";
+        field.parentElement.hidden = !result?.ok || value === null;
+      }
+      // Human identities precede the content-bearing proof URL and technical facts.
+      if (ui.factsGrid.firstElementChild?.id !== "factOriginalCreatorRow") {
+        for (const id of ["factPbiSignerRow", "factPlacementOwnerRow", "factCurrentOwnerRow", "factOriginalCreatorRow"]) {
+          const row = document.getElementById(id);
+          if (row) ui.factsGrid.prepend(row);
+        }
+      }
+      for (const [id, label] of [["factPreviousOwner", "Previous Owner"], ["factGenesisOwner", "Genesis Owner"], ["factOwnershipCount", "Ownership Appends"], ["factPbiAuthorshipCount", "PBI authorship appends"]]) {
+        const field = document.getElementById(id);
+        if (field) field.previousElementSibling.textContent = (display.placementOwner ? "Placement · " : "") + label;
+      }
+    }
+    // END SHARED VERIFIER IDENTITY DISPLAY
     function writeFacts(result) {
+      const continuity = result?.assetContinuity?.state === "verified" ? result.assetContinuity : result?.bundle?.nativeRecordSeal?.ownershipContinuity;
+      const history = continuity && Array.isArray(continuity.history) ? continuity.history : [];
+      const latestTransfer = history.length > 1 ? history[history.length - 1] : null;
+      const nativeCapture = result?.ok ? result.nativeCapture : null;
+      const pbiAuthorshipHistory = result?.ok && Array.isArray(result.pbiAuthorshipHistory)
+        ? result.pbiAuthorshipHistory
+        : [];
       if (!result || !result.bundle) {
+        writeVerifierIdentityFacts(null);
         ui.factsGrid.hidden = true;
         ui.factTs.textContent = "-";
         ui.factCode.textContent = "-";
@@ -773,20 +1351,66 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.factPath.textContent = "-";
         ui.factHash.textContent = "-";
         ui.factAnchor.textContent = "-";
+        ui.factCurrentOwnerRow.hidden = true;
+        ui.factPreviousOwnerRow.hidden = true;
+        ui.factGenesisOwnerRow.hidden = true;
+        ui.factOwnershipCountRow.hidden = true;
+        ui.ownershipHistoryPanel.hidden = true;
+        ui.ownershipHistoryJson.textContent = "(none)";
+        ui.factNativeCaptureRow.hidden = true;
+        ui.factNativeCapture.textContent = "-";
+        ui.factPbiAuthorshipCountRow.hidden = true;
+        ui.factPbiAuthorshipCount.textContent = "-";
+        ui.pbiAuthorshipHistoryPanel.hidden = true;
+        ui.pbiAuthorshipHistoryJson.textContent = "(none)";
         ui.factPreset.textContent = "-";
         ui.factPresetRow.hidden = true;
         return;
       }
 
       ui.factsGrid.hidden = false;
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
       ui.factTs.textContent = result.bundle.ts || "-";
       ui.factCode.textContent = result.bundle.code || "-";
       ui.factPulse.textContent = result.bundle.kaiPulseEternal || "-";
-      ui.factPath.textContent = result.bundle.verifyPath || "-";
+      ui.factPath.textContent = derivedAnchor?.parent?.viewUrl || result.anchor?.parent?.viewUrl || result.bundle.verifyPath || "-";
       ui.factHash.textContent = result.fileHash || "-";
-      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
       const bundleAnchorId = asString(result.bundle.anchorId);
       ui.factAnchor.textContent = result.anchor?.anchorId || derivedAnchor?.anchorId || bundleAnchorId || "none";
+      const hasOwnership = result.ok && continuity && typeof continuity.ownerReceizId === "string";
+      ui.factCurrentOwnerRow.hidden = !hasOwnership;
+      ui.factPreviousOwnerRow.hidden = !hasOwnership;
+      ui.factGenesisOwnerRow.hidden = !hasOwnership;
+      ui.factOwnershipCountRow.hidden = !hasOwnership;
+      ui.factCurrentOwner.textContent = hasOwnership ? continuity.ownerReceizId : "-";
+      ui.factPreviousOwner.textContent = hasOwnership
+        ? (latestTransfer?.fromOwnerReceizId || continuity.genesisOwnerReceizId || "-")
+        : "-";
+      ui.factGenesisOwner.textContent = hasOwnership ? (continuity.genesisOwnerReceizId || "-") : "-";
+      ui.factOwnershipCount.textContent = hasOwnership ? String(continuity.appendCount ?? history.length) : "-";
+      ui.ownershipHistoryPanel.hidden = !hasOwnership || history.length === 0;
+      ui.ownershipHistoryJson.textContent = history.length > 0
+        ? safeJson({ proofPredecessor: result.bundle.nativeRecordSeal?.proofPredecessor || null, ownershipHistory: history })
+        : "(none)";
+      ui.factNativeCaptureRow.hidden = !nativeCapture;
+      ui.factNativeCapture.textContent = nativeCapture
+        ? `${nativeCapture.mediaKind} · ${nativeCapture.sourceSha256}`
+        : "-";
+      ui.factPbiAuthorshipCountRow.hidden = !result.ok;
+      ui.factPbiAuthorshipCount.textContent = result.ok ? String(pbiAuthorshipHistory.length) : "-";
+      ui.pbiAuthorshipHistoryPanel.hidden = pbiAuthorshipHistory.length === 0;
+      ui.pbiAuthorshipHistoryJson.textContent = pbiAuthorshipHistory.length > 0
+        ? safeJson(pbiAuthorshipHistory.map((entry) => ({
+            position: entry.position,
+            credentialId: entry.credentialId,
+            receizId: entry.receizId,
+            pbiReceiptHash: entry.pbiReceiptHash,
+            predecessorDigest: entry.predecessorArtifactSha256,
+            signingTime: entry.signedAt,
+            appendHead: entry.appendHeadSha256
+          })))
+        : "(none)";
+      writeVerifierIdentityFacts(result);
       if (result.anchor?.contextPreset) {
         ui.factPreset.textContent = result.anchor.contextPreset;
         ui.factPresetRow.hidden = false;
@@ -802,6 +1426,35 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       } catch {
         return String(value);
       }
+    }
+
+    function absoluteReceizVerifyUrl(path) {
+      const text = String(path || "");
+      if (!text) return "";
+      try {
+        return new URL(text, "https://receiz.com").toString();
+      } catch {
+        return text;
+      }
+    }
+
+    function proofBundleDisplayProjection(result) {
+      if (!result || !result.bundle) return null;
+      const derivedAnchor = deriveAnchorBundleFromProofBundle(result.bundle);
+      const viewPath =
+        derivedAnchor?.parent?.viewUrl ||
+        result.anchor?.parent?.viewUrl ||
+        proofBearingVerifyPathFromProofBundle(result.bundle) ||
+        result.bundle.verifyPath ||
+        "";
+      if (!viewPath) return result.bundle;
+      return {
+        ...result.bundle,
+        canonicalVerifyPath: result.bundle.verifyPath,
+        canonicalVerifyUrl: result.bundle.verifyUrl,
+        verifyPath: viewPath,
+        verifyUrl: absoluteReceizVerifyUrl(viewPath),
+      };
     }
 
     function hasMissingPackageManifestError(result) {
@@ -921,7 +1574,30 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       try {
         const result = await verifySelectedFiles(selectedFiles, "");
         renderResult(result);
+        if (
+          result.ok
+          && result.bundle
+          && !result.packageSummary
+          && !result.folderScanSummary
+          && selectedFiles.length === 1
+        ) {
+          const file = selectedFiles[0];
+          const heldLargeNativeMedia = file.size > 16 * 1024 * 1024 && (
+            /^(?:video|audio)\//i.test(file.type || "")
+            || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "")
+          );
+          if (heldLargeNativeMedia) {
+            setVerifiedArtifact(result, null, file.name, file);
+          } else {
+            const bytes = new Uint8Array(await file.arrayBuffer());
+            const digest = await sha256Hex(bytes);
+            setVerifiedArtifact(digest === result.fileHash ? result : null, bytes, file.name);
+          }
+        } else {
+          setVerifiedArtifact(null);
+        }
       } catch (err) {
+        setVerifiedArtifact(null);
         const msg = err instanceof Error ? err.message : String(err);
         setStatus("bad", "Verification failed", msg || "Unknown error.");
         addCheck("bad", msg || "Unexpected error.");
@@ -956,7 +1632,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (hidden > 0) addCheck("warn", `+ ${hidden} more folder file checks.`);
       }
 
-      if (result.ok && result.packageSummary) {
+      if (result.denial) {
+        setStatus(
+          "warn",
+          "Verification not completed",
+          `${result.denial.code} · proof validity was not evaluated.`,
+        );
+      } else if (result.ok && result.packageSummary) {
         setStatus(
           "ok",
           "Verified package",
@@ -972,7 +1654,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           setStatus("bad", "No sealed files found", `Checked ${summary.itemCount} files.`);
         }
       } else if (result.ok) {
-        setStatus("ok", "Verified file", "All required checks passed.");
+        setStatus("ok", "Verified", "The sealed file passed offline verification.");
       } else {
         setStatus("bad", "Not verified", result.errors[0] || "One or more required checks failed.");
       }
@@ -980,7 +1662,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       for (const w of result.warnings) addCheck("warn", w);
       for (const e of result.errors) addCheck("bad", e);
 
-      ui.bundleJson.textContent = result.bundle ? safeJson(result.bundle) : "(none)";
+      ui.bundleJson.textContent = result.bundle ? safeJson(proofBundleDisplayProjection(result)) : "(none)";
       ui.chunkJson.textContent = safeJson(
         result.packageSummary
           ? { chunkSummary: result.chunkSummary, packageSummary: result.packageSummary }
@@ -1024,6 +1706,50 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       );
     }
 
+    const HEIC_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "heim", "heis", "hevm", "hevs"]);
+    function heicAscii4(bytes, offset) {
+      return String.fromCharCode(bytes[offset] || 0, bytes[offset + 1] || 0, bytes[offset + 2] || 0, bytes[offset + 3] || 0);
+    }
+    function isCompleteHeic(bytes) {
+      if (bytes.length < 16 || heicAscii4(bytes, 4) !== "ftyp") return false;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      let offset = 0;
+      let sawFtyp = false;
+      let sawMeta = false;
+      let sawMdat = false;
+      let hasHeicBrand = false;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return false;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return false;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return false;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return false;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return false;
+        if (offset === 0) {
+          if (type !== "ftyp" || headerLength !== 8 || size < 16 || (size - 16) % 4 !== 0) return false;
+          sawFtyp = true;
+          hasHeicBrand = HEIC_BRANDS.has(heicAscii4(bytes, offset + 8));
+          for (let brandOffset = offset + 16; brandOffset < offset + size; brandOffset += 4) {
+            if (HEIC_BRANDS.has(heicAscii4(bytes, brandOffset))) hasHeicBrand = true;
+          }
+        } else if (type === "ftyp") {
+          return false;
+        }
+        if (type === "meta") sawMeta = true;
+        if (type === "mdat") sawMdat = true;
+        offset += size;
+      }
+      return sawFtyp && hasHeicBrand && sawMeta && sawMdat && offset === bytes.length;
+    }
+
     function extensionFromName(filename) {
       const trimmed = String(filename || "").trim();
       if (!trimmed) return null;
@@ -1065,6 +1791,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (startsWithBytes(bytes, PNG_SIGNATURE)) return "png";
       if (startsWithBytes(bytes, PDF_SIGNATURE)) return "pdf";
       if (startsWithBytes(bytes, JPEG_SIGNATURE)) return "jpeg";
+      if (isCompleteHeic(bytes)) return "heic";
       if (startsWithBytes(bytes, GIF87A_SIGNATURE) || startsWithBytes(bytes, GIF89A_SIGNATURE)) return "gif";
       if (isWebp(bytes)) return "webp";
       if (startsWithBytes(bytes, ZIP_SIGNATURE)) return "zip";
@@ -1073,6 +1800,920 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       const textHint = detectFromTextPrefix(bytes);
       if (textHint) return textHint;
       return "unknown";
+    }
+
+    const RECEIZ_HEIC_PROOF_UUID = new Uint8Array([
+      0xc0, 0x61, 0x19, 0xbd, 0x6b, 0x98, 0x55, 0x1f,
+      0xad, 0x30, 0x6d, 0x23, 0xed, 0xcb, 0x79, 0xd0,
+    ]);
+    const RECEIZ_HEIC_PROOF_MAGIC = new TextEncoder().encode("receiz.heic.proof.v1\0");
+    const heicDecoder = new TextDecoder("utf-8", { fatal: true });
+
+    function heicBytesEqualAt(bytes, expected, offset) {
+      if (offset < 0 || offset + expected.length > bytes.length) return false;
+      for (let index = 0; index < expected.length; index += 1) {
+        if (bytes[offset + index] !== expected[index]) return false;
+      }
+      return true;
+    }
+
+    function heicConcat(parts) {
+      const length = parts.reduce((sum, part) => sum + part.length, 0);
+      const out = new Uint8Array(length);
+      let offset = 0;
+      for (const part of parts) {
+        out.set(part, offset);
+        offset += part.length;
+      }
+      return out;
+    }
+
+    function parseHeicTopLevelBoxes(bytes) {
+      if (bytes.length < 8) return null;
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const boxes = [];
+      let offset = 0;
+      while (offset < bytes.length) {
+        if (offset + 8 > bytes.length) return null;
+        const size32 = view.getUint32(offset, false);
+        const type = heicAscii4(bytes, offset + 4);
+        let size = size32;
+        let headerLength = 8;
+        if (size32 === 0) return null;
+        if (size32 === 1) {
+          if (offset + 16 > bytes.length) return null;
+          const size64 = view.getBigUint64(offset + 8, false);
+          if (size64 > BigInt(Number.MAX_SAFE_INTEGER)) return null;
+          size = Number(size64);
+          headerLength = 16;
+        }
+        if (size < headerLength || offset + size > bytes.length) return null;
+        boxes.push({ start: offset, end: offset + size, type, headerLength });
+        offset += size;
+      }
+      return offset === bytes.length ? boxes : null;
+    }
+
+    function parseHeicProofBox(bytes, box) {
+      if (box.type !== "uuid") return null;
+      const uuidOffset = box.start + box.headerLength;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_UUID, uuidOffset)) return null;
+      const magicOffset = uuidOffset + RECEIZ_HEIC_PROOF_UUID.length;
+      if (!heicBytesEqualAt(bytes, RECEIZ_HEIC_PROOF_MAGIC, magicOffset)) return { error: "heic_receiz_magic_invalid" };
+      const lengthOffset = magicOffset + RECEIZ_HEIC_PROOF_MAGIC.length;
+      if (lengthOffset + 4 > box.end) return { error: "heic_receiz_json_length_missing" };
+      const jsonLength = new DataView(bytes.buffer, bytes.byteOffset + lengthOffset, 4).getUint32(0, false);
+      const jsonOffset = lengthOffset + 4;
+      if (jsonOffset + jsonLength !== box.end) return { error: "heic_receiz_json_length_invalid" };
+      try {
+        const jsonText = heicDecoder.decode(bytes.slice(jsonOffset, box.end));
+        const bundle = JSON.parse(jsonText);
+        if (jcsCanonicalize(bundle) !== jsonText) return { error: "heic_receiz_json_noncanonical" };
+        return { bundle };
+      } catch {
+        return { error: "heic_receiz_json_invalid" };
+      }
+    }
+
+    function parseReceizHeicProof(bytes) {
+      const boxes = parseHeicTopLevelBoxes(bytes);
+      if (!boxes || boxes.length === 0 || boxes[0].type !== "ftyp") {
+        return { basisBytes: bytes.slice(), proofCount: 0, bundle: null, parseError: "heic_container_invalid" };
+      }
+      const basisParts = [];
+      let proofCount = 0;
+      let bundle = null;
+      for (let index = 0; index < boxes.length; index += 1) {
+        const box = boxes[index];
+        const parsed = parseHeicProofBox(bytes, box);
+        if (parsed && "error" in parsed) {
+          return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: parsed.error };
+        }
+        if (parsed) {
+          proofCount += 1;
+          if (proofCount !== 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_duplicate" };
+          }
+          if (index !== boxes.length - 1) {
+            return { basisBytes: bytes.slice(), proofCount, bundle: null, parseError: "heic_receiz_proof_not_final" };
+          }
+          bundle = parsed.bundle;
+        } else {
+          basisParts.push(bytes.slice(box.start, box.end));
+        }
+      }
+      return { basisBytes: heicConcat(basisParts), proofCount, bundle, parseError: null };
+    }
+
+    const JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION = "jpeg-adobe-xmp-app1-v1";
+    const JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v2";
+    const JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v3";
+    const JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v4";
+    const JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v5";
+    const JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION = "jpeg-ios-photos-carrier-v6";
+    const JPEG_STANDARD_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xap/1.0/\0");
+    const JPEG_EXTENDED_XMP_IDENTIFIER = new TextEncoder().encode("http://ns.adobe.com/xmp/extension/\0");
+    const JPEG_EXIF_IDENTIFIER = new TextEncoder().encode("Exif\0\0");
+    const JPEG_PHOTOSHOP_APP13_IDENTIFIER = new TextEncoder().encode("Photoshop 3.0\0");
+
+    function startsWithBytesAt(bytes, prefix, offset) {
+      if (offset < 0 || offset + prefix.length > bytes.length) return false;
+      for (let index = 0; index < prefix.length; index += 1) {
+        if (bytes[offset + index] !== prefix[index]) return false;
+      }
+      return true;
+    }
+
+    function concatByteChunks(chunks) {
+      const byteLength = chunks.reduce((sum, chunk) => sum + chunk.length, 0);
+      const joined = new Uint8Array(byteLength);
+      let offset = 0;
+      for (const chunk of chunks) {
+        joined.set(chunk, offset);
+        offset += chunk.length;
+      }
+      return joined;
+    }
+
+    function equalByteChunks(left, right) {
+      if (left.length !== right.length) return false;
+      for (let index = 0; index < left.length; index += 1) {
+        if (left[index] !== right[index]) return false;
+      }
+      return true;
+    }
+
+    function canonicalizeExifTrailingNullPadding(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      let trailingNullCount = 0;
+      for (let index = segmentEnd - 1; index >= payloadOffset && bytes[index] === 0; index -= 1) {
+        trailingNullCount += 1;
+      }
+      if (trailingNullCount <= 2) return bytes.slice(markerStart, segmentEnd);
+      const canonicalEnd = segmentEnd - (trailingNullCount - 2);
+      const canonicalDeclaredLength = canonicalEnd - markerCodeEnd;
+      return concatByteChunks([
+        bytes.slice(markerStart, markerCodeEnd),
+        new Uint8Array([(canonicalDeclaredLength >>> 8) & 255, canonicalDeclaredLength & 255]),
+        bytes.slice(payloadOffset, canonicalEnd),
+      ]);
+    }
+
+    const JPEG_TIFF_TYPE_BYTE_LENGTH = new Map([
+      [1, 1], [2, 1], [3, 2], [4, 4], [5, 8],
+      [7, 1], [9, 4], [10, 8], [11, 4], [12, 8],
+    ]);
+    const JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS = new Set([0x8769, 0x8825, 0xa005]);
+    const JPEG_PHOTOS_IFD1_TAGS = new Set([0x0103, 0x011a, 0x011b, 0x0128, 0x0201, 0x0202]);
+    const JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER = new TextEncoder().encode("Apple iOS\0\0");
+    const JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG = 0x0011;
+    const JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG = 0x0016;
+    const JPEG_EXIF_BRIGHTNESS_VALUE_TAG = 0x9203;
+    const JPEG_GPS_ALTITUDE_TAG = 0x0006;
+    const JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE = 10_000_000;
+    const JPEG_GPS_ALTITUDE_CANONICAL_SCALE = 100_000;
+    const JPEG_CANONICAL_APPLE_ASSET_UUID = new TextEncoder().encode("00000000-0000-0000-0000-000000000000\0");
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX = new Uint8Array([98, 112, 108, 105, 115, 116, 48, 48, 95, 16, 28]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX = new Uint8Array([
+      8,
+      0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      1, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 39,
+    ]);
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH = 28;
+    const JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH =
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH
+      + JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX.length;
+    const JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN = concatByteChunks([
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX,
+      new TextEncoder().encode("A".repeat(JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH)),
+      JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX,
+    ]);
+
+    function canonicalizeExifAppleMakerNoteAssetIdentifiers(bytes, markerStart, payloadOffset, segmentEnd, includePhotosAssetToken) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+      const findEntry = (ifdOffset, wantedTag) => {
+        const count = uint16(ifdOffset);
+        if (count === null) return null;
+        const tableEnd = ifdOffset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        let found = null;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = ifdOffset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          if (tag !== wantedTag) continue;
+          if (found) return null;
+          found = { type, count: entryCount, value };
+        }
+        return found;
+      };
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const exifPointer = findEntry(ifd0Offset, 0x8769);
+      if (!exifPointer || exifPointer.type !== 4 || exifPointer.count !== 1) return null;
+      const makerNoteEntry = findEntry(exifPointer.value, 0x927c);
+      if (!makerNoteEntry || makerNoteEntry.type !== 7 || makerNoteEntry.count < JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 16) return null;
+      const makerNoteOffset = makerNoteEntry.value;
+      const makerNoteEnd = makerNoteOffset + makerNoteEntry.count;
+      if (!Number.isSafeInteger(makerNoteEnd) || makerNoteOffset < 0 || makerNoteEnd > tiffLength
+        || !startsWithBytesAt(bytes, JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER, tiffOffset + makerNoteOffset)) return null;
+      const makerNoteByteOrderOffset = makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length + 1;
+      if (bytes[tiffOffset + makerNoteOffset + JPEG_APPLE_IOS_MAKER_NOTE_IDENTIFIER.length] !== 1
+        || bytes[tiffOffset + makerNoteByteOrderOffset] !== 0x4d
+        || bytes[tiffOffset + makerNoteByteOrderOffset + 1] !== 0x4d) return null;
+      const makerView = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset + makerNoteOffset, makerNoteEntry.count);
+      const makerIfdOffset = makerNoteByteOrderOffset + 2 - makerNoteOffset;
+      if (makerIfdOffset + 2 > makerNoteEntry.count) return null;
+      const makerEntryCount = makerView.getUint16(makerIfdOffset, false);
+      const makerTableEnd = makerIfdOffset + 2 + makerEntryCount * 12 + 4;
+      if (!Number.isSafeInteger(makerTableEnd) || makerTableEnd > makerNoteEntry.count) return null;
+      let assetUuidOffset = null;
+      let photosAssetTokenOffset = null;
+      for (let index = 0; index < makerEntryCount; index += 1) {
+        const entryOffset = makerIfdOffset + 2 + index * 12;
+        const tag = makerView.getUint16(entryOffset, false);
+        const type = makerView.getUint16(entryOffset + 2, false);
+        const count = makerView.getUint32(entryOffset + 4, false);
+        const value = makerView.getUint32(entryOffset + 8, false);
+        if (tag === JPEG_APPLE_MAKER_NOTE_ASSET_UUID_TAG) {
+          if (assetUuidOffset !== null) return null;
+          if (type !== 2 || count !== JPEG_CANONICAL_APPLE_ASSET_UUID.length
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          assetUuidOffset = value;
+          continue;
+        }
+        if (includePhotosAssetToken && tag === JPEG_APPLE_MAKER_NOTE_PHOTOS_ASSET_TOKEN_TAG) {
+          if (photosAssetTokenOffset !== null) return null;
+          if (type !== 7 || count !== JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH
+            || value < makerTableEnd || value + count > makerNoteEntry.count) return null;
+          photosAssetTokenOffset = value;
+        }
+      }
+      if (assetUuidOffset === null && photosAssetTokenOffset === null) return null;
+      if (assetUuidOffset !== null) {
+        const uuidBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + assetUuidOffset,
+          tiffOffset + makerNoteOffset + assetUuidOffset + JPEG_CANONICAL_APPLE_ASSET_UUID.length,
+        );
+        const uuidText = new TextDecoder("ascii").decode(uuidBytes.slice(0, -1));
+        if (uuidBytes[uuidBytes.length - 1] !== 0
+          || !/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/.test(uuidText)) return null;
+      }
+      if (photosAssetTokenOffset !== null) {
+        const tokenBytes = bytes.slice(
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset + JPEG_APPLE_PHOTOS_ASSET_TOKEN_BYTE_LENGTH,
+        );
+        const tokenTextStart = JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX.length;
+        const tokenTextEnd = tokenTextStart + JPEG_APPLE_PHOTOS_ASSET_TOKEN_TEXT_LENGTH;
+        const tokenText = new TextDecoder("ascii").decode(tokenBytes.slice(tokenTextStart, tokenTextEnd));
+        if (!startsWithBytesAt(tokenBytes, JPEG_APPLE_PHOTOS_ASSET_TOKEN_PREFIX, 0)
+          || !equalByteChunks(tokenBytes.slice(tokenTextEnd), JPEG_APPLE_PHOTOS_ASSET_TOKEN_SUFFIX)
+          || !/^[A-Za-z0-9+/]{28}$/.test(tokenText)) return null;
+      }
+      const canonical = bytes.slice(markerStart, segmentEnd);
+      if (assetUuidOffset !== null) {
+        canonical.set(JPEG_CANONICAL_APPLE_ASSET_UUID, tiffOffset + makerNoteOffset + assetUuidOffset - markerStart);
+      }
+      if (photosAssetTokenOffset !== null) {
+        canonical.set(
+          JPEG_CANONICAL_APPLE_PHOTOS_ASSET_TOKEN,
+          tiffOffset + makerNoteOffset + photosAssetTokenOffset - markerStart,
+        );
+      }
+      return canonical;
+    }
+
+    function canonicalizeExifIosPhotosReserializedRationals(bytes, markerStart, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+      const findEntry = (ifdOffset, wantedTag) => {
+        const count = uint16(ifdOffset);
+        if (count === null) return null;
+        const tableEnd = ifdOffset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        let found;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = ifdOffset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          if (tag !== wantedTag) continue;
+          if (found) return null;
+          found = { type, count: entryCount, value, tableEnd };
+        }
+        return found;
+      };
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const exifPointer = findEntry(ifd0Offset, 0x8769);
+      const gpsPointer = findEntry(ifd0Offset, 0x8825);
+      if (exifPointer === null || gpsPointer === null) return null;
+      if (exifPointer && (exifPointer.type !== 4 || exifPointer.count !== 1)) return null;
+      if (gpsPointer && (gpsPointer.type !== 4 || gpsPointer.count !== 1)) return null;
+      const brightness = exifPointer ? findEntry(exifPointer.value, JPEG_EXIF_BRIGHTNESS_VALUE_TAG) : undefined;
+      const altitude = gpsPointer ? findEntry(gpsPointer.value, JPEG_GPS_ALTITUDE_TAG) : undefined;
+      if (brightness === null || altitude === null) return null;
+      if (!brightness && !altitude) return null;
+      const canonical = bytes.slice(markerStart, segmentEnd);
+      const canonicalView = new DataView(canonical.buffer, canonical.byteOffset, canonical.byteLength);
+      if (brightness) {
+        if (brightness.type !== 10 || brightness.count !== 1
+          || brightness.value < brightness.tableEnd || brightness.value + 8 > tiffLength) return null;
+        const numerator = view.getInt32(brightness.value, littleEndian);
+        const denominator = view.getInt32(brightness.value + 4, littleEndian);
+        if (denominator <= 0) return null;
+        const canonicalNumerator = Math.round(
+          (numerator / denominator) * JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE,
+        );
+        if (!Number.isSafeInteger(canonicalNumerator)
+          || canonicalNumerator < -0x80000000 || canonicalNumerator > 0x7fffffff) return null;
+        const valueOffset = tiffOffset + brightness.value - markerStart;
+        canonicalView.setInt32(valueOffset, canonicalNumerator, littleEndian);
+        canonicalView.setInt32(valueOffset + 4, JPEG_EXIF_BRIGHTNESS_CANONICAL_SCALE, littleEndian);
+      }
+      if (altitude) {
+        if (altitude.type !== 5 || altitude.count !== 1
+          || altitude.value < altitude.tableEnd || altitude.value + 8 > tiffLength) return null;
+        const numerator = view.getUint32(altitude.value, littleEndian);
+        const denominator = view.getUint32(altitude.value + 4, littleEndian);
+        if (denominator === 0) return null;
+        const canonicalNumerator = Math.round(
+          (numerator / denominator) * JPEG_GPS_ALTITUDE_CANONICAL_SCALE,
+        );
+        if (!Number.isSafeInteger(canonicalNumerator)
+          || canonicalNumerator < 0 || canonicalNumerator > 0xffffffff) return null;
+        const valueOffset = tiffOffset + altitude.value - markerStart;
+        canonicalView.setUint32(valueOffset, canonicalNumerator, littleEndian);
+        canonicalView.setUint32(valueOffset + 4, JPEG_GPS_ALTITUDE_CANONICAL_SCALE, littleEndian);
+      }
+      return canonical;
+    }
+
+    function canonicalizeExifPhotosIfd1(bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd) {
+      const tiffOffset = payloadOffset + JPEG_EXIF_IDENTIFIER.length;
+      const tiffLength = segmentEnd - tiffOffset;
+      if (tiffLength < 8) return null;
+      const byteOrder = String.fromCharCode(bytes[tiffOffset] || 0, bytes[tiffOffset + 1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const littleEndian = byteOrder === "II";
+      const view = new DataView(bytes.buffer, bytes.byteOffset + tiffOffset, tiffLength);
+      const uint16 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 2 <= tiffLength
+        ? view.getUint16(offset, littleEndian)
+        : null;
+      const uint32 = (offset) => Number.isSafeInteger(offset) && offset >= 0 && offset + 4 <= tiffLength
+        ? view.getUint32(offset, littleEndian)
+        : null;
+      if (uint16(2) !== 42) return null;
+
+      const parseIfd = (offset) => {
+        const count = uint16(offset);
+        if (count === null) return null;
+        const tableEnd = offset + 2 + count * 12 + 4;
+        if (!Number.isSafeInteger(tableEnd) || tableEnd > tiffLength) return null;
+        const entries = [];
+        let referencedEnd = tableEnd;
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = offset + 2 + index * 12;
+          const tag = uint16(entryOffset);
+          const type = uint16(entryOffset + 2);
+          const entryCount = uint32(entryOffset + 4);
+          const value = uint32(entryOffset + 8);
+          if (tag === null || type === null || entryCount === null || value === null) return null;
+          const unitLength = JPEG_TIFF_TYPE_BYTE_LENGTH.get(type);
+          if (!unitLength) return null;
+          const valueByteLength = unitLength * entryCount;
+          if (!Number.isSafeInteger(valueByteLength)) return null;
+          const valueOffset = valueByteLength > 4 ? value : null;
+          if (valueOffset !== null) {
+            const valueEnd = valueOffset + valueByteLength;
+            if (!Number.isSafeInteger(valueEnd) || valueOffset < 0 || valueEnd > tiffLength) return null;
+            referencedEnd = Math.max(referencedEnd, valueEnd);
+          }
+          entries.push({ tag, type, count: entryCount, value, valueByteLength, valueOffset });
+        }
+        const nextIfdOffset = uint32(tableEnd - 4);
+        if (nextIfdOffset === null) return null;
+        return { entries, nextIfdOffset, tableEnd, referencedEnd };
+      };
+
+      const ifd0Offset = uint32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const ifd0 = parseIfd(ifd0Offset);
+      if (!ifd0 || ifd0.nextIfdOffset === 0) return null;
+      let primaryReferencedEnd = ifd0.referencedEnd;
+      const visited = new Set([ifd0Offset]);
+      const pending = ifd0.entries
+        .filter((entry) => JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1)
+        .map((entry) => entry.value);
+      while (pending.length > 0) {
+        const childOffset = pending.pop() || 0;
+        if (childOffset === 0 || visited.has(childOffset)) return null;
+        visited.add(childOffset);
+        const child = parseIfd(childOffset);
+        if (!child || child.nextIfdOffset !== 0) return null;
+        primaryReferencedEnd = Math.max(primaryReferencedEnd, child.referencedEnd);
+        for (const entry of child.entries) {
+          if (JPEG_TIFF_PRIMARY_IFD_POINTER_TAGS.has(entry.tag) && entry.type === 4 && entry.count === 1) {
+            pending.push(entry.value);
+          }
+        }
+      }
+
+      const ifd1Offset = ifd0.nextIfdOffset;
+      const ifd1 = parseIfd(ifd1Offset);
+      if (!ifd1 || ifd1.nextIfdOffset !== 0 || ifd1.entries.length !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      if (ifd1Offset < primaryReferencedEnd) return null;
+      for (let offset = primaryReferencedEnd; offset < ifd1Offset; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+      const byTag = new Map(ifd1.entries.map((entry) => [entry.tag, entry]));
+      if (byTag.size !== JPEG_PHOTOS_IFD1_TAGS.size) return null;
+      for (const tag of JPEG_PHOTOS_IFD1_TAGS) {
+        if (!byTag.has(tag)) return null;
+      }
+      const compression = byTag.get(0x0103);
+      const xResolution = byTag.get(0x011a);
+      const yResolution = byTag.get(0x011b);
+      const resolutionUnit = byTag.get(0x0128);
+      const previewOffsetEntry = byTag.get(0x0201);
+      const previewLengthEntry = byTag.get(0x0202);
+      if (
+        !compression || compression.type !== 3 || compression.count !== 1
+        || (littleEndian ? compression.value & 0xffff : compression.value >>> 16) !== 6
+        || !xResolution || xResolution.type !== 5 || xResolution.count !== 1 || xResolution.valueOffset === null
+        || !yResolution || yResolution.type !== 5 || yResolution.count !== 1 || yResolution.valueOffset === null
+        || !resolutionUnit || resolutionUnit.type !== 3 || resolutionUnit.count !== 1
+        || !previewOffsetEntry || previewOffsetEntry.type !== 4 || previewOffsetEntry.count !== 1
+        || !previewLengthEntry || previewLengthEntry.type !== 4 || previewLengthEntry.count !== 1
+      ) return null;
+
+      const previewOffset = previewOffsetEntry.value;
+      const previewLength = previewLengthEntry.value;
+      const previewEnd = previewOffset + previewLength;
+      if (
+        xResolution.valueOffset !== ifd1.tableEnd
+        || yResolution.valueOffset !== xResolution.valueOffset + 8
+        || previewOffset !== yResolution.valueOffset + 8
+        || !Number.isSafeInteger(previewEnd)
+        || previewLength < 4
+        || previewEnd > tiffLength
+        || bytes[tiffOffset + previewOffset] !== 255
+        || bytes[tiffOffset + previewOffset + 1] !== 216
+        || bytes[tiffOffset + previewEnd - 2] !== 255
+        || bytes[tiffOffset + previewEnd - 1] !== 217
+      ) return null;
+      for (let offset = previewEnd; offset < tiffLength; offset += 1) {
+        if (bytes[tiffOffset + offset] !== 0) return null;
+      }
+
+      let canonicalPrefix = bytes.slice(markerStart, tiffOffset + ifd1Offset);
+      const nextIfdPointerOffset = tiffOffset + ifd0.tableEnd - 4 - markerStart;
+      canonicalPrefix.fill(0, nextIfdPointerOffset, nextIfdPointerOffset + 4);
+      let trailingNullCount = 0;
+      for (
+        let offset = canonicalPrefix.length - 1;
+        offset >= payloadOffset - markerStart && canonicalPrefix[offset] === 0;
+        offset -= 1
+      ) trailingNullCount += 1;
+      if (trailingNullCount > 2) {
+        canonicalPrefix = canonicalPrefix.slice(0, canonicalPrefix.length - (trailingNullCount - 2));
+      }
+      const canonicalDeclaredLength = canonicalPrefix.length - (markerCodeEnd - markerStart);
+      canonicalPrefix[markerCodeEnd - markerStart] = (canonicalDeclaredLength >>> 8) & 255;
+      canonicalPrefix[markerCodeEnd - markerStart + 1] = canonicalDeclaredLength & 255;
+      return canonicalPrefix;
+    }
+
+    function normalizeJpegCarrierBasis(bytes, normalization) {
+      if (bytes.length < 4 || bytes[0] !== 255 || bytes[1] !== 216) throw new Error("jpeg_soi_missing");
+      const kept = [bytes.slice(0, 2)];
+      const photoshopApp13Segments = [];
+      let offset = 2;
+      let inScan = false;
+      let sawSos = false;
+      let sawEoi = false;
+      const isIosPhotosCarrier = normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+        || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION;
+      while (offset < bytes.length) {
+        if (inScan) {
+          const scanStart = offset;
+          while (offset < bytes.length) {
+            if (bytes[offset] !== 255) {
+              offset += 1;
+              continue;
+            }
+            if (offset + 1 >= bytes.length) throw new Error("jpeg_scan_truncated");
+            const next = bytes[offset + 1];
+            if (next === 0 || next === 255 || (next >= 208 && next <= 215)) {
+              offset += 2;
+              continue;
+            }
+            break;
+          }
+          kept.push(bytes.slice(scanStart, offset));
+          inScan = false;
+          continue;
+        }
+        const markerStart = offset;
+        if (bytes[offset] !== 255) throw new Error("jpeg_marker_missing");
+        while (offset < bytes.length && bytes[offset] === 255) offset += 1;
+        if (offset >= bytes.length) throw new Error("jpeg_marker_truncated");
+        const marker = bytes[offset];
+        offset += 1;
+        const markerCodeEnd = offset;
+        if (marker === 0) throw new Error("jpeg_marker_invalid");
+        const standalone = marker === 1 || marker === 216 || marker === 217 || (marker >= 208 && marker <= 215);
+        if (standalone) {
+          kept.push(bytes.slice(markerStart, offset));
+          if (marker === 217) {
+            sawEoi = true;
+            if (offset < bytes.length) kept.push(bytes.slice(offset));
+            offset = bytes.length;
+          }
+          continue;
+        }
+        if (offset + 2 > bytes.length) throw new Error("jpeg_segment_length_missing");
+        const declaredLength = (bytes[offset] << 8) | bytes[offset + 1];
+        if (declaredLength < 2) throw new Error("jpeg_segment_length_invalid");
+        const segmentEnd = offset + declaredLength;
+        if (segmentEnd > bytes.length) throw new Error("jpeg_segment_truncated");
+        const payloadOffset = offset + 2;
+        const adobeXmp = marker === 225 && (
+          startsWithBytesAt(bytes, JPEG_STANDARD_XMP_IDENTIFIER, payloadOffset)
+          || startsWithBytesAt(bytes, JPEG_EXTENDED_XMP_IDENTIFIER, payloadOffset)
+        );
+        if (adobeXmp) {
+          // Adobe XMP is a non-authoritative carrier append in both versions.
+        } else if (
+          isIosPhotosCarrier
+          && marker === 225
+          && startsWithBytesAt(bytes, JPEG_EXIF_IDENTIFIER, payloadOffset)
+        ) {
+          const makerNoteCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
+            ? canonicalizeExifAppleMakerNoteAssetIdentifiers(
+              bytes,
+              markerStart,
+              payloadOffset,
+              segmentEnd,
+              normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+                || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION,
+            )
+            : null;
+          const makerNoteSource = makerNoteCanonical ? (() => {
+            const copy = bytes.slice();
+            copy.set(makerNoteCanonical, markerStart);
+            return copy;
+          })() : bytes;
+          const reserializedRationalsCanonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
+            ? canonicalizeExifIosPhotosReserializedRationals(
+              makerNoteSource, markerStart, payloadOffset, segmentEnd,
+            )
+            : null;
+          const ifd1Source = reserializedRationalsCanonical ? (() => {
+            const copy = makerNoteSource.slice();
+            copy.set(reserializedRationalsCanonical, markerStart);
+            return copy;
+          })() : makerNoteSource;
+          const v3Ifd1Canonical = normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION
+            || normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION
+            ? canonicalizeExifPhotosIfd1(ifd1Source, markerStart, markerCodeEnd, payloadOffset, segmentEnd)
+            : null;
+          kept.push(v3Ifd1Canonical || reserializedRationalsCanonical || makerNoteCanonical || canonicalizeExifTrailingNullPadding(
+            bytes, markerStart, markerCodeEnd, payloadOffset, segmentEnd,
+          ));
+        } else if (
+          isIosPhotosCarrier
+          && marker === 237
+          && startsWithBytesAt(bytes, JPEG_PHOTOSHOP_APP13_IDENTIFIER, payloadOffset)
+        ) {
+          const segmentBytes = bytes.slice(markerStart, segmentEnd);
+          if (!photoshopApp13Segments.some((prior) => equalByteChunks(prior, segmentBytes))) {
+            photoshopApp13Segments.push(segmentBytes);
+            kept.push(segmentBytes);
+          }
+        } else {
+          kept.push(bytes.slice(markerStart, segmentEnd));
+        }
+        offset = segmentEnd;
+        if (marker === 218) {
+          sawSos = true;
+          inScan = true;
+        }
+      }
+      if (!sawSos) throw new Error("jpeg_sos_missing");
+      if (!sawEoi) throw new Error("jpeg_eoi_missing");
+      return concatByteChunks(kept);
+    }
+
+    function normalizeJpegAdobeXmpApp1Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION);
+    }
+
+    function normalizeJpegIosPhotosCarrierV2Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION);
+    }
+
+    function normalizeJpegIosPhotosCarrierV3Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION);
+    }
+    function normalizeJpegIosPhotosCarrierV4Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION);
+    }
+    function normalizeJpegIosPhotosCarrierV5Basis(bytes) {
+      return normalizeJpegCarrierBasis(bytes, JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION);
+    }
+    function transformReceizIosPwaCameraRollV6(bytes) {
+      const starts = (source, prefix, offset) => {
+        if (offset < 0 || offset + prefix.byteLength > source.byteLength) return false;
+        for (let index = 0; index < prefix.byteLength; index += 1) {
+          if (source[offset + index] !== prefix[index]) return false;
+        }
+        return true;
+      };
+      const join = (parts) => {
+        const size = parts.reduce((sum, part) => sum + part.byteLength, 0);
+        const out = new Uint8Array(size);
+        let offset = 0;
+        for (const part of parts) {
+          out.set(part, offset);
+          offset += part.byteLength;
+        }
+        return out;
+      };
+      const exifId = new TextEncoder().encode("Exif\0\0");
+      const photoshopId = new TextEncoder().encode("Photoshop 3.0\0");
+      const parts = [bytes.slice(0, 2)];
+      let offset = 2;
+      let app2Index = -1;
+      let photoshopIndex = -1;
+      let exifIndex = -1;
+      while (offset + 3 < bytes.byteLength) {
+        if (bytes[offset] !== 255) return null;
+        const marker = bytes[offset + 1];
+        if (marker === 218 || marker === 217) break;
+        const standalone = marker === 1 || (marker >= 208 && marker <= 217);
+        if (standalone) {
+          parts.push(bytes.slice(offset, offset + 2));
+          offset += 2;
+          continue;
+        }
+        const length = (bytes[offset + 2] << 8) | bytes[offset + 3];
+        const end = offset + 2 + length;
+        if (length < 2 || end > bytes.byteLength) return null;
+        parts.push(bytes.slice(offset, end));
+        const index = parts.length - 1;
+        if (marker === 226) {
+          if (app2Index !== -1) return null;
+          app2Index = index;
+        }
+        if (marker === 237 && starts(bytes, photoshopId, offset + 4)) {
+          if (photoshopIndex !== -1) return null;
+          photoshopIndex = index;
+        }
+        if (marker === 225 && starts(bytes, exifId, offset + 4)) {
+          if (exifIndex !== -1) return null;
+          exifIndex = index;
+        }
+        offset = end;
+      }
+      if (
+        app2Index < 0
+        || photoshopIndex <= app2Index
+        || exifIndex < 0
+        || offset + 1 >= bytes.byteLength
+        || bytes[offset] !== 255
+        || bytes[offset + 1] !== 218
+      ) {
+        return null;
+      }
+
+      const segment = parts[exifIndex];
+      const tiffOffset = 10;
+      const tiff = segment.slice(tiffOffset);
+      const byteOrder = String.fromCharCode(tiff[0] || 0, tiff[1] || 0);
+      if (byteOrder !== "II" && byteOrder !== "MM") return null;
+      const little = byteOrder === "II";
+      const view = new DataView(tiff.buffer, tiff.byteOffset, tiff.byteLength);
+      const u16 = (at) => (
+        Number.isSafeInteger(at) && at >= 0 && at + 2 <= tiff.byteLength
+          ? view.getUint16(at, little)
+          : null
+      );
+      const u32 = (at) => (
+        Number.isSafeInteger(at) && at >= 0 && at + 4 <= tiff.byteLength
+          ? view.getUint32(at, little)
+          : null
+      );
+      if (u16(2) !== 42) return null;
+      const typeLengths = new Map([
+        [1, 1], [2, 1], [3, 2], [4, 4], [5, 8], [7, 1],
+        [9, 4], [10, 8], [11, 4], [12, 8],
+      ]);
+      const parseIfd = (at) => {
+        const count = u16(at);
+        if (count === null) return null;
+        const nextPointerOffset = at + 2 + count * 12;
+        if (nextPointerOffset + 4 > tiff.byteLength) return null;
+        const entries = [];
+        for (let index = 0; index < count; index += 1) {
+          const entryOffset = at + 2 + index * 12;
+          const tag = u16(entryOffset);
+          const type = u16(entryOffset + 2);
+          const entryCount = u32(entryOffset + 4);
+          const value = u32(entryOffset + 8);
+          const unitLength = typeLengths.get(type);
+          if (
+            tag === null
+            || type === null
+            || entryCount === null
+            || value === null
+            || !unitLength
+          ) {
+            return null;
+          }
+          const valueByteLength = unitLength * entryCount;
+          if (!Number.isSafeInteger(valueByteLength)) return null;
+          const valueOffset = valueByteLength > 4 ? value : null;
+          if (
+            valueOffset !== null
+            && (valueOffset < nextPointerOffset + 4 || valueOffset + valueByteLength > tiff.byteLength)
+          ) {
+            return null;
+          }
+          entries.push({ tag, type, count: entryCount, value, valueByteLength, valueOffset, entryOffset });
+        }
+        const nextIfdOffset = u32(nextPointerOffset);
+        return nextIfdOffset === null
+          ? null
+          : { offset: at, entries, nextPointerOffset, nextIfdOffset };
+      };
+      const unique = (ifd, tag) => {
+        const matches = ifd.entries.filter((entry) => entry.tag === tag);
+        return matches.length === 1 ? matches[0] : null;
+      };
+      const ifd0Offset = u32(4);
+      if (ifd0Offset === null || ifd0Offset < 8) return null;
+      const ifd0 = parseIfd(ifd0Offset);
+      if (!ifd0 || ifd0.nextIfdOffset === 0) return null;
+      const exifPointer = unique(ifd0, 34665);
+      const ycbcr = unique(ifd0, 531);
+      if (
+        !exifPointer
+        || exifPointer.type !== 4
+        || exifPointer.count !== 1
+        || !ycbcr
+        || ycbcr.type !== 3
+        || ycbcr.count !== 1
+        || view.getUint16(ycbcr.entryOffset + 8, little) !== 1
+      ) {
+        return null;
+      }
+      const exif = parseIfd(exifPointer.value);
+      if (!exif || exif.nextIfdOffset !== 0) return null;
+      const expected = new Map([
+        [36864, [7, 4, [48, 50, 50, 49]]],
+        [37121, [7, 4, [1, 2, 3, 0]]],
+        [40960, [7, 4, [48, 49, 48, 48]]],
+        [41990, [3, 1, [0, 0]]],
+      ]);
+      const removed = [ycbcr.entryOffset];
+      for (const [tag, rule] of expected) {
+        const entry = unique(exif, tag);
+        if (!entry || entry.type !== rule[0] || entry.count !== rule[1]) return null;
+        const inline = Array.from(tiff.slice(entry.entryOffset + 8, entry.entryOffset + 8 + rule[2].length));
+        if (inline.some((value, index) => value !== rule[2][index])) return null;
+        removed.push(entry.entryOffset);
+      }
+      removed.sort((left, right) => left - right);
+      const removedSet = new Set(removed);
+      const translate = (oldOffset) => (
+        oldOffset - removed.filter((deleted) => deleted < oldOffset).length * 12
+      );
+      const primaryEnd = ifd0.nextIfdOffset;
+      let cursor = 0;
+      const tiffParts = [];
+      for (const deleted of removed) {
+        if (deleted < cursor || deleted + 12 > primaryEnd) return null;
+        tiffParts.push(tiff.slice(cursor, deleted));
+        cursor = deleted + 12;
+      }
+      tiffParts.push(tiff.slice(cursor, primaryEnd));
+      let canonicalTiff = join(tiffParts);
+      const canonicalView = new DataView(
+        canonicalTiff.buffer,
+        canonicalTiff.byteOffset,
+        canonicalTiff.byteLength,
+      );
+      canonicalView.setUint32(4, translate(ifd0Offset), little);
+      for (const ifd of [ifd0, exif]) {
+        const kept = ifd.entries.filter((entry) => !removedSet.has(entry.entryOffset));
+        canonicalView.setUint16(translate(ifd.offset), kept.length, little);
+        for (const entry of kept) {
+          if ((entry.tag === 34665 && entry.type === 4 && entry.count === 1) || entry.valueOffset !== null) {
+            canonicalView.setUint32(translate(entry.entryOffset) + 8, translate(entry.value), little);
+          }
+        }
+        canonicalView.setUint32(translate(ifd.nextPointerOffset), 0, little);
+      }
+      let trailingNulls = 0;
+      for (let index = canonicalTiff.byteLength - 1; index >= 0 && canonicalTiff[index] === 0; index -= 1) {
+        trailingNulls += 1;
+      }
+      if (trailingNulls > 2) {
+        canonicalTiff = canonicalTiff.slice(0, canonicalTiff.byteLength - (trailingNulls - 2));
+      }
+      const canonicalExif = join([
+        segment.slice(0, 2),
+        new Uint8Array([0, 0]),
+        segment.slice(4, tiffOffset),
+        canonicalTiff,
+      ]);
+      const declaredLength = canonicalExif.byteLength - 2;
+      canonicalExif[2] = (declaredLength >>> 8) & 255;
+      canonicalExif[3] = declaredLength & 255;
+      parts[exifIndex] = canonicalExif;
+      const photoshop = parts.splice(photoshopIndex, 1)[0];
+      parts.splice(app2Index, 0, photoshop);
+      return join([...parts, bytes.slice(offset)]);
+    }
+    function normalizeJpegIosPhotosCarrierV6Basis(bytes) {
+      const cameraRollProjection = transformReceizIosPwaCameraRollV6(bytes);
+      return normalizeJpegCarrierBasis(
+        cameraRollProjection || bytes,
+        JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION,
+      );
+    }
+
+    function artifactIdentityBasisBytes(bundle, basisBytes) {
+      if (typeof bundle.artifactBasis === "undefined") return basisBytes;
+      if (
+        !isRecord(bundle.artifactBasis)
+        || bundle.artifactBasis.algorithm !== "sha256"
+      ) {
+        throw new Error("artifact_basis_normalization_unsupported");
+      }
+      if (detectDocumentFormat(basisBytes, {}) !== "jpeg") {
+        throw new Error("artifact_basis_normalization_requires_jpeg");
+      }
+      if (bundle.artifactBasis.normalization === JPEG_ADOBE_XMP_APP1_BASIS_NORMALIZATION) {
+        return normalizeJpegAdobeXmpApp1Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V2_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV2Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V3_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV3Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V4_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV4Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V5_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV5Basis(basisBytes);
+      }
+      if (bundle.artifactBasis.normalization === JPEG_IOS_PHOTOS_CARRIER_V6_BASIS_NORMALIZATION) {
+        return normalizeJpegIosPhotosCarrierV6Basis(basisBytes);
+      }
+      throw new Error("artifact_basis_normalization_unsupported");
     }
 
     function readUint32BE(bytes, offset) {
@@ -1214,7 +2855,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (type === "iTXt" || type === "tEXt" || type === "zTXt") {
           const data = pngBytes.slice(dataStart, dataEnd);
           const parsed = type === "iTXt" ? parseITXtData(data) : type === "tEXt" ? parseTextData(data) : parseZTxtData(data);
-          if (parsed && parsed.keyword === PROOF_KEY) remove = true;
+          if (parsed && (parsed.keyword === PROOF_KEY || parsed.keyword === "receiz.ownership_provenance")) remove = true;
         }
 
         if (!remove) {
@@ -1427,6 +3068,313 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return ts.replace(/-/g, "").replace(/:/g, "").replace(/ /g, "_");
     }
 
+    function receizCompactHexToBytes(hex, expectedBytes) {
+      const normalized = String(hex || "").trim().toLowerCase();
+      if (!new RegExp(`^[0-9a-f]{${expectedBytes * 2}}$`).test(normalized)) return null;
+      const out = new Uint8Array(expectedBytes);
+      for (let i = 0; i < expectedBytes; i += 1) out[i] = Number.parseInt(normalized.slice(i * 2, i * 2 + 2), 16);
+      return out;
+    }
+
+    function receizCompactB64uToBytes(value, expectedBytes) {
+      try {
+        const bytes = base64UrlDecode(String(value || ""));
+        return bytes.length === expectedBytes ? bytes : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function receizCompactTsFromSlug(slug) {
+      const match = String(slug || "").match(/^(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})$/);
+      return match ? `${match[1]}-${match[2]}-${match[3]} ${match[4]}:${match[5]}` : "";
+    }
+
+    function receizCompactTs24ToTs12(ts24) {
+      const match = String(ts24 || "").trim().match(/^(\d{4}-\d{2}-\d{2}) (\d{2}):(\d{2})$/);
+      if (!match) return "";
+      const hour = Number.parseInt(match[2], 10);
+      if (!Number.isFinite(hour)) return "";
+      const ampm = hour >= 12 ? "PM" : "AM";
+      let h12 = hour % 12;
+      if (h12 === 0) h12 = 12;
+      return `${match[1]} ${h12}:${match[3]} ${ampm}`;
+    }
+
+    function receizCompactCanWriteU48(value) {
+      return Number.isSafeInteger(value) && value >= 0 && value <= 0xffffffffffff;
+    }
+
+    function receizCompactWriter() {
+      const encoder = new TextEncoder();
+      const out = [];
+      const writeU8 = (value) => out.push(value & 0xff);
+      const writeU16 = (value) => out.push((value >>> 8) & 0xff, value & 0xff);
+      return {
+        writeU8,
+        writeU32(value) {
+          out.push((value >>> 24) & 0xff, (value >>> 16) & 0xff, (value >>> 8) & 0xff, value & 0xff);
+        },
+        writeI16(value) {
+          writeU16(value < 0 ? 0x10000 + value : value);
+        },
+        writeU48(value) {
+          let remaining = value;
+          const bytes = new Uint8Array(6);
+          for (let i = 5; i >= 0; i -= 1) {
+            bytes[i] = remaining & 0xff;
+            remaining = Math.floor(remaining / 256);
+          }
+          this.writeBytes(bytes);
+        },
+        writeVarUint(value) {
+          let remaining = value >>> 0;
+          while (remaining >= 0x80) {
+            writeU8((remaining & 0x7f) | 0x80);
+            remaining >>>= 7;
+          }
+          writeU8(remaining);
+        },
+        writeBytes(bytes) {
+          for (let i = 0; i < bytes.length; i += 1) writeU8(bytes[i]);
+        },
+        writeText(value) {
+          const bytes = encoder.encode(String(value || ""));
+          this.writeVarUint(bytes.length);
+          this.writeBytes(bytes);
+        },
+        bytes() {
+          return Uint8Array.from(out);
+        },
+      };
+    }
+
+    function buildBinaryCompactReceizProofToken(bundle) {
+      if (!isRecord(bundle)) return "";
+      const slim = { ...bundle };
+      delete slim.groth16Proof;
+      delete slim.signatureV3;
+      if (slim.artifactBasis || slim.nativeCapture || slim.nativeCaptureSource || slim.nativeCaptureClaim || slim.pbiAuthorshipHistory || slim.nativeRecordSeal) return "";
+      const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
+      const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
+      const createdAtMs = Number(slim.createdAtMs);
+      if (!receizCompactCanWriteU48(createdAtMs)) return "";
+      if (!receizCompactHexToBytes(slim.receizClaimId, 16) || !receizCompactHexToBytes(slim.sigilClaimSeed, 32)) return "";
+
+      const routeCode = String(slim.code || "").trim().toUpperCase();
+      const routePulse = String(slim.kaiPulseEternal || "").trim();
+      const basePath = `/v/${slim.slug}/${routeCode}/${routePulse}`;
+      const publicBaseUrl = `https://receiz.com${basePath}`;
+      const routeTs = receizCompactTsFromSlug(slim.slug);
+      const derivedTsDisplay = receizCompactTs24ToTs12(slim.ts);
+
+      const FLAG_PAYLOAD_VERSION_V1 = 1 << 0;
+      const FLAG_TS_STORED = 1 << 1;
+      const FLAG_TS_DISPLAY_DERIVED = 1 << 2;
+      const FLAG_TS_DISPLAY_STORED = 1 << 3;
+      const FLAG_VERIFY_URL_BASE = 1 << 4;
+      const FLAG_VERIFY_URL_ANCHORED = 1 << 5;
+      const FLAG_VERIFY_URL_STORED = 1 << 6;
+      const FLAG_KAI_KLOK_STORED = 1 << 7;
+      const FLAG_TZ_MINUTES_PRESENT = 1 << 8;
+      const FLAG_SIGNER_KEY_ID_PRESENT = 1 << 9;
+      const FLAG_ANCHOR_ID_PRESENT = 1 << 10;
+      const FLAG_ZK_POSEIDON_HASH_PRESENT = 1 << 11;
+      const FLAG_GROTH16_DIGEST_PRESENT = 1 << 12;
+      const FLAG_ARTIFACT_BASIS_PRESENT = 1 << 13;
+      const FLAG_WIREPROOF_PRESENT = 1 << 14;
+      const FLAG_WIREPROOF_PATH_STORED = 1 << 15;
+      const FLAG_SIGNATURE_V4_PRESENT = 1 << 16;
+      const FLAG_SIGNATURE_V4_ISSUER_KID_STORED = 1 << 17;
+      const DEFAULT_SIGNATURE_V4_ISSUER_KID = "receiz.v4.prod.2026-03-02";
+
+      let flags = FLAG_KAI_KLOK_STORED;
+      if (slim.payloadVersion === "v1") flags |= FLAG_PAYLOAD_VERSION_V1;
+      if (slim.ts !== routeTs) flags |= FLAG_TS_STORED;
+      if (slim.tsDisplay) flags |= slim.tsDisplay === derivedTsDisplay ? FLAG_TS_DISPLAY_DERIVED : FLAG_TS_DISPLAY_STORED;
+      if (typeof slim.tzMinutesEast === "number" && Number.isFinite(slim.tzMinutesEast)) flags |= FLAG_TZ_MINUTES_PRESENT;
+      if (slim.verifyUrl === publicBaseUrl) flags |= FLAG_VERIFY_URL_BASE;
+      else if (slim.anchorId && slim.verifyUrl === `${publicBaseUrl}?a=${slim.anchorId}&ms=${createdAtMs}`) flags |= FLAG_VERIFY_URL_ANCHORED;
+      else flags |= FLAG_VERIFY_URL_STORED;
+      if (slim.signerKeyId) {
+        if (!receizCompactHexToBytes(slim.signerKeyId, 6)) return "";
+        flags |= FLAG_SIGNER_KEY_ID_PRESENT;
+      }
+      if (slim.anchorId) {
+        if (!receizCompactHexToBytes(slim.anchorId, 4)) return "";
+        flags |= FLAG_ANCHOR_ID_PRESENT;
+      }
+      if (slim.zkPoseidonHash) {
+        if (!receizCompactHexToBytes(slim.zkPoseidonHash, 32)) return "";
+        flags |= FLAG_ZK_POSEIDON_HASH_PRESENT;
+      }
+      if (slim.groth16ProofDigest) {
+        if (!receizCompactHexToBytes(slim.groth16ProofDigest, 32)) return "";
+        flags |= FLAG_GROTH16_DIGEST_PRESENT;
+      }
+      if (slim.artifactSha256Basis) {
+        if (!receizCompactHexToBytes(slim.artifactSha256Basis, 32)) return "";
+        flags |= FLAG_ARTIFACT_BASIS_PRESENT;
+      }
+      if (isRecord(slim.wireproof)) flags |= FLAG_WIREPROOF_PRESENT | FLAG_WIREPROOF_PATH_STORED;
+      if (signatureV4 && cert) {
+        if (
+          !receizCompactCanWriteU48(Number(signatureV4.signedAtMs)) ||
+          !receizCompactCanWriteU48(Number(cert.issuedAtMs)) ||
+          !receizCompactCanWriteU48(Number(cert.expiresAtMs)) ||
+          !receizCompactHexToBytes(signatureV4.payloadHashSha256, 32) ||
+          !receizCompactB64uToBytes(signatureV4.sig, 64) ||
+          !receizCompactHexToBytes(cert.certId, 16) ||
+          !receizCompactB64uToBytes(cert.subjectPublicKeyRawB64u, 32) ||
+          !receizCompactB64uToBytes(cert.sig, 64)
+        ) return "";
+        flags |= FLAG_SIGNATURE_V4_PRESENT;
+        if (cert.issuerKid !== DEFAULT_SIGNATURE_V4_ISSUER_KID) flags |= FLAG_SIGNATURE_V4_ISSUER_KID_STORED;
+      }
+
+      const writer = receizCompactWriter();
+      writer.writeU8(4);
+      writer.writeVarUint(flags);
+      writer.writeU48(createdAtMs);
+      if (flags & FLAG_TS_STORED) writer.writeText(slim.ts);
+      if (flags & FLAG_TS_DISPLAY_STORED) writer.writeText(slim.tsDisplay || "");
+      if (flags & FLAG_TZ_MINUTES_PRESENT) writer.writeI16(Math.trunc(slim.tzMinutesEast || 0));
+      if (flags & FLAG_VERIFY_URL_STORED) writer.writeText(slim.verifyUrl || "");
+      writer.writeText(slim.kaiKlok || "");
+      const writeHex = (value, bytes) => writer.writeBytes(receizCompactHexToBytes(value, bytes));
+      const writeB64 = (value, bytes) => writer.writeBytes(receizCompactB64uToBytes(value, bytes));
+      if (flags & FLAG_SIGNER_KEY_ID_PRESENT) writeHex(slim.signerKeyId, 6);
+      if (flags & FLAG_ANCHOR_ID_PRESENT) writeHex(slim.anchorId, 4);
+      writeHex(slim.receizClaimId, 16);
+      writeHex(slim.sigilClaimSeed, 32);
+      if (flags & FLAG_ZK_POSEIDON_HASH_PRESENT) writeHex(slim.zkPoseidonHash, 32);
+      if (flags & FLAG_GROTH16_DIGEST_PRESENT) writeHex(slim.groth16ProofDigest, 32);
+      if (flags & FLAG_ARTIFACT_BASIS_PRESENT) writeHex(slim.artifactSha256Basis, 32);
+      if (flags & FLAG_WIREPROOF_PRESENT) {
+        if (!isRecord(slim.wireproof) || !receizCompactHexToBytes(slim.wireproof.anchorId, 4) || !receizCompactHexToBytes(slim.wireproof.claimHashSha256, 32)) return "";
+        writeHex(slim.wireproof.anchorId, 4);
+        writeHex(slim.wireproof.claimHashSha256, 32);
+        writer.writeText(slim.wireproof.verifierPath || "");
+      }
+      if (flags & FLAG_SIGNATURE_V4_PRESENT) {
+        writer.writeU48(Math.trunc(Number(signatureV4.signedAtMs)));
+        writeB64(signatureV4.sig, 64);
+        if (flags & FLAG_SIGNATURE_V4_ISSUER_KID_STORED) writer.writeText(cert.issuerKid || "");
+        writeB64(cert.subjectPublicKeyRawB64u, 32);
+        writer.writeU48(Math.trunc(Number(cert.issuedAtMs)));
+        writer.writeU48(Math.trunc(Number(cert.expiresAtMs)));
+        writeB64(cert.sig, 64);
+      }
+      return base64UrlEncode(writer.bytes());
+    }
+
+    function buildCompactReceizProofToken(bundle) {
+      if (!isRecord(bundle)) return "";
+      const slim = { ...bundle };
+      delete slim.groth16Proof;
+      delete slim.signatureV3;
+      const signatureV4 = isRecord(slim.signatureV4) ? slim.signatureV4 : null;
+      const cert = signatureV4 && isRecord(signatureV4.cert) ? signatureV4.cert : null;
+      const compact = [
+        slim.nativeRecordSeal ? "rpb2" : "rpb1",
+        slim.payloadVersion,
+        slim.createdAtMs,
+        slim.ts,
+        slim.tsDisplay || "",
+        typeof slim.tzMinutesEast === "number" && Number.isFinite(slim.tzMinutesEast) ? Math.trunc(slim.tzMinutesEast) : null,
+        slim.verifyUrl || "",
+        slim.kaiKlok || "",
+        slim.signerKeyId || "",
+        slim.anchorId || "",
+        slim.receizClaimId || "",
+        slim.sigilClaimSeed || "",
+        slim.zkPoseidonHash || "",
+        slim.groth16ProofDigest || "",
+        slim.artifactSha256Basis || "",
+        isRecord(slim.wireproof)
+          ? [slim.wireproof.anchorId || "", slim.wireproof.claimHashSha256 || "", slim.wireproof.verifierPath || ""]
+          : null,
+        signatureV4 && cert
+          ? [
+              signatureV4.signedAtMs,
+              signatureV4.payloadHashSha256 || "",
+              signatureV4.sig || "",
+              [
+                cert.certId || "",
+                cert.issuerKid || "",
+                cert.subjectPublicKeyRawB64u || "",
+                cert.issuedAtMs,
+                cert.expiresAtMs,
+                cert.sig || "",
+              ],
+            ]
+          : null,
+        isRecord(slim.artifactBasis) ? slim.artifactBasis.normalization || "" : "",
+      ];
+      if (isRecord(slim.nativeCapture) || isRecord(slim.nativeCaptureSource) || isRecord(slim.nativeCaptureClaim)) {
+        compact.push(slim.nativeCapture || null, slim.nativeCaptureSource || null, slim.nativeCaptureClaim || null);
+      }
+      if (Array.isArray(slim.pbiAuthorshipHistory)) {
+        while (compact.length < 21) compact.push(null);
+        compact.push(slim.pbiAuthorshipHistory);
+      }
+      if (isRecord(slim.nativeRecordSeal)) {
+        while (compact.length < 22) compact.push(null);
+        compact.push(slim.nativeRecordSeal);
+      }
+      const raw = new TextEncoder().encode(JSON.stringify(compact));
+      if (raw.byteLength > MAX_BUNDLE_DECODE_BYTES) return "";
+      if (typeof fflate === "undefined" || !fflate || typeof fflate.deflateSync !== "function") return "";
+      try {
+        const legacy = `${isRecord(slim.nativeRecordSeal) ? "rpb2" : "rpb1"}:${base64UrlEncode(fflate.deflateSync(raw, { level: 9 }))}`;
+        if (isRecord(slim.nativeRecordSeal)) return legacy;
+        const binary = buildBinaryCompactReceizProofToken(bundle);
+        return binary && binary.length < legacy.length ? binary : legacy;
+      } catch {
+        return "";
+      }
+    }
+
+    function anchoredVerifyPathFromProofBundle(bundle) {
+      if (!isRecord(bundle)) return null;
+
+      const anchorIdRaw = typeof bundle.anchorId === "string" ? bundle.anchorId.trim().toLowerCase() : "";
+      if (!isHex(anchorIdRaw, 8)) return null;
+
+      const verifyPath = asString(bundle.verifyPath);
+      if (!verifyPath) return null;
+
+      const createdAtMsRaw = Number(bundle.createdAtMs);
+      const createdAtMs = Number.isFinite(createdAtMsRaw) ? Math.trunc(createdAtMsRaw) : null;
+      const params = new URLSearchParams();
+      params.set("a", anchorIdRaw);
+      if (createdAtMs !== null) {
+        params.set("ms", String(createdAtMs));
+      }
+      const joiner = verifyPath.includes("?") ? "&" : "?";
+      return `${verifyPath}${joiner}${params.toString()}`;
+    }
+
+    function proofBearingVerifyPathFromProofBundle(bundle) {
+      const anchoredViewUrl = anchoredVerifyPathFromProofBundle(bundle);
+      if (!anchoredViewUrl) return "";
+      const compactToken = buildCompactReceizProofToken(bundle);
+      let viewUrl = anchoredViewUrl;
+      if (compactToken) {
+        try {
+          const proofUrl = new URL(anchoredViewUrl, "https://receiz.local");
+          proofUrl.searchParams.delete("p");
+          proofUrl.searchParams.delete("a");
+          proofUrl.searchParams.delete("ms");
+          proofUrl.searchParams.set("c", compactToken);
+          viewUrl = `${proofUrl.pathname}${proofUrl.search}${proofUrl.hash}`;
+        } catch {
+          viewUrl = anchoredViewUrl;
+        }
+      }
+      return viewUrl;
+    }
+
     function deriveAnchorBundleFromProofBundle(bundle) {
       if (!isRecord(bundle)) return null;
 
@@ -1440,13 +3388,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       const createdAtMsRaw = Number(bundle.createdAtMs);
       const createdAtMs = Number.isFinite(createdAtMsRaw) ? Math.trunc(createdAtMsRaw) : null;
-      const params = new URLSearchParams();
-      params.set("a", anchorIdRaw);
-      if (createdAtMs !== null) {
-        params.set("ms", String(createdAtMs));
-      }
-      const joiner = verifyPath.includes("?") ? "&" : "?";
-      const viewUrl = `${verifyPath}${joiner}${params.toString()}`;
+      const viewUrl = proofBearingVerifyPathFromProofBundle(bundle) || anchoredVerifyPathFromProofBundle(bundle) || verifyPath;
 
       return {
         version: 1,
@@ -1588,6 +3530,12 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         zkPoseidonHash: bundle.zkPoseidonHash || "",
         groth16ProofDigest: bundle.groth16ProofDigest || "",
         artifactSha256Basis: bundle.artifactSha256Basis || "",
+        ...(bundle.artifactBasis ? { artifactBasis: bundle.artifactBasis } : {}),
+        ...(bundle.nativeCapture ? { nativeCapture: bundle.nativeCapture } : {}),
+        ...(bundle.nativeCaptureSource ? { nativeCaptureSource: bundle.nativeCaptureSource } : {}),
+        ...(bundle.nativeCaptureClaim ? { nativeCaptureClaim: bundle.nativeCaptureClaim } : {}),
+        ...(bundle.pbiAuthorshipHistory ? { pbiAuthorshipHistory: bundle.pbiAuthorshipHistory } : {}),
+        ...(bundle.nativeRecordSeal ? { nativeRecordSeal: bundle.nativeRecordSeal } : {}),
         wireproof: bundle.wireproof || null
       };
       return jcsCanonicalize(canonical);
@@ -2431,10 +4379,83 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
-    async function validateBundleAgainstBasis({
-      bundle,
-      basisBytes,
-      anchor,
+    async function classifyPortableAssetContinuity(originalBytes, bundle) {
+      return ReceizVerifierIdentityDisplay.classifyPortableIdentityCarrier(originalBytes, bundle);
+    }
+
+    function classifyOwnershipProvenanceContinuity(bytes, bundle) {
+      if (!bundle || !isRecord(bundle)) return { state: "not_applicable" };
+      const chunks = readPngTextChunks(bytes);
+      const matches = chunks.filter((entry) => entry.keyword === "receiz.ownership_provenance");
+      if (matches.length === 0) return { state: "not_applicable" };
+      if (matches.length !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
+      const raw = matches[0].text || "";
+      const dot = raw.indexOf(".");
+      if (dot <= 0 || raw.slice(0, dot) !== "c1") return { state: "invalid", error: "continuity_round_trip_failed" };
+      let provenance = null;
+      try {
+        const compressed = base64UrlDecode(raw.slice(dot + 1));
+        const inflated = fflate.inflateSync(compressed);
+        provenance = JSON.parse(new TextDecoder().decode(inflated));
+      } catch {
+        return { state: "invalid", error: "continuity_round_trip_failed" };
+      }
+      if (!isRecord(provenance) || provenance.kind !== "receiz.ownership_provenance" || provenance.version !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
+      const slug = asString(bundle.slug);
+      const code = asString(bundle.code);
+      const pulse = asString(bundle.kaiPulseEternal);
+      const verifyPath = asString(bundle.verifyPath);
+      if (!slug || !code || !pulse || !verifyPath || provenance.slug !== slug || provenance.code !== code || provenance.pulse !== pulse || provenance.verifyPath !== verifyPath || verifyPath !== `/v/${slug}/${code}/${pulse}`) {
+        return { state: "invalid", error: "continuity_coordinate_mismatch" };
+      }
+      const owner = isRecord(provenance.currentOwner) ? provenance.currentOwner : (isRecord(provenance.originalCreator) ? provenance.originalCreator : null);
+      const username = owner && typeof owner.username === "string" ? owner.username.trim().toLowerCase() : "";
+      if (!owner || !asString(owner.userId) || !/^[a-z0-9_]{3,24}$/.test(username)) return { state: "invalid", error: "continuity_ownership_missing" };
+      const latestTransfer = Array.isArray(provenance.transfers) ? provenance.transfers[provenance.transfers.length - 1] : null;
+      return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
+    }
+
+    async function verifyNativeOwnershipContinuity(bundle, basisSha256) {
+      if (!bundle || !isRecord(bundle.nativeRecordSeal)) return true;
+      const seal = bundle.nativeRecordSeal;
+      if (!isRecord(seal.ownershipContinuity)) return true;
+      const continuity = seal.ownershipContinuity;
+      if (typeof continuity.namespace !== "string" || !continuity.namespace.startsWith("receiz.native-proof:")) return true;
+      if (!isRecord(seal.payload) || seal.payload.sha256 !== basisSha256 || continuity.artifactId !== basisSha256 || continuity.namespace !== `receiz.native-proof:${basisSha256}` || continuity.ownerReceizId !== seal.ownerReceizId || continuity.headReference !== bundle.receizClaimId || !Number.isSafeInteger(continuity.appendCount) || continuity.appendCount < 0) return false;
+      if (Array.isArray(continuity.history)) {
+        if (continuity.history.length !== continuity.appendCount + 1) return false;
+        const genesis = continuity.history[0];
+        if (!isRecord(genesis) || genesis.schema !== "receiz.native_ownership_genesis.v1" || genesis.index !== 0 || genesis.ownerReceizId !== continuity.genesisOwnerReceizId) return false;
+        let expectedOwner = genesis.ownerReceizId;
+        let expectedHead = genesis.headReference;
+        let expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: expectedOwner }));
+        if (genesis.historyDigestSha256 !== expectedDigest) return false;
+        for (let index = 1; index < continuity.history.length; index += 1) {
+          const entry = continuity.history[index];
+          if (!isRecord(entry) || entry.schema !== "receiz.native_ownership_transfer.v1" || entry.index !== index || entry.fromOwnerReceizId !== expectedOwner || entry.priorHeadReference !== expectedHead) return false;
+          expectedDigest = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: expectedDigest, sourceArtifactSha256: entry.sourceArtifactSha256, priorHeadReference: entry.priorHeadReference, fromOwnerReceizId: entry.fromOwnerReceizId, toOwnerReceizId: entry.toOwnerReceizId }));
+          if (entry.historyDigestSha256 !== expectedDigest) return false;
+          expectedOwner = entry.toOwnerReceizId;
+          expectedHead = entry.headReference;
+        }
+        if (expectedOwner !== continuity.ownerReceizId || expectedHead !== continuity.headReference || expectedDigest !== continuity.historyDigestSha256) return false;
+      }
+      if (continuity.appendCount === 0) {
+        if (continuity.predecessor) return false;
+        const expectedGenesis = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.genesis.v1", artifactId: continuity.artifactId, namespace: continuity.namespace, ownerReceizId: continuity.ownerReceizId }));
+        return continuity.genesisOwnerReceizId === continuity.ownerReceizId && continuity.historyDigestSha256 === expectedGenesis;
+      }
+      const predecessor = continuity.predecessor;
+      if (!isRecord(predecessor) || !Number.isSafeInteger(predecessor.appendCount) || continuity.appendCount !== predecessor.appendCount + 1) return false;
+      const expectedAppend = await sha256Hex(jcsCanonicalize({ schema: "receiz.ownership.append.v1", priorHistoryDigestSha256: predecessor.historyDigestSha256, sourceArtifactSha256: predecessor.artifactSha256, priorHeadReference: predecessor.headReference, fromOwnerReceizId: predecessor.ownerReceizId, toOwnerReceizId: continuity.ownerReceizId }));
+      return continuity.historyDigestSha256 === expectedAppend;
+    }
+
+   async function validateBundleAgainstBasis({
+     bundle,
+     basisBytes,
+      basisSha256,
+     anchor,
       optionalLink,
       checks,
       errors,
@@ -2484,7 +4505,18 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         try {
           const parsed = new URL(verifyUrl);
           const fromUrl = `${parsed.pathname}${parsed.search}`;
-          if (verifyPath && fromUrl !== verifyPath) {
+          const acceptedVerifyUrlPaths = new Set();
+          if (verifyPath) acceptedVerifyUrlPaths.add(verifyPath);
+          const anchoredVerifyPath = anchoredVerifyPathFromProofBundle(bundle);
+          if (anchoredVerifyPath) acceptedVerifyUrlPaths.add(anchoredVerifyPath);
+          const proofBearingVerifyPath = proofBearingVerifyPathFromProofBundle(bundle);
+          if (proofBearingVerifyPath) acceptedVerifyUrlPaths.add(proofBearingVerifyPath);
+          if (derivedAnchor && typeof derivedAnchor.parent.viewUrl === "string") acceptedVerifyUrlPaths.add(derivedAnchor.parent.viewUrl);
+          if (effectiveAnchor && typeof effectiveAnchor.parent.viewUrl === "string") acceptedVerifyUrlPaths.add(effectiveAnchor.parent.viewUrl);
+          if (isRecord(bundle.wireproof) && typeof bundle.wireproof.verifierPath === "string") {
+            acceptedVerifyUrlPaths.add(bundle.wireproof.verifierPath);
+          }
+          if (verifyPath && !acceptedVerifyUrlPaths.has(fromUrl)) {
             warnings.push("verifyUrl path does not exactly match verifyPath.");
           }
         } catch {
@@ -2498,12 +4530,25 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           errors.push("Artifact binding field has invalid format.");
           checks.push({ state: "bad", message: "Artifact binding" });
         } else {
-          const computedBasis = (await sha256Hex(basisBytes)).toLowerCase();
-          if (computedBasis !== artifactSha256Basis) {
-            errors.push("Artifact binding mismatch");
+          try {
+            let computedBasis;
+            if (basisSha256) {
+              if (bundle.artifactBasis) throw new Error("precomputed_normalized_basis_forbidden");
+              computedBasis = String(basisSha256).trim().toLowerCase();
+              if (!/^[0-9a-f]{64}$/.test(computedBasis)) throw new Error("precomputed_basis_hash_invalid");
+            } else {
+              const identityBasisBytes = artifactIdentityBasisBytes(bundle, basisBytes);
+              computedBasis = (await sha256Hex(identityBasisBytes)).toLowerCase();
+            }
+            if (computedBasis !== artifactSha256Basis) {
+              errors.push("Artifact binding mismatch");
+              checks.push({ state: "bad", message: "Artifact binding" });
+            } else {
+              checks.push({ state: "ok", message: "Artifact binding" });
+            }
+          } catch {
+            errors.push("Artifact basis normalization is unsupported.");
             checks.push({ state: "bad", message: "Artifact binding" });
-          } else {
-            checks.push({ state: "ok", message: "Artifact binding" });
           }
         }
       } else {
@@ -2580,6 +4625,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         } else {
           const acceptedPaths = new Set();
           if (verifyPath) acceptedPaths.add(verifyPath);
+          if (derivedAnchor && typeof derivedAnchor.parent.viewUrl === "string") acceptedPaths.add(derivedAnchor.parent.viewUrl);
           if (effectiveAnchor && typeof effectiveAnchor.parent.viewUrl === "string") acceptedPaths.add(effectiveAnchor.parent.viewUrl);
           if (isRecord(bundle.wireproof) && typeof bundle.wireproof.verifierPath === "string") {
             acceptedPaths.add(bundle.wireproof.verifierPath);
@@ -2787,6 +4833,183 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return found;
     }
 
+    async function verifyReceizNativeCaptureV1(value, expected) {
+      const captureKeys = new Set([
+        "schema", "source", "mediaKind", "sourceSha256", "mimeType", "width", "height",
+        "durationMs", "requestedFacingMode", "captureSessionCommitment", "capturedAt",
+        "kaiUpulse", "ownerReceizId", "coordinates", "commitmentSha256"
+      ]);
+      const coordinateKeys = new Set(["slug", "code", "pulse", "verifyPath"]);
+      const exactKeys = (candidate, keys) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return false;
+        const ownKeys = Object.keys(candidate);
+        return ownKeys.length === keys.size && ownKeys.every((key) => keys.has(key));
+      };
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const integerOrNull = (candidate) => candidate === null
+        || (typeof candidate === "number" && Number.isSafeInteger(candidate) && candidate >= 0);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const coordinates = value && value.coordinates;
+      if (
+        !exactKeys(value, captureKeys)
+        || value.schema !== "receiz.native_capture.v1"
+        || value.source !== "camera"
+        || (value.mediaKind !== "photo" && value.mediaKind !== "video")
+        || !hex64(value.sourceSha256)
+        || !nonempty(value.mimeType)
+        || !integerOrNull(value.width)
+        || !integerOrNull(value.height)
+        || !integerOrNull(value.durationMs)
+        || !["user", "environment", null].includes(value.requestedFacingMode)
+        || !hex64(value.captureSessionCommitment)
+        || !nonempty(value.capturedAt)
+        || !nonempty(value.kaiUpulse)
+        || !nonempty(value.ownerReceizId)
+        || !exactKeys(coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => nonempty(coordinates[key]))
+        || !hex64(value.commitmentSha256)
+        || !expected
+        || (!(expected.sourceBytes instanceof Uint8Array) && !hex64(expected.sourceSha256))
+        || !exactKeys(expected.coordinates, coordinateKeys)
+        || !Array.from(coordinateKeys).every((key) => coordinates[key] === expected.coordinates[key])
+      ) return null;
+      if (
+        (expected.sourceSha256 || await sha256Hex(expected.sourceBytes)) !== value.sourceSha256
+        && expected.verifiedIosCameraRollProjection !== true
+      ) return null;
+      const { commitmentSha256: _commitmentSha256, ...body } = value;
+      return await sha256Hex(jcsCanonicalize(body)) === value.commitmentSha256 ? value : null;
+    }
+
+    async function verifyReceizPbiProofObjectAuthorshipChainV1(history) {
+      const appendKeys = new Set([
+        "schema", "position", "predecessorArtifactSha256", "predecessorProofHead",
+        "previousAppendHeadSha256", "claimHashHex", "slug", "code", "pulse", "receizId",
+        "credentialId", "credentialPublicKeyPem", "pbiReceipt", "pbiReceiptHash", "signedAt",
+        "kaiUpulse", "actionHashSha256", "appendHeadSha256"
+      ]);
+      const hex64 = (candidate) => typeof candidate === "string" && /^[0-9a-f]{64}$/.test(candidate);
+      const nonempty = (candidate) => typeof candidate === "string" && candidate.length > 0;
+      const portable = (candidate, ancestors = new Set(), state = { nodes: 0 }, depth = 0) => {
+        state.nodes += 1;
+        if (depth > 64 || state.nodes > 100000) return false;
+        if (candidate === null || typeof candidate === "string" || typeof candidate === "boolean") return true;
+        if (typeof candidate === "number") return Number.isFinite(candidate);
+        if (typeof candidate !== "object" || ancestors.has(candidate)) return false;
+        ancestors.add(candidate);
+        try {
+          if (Array.isArray(candidate)) {
+            const keys = Object.keys(candidate);
+            return keys.length === candidate.length
+              && keys.every((key, index) => key === String(index))
+              && candidate.every((entry) => portable(entry, ancestors, state, depth + 1));
+          }
+          const prototype = Object.getPrototypeOf(candidate);
+          if (prototype !== Object.prototype && prototype !== null) return false;
+          return Reflect.ownKeys(Object.getOwnPropertyDescriptors(candidate)).every((key) => {
+            const descriptor = Object.getOwnPropertyDescriptor(candidate, key);
+            return typeof key === "string"
+              && Boolean(descriptor?.enumerable)
+              && Object.prototype.hasOwnProperty.call(descriptor, "value")
+              && portable(descriptor.value, ancestors, state, depth + 1);
+          });
+        } finally {
+          ancestors.delete(candidate);
+        }
+      };
+      const exactAppend = (candidate) => {
+        if (!candidate || typeof candidate !== "object" || Array.isArray(candidate) || "toJSON" in candidate) return false;
+        const descriptors = Object.getOwnPropertyDescriptors(candidate);
+        const ownKeys = Reflect.ownKeys(candidate);
+        return ownKeys.length === appendKeys.size
+          && ownKeys.every((key) => typeof key === "string"
+            && appendKeys.has(key)
+            && descriptors[key]?.enumerable === true
+            && Object.prototype.hasOwnProperty.call(descriptors[key], "value"));
+      };
+      const canonicalChronos = (candidate) => {
+        if (typeof candidate !== "string") return false;
+        try { return new Date(candidate).toISOString() === candidate; } catch { return false; }
+      };
+      const actionBody = (candidate) => ({
+        schema: candidate.schema,
+        position: candidate.position,
+        predecessorArtifactSha256: candidate.predecessorArtifactSha256,
+        predecessorProofHead: candidate.predecessorProofHead,
+        previousAppendHeadSha256: candidate.previousAppendHeadSha256,
+        claimHashHex: candidate.claimHashHex,
+        slug: candidate.slug,
+        code: candidate.code,
+        pulse: candidate.pulse,
+        receizId: candidate.receizId,
+        credentialId: candidate.credentialId,
+        credentialPublicKeyPem: candidate.credentialPublicKeyPem,
+        pbiReceipt: candidate.pbiReceipt,
+        pbiReceiptHash: candidate.pbiReceiptHash,
+        signedAt: candidate.signedAt,
+        kaiUpulse: candidate.kaiUpulse
+      });
+      try {
+        if (!Array.isArray(history)) return false;
+        const appendHeads = new Set();
+        const predecessorArtifacts = new Set();
+        let previous = null;
+        for (const [position, candidate] of history.entries()) {
+          if (
+            !exactAppend(candidate)
+            || candidate.schema !== "receiz.pbi.proof-object-authorship.v1"
+            || !Number.isSafeInteger(candidate.position)
+            || candidate.position < 0
+            || !hex64(candidate.predecessorArtifactSha256)
+            || !hex64(candidate.predecessorProofHead)
+            || (candidate.previousAppendHeadSha256 !== null && !hex64(candidate.previousAppendHeadSha256))
+            || !hex64(candidate.claimHashHex)
+            || !nonempty(candidate.slug)
+            || !nonempty(candidate.code)
+            || !nonempty(candidate.pulse)
+            || !hex64(candidate.receizId)
+            || !nonempty(candidate.credentialId)
+            || !nonempty(candidate.credentialPublicKeyPem)
+            || !portable(candidate.pbiReceipt)
+            || !hex64(candidate.pbiReceiptHash)
+            || !canonicalChronos(candidate.signedAt)
+            || typeof candidate.kaiUpulse !== "string"
+            || !/^(0|[1-9][0-9]*)$/.test(candidate.kaiUpulse)
+            || !hex64(candidate.actionHashSha256)
+            || !hex64(candidate.appendHeadSha256)
+          ) return false;
+          const expectedPreviousHead = previous?.appendHeadSha256 || null;
+          if (
+            candidate.position !== position
+            || candidate.previousAppendHeadSha256 !== expectedPreviousHead
+            || (previous && candidate.predecessorProofHead !== previous.appendHeadSha256)
+            || (previous && candidate.claimHashHex !== previous.claimHashHex)
+            || (previous && candidate.slug !== previous.slug)
+            || (previous && candidate.code !== previous.code)
+            || (previous && candidate.pulse !== previous.pulse)
+            || (previous && BigInt(candidate.kaiUpulse) <= BigInt(previous.kaiUpulse))
+            || appendHeads.has(candidate.appendHeadSha256)
+            || predecessorArtifacts.has(candidate.predecessorArtifactSha256)
+          ) return false;
+          const actionHashSha256 = await sha256Hex(jcsCanonicalize(actionBody(candidate)));
+          const appendHeadSha256 = await sha256Hex(jcsCanonicalize({
+            actionHashSha256,
+            previousAppendHeadSha256: candidate.previousAppendHeadSha256
+          }));
+          if (
+            actionHashSha256 !== candidate.actionHashSha256
+            || appendHeadSha256 !== candidate.appendHeadSha256
+          ) return false;
+          appendHeads.add(candidate.appendHeadSha256);
+          predecessorArtifacts.add(candidate.predecessorArtifactSha256);
+          previous = candidate;
+        }
+        return true;
+      } catch {
+        return false;
+      }
+    }
+
     async function verifyReceizBytes(fileName, bytes, optionalLink) {
       const errors = [];
       const warnings = [];
@@ -2800,6 +5023,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       let basisBytes = null;
       let chunkSummary = [];
       let packageSummary = null;
+      let assetContinuity = { state: "not_applicable" };
       const bundleParsed = decodeReceizBundleEnvelope(bytes);
       if (bundleParsed) {
         checks.push({ state: "ok", message: "Container envelope parse" });
@@ -2815,6 +5039,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (bundleBasis !== manifestBasis) {
           errors.push("Proof bundle artifact binding does not match container file bytes.");
         }
+        assetContinuity = await classifyPortableAssetContinuity(bundleParsed.originalBytes, bundle);
+        if (assetContinuity.state === "invalid") errors.push(assetContinuity.error || "continuity_round_trip_failed");
       } else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
         chunkSummary = summarizeChunks(chunks);
@@ -2835,7 +5061,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         const proofEncoded = chunkMap.get(PROOF_KEY) || null;
         if (!proofEncoded) {
           checks.push({ state: "bad", message: "Proof bundle chunk present" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle chunk present" });
 
@@ -2846,7 +5072,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
 
@@ -2884,7 +5110,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               : "Missing embedded PDF proof bundle."
           );
           checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
@@ -2897,10 +5123,28 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           const message = err instanceof Error ? err.message : String(err);
           errors.push(`Proof bundle decode failed: ${message}`);
           checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
+      } else if (format === "heic") {
+        const parsed = parseReceizHeicProof(bytes);
+        if (parsed.proofCount !== 1 || parsed.parseError || !parsed.bundle || !isRecord(parsed.bundle)) {
+          errors.push(
+            parsed.proofCount > 1
+              ? "Duplicate HEIC proof bundles detected."
+              : parsed.parseError
+                ? "HEIC proof bundle is malformed."
+                : "Missing embedded HEIC proof bundle."
+          );
+          checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+        }
+        bundle = parsed.bundle;
+        basisBytes = parsed.basisBytes;
+        chunkSummary = [{ keyword: "receiz.heic.proof.v1", bytes: bytes.length - basisBytes.length }];
+        checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+        checks.push({ state: "ok", message: "Proof bundle decode" });
       } else if (format === "svg") {
         const parsed = parseReceizSvgProof(bytes);
         if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
@@ -2924,7 +5168,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("SVG proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -2936,7 +5180,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -2964,7 +5208,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               errors.push("JSON proof bundle is malformed.");
               checks.push({ state: "bad", message: "Proof bundle decode" });
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
         } else {
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
@@ -2976,7 +5220,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             const message = err instanceof Error ? err.message : String(err);
             errors.push(`Proof bundle decode failed: ${message}`);
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle decode" });
           basisBytes = parsed.basisBytes;
@@ -2991,14 +5235,14 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
                 : "Missing trailer proof bundle."
             );
             checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
           checks.push({ state: "ok", message: "Proof bundle uniqueness" });
 
           if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
             errors.push("Trailer proof bundle is malformed.");
             checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
           }
 
           bundle = trailerParsed.bundle;
@@ -3007,19 +5251,19 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           checks.push({ state: "ok", message: "Proof bundle decode" });
         } else {
           errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary };
+          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
       }
 
       if (!bundle || !basisBytes || !isRecord(bundle)) {
-        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary };
+        return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
       }
 
       if (!anchor) {
         anchor = deriveAnchorBundleFromProofBundle(bundle);
       }
 
-      
+
       await validateBundleAgainstBasis({
         bundle,
         basisBytes,
@@ -3029,9 +5273,82 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         errors,
         warnings
       });
+      if (!await verifyNativeOwnershipContinuity(bundle, String(bundle.artifactSha256Basis || "").toLowerCase())) {
+        errors.push("continuity_ownership_attestation_mismatch");
+      }
 
-      return {
-        ok: errors.length === 0,
+      let nativeCapture = null;
+      let pbiAuthorshipHistory = [];
+      if (errors.length === 0) {
+        const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
+          ? bundle.nativeRecordSeal
+          : bundle;
+        const rawNativeCapture = captureCarrier.nativeCapture;
+        try {
+          if (rawNativeCapture) {
+            const cameraRollProjection = transformReceizIosPwaCameraRollV6(basisBytes);
+            let sourceBytes = cameraRollProjection || basisBytes;
+            if (captureCarrier.nativeCaptureSource) {
+              const sourceDescriptor = captureCarrier.nativeCaptureSource;
+              const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
+              if (
+                sourceDescriptorKeys.length !== 3
+                || !sourceDescriptorKeys.includes("schema")
+                || !sourceDescriptorKeys.includes("carrier")
+                || !sourceDescriptorKeys.includes("sourceBytesSha256")
+                || sourceDescriptor.schema !== "receiz.native_capture_source.v1"
+                || sourceDescriptor.carrier !== "png.iTXt"
+                || typeof sourceDescriptor.sourceBytesSha256 !== "string"
+              ) throw new Error("native_capture_source_descriptor_invalid");
+              const sourceChunks = readPngTextChunks(basisBytes)
+                .filter((entry) => entry.keyword === "receiz.native_capture.source.v1");
+              if (sourceChunks.length !== 1) throw new Error("native_capture_source_chunk_invalid");
+              sourceBytes = base64UrlDecode(sourceChunks[0].text);
+            }
+            nativeCapture = await verifyReceizNativeCaptureV1(rawNativeCapture, {
+              sourceBytes,
+              coordinates: {
+                slug: bundle.slug,
+                code: bundle.code,
+                pulse: bundle.kaiPulseEternal,
+                verifyPath: bundle.verifyPath
+              },
+              verifiedIosCameraRollProjection: Boolean(cameraRollProjection)
+            });
+            if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
+            if (
+              captureCarrier.nativeCaptureSource
+              && captureCarrier.nativeCaptureSource.sourceBytesSha256 !== nativeCapture.sourceSha256
+            ) throw new Error("native_capture_source_binding_failed");
+            checks.push({ state: "ok", message: "Native Capture Verified" });
+          } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+            throw new Error("native_capture_append_missing");
+          }
+        } catch (error) {
+          nativeCapture = null;
+          errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+          checks.push({ state: "bad", message: "Native Capture verification" });
+        }
+
+        const rawHistory = bundle.pbiAuthorshipHistory;
+        if (
+          typeof rawHistory !== "undefined"
+          && (!Array.isArray(rawHistory)
+            || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
+        ) {
+          errors.push("pbi_authorship_history_verification_failed");
+          checks.push({ state: "bad", message: "PBI authorship history verification" });
+        } else {
+          pbiAuthorshipHistory = rawHistory || [];
+          if (pbiAuthorshipHistory.length > 0) {
+            checks.push({ state: "ok", message: "PBI authorship history verified" });
+          }
+        }
+      }
+
+      const ok = errors.length === 0;
+      const result = {
+        ok,
         errors,
         warnings,
         checks,
@@ -3039,11 +5356,319 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         anchor,
         fileHash,
         chunkSummary,
-        packageSummary
+        packageSummary,
+        assetContinuity,
+        nativeCapture: ok ? nativeCapture : null,
+        pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
+      };
+      if (ReceizVerifierIdentityDisplay.carriedVerifierOriginal(result)) {
+        try {
+          const nestedBytes = base64UrlDecode(assetContinuity.document.payload.bytesBase64Url);
+          if (nestedBytes.byteLength >= basisBytes.byteLength) throw new Error("nested_source_resource_unavailable");
+          const nested = await verifyReceizBytes("carried-original-source", nestedBytes, "");
+          result.identitySource = { state: nested.denial ? "unavailable" : nested.ok ? "verified" : "invalid", result: nested };
+        } catch {
+          result.identitySource = { state: "unavailable" };
+        }
+      }
+      return result;
+    }
+
+    class ReceizStreamingSha256 {
+      constructor() {
+        this.h = new Uint32Array([
+          0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+          0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
+        ]);
+        this.buffer = new Uint8Array(64);
+        this.w = new Uint32Array(64);
+        this.bufferLength = 0;
+        this.bytesHashed = 0;
+        this.finished = false;
+      }
+
+      static rotr(value, bits) {
+        return (value >>> bits) | (value << (32 - bits));
+      }
+
+      compress(chunk, offset = 0) {
+        const k = ReceizStreamingSha256.K;
+        const w = this.w;
+        const view = new DataView(chunk.buffer, chunk.byteOffset + offset, 64);
+        for (let index = 0; index < 16; index += 1) w[index] = view.getUint32(index * 4, false);
+        for (let index = 16; index < 64; index += 1) {
+          const x = w[index - 15];
+          const y = w[index - 2];
+          const s0 = ReceizStreamingSha256.rotr(x, 7) ^ ReceizStreamingSha256.rotr(x, 18) ^ (x >>> 3);
+          const s1 = ReceizStreamingSha256.rotr(y, 17) ^ ReceizStreamingSha256.rotr(y, 19) ^ (y >>> 10);
+          w[index] = (w[index - 16] + s0 + w[index - 7] + s1) >>> 0;
+        }
+        let [a, b, c, d, e, f, g, h] = this.h;
+        for (let index = 0; index < 64; index += 1) {
+          const s1 = ReceizStreamingSha256.rotr(e, 6) ^ ReceizStreamingSha256.rotr(e, 11) ^ ReceizStreamingSha256.rotr(e, 25);
+          const choose = (e & f) ^ (~e & g);
+          const temp1 = (h + s1 + choose + k[index] + w[index]) >>> 0;
+          const s0 = ReceizStreamingSha256.rotr(a, 2) ^ ReceizStreamingSha256.rotr(a, 13) ^ ReceizStreamingSha256.rotr(a, 22);
+          const majority = (a & b) ^ (a & c) ^ (b & c);
+          const temp2 = (s0 + majority) >>> 0;
+          h = g;
+          g = f;
+          f = e;
+          e = (d + temp1) >>> 0;
+          d = c;
+          c = b;
+          b = a;
+          a = (temp1 + temp2) >>> 0;
+        }
+        this.h[0] = (this.h[0] + a) >>> 0;
+        this.h[1] = (this.h[1] + b) >>> 0;
+        this.h[2] = (this.h[2] + c) >>> 0;
+        this.h[3] = (this.h[3] + d) >>> 0;
+        this.h[4] = (this.h[4] + e) >>> 0;
+        this.h[5] = (this.h[5] + f) >>> 0;
+        this.h[6] = (this.h[6] + g) >>> 0;
+        this.h[7] = (this.h[7] + h) >>> 0;
+      }
+
+      update(bytes) {
+        if (this.finished) throw new Error("sha256_already_finalized");
+        this.bytesHashed += bytes.byteLength;
+        let offset = 0;
+        if (this.bufferLength > 0) {
+          const take = Math.min(64 - this.bufferLength, bytes.byteLength);
+          this.buffer.set(bytes.subarray(0, take), this.bufferLength);
+          this.bufferLength += take;
+          offset += take;
+          if (this.bufferLength === 64) {
+            this.compress(this.buffer);
+            this.bufferLength = 0;
+          }
+        }
+        while (offset + 64 <= bytes.byteLength) {
+          this.compress(bytes, offset);
+          offset += 64;
+        }
+        if (offset < bytes.byteLength) {
+          this.buffer.set(bytes.subarray(offset), 0);
+          this.bufferLength = bytes.byteLength - offset;
+        }
+        return this;
+      }
+
+      clone() {
+        const copy = new ReceizStreamingSha256();
+        copy.h.set(this.h);
+        copy.buffer.set(this.buffer);
+        copy.bufferLength = this.bufferLength;
+        copy.bytesHashed = this.bytesHashed;
+        copy.finished = this.finished;
+        return copy;
+      }
+
+      hex() {
+        if (!this.finished) {
+          const bitLength = this.bytesHashed * 8;
+          this.buffer[this.bufferLength] = 0x80;
+          this.bufferLength += 1;
+          if (this.bufferLength > 56) {
+            this.buffer.fill(0, this.bufferLength, 64);
+            this.compress(this.buffer);
+            this.bufferLength = 0;
+          }
+          this.buffer.fill(0, this.bufferLength, 56);
+          const view = new DataView(this.buffer.buffer);
+          view.setUint32(56, Math.floor(bitLength / 0x100000000), false);
+          view.setUint32(60, bitLength >>> 0, false);
+          this.compress(this.buffer);
+          this.finished = true;
+        }
+        return Array.from(this.h).map((value) => value.toString(16).padStart(8, "0")).join("");
+      }
+    }
+
+    ReceizStreamingSha256.K = new Uint32Array([
+      0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+      0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+      0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+      0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+      0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+      0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+      0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+      0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+    ]);
+
+    async function hashReceizFileRange(file, end = file.size) {
+      if (!(file instanceof Blob) || !Number.isSafeInteger(end) || end < 0 || end > file.size) {
+        throw new Error("artifact_hash_range_invalid");
+      }
+      const hash = new ReceizStreamingSha256();
+      const chunkBytes = 1024 * 1024;
+      for (let offset = 0; offset < end; offset += chunkBytes) {
+        hash.update(new Uint8Array(await file.slice(offset, Math.min(end, offset + chunkBytes)).arrayBuffer()));
+      }
+      return hash.hex();
+    }
+
+    function receizBytesMatchAt(bytes, pattern, offset) {
+      if (offset < 0 || offset + pattern.length > bytes.length) return false;
+      for (let index = 0; index < pattern.length; index += 1) {
+        if (bytes[offset + index] !== pattern[index]) return false;
+      }
+      return true;
+    }
+
+    function countReceizTrailerPrefixes(bytes) {
+      let count = 0;
+      let offset = bytes.indexOf(TRAILER_PREFIX_BYTES[0]);
+      while (offset >= 0) {
+        if (receizBytesMatchAt(bytes, TRAILER_PREFIX_BYTES, offset)) count += 1;
+        offset = bytes.indexOf(TRAILER_PREFIX_BYTES[0], offset + 1);
+      }
+      return count;
+    }
+
+    async function verifyLargeReceizTrailerFile(file, optionalLink) {
+      const errors = [];
+      const warnings = [];
+      const checks = [];
+      const maxArtifactBytes = 500 * 1024 * 1024;
+      const tailLimit = 4 * 1024 * 1024;
+      if (!Number.isSafeInteger(file.size) || file.size <= 0) {
+        return { ok: false, errors: ["Artifact file is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      if (file.size > maxArtifactBytes) {
+        return { ok: false, denial: { status: "operational-denial", code: "ARTIFACT_TOO_LARGE", artifactValidity: "not-evaluated" }, errors: [], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      const tailStart = Math.max(0, file.size - tailLimit);
+      const tail = new Uint8Array(await file.slice(tailStart).arrayBuffer());
+      const prefixOffset = lastIndexOfBytes(tail, TRAILER_PREFIX_BYTES);
+      const suffixOffset = tail.length - TRAILER_SUFFIX_BYTES.length;
+      if (
+        prefixOffset < 0
+        || suffixOffset <= prefixOffset + TRAILER_PREFIX_BYTES.length
+        || !receizBytesMatchAt(tail, TRAILER_SUFFIX_BYTES, suffixOffset)
+      ) {
+        return { ok: false, errors: ["Missing or malformed trailer proof bundle."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      let bundle = null;
+      try {
+        bundle = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(
+          tail.subarray(prefixOffset + TRAILER_PREFIX_BYTES.length, suffixOffset)
+        ));
+      } catch {
+        return { ok: false, errors: ["Trailer proof bundle is malformed."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      if (!isRecord(bundle)) {
+        return { ok: false, errors: ["Trailer proof bundle schema is invalid."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+
+      const basisByteLength = tailStart + prefixOffset;
+      const basisHash = new ReceizStreamingSha256();
+      let artifactHash = null;
+      let prefixCount = 0;
+      let carry = new Uint8Array();
+      const chunkBytes = 1024 * 1024;
+      for (let offset = 0; offset < file.size; offset += chunkBytes) {
+        const chunk = new Uint8Array(await file.slice(offset, Math.min(file.size, offset + chunkBytes)).arrayBuffer());
+        if (artifactHash) {
+          artifactHash.update(chunk);
+        } else {
+          const take = Math.min(chunk.length, Math.max(0, basisByteLength - offset));
+          if (take > 0) basisHash.update(chunk.subarray(0, take));
+          if (offset + chunk.length >= basisByteLength) {
+            artifactHash = basisHash.clone();
+            if (take < chunk.length) artifactHash.update(chunk.subarray(take));
+          }
+        }
+        const scan = new Uint8Array(carry.length + chunk.length);
+        scan.set(carry);
+        scan.set(chunk, carry.length);
+        prefixCount += countReceizTrailerPrefixes(scan);
+        const carryLength = Math.min(TRAILER_PREFIX_BYTES.length - 1, scan.length);
+        carry = scan.slice(scan.length - carryLength);
+      }
+      if (prefixCount !== 1) {
+        return { ok: false, errors: [prefixCount > 1 ? "Duplicate trailer proof bundles detected." : "Missing trailer proof bundle."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+
+      if (!artifactHash) {
+        return { ok: false, errors: ["Artifact stream ended before its declared byte length."], warnings, checks, bundle: null, anchor: null, fileHash: "", chunkSummary: [], nativeCapture: null, pbiAuthorshipHistory: [] };
+      }
+      const fileHash = artifactHash.hex();
+      const basisSha256 = basisHash.hex();
+      const anchor = deriveAnchorBundleFromProofBundle(bundle);
+      checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+      checks.push({ state: "ok", message: "Proof bundle decode" });
+      await validateBundleAgainstBasis({
+        bundle,
+        basisSha256,
+        anchor,
+        optionalLink,
+        checks,
+        errors,
+        warnings
+      });
+      if (!await verifyNativeOwnershipContinuity(bundle, basisSha256)) {
+        errors.push("continuity_ownership_attestation_mismatch");
+      }
+
+      let nativeCapture = null;
+      const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
+        ? bundle.nativeRecordSeal
+        : bundle;
+      try {
+        if (captureCarrier.nativeCapture) {
+          nativeCapture = await verifyReceizNativeCaptureV1(captureCarrier.nativeCapture, {
+            sourceSha256: basisSha256,
+            coordinates: {
+              slug: bundle.slug,
+              code: bundle.code,
+              pulse: bundle.kaiPulseEternal,
+              verifyPath: bundle.verifyPath
+            }
+          });
+          if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
+          checks.push({ state: "ok", message: "Native Capture Verified" });
+        } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+          throw new Error("native_capture_append_missing");
+        }
+      } catch (error) {
+        errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+        checks.push({ state: "bad", message: "Native Capture verification" });
+      }
+
+      const rawHistory = bundle.pbiAuthorshipHistory;
+      const pbiAuthorshipHistory = Array.isArray(rawHistory) ? rawHistory : [];
+      if (
+        typeof rawHistory !== "undefined"
+        && (!Array.isArray(rawHistory) || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
+      ) {
+        errors.push("pbi_authorship_history_verification_failed");
+        checks.push({ state: "bad", message: "PBI authorship history verification" });
+      }
+      const ok = errors.length === 0;
+      return {
+        ok,
+        errors,
+        warnings,
+        checks,
+        bundle,
+        anchor,
+        fileHash,
+        chunkSummary: [{ keyword: "receiz.trailer.v1", bytes: file.size - basisByteLength }],
+        packageSummary: null,
+        assetContinuity: { state: "not_applicable" },
+        nativeCapture: ok ? nativeCapture : null,
+        pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
       };
     }
 
     async function verifyReceizFile(file, optionalLink) {
+      const nativeTrailerMedia = /^(?:video|audio)\//i.test(file.type || "")
+        || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "");
+      if (file.size > 16 * 1024 * 1024 && nativeTrailerMedia) {
+        return verifyLargeReceizTrailerFile(file, optionalLink);
+      }
       const bytes = new Uint8Array(await file.arrayBuffer());
       return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
     }
@@ -3317,6 +5942,56 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return packageResult;
     }
 
+    function hasEnclosingZipTrailerCandidate(bytes) {
+      const marker = lastIndexOfBytes(bytes, TRAILER_PREFIX_BYTES);
+      if (marker < 0) return false;
+      // A member or ZIP comment may itself carry a trailer. Locate the enclosing
+      // central-directory end (including ZIP64 and its comment) without inflating
+      // members. This selects a reader only; canonical verification decides truth.
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const u16 = (offset) => view.getUint16(offset, true);
+      const u32 = (offset) => view.getUint32(offset, true);
+      const u64 = (offset) => u32(offset) + u32(offset + 4) * 0x100000000;
+      let foundArchiveEnd = false;
+      for (let end = bytes.length - 22; end >= 0; end -= 1) {
+        if (bytes[end] !== 0x50 || u32(end) !== 0x06054b50) continue;
+        const archiveEnd = end + 22 + u16(end + 20);
+        if (archiveEnd > bytes.length) continue;
+        let count = u16(end + 10);
+        let size = u32(end + 12);
+        let offset = u32(end + 16);
+        let directoryEnd = end;
+        if (end >= 20 && u32(end - 20) === 0x07064b50) {
+          const zip64End = u64(end - 12);
+          if (!Number.isSafeInteger(zip64End) || zip64End < 0 || zip64End + 56 > end - 20
+            || u32(zip64End) !== 0x06064b50) continue;
+          const recordSize = u64(zip64End + 4);
+          if (!Number.isSafeInteger(recordSize) || recordSize < 44
+            || zip64End + 12 + recordSize !== end - 20) continue;
+          count = u64(zip64End + 32);
+          size = u64(zip64End + 40);
+          offset = u64(zip64End + 48);
+          directoryEnd = zip64End;
+        }
+        if (!Number.isSafeInteger(count) || !Number.isSafeInteger(size)
+          || !Number.isSafeInteger(offset) || offset + size !== directoryEnd
+          || count > Math.floor(size / 46)) continue;
+        let cursor = offset;
+        for (let entry = 0; entry < count; entry += 1) {
+          if (cursor + 46 > directoryEnd || u32(cursor) !== 0x02014b50) break;
+          cursor += 46 + u16(cursor + 28) + u16(cursor + 30) + u16(cursor + 32);
+        }
+        if (cursor !== directoryEnd) continue;
+        foundArchiveEnd = true;
+        // Later ZIP structure cannot hide a proof appended after an earlier
+        // enclosing end. Inspect every qualifying boundary before child dispatch.
+        if (marker >= archiveEnd) return true;
+      }
+      // An unresolvable container with proof markers must not escape a completed
+      // enclosing-proof rejection by succeeding as a collection of child objects.
+      return !foundArchiveEnd;
+    }
+
     async function verifySelectedFiles(files, optionalLink) {
       if (!Array.isArray(files) || files.length === 0) {
         return {
@@ -3335,6 +6010,11 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
       if (files.length === 1) {
         const file = files[0];
+        const nativeTrailerMedia = /^(?:video|audio)\//i.test(file.type || "")
+          || /\.(?:mp4|m4v|mov|webm|mkv|avi|mp3|wav|m4a|aac|flac|ogg|oga|opus)$/i.test(file.name || "");
+        if (file.size > 16 * 1024 * 1024 && nativeTrailerMedia) {
+          return verifyReceizFile(file, optionalLink);
+        }
         let bytes;
         try {
           bytes = new Uint8Array(await file.arrayBuffer());
@@ -3354,6 +6034,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           };
         }
         if (detectDocumentFormat(bytes, { filename: file.name || "artifact", mime: file.type || "" }) === "zip") {
+          if (hasEnclosingZipTrailerCandidate(bytes)) {
+            return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
+          }
           if (!fflate || typeof fflate.unzipSync !== "function") {
             return {
               ok: false,
@@ -3460,6 +6143,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ui.dropZone.classList.remove("is-over");
         const files = event.dataTransfer && event.dataTransfer.files ? Array.from(event.dataTransfer.files) : [];
         if (!files.length) return;
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = false;
@@ -3471,9 +6155,42 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.dropZone.addEventListener("drop", onDrop);
     }
 
+    async function onPbiAuthorshipActionClick() {
+      if (!verifiedArtifact) return;
+      const runtime = globalThis.receizOfflineStudioPbiAuthorship;
+      if (!runtime || typeof runtime.appendVerifiedArtifact !== "function") {
+        setStatus("bad", "PBI authorship unavailable", "The local authorship runtime is unavailable.");
+        return;
+      }
+      ui.appendPbiAuthorshipBtn.disabled = true;
+      setStatus("warn", "Confirm PBI authorship", "Use Face ID or your device authenticator to sign this verified proof object.");
+      try {
+        const successor = await runtime.appendVerifiedArtifact({
+          predecessor: verifiedArtifact,
+          setVerifiedArtifact,
+        });
+        const heldResult = ReceizVerifierIdentityDisplay.retainVerifierPbiAssertionResult(successor.successorResult, successor.append);
+        if (verifiedArtifact?.fileHash === heldResult.fileHash) verifiedArtifact = { ...verifiedArtifact, ...heldResult };
+        renderResult(heldResult);
+        setStatus(
+          "ok",
+          "PBI authorship verified",
+          successor.saved
+            ? "Signed Receiz handed to the native save sheet."
+            : "Signed Receiz ready. Tap Save if the native save sheet did not open.",
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error || "PBI authorship failed.");
+        setStatus("bad", "PBI authorship not appended", message);
+      } finally {
+        ui.appendPbiAuthorshipBtn.disabled = false;
+      }
+    }
+
     function installEvents() {
       ui.fileInput.addEventListener("change", (event) => {
         const files = event.target && event.target.files ? Array.from(event.target.files) : [];
+        setVerifiedArtifact(null);
         selectedFiles = files;
         setFileMeta(selectedFiles);
         ui.verifyBtn.disabled = selectedFiles.length === 0;
@@ -3482,16 +6199,34 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.verifyBtn.addEventListener("click", () => {
         void onVerifyClick();
       });
+
+      if (ui.appendPbiAuthorshipBtn) ui.appendPbiAuthorshipBtn.addEventListener("click", () => {
+        void onPbiAuthorshipActionClick();
+      });
     }
 
     function init() {
       installEvents();
       installDnD();
       setFileMeta([]);
+      setVerifiedArtifact(null);
       ui.bundleJson.textContent = "(none)";
       ui.chunkJson.textContent = "(none)";
       writeFacts(null);
     }
+
+    Object.defineProperty(globalThis, "receizCanonicalOfflineVerifier", {
+      value: Object.freeze({
+        verifyBytes: verifyReceizBytes,
+        verifyFile: verifyReceizFile,
+        hashFileRange: hashReceizFileRange,
+        verifyNativeCapture: verifyReceizNativeCaptureV1,
+        verifyPbiAuthorshipHistory: verifyReceizPbiProofObjectAuthorshipChainV1,
+      }),
+      configurable: false,
+      enumerable: false,
+      writable: false
+    });
 
     init();
   })();
@@ -3500,8 +6235,16 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
   (() => {
     if (typeof window === "undefined") return;
     if (!("serviceWorker" in navigator)) return;
-    if (!window.isSecureContext && window.location.hostname !== "localhost") return;
+    const hostname = window.location.hostname;
+    const isLocalHost =
+      hostname === "localhost" ||
+      hostname === "127.0.0.1" ||
+      hostname === "::1" ||
+      hostname.endsWith(".localhost");
+    if (isLocalHost) return;
+    if (!window.isSecureContext) return;
 
+    const OFFLINE_STANDALONE_SW_VERSION = "126.0.0-official-release-v1";
     const warmUrls = [
       "/offline-verifier.html",
       "/verify",
@@ -3518,7 +6261,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
 
     window.addEventListener("load", () => {
       navigator.serviceWorker
-        .register("/sw.js?v=126.0.0", { scope: "/" })
+        .register(`/sw.js?v=${encodeURIComponent(OFFLINE_STANDALONE_SW_VERSION)}`, { scope: "/" })
         .then((reg) => {
           postWarm(reg);
           return navigator.serviceWorker.ready;

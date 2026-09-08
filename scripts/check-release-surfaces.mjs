@@ -54,7 +54,7 @@ const pointers = [
     "pbi-recovery-receiz-id-binding.md", "value-loop-invariants.md", "receiz-reasoning-kernel.md",
   ].map((file) => [`docs/${file}`, `carried forward for \`${releaseVersion}\``]),
   ["docs/scale-reasoning-invariants.md", `reasoning for \`${releaseVersion}\``],
-  ["site/index.html", releaseVersion], ["site/index.html", `/sw.js?v=${bareVersion}`],
+  ["site/index.html", releaseVersion], ["site/index.html", `${bareVersion}-official-release-v1`],
   ["site/sw.js", `RECEIZ_RELEASE_VERSION = "${bareVersion}"`],
   ["apps/offline-verifier.html", releaseVersion],
   ["apps/offline-record-seal.html", releaseVersion],
@@ -98,7 +98,7 @@ for (const suffix of releaseSuffixes) {
 }
 
 const sha256File = (file) => createHash("sha256").update(readFileSync(join(root, file))).digest("hex");
-if (sha256File("apps/offline-verifier.html") !== expectedOfflineVerifierDigest) {
+if (sha256File("apps/offline-verifier.html") !== JSON.parse(readFileSync(join(root, "source-alignment.json"), "utf8")).files.find((file) => file.source === "public/offline-verifier.html").sha256) {
   errors.push("Canonical standalone verifier bytes do not match the v126 source digest");
 }
 if (sha256File("apps/offline-record-seal.html") !== expectedOfflineStudioDigest) {

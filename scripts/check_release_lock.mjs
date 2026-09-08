@@ -25,4 +25,6 @@ const result = spawnSync(
   { stdio: "inherit" }
 );
 
-process.exit(result.status ?? 1);
+if (result.status !== 0) process.exit(result.status ?? 1);
+const alignment = spawnSync(process.execPath, [join(root, "scripts/check-source-alignment.mjs")], { stdio: "inherit" });
+process.exit(alignment.status ?? 1);

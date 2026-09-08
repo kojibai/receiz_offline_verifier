@@ -4,6 +4,12 @@ Verify a file offline. Proof is in the file.
 
 Current release: `v126.0.0`
 
+## Current source alignment
+
+The deployed verifier and downloadable applications track the committed main implementation recorded in [source-alignment.json](source-alignment.json). [Source alignment notes](docs/source-alignment.md) distinguish this update from the original immutable v126 release record.
+
+Receiz is a proof-native artifact system. Its proof objects carry verifiable source, identity, Kai coordinates and ordered provenance across applications. The canonical verifier displays verified ownership and authorship carried by the source; hosted discovery does not authorize that truth. Explore the [capability directory](https://receiz.com/capabilities), [ontology](https://receiz.com/capabilities/ontology) and [developer documentation](https://docs.receiz.com).
+
 ## What changed in v126.0.0
 
 - The standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, public documentation, and service-worker surfaces carry coordinated release identity `126.0.0`.
@@ -19,7 +25,7 @@ Current release: `v126.0.0`
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
 - Broader platform target environments require the checks and evidence boundaries named in [docs/releases/v126.0.0-checklist.md](docs/releases/v126.0.0-checklist.md).
-- The source records state that npm publication, production registry migration, deployment, live checks, and attestation remain incomplete. This standalone archive performs none of them and makes no broader claim.
+- The original source records preserve their preparation-time evidence boundary. They are historical records, not a statement that production remains unpublished. Current standalone synchronization and its checks are recorded separately in [source alignment notes](docs/source-alignment.md).
 - Core Signature V4, Groth16, KKS, artifact binding, ownership continuity, and fail-closed verification law remains unchanged. Historical wire identifiers and sealed artifacts retain their original identities.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
@@ -201,7 +207,7 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v111.0.0-commit-history.md](docs/releases/v111.0.0-commit-history.md): coordinated upstream and standalone-verifier history boundary.
 - [docs/releases/v111.0.0-constitution-registry.digest](docs/releases/v111.0.0-constitution-registry.digest): canonical v111 registry digest.
 - [docs/releases/v111.0.0-constitution-registry.json](docs/releases/v111.0.0-constitution-registry.json): pinned machine-readable v111 registry.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v111.0.0`.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v126.0.0`.
 - [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md): canonical Enterprise App Runtime SDK Release note for `v97.2.0`.
 - [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md): `v97.2.0` product-truth freeze document.
 - [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md): release-prep checklist and additional gates for `v97.2.0`.
@@ -375,11 +381,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v111.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v111.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v126.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v126.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v111.0.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v111.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v126.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v126.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.

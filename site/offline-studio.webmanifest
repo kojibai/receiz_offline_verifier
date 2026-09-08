@@ -1,0 +1,23 @@
+{
+  "id": "/offline-record-seal",
+  "name": "Receiz Offline Studio",
+  "short_name": "Receiz Studio",
+  "description": "Record, seal, and verify artifacts offline.",
+  "start_url": "/offline-record-seal.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eff4ff",
+  "theme_color": "#eff4ff",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

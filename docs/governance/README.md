@@ -2,6 +2,10 @@
 
 This directory contains the public governance documentation set for Receiz `v126.0.0`.
 
+## Current source authority
+
+See [current source alignment](../source-alignment.md#current-governance-authority) for the implemented Receiz identity sealing path. The versioned standards below preserve historical governance evidence; they must not be read as a requirement to restore the former signing-service authority.
+
 ## Contents
 
 - Standards: charter, change control, release attestation, historical continuity, control testing, independent assurance, incident governance, artifact signing, artifact verification, key custody, and control boundaries.

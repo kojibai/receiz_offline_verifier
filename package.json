@@ -4,9 +4,10 @@
   "version": "126.0.0",
   "description": "Receiz offline verifier static app and public release surfaces",
   "scripts": {
-    "lint": "node scripts/check-release-surfaces.mjs",
-    "build": "node scripts/check-release-surfaces.mjs",
-    "release:lock": "node scripts/check_release_lock.mjs"
+    "lint": "node scripts/check-release-surfaces.mjs && node scripts/check-source-alignment.mjs",
+    "build": "node scripts/check-release-surfaces.mjs && node scripts/check-source-alignment.mjs",
+    "release:lock": "node scripts/check_release_lock.mjs",
+    "test": "node scripts/check-release-surfaces.mjs && node scripts/check-source-alignment.mjs"
   },
   "license": "MIT"
 }
