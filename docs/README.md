@@ -1,9 +1,18 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v125.0.0`.
+This directory is the public documentation set for Receiz `v126.0.0`.
 
 ## Start Here
 
+- [releases/v126.0.0.md](releases/v126.0.0.md): canonical Reality-Grade Infrastructure v126 record and standalone boundary.
+- [releases/v126.0.0-product-truth.md](releases/v126.0.0-product-truth.md): frozen proof, identity, ownership, provenance, settlement, public proof, and offline-verification primitives.
+- [releases/v126.0.0-checklist.md](releases/v126.0.0-checklist.md): source qualification and exact incomplete external evidence.
+- [releases/v126.0.0-process.md](releases/v126.0.0-process.md): coordinated alignment, registry admission, and standalone qualification sequence.
+- [releases/v126.0.0-regression-lessons.md](releases/v126.0.0-regression-lessons.md): source custody, creator, ownership, coordinate, and completed-report continuity rules.
+- [releases/v126.0.0-commit-history.md](releases/v126.0.0-commit-history.md): complete 51-commit implementation history and standalone archive boundary.
+- [releases/v126.0.0-compatibility.md](releases/v126.0.0-compatibility.md): historical artifact, schema, protocol, and package compatibility.
+- [releases/v126.0.0-migration.md](releases/v126.0.0-migration.md): additive registry-successor migration boundary.
+- [releases/v126.0.0-constitution-registry.json](releases/v126.0.0-constitution-registry.json) and [digest](releases/v126.0.0-constitution-registry.digest): deterministic 133-law v126 registry.
 - [releases/v125.0.0.md](releases/v125.0.0.md): canonical Reality-Grade Infrastructure release record and standalone boundary.
 - [releases/v125.0.0-product-truth.md](releases/v125.0.0-product-truth.md): source, law, sequence, object, evidence, and reader authority.
 - [releases/v125.0.0-checklist.md](releases/v125.0.0-checklist.md): constitutional, implementation, evidence, and standalone release gates.
@@ -29,7 +38,7 @@ This directory is the public documentation set for Receiz `v125.0.0`.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v125.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v126.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

@@ -2,17 +2,15 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v125.0.0`
+Current release: `v126.0.0`
 
-## What changed in v125.0.0
+## What changed in v126.0.0
 
-- The standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, public documentation, and service-worker surfaces now carry coordinated release identity `125.0.0`.
-- V125 makes the authority order executable: source, law, sequence, object, evidence, then reader. The enclosing sealed proof object remains stronger than SDK, MCP, AI, server, database, cache, or display projections.
-- The complete 26-record Reality-Grade Infrastructure release book begins at [docs/releases/v125.0.0.md](docs/releases/v125.0.0.md). See the [product truth](docs/releases/v125.0.0-product-truth.md), [checklist](docs/releases/v125.0.0-checklist.md), [process](docs/releases/v125.0.0-process.md), [regression lessons](docs/releases/v125.0.0-regression-lessons.md), [compatibility](docs/releases/v125.0.0-compatibility-matrix.md), [conformance](docs/releases/v125.0.0-conformance.md), [evidence status](docs/releases/v125.0.0-evidence-status.md), and [commit history](docs/releases/v125.0.0-commit-history.md).
-- Release/ruleset/package identity is `125.0.0`; compatibility is `>=125.0.0 <126.0.0`.
-- The 133-law registry digest is `85a24c3a7fe144c8ec03c6b5fae238d1dfda64c1ed3091b24d4264dc3862ff17`, chained to immutable v124 digest `d02429151b0bcebdaeb89485792e377afc55130f9a25e07982c1c88221314247`.
-- The operation-matrix digest is `17c98e99c3f54b7a18dea9f2466a49ea2ac5da4d1cf0a90c723560184a314a6c`; temporal-authority conformance digest is `4289c365fdd6360b09a22b011557350da6b59b9f0b0dc95e2ed03ad286a83fc0`.
-- The application repository was inspected read-only at committed `HEAD` and `origin/main` `ddca6196ad9f1e845d28dc6796de4d2818c7e4d3`. Its verifier, Studio, and 26-record release book are bound here by SHA-256: verifier `7d9f40257d38fb9c72ed8248a9fddcf2602b9365e317f343b64c2530f95e7735`, Studio `2346f79a4ecdd80b25028c34910511000f6dbe28c30f7fd277eace40869afde1`, release-book manifest `5ada7131a27892eb1ce86d0f821ed2b1c30223b41909c1d0aacdfa15fc282bfb`.
+- The standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, public documentation, and service-worker surfaces carry coordinated release identity `126.0.0`.
+- V126 preserves complete source custody, deterministic sealing coordinates, identity genesis, creator/owner provenance, ownership handoffs, and completed conformance evidence. Known complete proof truth paints immediately; verified additions append after the held head.
+- The complete ten-record release book begins at [docs/releases/v126.0.0.md](docs/releases/v126.0.0.md). See the [product truth](docs/releases/v126.0.0-product-truth.md), [checklist](docs/releases/v126.0.0-checklist.md), [process](docs/releases/v126.0.0-process.md), [regression lessons](docs/releases/v126.0.0-regression-lessons.md), [compatibility](docs/releases/v126.0.0-compatibility.md), [migration](docs/releases/v126.0.0-migration.md), and [commit history](docs/releases/v126.0.0-commit-history.md).
+- The v126 133-law registry digest is `80137c2e6f294050ef36ff75e4daac15c7790b7f04d9a91fab9d1970fa3c0b09`, chained to immutable v125 digest `85a24c3a7fe144c8ec03c6b5fae238d1dfda64c1ed3091b24d4264dc3862ff17`.
+- The application repository was inspected read-only at committed local `HEAD` `d69d6bdfa8277a7933d16015346f38ba4aa37420`. Its canonical verifier, Studio, and ten-record source release book are bound by SHA-256: verifier `822b558ceeeef3db7b005346f6992580fe01ab378b95d8b64284d6844abf55b8`, Studio `51003369c3e2ff70bc35013b55443c04f878563b05e4509b489cceea89e6f956`, source-book manifest `04539f15b59dcd066a020ba171d040cd4941a041247f568d46f340ab02ce0698`.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -20,9 +18,9 @@ Current release: `v125.0.0`
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and evidence boundaries named in [docs/releases/v125.0.0-checklist.md](docs/releases/v125.0.0-checklist.md).
-- The source release records already document package publication and specific September 5 operational evidence. This standalone archive preserves those records but does not itself perform or broaden any publication, migration, deployment, production mutation, smoke, signed attestation, application-repository write, or remote push.
-- Core Signature V4, Groth16, artifact binding, ownership continuity, and fail-closed verification law remains unchanged; v125 composes KKS temporal authority and referenced-evidence admission beneath the enclosing proof object.
+- Broader platform target environments require the checks and evidence boundaries named in [docs/releases/v126.0.0-checklist.md](docs/releases/v126.0.0-checklist.md).
+- The source records state that npm publication, production registry migration, deployment, live checks, and attestation remain incomplete. This standalone archive performs none of them and makes no broader claim.
+- Core Signature V4, Groth16, KKS, artifact binding, ownership continuity, and fail-closed verification law remains unchanged. Historical wire identifiers and sealed artifacts retain their original identities.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
 
 ## Live Conformance
@@ -39,7 +37,7 @@ Current release: `v125.0.0`
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs; the `v125.0.0` package and constitutional identity are documented in the release record.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs; the `v126.0.0` identity and exact evidence boundary are documented in the release record.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).

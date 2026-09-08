@@ -1,5 +1,31 @@
 # Release Notes
 
+## v126.0.0
+Release date: 2026-09-07
+
+`v126.0.0` preserves complete source custody, deterministic sealing
+coordinates, identity continuity, creator and ownership provenance, verified
+handoffs, and completed conformance evidence across the standalone verifier
+distribution.
+
+- Canonical release note: [docs/releases/v126.0.0.md](docs/releases/v126.0.0.md)
+- Product truth: [docs/releases/v126.0.0-product-truth.md](docs/releases/v126.0.0-product-truth.md)
+- Evidence checklist: [docs/releases/v126.0.0-checklist.md](docs/releases/v126.0.0-checklist.md)
+- Process: [docs/releases/v126.0.0-process.md](docs/releases/v126.0.0-process.md)
+- Regression lessons: [docs/releases/v126.0.0-regression-lessons.md](docs/releases/v126.0.0-regression-lessons.md)
+- Compatibility: [docs/releases/v126.0.0-compatibility.md](docs/releases/v126.0.0-compatibility.md)
+- Registry: [docs/releases/v126.0.0-constitution-registry.json](docs/releases/v126.0.0-constitution-registry.json)
+- Migration boundary: [docs/releases/v126.0.0-migration.md](docs/releases/v126.0.0-migration.md)
+- Commit history: [docs/releases/v126.0.0-commit-history.md](docs/releases/v126.0.0-commit-history.md)
+
+The application source was inspected without modification at committed local
+`HEAD` `d69d6bdfa8277a7933d16015346f38ba4aa37420`. The canonical verifier,
+Studio, and ten-record source book are digest-bound in this release. The
+source checkout is ahead of `origin/main`; the local committed source is the
+explicit boundary used here. No npm publication, database migration,
+deployment, production check, attestation, application-repository write, or
+remote push is performed or inferred.
+
 ## v125.0.0
 Release date: 2026-09-04
 

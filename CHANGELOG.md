@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v126.0.0] - 2026-09-07
+
+### Added
+
+- Added the complete ten-record v126 archive, including the deterministic 133-law successor registry, compatibility, migration, process, checklist, and implementation history.
+- Added the exact v126 canonical verifier and Record and Seal Studio from the read-only committed application source.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, documentation, Sports and Studio epochs, and site service-worker identity to `126.0.0`.
+- Rebuilt the release lock around the v126 registry chain, ten-record mirror parity, exact source digests, and committed local application-source boundary.
+
+### Preserved
+
+- Complete sealed source custody, original creation coordinates, deterministic identity, creator and owner provenance, verified ownership history, and first-admission-then-append-forever memory.
+- The enclosing sealed proof object above route, server, database, session, package, MCP, AI, cache, and presentation state.
+
+### Boundary
+
+- The main `/receiz` repository was read only. npm publication, production registry migration, deployment, production checks, attestation, and remote push remain unperformed by this standalone release.
+
 ## [v125.0.0] - 2026-09-04
 
 ### Added

@@ -916,7 +916,7 @@
 
     <p class="footer">
       <span>Receiz Offline Studio · record, seal, and verify from artifact bytes.</span>
-      <span class="footer-version">v125.0.0</span>
+      <span class="footer-version">v126.0.0</span>
     </p>
 
     <section class="offline-tools" aria-label="Offline HTML downloads">
@@ -6167,11 +6167,10 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             sourceBytesSha256: embeddedNativeCapture.sourceSha256,
           }
         : null;
-      const nativeRecordSeal = predecessorBundle
-        ? {
+      const nativeRecordSeal = {
             schema: "receiz.native_record_seal.v1",
             ownerReceizId: signer.owner.receizId,
-            recordId: isRecord(predecessorBundle.nativeRecordSeal)
+            recordId: predecessorBundle && isRecord(predecessorBundle.nativeRecordSeal)
               && typeof predecessorBundle.nativeRecordSeal.recordId === "string"
               ? predecessorBundle.nativeRecordSeal.recordId
               : `native:${basisSha256}`,
@@ -6188,14 +6187,13 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
               predecessorBundle,
               portableContinuity
             }),
-            ...(predecessorArtifactSha256 ? {
+            ...(predecessorBundle && predecessorArtifactSha256 ? {
               proofPredecessor: {
                 headReference: predecessorBundle.receizClaimId,
                 artifactSha256: predecessorArtifactSha256
               }
             } : {})
-          }
-        : null;
+          };
       const nativeCaptureClaim = nativeCapture && nativeCapture.claimText
         ? { text: nativeCapture.claimText, sha256: await sha256Hex(nativeCapture.claimText) }
         : null;
@@ -6849,7 +6847,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       if (isLocalHost) return;
       if (!window.isSecureContext) return;
 
-      const OFFLINE_STANDALONE_SW_VERSION = "125.0.0-local-proof-primitives-v2";
+      const OFFLINE_STANDALONE_SW_VERSION = "126.0.0-local-proof-primitives-v4";
       const warmUrls = [
         "/offline-record-seal.html",
         "/offline-verifier.html",
@@ -8144,8 +8142,530 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       ui.checks.appendChild(li);
     }
 
+    // BEGIN SHARED VERIFIER IDENTITY DISPLAY
+"use strict";
+var ReceizVerifierIdentityDisplay = (() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __export = (target, all) => {
+    for (var name in all)
+      __defProp(target, name, { get: all[name], enumerable: true });
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+  // app/verify/identityDisplay.ts
+  var identityDisplay_exports = {};
+  __export(identityDisplay_exports, {
+    carriedVerifierOriginal: () => carriedVerifierOriginal,
+    classifyPortableIdentityCarrier: () => classifyPortableIdentityCarrier,
+    formatVerifierIdentity: () => formatVerifierIdentity,
+    formatVerifierPbiSigners: () => formatVerifierPbiSigners,
+    projectVerifierIdentityDisplay: () => projectVerifierIdentityDisplay,
+    retainVerifierPbiAssertionResult: () => retainVerifierPbiAssertionResult,
+    verifierIdentity: () => verifierIdentity
+  });
+
+  // app/lib/profile/showcase/routeProjectionEncoding.ts
+  var PROFILE_ORIGINAL_RENDER_APPEND_TYPE = "receiz.profile-original-render.v1";
+  function record(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+  function canonicalJson(value) {
+    if (value === null || typeof value === "string" || typeof value === "boolean") {
+      return JSON.stringify(value);
+    }
+    if (typeof value === "number") {
+      if (!Number.isFinite(value)) {
+        throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+      }
+      return JSON.stringify(value);
+    }
+    if (Array.isArray(value)) {
+      return `[${value.map(canonicalJson).join(",")}]`;
+    }
+    if (!record(value)) {
+      throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+    }
+    return `{${Object.keys(value).sort().filter((key) => value[key] !== void 0).map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
+  }
+  function encodeProfileOriginalRouteProjection(projection) {
+    const encoded = canonicalJson(projection);
+    const decoded = JSON.parse(encoded);
+    if (!record(decoded) || typeof decoded.id !== "string" || typeof decoded.slug !== "string" || typeof decoded.code !== "string") {
+      throw new TypeError("PROFILE_ORIGINAL_ROUTE_PROJECTION_INVALID");
+    }
+    return encoded;
+  }
+  function decodeProfileOriginalRouteProjectionAppend(append, renderedArtifactSha256) {
+    if (!record(append) || append.type !== PROFILE_ORIGINAL_RENDER_APPEND_TYPE || append.renderedArtifactSha256 !== renderedArtifactSha256) return null;
+    const bindSealedRecordMediaHash = (projection) => {
+      if (projection.media === null && typeof projection.recordMediaSha256Hex !== "string") {
+        return {
+          ...projection,
+          recordMediaSha256Hex: renderedArtifactSha256
+        };
+      }
+      return projection;
+    };
+    if (record(append.projection)) {
+      return bindSealedRecordMediaHash(append.projection);
+    }
+    if (typeof append.projectionJson !== "string") return null;
+    try {
+      const projection = JSON.parse(append.projectionJson);
+      if (!record(projection)) return null;
+      if (encodeProfileOriginalRouteProjection(projection) !== append.projectionJson) {
+        return null;
+      }
+      return bindSealedRecordMediaHash(projection);
+    } catch {
+      return null;
+    }
+  }
+
+  // packages/receiz-sdk/src/errors.ts
+  var PRIVATE_KEY_RE = /-----BEGIN [^-\r\n]*PRIVATE KEY-----[\s\S]*?-----END [^-\r\n]*PRIVATE KEY-----/gi;
+  var AUTHORIZATION_RE = /\bauthorization\s*:\s*(?:bearer\s+)?[^\s,;]+/gi;
+  var BEARER_RE = /\bbearer\s+[^\s,;]+/gi;
+  var SECRET_FIELD_RE = /\b(access[_-]?token|refresh[_-]?token|private[_-]?key|client[_-]?secret|webhook[_-]?secret|receiz[_-]?key)\s*[:=]\s*[^\s,;]+/gi;
+  var JWT_RE = /\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g;
+  function sanitizeReceizErrorMessage(message) {
+    return message.replace(PRIVATE_KEY_RE, "[REDACTED]").replace(AUTHORIZATION_RE, "Authorization: [REDACTED]").replace(BEARER_RE, "Bearer [REDACTED]").replace(SECRET_FIELD_RE, "$1=[REDACTED]").replace(JWT_RE, "[REDACTED]");
+  }
+  function inferredRail(code) {
+    if (code.includes("continuity")) return "continuity";
+    if (code.includes("identity") || code.includes("scope") || code.includes("unauthorized")) return "identity";
+    if (code.includes("ownership")) return "ownership";
+    if (code.includes("settlement")) return "settlement";
+    if (code.includes("webhook")) return "webhook";
+    if (code.includes("compiler") || code.includes("contract") || code.includes("project")) return "compiler";
+    if (code.includes("proof") || code.includes("artifact")) return "proof";
+    return "sdk";
+  }
+  function inferredRepair(code) {
+    if (code === "missing_scope") return "Request the missing delegated scope through Receiz Connect.";
+    if (code.includes("continuity")) return "Recreate the proof object through authenticated Receiz Record and Seal continuity.";
+    if (code.startsWith("http_5")) return "Retry the same idempotent SDK operation after the Receiz service recovers.";
+    if (code.startsWith("http_4")) return "Correct the request or delegated authorization before retrying.";
+    if (code.includes("validation")) return "Correct the invalid fields and submit the same Receiz operation again.";
+    return "Inspect the affected Receiz rail and retry only after correcting the reported condition.";
+  }
+  function descriptorFor(code, message, context = {}) {
+    const rail = context.rail ?? inferredRail(code);
+    const retryable = context.retryable ?? /^http_5\d\d$/.test(code);
+    return {
+      schema: "receiz.sdk.error.v1",
+      code,
+      message: sanitizeReceizErrorMessage(message),
+      rail,
+      retryable,
+      ...context.missingScope ? { missingScope: context.missingScope } : {},
+      documentationUrl: context.documentationUrl ?? "https://receiz.com/developers",
+      suggestedRepair: context.suggestedRepair ?? inferredRepair(code),
+      authorityBoundary: context.authorityBoundary ?? "sdk-mechanics-beneath-receiz-proof-object-truth"
+    };
+  }
+  var ReceizError = class extends Error {
+    code;
+    descriptor;
+    constructor(code, message, context = {}) {
+      const descriptor = descriptorFor(code, message, context);
+      super(descriptor.message);
+      this.name = "ReceizError";
+      this.code = code;
+      this.descriptor = descriptor;
+    }
+  };
+
+  // packages/receiz-sdk/src/portableAssetReader.ts
+  var ReceizPortableAssetError = class extends ReceizError {
+    constructor(code) {
+      super(code, code, { rail: "continuity", retryable: false });
+      this.name = "ReceizPortableAssetError";
+    }
+  };
+  var ASSET_TYPES = /* @__PURE__ */ new Set([
+    "proof_object",
+    "sports_card",
+    "signal_card",
+    "wallet_note",
+    "reserve_funding",
+    "market_certificate",
+    "profile_original",
+    "document"
+  ]);
+  var HEX64_RE = /^[0-9a-f]{64}$/;
+  var B64URL_RE = /^[A-Za-z0-9_-]*$/;
+  var OWNER_RECEIZ_ID_RE = /^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?\.receiz\.id$/;
+  var OWNERSHIP_APPEND_TYPE = "receiz.ownership.bearer-claim.v108";
+  function isRecord(value) {
+    return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  }
+  function canonicalize(value) {
+    if (value === null || typeof value === "string" || typeof value === "boolean") return JSON.stringify(value);
+    if (typeof value === "number") return Number.isFinite(value) ? JSON.stringify(value) : "null";
+    if (Array.isArray(value)) return `[${value.map((entry) => canonicalize(entry)).join(",")}]`;
+    if (isRecord(value)) {
+      return `{${Object.keys(value).sort().filter((key) => value[key] !== void 0).map((key) => `${JSON.stringify(key)}:${canonicalize(value[key])}`).join(",")}}`;
+    }
+    throw new ReceizPortableAssetError("continuity_round_trip_failed");
+  }
+  function nonempty(value) {
+    return typeof value === "string" && value.trim() ? value.trim() : null;
+  }
+  function base64UrlDecode(value) {
+    if (!B64URL_RE.test(value)) throw new ReceizPortableAssetError("continuity_payload_missing");
+    const padded = value.replace(/-/g, "+").replace(/_/g, "/").padEnd(Math.ceil(value.length / 4) * 4, "=");
+    let binary;
+    try {
+      binary = atob(padded);
+    } catch {
+      throw new ReceizPortableAssetError("continuity_payload_missing");
+    }
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
+    return bytes;
+  }
+  async function sha256Hex(bytes) {
+    const copy = new Uint8Array(bytes.byteLength);
+    copy.set(bytes);
+    const digest = await globalThis.crypto.subtle.digest("SHA-256", copy.buffer);
+    return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  function parseOwnership(value) {
+    if (!isRecord(value)) throw new ReceizPortableAssetError("continuity_ownership_missing");
+    const ownerReceizId = nonempty(value.ownerReceizId);
+    const custody = nonempty(value.custody);
+    const proofRef = nonempty(value.proofRef);
+    if (!ownerReceizId || !custody || !proofRef) throw new ReceizPortableAssetError("continuity_ownership_missing");
+    return { ownerReceizId, custody, proofRef };
+  }
+  function parseProvenance(value) {
+    if (!isRecord(value)) throw new ReceizPortableAssetError("continuity_provenance_missing");
+    const root = nonempty(value.root);
+    if (!root || !Array.isArray(value.appends)) throw new ReceizPortableAssetError("continuity_provenance_missing");
+    if (value.appends.some((append) => !isRecord(append))) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    return {
+      root,
+      appends: value.appends.map((append) => ({ ...append }))
+    };
+  }
+  function parseSettlement(value) {
+    if (!isRecord(value) || !nonempty(value.state)) {
+      throw new ReceizPortableAssetError("continuity_settlement_missing");
+    }
+    return { ...value };
+  }
+  async function parseReceizPortableAssetDocument(value) {
+    if (!isRecord(value) || value.schema !== "receiz.portable_asset.v1") {
+      throw new ReceizPortableAssetError("continuity_schema_unsupported");
+    }
+    if (typeof value.assetType !== "string" || !ASSET_TYPES.has(value.assetType)) {
+      throw new ReceizPortableAssetError("continuity_schema_unsupported");
+    }
+    if (!isRecord(value.payload)) throw new ReceizPortableAssetError("continuity_payload_missing");
+    const mimeType = nonempty(value.payload.mimeType);
+    const bytesBase64Url = typeof value.payload.bytesBase64Url === "string" ? value.payload.bytesBase64Url : null;
+    const claimedSha256 = typeof value.payload.sha256 === "string" ? value.payload.sha256.trim().toLowerCase() : "";
+    if (!mimeType || bytesBase64Url === null || !HEX64_RE.test(claimedSha256)) {
+      throw new ReceizPortableAssetError("continuity_payload_missing");
+    }
+    const payloadBytes = base64UrlDecode(bytesBase64Url);
+    if (await sha256Hex(payloadBytes) !== claimedSha256) {
+      throw new ReceizPortableAssetError("continuity_media_unbound");
+    }
+    let receizProofHistory;
+    if (value.receizProofHistory !== void 0) {
+      if (!isRecord(value.receizProofHistory) || value.receizProofHistory.schema !== "receiz.carried-proof-history.v113" || !isRecord(value.receizProofHistory.history) || typeof value.receizProofHistory.commitmentDigest !== "string" || !HEX64_RE.test(value.receizProofHistory.commitmentDigest) || await sha256Hex(new TextEncoder().encode(canonicalize(value.receizProofHistory.history))) !== value.receizProofHistory.commitmentDigest) {
+        throw new ReceizPortableAssetError("continuity_offline_verification_failed");
+      }
+      receizProofHistory = {
+        schema: "receiz.carried-proof-history.v113",
+        history: structuredClone(value.receizProofHistory.history),
+        commitmentDigest: value.receizProofHistory.commitmentDigest
+      };
+    }
+    canonicalize(value);
+    return {
+      ...structuredClone(value),
+      schema: "receiz.portable_asset.v1",
+      assetType: value.assetType,
+      payload: { mimeType, bytesBase64Url, sha256: claimedSha256 },
+      ownership: parseOwnership(value.ownership),
+      provenance: parseProvenance(value.provenance),
+      settlement: parseSettlement(value.settlement),
+      ...receizProofHistory ? { receizProofHistory } : {}
+    };
+  }
+  function canonicalOwnerReceizId(value) {
+    if (typeof value !== "string") return null;
+    const normalized = value.trim();
+    return OWNER_RECEIZ_ID_RE.test(normalized) ? normalized : null;
+  }
+  async function ownershipHistoryDigest(value) {
+    return sha256Hex(new TextEncoder().encode(canonicalize(value)));
+  }
+  async function deriveReceizPortableOwnershipContinuity(document) {
+    const parsed = await parseReceizPortableAssetDocument(document);
+    const currentOwnerReceizId = canonicalOwnerReceizId(parsed.ownership.ownerReceizId);
+    if (!currentOwnerReceizId) throw new ReceizPortableAssetError("continuity_identity_mismatch");
+    const provenanceAppends = parsed.provenance.appends;
+    const headBearingAppends = provenanceAppends.filter(
+      (append) => nonempty(append.priorHeadReference) !== null
+    );
+    const latestHeadBearingAppend = headBearingAppends.at(-1);
+    if (parsed.ownership.proofRef === "genesis" && headBearingAppends.length !== 0 || parsed.ownership.proofRef !== "genesis" && (!latestHeadBearingAppend || nonempty(latestHeadBearingAppend.priorHeadReference) !== parsed.ownership.proofRef)) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    const ownershipAppends = parsed.provenance.appends.filter(
+      (append) => append.type === OWNERSHIP_APPEND_TYPE
+    );
+    const firstAppend = ownershipAppends[0];
+    const genesisOwnerReceizId = firstAppend ? canonicalOwnerReceizId(firstAppend.fromOwnerReceizId) : currentOwnerReceizId;
+    if (!genesisOwnerReceizId) throw new ReceizPortableAssetError("continuity_identity_mismatch");
+    let expectedOwnerReceizId = genesisOwnerReceizId;
+    let historyDigestSha256 = await ownershipHistoryDigest({
+      schema: "receiz.ownership.genesis.v1",
+      artifactId: parsed.payload.sha256,
+      namespace: parsed.provenance.root,
+      ownerReceizId: genesisOwnerReceizId
+    });
+    const seenPriorHeads = /* @__PURE__ */ new Set();
+    const seenSourceArtifacts = /* @__PURE__ */ new Set();
+    for (const append of ownershipAppends) {
+      const fromOwnerReceizId = canonicalOwnerReceizId(append.fromOwnerReceizId);
+      const toOwnerReceizId = canonicalOwnerReceizId(append.toOwnerReceizId);
+      const priorHeadReference = nonempty(append.priorHeadReference);
+      const sourceArtifactSha256 = typeof append.sourceArtifactSha256 === "string" ? append.sourceArtifactSha256.trim().toLowerCase() : "";
+      const priorHistoryDigestSha256 = typeof append.priorHistoryDigestSha256 === "string" ? append.priorHistoryDigestSha256.trim().toLowerCase() : "";
+      if (!fromOwnerReceizId || fromOwnerReceizId !== expectedOwnerReceizId || !toOwnerReceizId || !priorHeadReference || priorHeadReference === "genesis" || seenPriorHeads.has(priorHeadReference) || !HEX64_RE.test(sourceArtifactSha256) || seenSourceArtifacts.has(sourceArtifactSha256) || priorHistoryDigestSha256 !== historyDigestSha256) {
+        throw new ReceizPortableAssetError("continuity_append_mismatch");
+      }
+      historyDigestSha256 = await ownershipHistoryDigest({
+        schema: "receiz.ownership.append.v1",
+        priorHistoryDigestSha256,
+        sourceArtifactSha256,
+        priorHeadReference,
+        fromOwnerReceizId,
+        toOwnerReceizId
+      });
+      seenPriorHeads.add(priorHeadReference);
+      seenSourceArtifacts.add(sourceArtifactSha256);
+      expectedOwnerReceizId = toOwnerReceizId;
+    }
+    if (expectedOwnerReceizId !== currentOwnerReceizId) {
+      throw new ReceizPortableAssetError("continuity_append_mismatch");
+    }
+    return Object.freeze({
+      artifactId: parsed.payload.sha256,
+      namespace: parsed.provenance.root,
+      genesisOwnerReceizId,
+      ownerReceizId: currentOwnerReceizId,
+      historyDigestSha256,
+      appendCount: ownershipAppends.length
+    });
+  }
+
+  // app/verify/portableIdentityReader.ts
+  async function classifyPortableIdentityCarrier(originalBytes, bundle) {
+    const nativeRecordSeal = bundle?.nativeRecordSeal ?? null;
+    let parsed;
+    try {
+      parsed = JSON.parse(new TextDecoder().decode(originalBytes));
+    } catch {
+      return { state: "not_applicable" };
+    }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return { state: "not_applicable" };
+    const schema = parsed.schema;
+    if (schema === "receiz.asset_manifest.v1") return { state: "historical_missing" };
+    if (schema !== "receiz.portable_asset.v1") return { state: "not_applicable" };
+    try {
+      const document = await parseReceizPortableAssetDocument(parsed);
+      const continuity = await deriveReceizPortableOwnershipContinuity(document);
+      const signedContinuity = nativeRecordSeal?.ownershipContinuity ?? null;
+      if (nativeRecordSeal && nativeRecordSeal.ownerReceizId !== continuity.ownerReceizId) {
+        return { state: "invalid", error: "continuity_identity_mismatch" };
+      }
+      if (continuity.appendCount > 0 && !signedContinuity) {
+        return { state: "invalid", error: "continuity_ownership_attestation_missing" };
+      }
+      if (signedContinuity && (signedContinuity.artifactId !== continuity.artifactId || signedContinuity.namespace !== continuity.namespace || signedContinuity.genesisOwnerReceizId !== continuity.genesisOwnerReceizId || signedContinuity.ownerReceizId !== continuity.ownerReceizId || signedContinuity.headReference !== bundle?.receizClaimId || signedContinuity.historyDigestSha256 !== continuity.historyDigestSha256 || signedContinuity.appendCount !== continuity.appendCount)) {
+        return { state: "invalid", error: "continuity_ownership_attestation_mismatch" };
+      }
+      return {
+        state: "verified",
+        carrier: "portable_asset",
+        issuerKid: bundle?.signatureV4?.cert.issuerKid ?? null,
+        artifactId: document.payload.sha256,
+        headReference: bundle?.receizClaimId ?? document.payload.sha256,
+        ownerReceizId: continuity.ownerReceizId,
+        namespace: document.provenance.root,
+        priorHeadReference: document.ownership.proofRef,
+        genesisOwnerReceizId: continuity.genesisOwnerReceizId,
+        historyDigestSha256: continuity.historyDigestSha256,
+        appendCount: continuity.appendCount,
+        history: projectPortableOwnershipHistory(
+          document,
+          bundle?.receizClaimId ?? document.payload.sha256,
+          continuity.genesisOwnerReceizId,
+          continuity.historyDigestSha256
+        ),
+        historyComplete: true,
+        document
+      };
+    } catch (error) {
+      return {
+        state: "invalid",
+        error: error instanceof ReceizPortableAssetError ? error.code : "continuity_round_trip_failed"
+      };
+    }
+  }
+  function projectPortableOwnershipHistory(document, currentHeadReference, genesisOwnerReceizId, currentHistoryDigestSha256) {
+    const ownershipAppends = document.provenance.appends.filter(
+      (append) => append.type === "receiz.ownership.bearer-claim.v108"
+    );
+    const first = ownershipAppends[0];
+    const genesisHead = typeof first?.priorHeadReference === "string" ? first.priorHeadReference : "genesis";
+    const genesisDigest = typeof first?.priorHistoryDigestSha256 === "string" ? first.priorHistoryDigestSha256 : currentHistoryDigestSha256;
+    const history = [{
+      schema: "receiz.native_ownership_genesis.v1",
+      index: 0,
+      ownerReceizId: genesisOwnerReceizId,
+      headReference: genesisHead,
+      historyDigestSha256: genesisDigest
+    }];
+    ownershipAppends.forEach((append, index) => {
+      const next = ownershipAppends[index + 1];
+      history.push({
+        schema: "receiz.native_ownership_transfer.v1",
+        index: index + 1,
+        fromOwnerReceizId: String(append.fromOwnerReceizId),
+        toOwnerReceizId: String(append.toOwnerReceizId),
+        priorHeadReference: String(append.priorHeadReference),
+        sourceArtifactSha256: String(append.sourceArtifactSha256),
+        headReference: typeof next?.priorHeadReference === "string" ? next.priorHeadReference : currentHeadReference,
+        historyDigestSha256: index === ownershipAppends.length - 1 ? currentHistoryDigestSha256 : String(next?.priorHistoryDigestSha256)
+      });
+    });
+    return history;
+  }
+
+  // app/verify/identityDisplay.ts
+  var record2 = (value) => value !== null && typeof value === "object" && !Array.isArray(value) ? value : null;
+  var text = (value) => typeof value === "string" && value.trim() ? value : null;
+  var USERNAME = /^[a-z0-9](?:[a-z0-9._-]{0,62}[a-z0-9])?$/;
+  function verifierIdentity(value, displayName = null) {
+    const receizId = text(value);
+    const component = receizId?.endsWith(".receiz.id") ? receizId.slice(0, -10) : null;
+    return { receizId, username: component && USERNAME.test(component) ? component : null, displayName: text(displayName) };
+  }
+  var absent = () => verifierIdentity(null);
+  function carriedVerifierOriginal(value) {
+    const result = record2(value);
+    if (result?.ok !== true || record2(result.integrity)?.ok === false) return null;
+    const continuity = record2(result.assetContinuity);
+    const document = record2(continuity?.document);
+    if (continuity?.state !== "verified" || continuity.carrier !== "portable_asset" || document?.assetType !== "profile_original") return null;
+    const appends = record2(document.provenance)?.appends;
+    const digest = text(record2(document.payload)?.sha256);
+    if (!Array.isArray(appends) || !digest) return null;
+    const render = appends.filter((append) => record2(append)?.type === "receiz.profile-original-render.v1");
+    return render.length === 1 ? decodeProfileOriginalRouteProjectionAppend(render[0], digest) : null;
+  }
+  function projectVerifierIdentityDisplay(value) {
+    const result = record2(value);
+    const empty = { originalCreator: absent(), currentOwner: absent(), placementOwner: null, pbiSigners: [] };
+    if (result?.ok !== true || record2(result.integrity)?.ok === false) return empty;
+    const canonicalContinuity = record2(result.assetContinuity);
+    const native = record2(record2(result.bundle)?.nativeRecordSeal);
+    const continuity = canonicalContinuity?.state === "verified" ? canonicalContinuity : record2(native?.ownershipContinuity);
+    const owner = verifierIdentity(continuity?.ownerReceizId ?? native?.ownerReceizId);
+    const original = carriedVerifierOriginal(result);
+    const creator = record2(original?.originalCreator);
+    const creatorUsername = text(creator?.username);
+    let originalCreator = creatorUsername && USERNAME.test(creatorUsername) ? verifierIdentity(`${creatorUsername}.receiz.id`, creator?.displayName) : verifierIdentity(creator?.receizId, creator?.displayName);
+    if (!creator && (original?.ownershipKind === "creator" || !original && canonicalContinuity?.state === "verified" && canonicalContinuity.carrier === "native_record_seal")) {
+      originalCreator = verifierIdentity(continuity?.genesisOwnerReceizId ?? record2(native?.ownershipContinuity)?.genesisOwnerReceizId);
+    }
+    const nested = record2(result.identitySource);
+    const nestedDisplay = nested?.state === "verified" ? projectVerifierIdentityDisplay(nested.result) : null;
+    const imported = Boolean(original && original.ownershipKind !== "creator");
+    const accepted = record2(result.verifiedPbiAssertion);
+    const history = Array.isArray(result.pbiAuthorshipHistory) ? result.pbiAuthorshipHistory : [];
+    return {
+      originalCreator: nestedDisplay?.originalCreator.receizId ? nestedDisplay.originalCreator : originalCreator,
+      currentOwner: imported ? nestedDisplay?.currentOwner ?? { ...absent(), unavailableReason: nested?.state === "invalid" ? "Source ownership not verified by this reader" : "Source ownership verification unavailable in this reader" } : owner,
+      sourceRolesUnavailable: imported && !nestedDisplay,
+      placementOwner: imported ? owner : null,
+      pbiSigners: [...nestedDisplay?.pbiSigners ?? [], ...history.flatMap((entry) => {
+        const receizId = text(record2(entry)?.receizId);
+        return receizId ? [{ identity: verifierIdentity(receizId), assertionStatus: accepted && accepted.sourceSha256 === result.fileHash && accepted.receizId === receizId && accepted.appendHeadSha256 === record2(entry)?.appendHeadSha256 ? "verified" : "carried-unverified", accountStatus: "not-carried" }] : [];
+      })]
+    };
+  }
+  function formatVerifierIdentity(identity) {
+    if (identity.unavailableReason) return identity.unavailableReason;
+    if (!identity.receizId) return identity.displayName ? `${identity.displayName} \xB7 Receiz ID not carried` : "Not carried in this proof";
+    return [identity.displayName, identity.username ? `@${identity.username}` : null, identity.receizId].filter(Boolean).join(" \xB7 ");
+  }
+  function formatVerifierPbiSigners(display) {
+    return display.pbiSigners.length ? display.pbiSigners.map((signer) => `${formatVerifierIdentity(signer.identity)} \xB7 Assertion ${signer.assertionStatus === "verified" ? "verified" : "not verified"}; account binding not verified`).join("\n") : display.sourceRolesUnavailable ? "Source PBI signer not evaluated by this reader" : "Not carried in this proof";
+  }
+  function retainVerifierPbiAssertionResult(result, append) {
+    const carried = record2(append);
+    if (!result.ok || !result.fileHash || !text(carried?.receizId) || !text(carried?.appendHeadSha256)) return result;
+    return { ...result, verifiedPbiAssertion: { sourceSha256: result.fileHash, receizId: carried.receizId, appendHeadSha256: carried.appendHeadSha256 } };
+  }
+  return __toCommonJS(identityDisplay_exports);
+})();
+
+    function writeVerifierIdentityFacts(result) {
+      const display = ReceizVerifierIdentityDisplay.projectVerifierIdentityDisplay(result);
+      const rows = [
+        ["factOriginalCreator", "Created by · Original creator", ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.originalCreator)],
+        ["factCurrentOwner", "Owned by · Current owner", ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.currentOwner)],
+        ["factPlacementOwner", "Placement owner", display.placementOwner ? ReceizVerifierIdentityDisplay.formatVerifierIdentity(display.placementOwner) : null],
+        ["factPbiSigner", "PBI signed by", ReceizVerifierIdentityDisplay.formatVerifierPbiSigners(display)]
+      ];
+      for (const [id, label, value] of rows) {
+        let field = document.getElementById(id);
+        if (!field) {
+          const row = ui.factCurrentOwnerRow.cloneNode(true); row.id = id + "Row";
+          field = row.lastElementChild; field.id = id;
+          if (id === "factOriginalCreator") ui.factsGrid.insertBefore(row, ui.factCurrentOwnerRow);
+          else (document.getElementById("factPlacementOwnerRow") || ui.factCurrentOwnerRow).after(row);
+        }
+        field.previousElementSibling.textContent = label;
+        field.textContent = value || "-";
+        field.parentElement.hidden = !result?.ok || value === null;
+      }
+      // Human identities precede the content-bearing proof URL and technical facts.
+      if (ui.factsGrid.firstElementChild?.id !== "factOriginalCreatorRow") {
+        for (const id of ["factPbiSignerRow", "factPlacementOwnerRow", "factCurrentOwnerRow", "factOriginalCreatorRow"]) {
+          const row = document.getElementById(id);
+          if (row) ui.factsGrid.prepend(row);
+        }
+      }
+      for (const [id, label] of [["factPreviousOwner", "Previous Owner"], ["factGenesisOwner", "Genesis Owner"], ["factOwnershipCount", "Ownership Appends"], ["factPbiAuthorshipCount", "PBI authorship appends"]]) {
+        const field = document.getElementById(id);
+        if (field) field.previousElementSibling.textContent = (display.placementOwner ? "Placement · " : "") + label;
+      }
+    }
+    // END SHARED VERIFIER IDENTITY DISPLAY
     function writeFacts(result) {
-      const continuity = result?.bundle?.nativeRecordSeal?.ownershipContinuity;
+      const continuity = result?.assetContinuity?.state === "verified" ? result.assetContinuity : result?.bundle?.nativeRecordSeal?.ownershipContinuity;
       const history = continuity && Array.isArray(continuity.history) ? continuity.history : [];
       const latestTransfer = history.length > 1 ? history[history.length - 1] : null;
       const nativeCapture = result?.ok ? result.nativeCapture : null;
@@ -8153,6 +8673,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ? result.pbiAuthorshipHistory
         : [];
       if (!result || !result.bundle) {
+        writeVerifierIdentityFacts(null);
         ui.factsGrid.hidden = true;
         ui.factTs.textContent = "-";
         ui.factCode.textContent = "-";
@@ -8196,7 +8717,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         ? (latestTransfer?.fromOwnerReceizId || continuity.genesisOwnerReceizId || "-")
         : "-";
       ui.factGenesisOwner.textContent = hasOwnership ? (continuity.genesisOwnerReceizId || "-") : "-";
-      ui.factOwnershipCount.textContent = hasOwnership ? String(history.length) : "-";
+      ui.factOwnershipCount.textContent = hasOwnership ? String(continuity.appendCount ?? history.length) : "-";
       ui.ownershipHistoryPanel.hidden = !hasOwnership || history.length === 0;
       ui.ownershipHistoryJson.textContent = history.length > 0
         ? safeJson({ proofPredecessor: result.bundle.nativeRecordSeal?.proofPredecessor || null, ownershipHistory: history })
@@ -8219,6 +8740,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
             appendHead: entry.appendHeadSha256
           })))
         : "(none)";
+      writeVerifierIdentityFacts(result);
       if (result.anchor?.contextPreset) {
         ui.factPreset.textContent = result.anchor.contextPreset;
         ui.factPresetRow.hidden = false;
@@ -11187,26 +11709,8 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       };
     }
 
-    async function classifyPortableAssetContinuity(originalBytes) {
-      let value = null;
-      try { value = JSON.parse(new TextDecoder().decode(originalBytes)); } catch { return { state: "not_applicable" }; }
-      if (!isRecord(value)) return { state: "not_applicable" };
-      if (value.schema === "receiz.asset_manifest.v1") return { state: "historical_missing" };
-      if (value.schema !== "receiz.portable_asset.v1") return { state: "not_applicable" };
-      if (!isRecord(value.payload) || !asString(value.payload.mimeType) || typeof value.payload.bytesBase64Url !== "string" || !asHex64(value.payload.sha256)) return { state: "invalid", error: "continuity_payload_missing" };
-      if (!isRecord(value.ownership) || !asString(value.ownership.ownerReceizId) || !asString(value.ownership.custody) || !asString(value.ownership.proofRef)) return { state: "invalid", error: "continuity_ownership_missing" };
-      if (!/^[a-z0-9_]{3,24}\\.receiz\\.id$/.test(value.ownership.ownerReceizId)) return { state: "invalid", error: "continuity_identity_mismatch" };
-      if (!isRecord(value.provenance) || !asString(value.provenance.root) || !Array.isArray(value.provenance.appends) || value.provenance.appends.some((entry) => !isRecord(entry))) return { state: "invalid", error: "continuity_provenance_missing" };
-      const ownerUsername = value.ownership.ownerReceizId.slice(0, -".receiz.id".length);
-      if (value.provenance.root !== `profile:${ownerUsername}`) return { state: "invalid", error: "continuity_namespace_mismatch" };
-      const headBearingAppends = value.provenance.appends.filter((append) => append && typeof append.priorHeadReference === "string" && append.priorHeadReference.trim());
-      const latestHeadBearingAppend = headBearingAppends.length > 0 ? headBearingAppends[headBearingAppends.length - 1] : null;
-      if ((value.ownership.proofRef === "genesis" && headBearingAppends.length !== 0) || (value.ownership.proofRef !== "genesis" && (!latestHeadBearingAppend || latestHeadBearingAppend.priorHeadReference !== value.ownership.proofRef))) return { state: "invalid", error: "continuity_append_mismatch" };
-      if (!isRecord(value.settlement) || !asString(value.settlement.state)) return { state: "invalid", error: "continuity_settlement_missing" };
-      let payloadBytes = null;
-      try { payloadBytes = base64UrlDecode(value.payload.bytesBase64Url); } catch { return { state: "invalid", error: "continuity_payload_missing" }; }
-      if ((await sha256Hex(payloadBytes)).toLowerCase() !== value.payload.sha256.toLowerCase()) return { state: "invalid", error: "continuity_media_unbound" };
-      return { state: "verified", carrier: "portable_asset", artifactId: value.payload.sha256, ownerReceizId: value.ownership.ownerReceizId, namespace: value.provenance.root, priorHeadReference: value.ownership.proofRef, document: value };
+    async function classifyPortableAssetContinuity(originalBytes, bundle) {
+      return ReceizVerifierIdentityDisplay.classifyPortableIdentityCarrier(originalBytes, bundle);
     }
 
     function classifyOwnershipProvenanceContinuity(bytes, bundle) {
@@ -11865,7 +12369,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         if (bundleBasis !== manifestBasis) {
           errors.push("Proof bundle artifact binding does not match container file bytes.");
         }
-        assetContinuity = await classifyPortableAssetContinuity(bundleParsed.originalBytes);
+        assetContinuity = await classifyPortableAssetContinuity(bundleParsed.originalBytes, bundle);
         if (assetContinuity.state === "invalid") errors.push(assetContinuity.error || "continuity_round_trip_failed");
       } else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
@@ -12173,7 +12677,7 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       }
 
       const ok = errors.length === 0;
-      return {
+      const result = {
         ok,
         errors,
         warnings,
@@ -12187,6 +12691,17 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
         nativeCapture: ok ? nativeCapture : null,
         pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
       };
+      if (ReceizVerifierIdentityDisplay.carriedVerifierOriginal(result)) {
+        try {
+          const nestedBytes = base64UrlDecode(assetContinuity.document.payload.bytesBase64Url);
+          if (nestedBytes.byteLength >= basisBytes.byteLength) throw new Error("nested_source_resource_unavailable");
+          const nested = await verifyReceizBytes("carried-original-source", nestedBytes, "");
+          result.identitySource = { state: nested.denial ? "unavailable" : nested.ok ? "verified" : "invalid", result: nested };
+        } catch {
+          result.identitySource = { state: "unavailable" };
+        }
+      }
+      return result;
     }
 
     class ReceizStreamingSha256 {
@@ -12757,6 +13272,56 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
       return packageResult;
     }
 
+    function hasEnclosingZipTrailerCandidate(bytes) {
+      const marker = lastIndexOfBytes(bytes, TRAILER_PREFIX_BYTES);
+      if (marker < 0) return false;
+      // A member or ZIP comment may itself carry a trailer. Locate the enclosing
+      // central-directory end (including ZIP64 and its comment) without inflating
+      // members. This selects a reader only; canonical verification decides truth.
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const u16 = (offset) => view.getUint16(offset, true);
+      const u32 = (offset) => view.getUint32(offset, true);
+      const u64 = (offset) => u32(offset) + u32(offset + 4) * 0x100000000;
+      let foundArchiveEnd = false;
+      for (let end = bytes.length - 22; end >= 0; end -= 1) {
+        if (bytes[end] !== 0x50 || u32(end) !== 0x06054b50) continue;
+        const archiveEnd = end + 22 + u16(end + 20);
+        if (archiveEnd > bytes.length) continue;
+        let count = u16(end + 10);
+        let size = u32(end + 12);
+        let offset = u32(end + 16);
+        let directoryEnd = end;
+        if (end >= 20 && u32(end - 20) === 0x07064b50) {
+          const zip64End = u64(end - 12);
+          if (!Number.isSafeInteger(zip64End) || zip64End < 0 || zip64End + 56 > end - 20
+            || u32(zip64End) !== 0x06064b50) continue;
+          const recordSize = u64(zip64End + 4);
+          if (!Number.isSafeInteger(recordSize) || recordSize < 44
+            || zip64End + 12 + recordSize !== end - 20) continue;
+          count = u64(zip64End + 32);
+          size = u64(zip64End + 40);
+          offset = u64(zip64End + 48);
+          directoryEnd = zip64End;
+        }
+        if (!Number.isSafeInteger(count) || !Number.isSafeInteger(size)
+          || !Number.isSafeInteger(offset) || offset + size !== directoryEnd
+          || count > Math.floor(size / 46)) continue;
+        let cursor = offset;
+        for (let entry = 0; entry < count; entry += 1) {
+          if (cursor + 46 > directoryEnd || u32(cursor) !== 0x02014b50) break;
+          cursor += 46 + u16(cursor + 28) + u16(cursor + 30) + u16(cursor + 32);
+        }
+        if (cursor !== directoryEnd) continue;
+        foundArchiveEnd = true;
+        // Later ZIP structure cannot hide a proof appended after an earlier
+        // enclosing end. Inspect every qualifying boundary before child dispatch.
+        if (marker >= archiveEnd) return true;
+      }
+      // An unresolvable container with proof markers must not escape a completed
+      // enclosing-proof rejection by succeeding as a collection of child objects.
+      return !foundArchiveEnd;
+    }
+
     async function verifySelectedFiles(files, optionalLink) {
       if (!Array.isArray(files) || files.length === 0) {
         return {
@@ -12799,6 +13364,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           };
         }
         if (detectDocumentFormat(bytes, { filename: file.name || "artifact", mime: file.type || "" }) === "zip") {
+          if (hasEnclosingZipTrailerCandidate(bytes)) {
+            return verifyReceizBytes(file.name || "artifact", bytes, optionalLink);
+          }
           if (!fflate || typeof fflate.unzipSync !== "function") {
             return {
               ok: false,
@@ -12931,7 +13499,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
           predecessor: verifiedArtifact,
           setVerifiedArtifact,
         });
-        renderResult(successor.successorResult);
+        const heldResult = ReceizVerifierIdentityDisplay.retainVerifierPbiAssertionResult(successor.successorResult, successor.append);
+        if (verifiedArtifact?.fileHash === heldResult.fileHash) verifiedArtifact = { ...verifiedArtifact, ...heldResult };
+        renderResult(heldResult);
         setStatus(
           "ok",
           "PBI authorship verified",
