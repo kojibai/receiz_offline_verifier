@@ -1,5 +1,34 @@
 # Release Notes
 
+## v127.0.0
+Release date: 2026-09-23
+
+`v127.0.0` is the Reality-Grade Infrastructure release for local proof
+creation and local intelligence. The standalone distribution carries the exact
+committed canonical verifier and Record and Seal Studio, the 133-law successor
+registry, the complete public release book, and its 20-file qualification
+evidence bundle.
+
+- Canonical release note: [docs/releases/v127.0.0.md](docs/releases/v127.0.0.md)
+- Product truth: [docs/releases/v127.0.0-product-truth.md](docs/releases/v127.0.0-product-truth.md)
+- Evidence checklist: [docs/releases/v127.0.0-checklist.md](docs/releases/v127.0.0-checklist.md)
+- Process: [docs/releases/v127.0.0-process.md](docs/releases/v127.0.0-process.md)
+- Regression lessons: [docs/releases/v127.0.0-regression-lessons.md](docs/releases/v127.0.0-regression-lessons.md)
+- Registry: [docs/releases/v127.0.0-constitution-registry.json](docs/releases/v127.0.0-constitution-registry.json)
+- Migration boundary: [docs/releases/v127.0.0-migration.md](docs/releases/v127.0.0-migration.md)
+- Package publication: [docs/releases/v127.0.0-package-publication-evidence.json](docs/releases/v127.0.0-package-publication-evidence.json)
+- Commit history: [docs/releases/v127.0.0-commit-history.md](docs/releases/v127.0.0-commit-history.md)
+- Public evidence: [docs/releases/evidence/v127.0.0/README.md](docs/releases/evidence/v127.0.0/README.md)
+
+The main `/receiz` repository was read only at committed release `HEAD`
+`8dec07dafa0803b1209b6b4cedde3bca37abaaf4`. Its committed evidence records
+verified npm publication, clean external installation, isolated database
+qualification, and production registry-successor application. This standalone
+work did not perform those external actions and does not broaden their scope.
+During closeout, the public app reported `v127.0.0`; the Academy still returned
+v126, so Academy production verification remains explicitly open even though
+the maintainer reported the documentation deployment live.
+
 ## v126.0.0
 Release date: 2026-09-07
 

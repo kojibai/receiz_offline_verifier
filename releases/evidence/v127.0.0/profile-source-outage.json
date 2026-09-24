@@ -1,0 +1,90 @@
+{
+  "startedAt": "2026-09-24T01:56:17.135Z",
+  "browser": "153.0.8010.53",
+  "workerSha256": "627b8a9dd986d7cde78e00c2950d54891f4e048a4f4f680c336f5d898136997d",
+  "route": "/business-domain/bjk.ceo",
+  "networkMode": "Browser online; Supabase source unavailable; local production app server remains available",
+  "navigationCustody": "RECEIZ-routes-public-v1",
+  "extraHealthyNavigation": false,
+  "custody": {
+    "controlled": true,
+    "mediaCount": 12,
+    "stageMediaCount": 1,
+    "allMediaHeld": true,
+    "documentHeld": true,
+    "documentDigest": "a8ac57108b5ca6ab509a4368e4e949e002c850576cc8d1894e8cada2c40cdaf5"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "stageAtSevenSeconds": {
+        "draws": 2324,
+        "firstDrawMs": 7193.199999988079,
+        "contextMs": 7146.199999988079,
+        "observedAtMs": 9017.100000023842
+      },
+      "stageReady": {
+        "draws": 2800,
+        "firstDrawMs": 7193.199999988079,
+        "contextMs": 7146.199999988079,
+        "observedAtMs": 9289.400000035763
+      },
+      "fromServiceWorker": true,
+      "frames": 135,
+      "emptyFrames": 0,
+      "held581": true,
+      "loadedMedia": 11,
+      "totalMedia": 26,
+      "visibleMedia": 5,
+      "visibleMediaLoaded": 5,
+      "documentUnchanged": true,
+      "heldMediaCount": 12,
+      "heldMediaBytesUnchanged": true
+    },
+    {
+      "attempt": 2,
+      "stageAtSevenSeconds": {
+        "draws": 0,
+        "firstDrawMs": null,
+        "contextMs": 8612.599999964237,
+        "observedAtMs": 8617.799999952316
+      },
+      "stageReady": {
+        "draws": 504,
+        "firstDrawMs": 8643.899999976158,
+        "contextMs": 8612.599999964237,
+        "observedAtMs": 8957.299999952316
+      },
+      "fromServiceWorker": true,
+      "frames": 256,
+      "emptyFrames": 0,
+      "held581": true,
+      "loadedMedia": 11,
+      "totalMedia": 26,
+      "visibleMedia": 5,
+      "visibleMediaLoaded": 5,
+      "documentUnchanged": true,
+      "heldMediaCount": 12,
+      "heldMediaBytesUnchanged": true
+    }
+  ],
+  "cold": {
+    "explicitUnavailable": true,
+    "containsOlderReleasedCount": false
+  },
+  "stageBoundary": "WebGL initialization is asynchronous on healthy and source-unavailable reloads; stage retention and rendering qualified after observed first draws, not immediate stage first paint",
+  "scope": {
+    "qualified": "Held profile document, identity artwork, showcase, public proof media and Live Twin public stage texture",
+    "worldTexturePolicyHistoricalOrigin": "bd5afb851768da1b380bc4859d1067d67748ca07"
+  },
+  "healthyControl": {
+    "source": "healthy Supabase source; separate diagnostic run",
+    "captureBoundary": "seven seconds after DOMContentLoaded, same as outage diagnostic",
+    "reloads": 3,
+    "firstReloadWebGLContextMs": 11643.1,
+    "secondAndThirdReloads": "No WebGL context at capture; canvas still default300x150",
+    "screenshot": "profile-healthy-stage-initialization.png",
+    "meaning": "Same pre-render boundary reproduced without source outage; no immediate stage first-paint qualification"
+  },
+  "evidenceStatus": "PASS for exact held profile/document/media continuity and stage rendering after observed WebGL draws; immediate stage first paint is not qualified"
+}

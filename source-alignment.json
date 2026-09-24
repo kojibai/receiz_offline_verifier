@@ -1,25 +1,23 @@
 {
   "schema": "receiz.standalone-source-alignment.v1",
-  "upstreamCommit": "b6bab4d8b2098676820b118b5497dcb2cdb70cfb",
-  "release": "126.0.0",
+  "upstreamCommit": "8dec07dafa0803b1209b6b4cedde3bca37abaaf4",
+  "release": "127.0.0",
   "files": [
     {
       "source": "public/offline-verifier.html",
-      "sourceSha256": "34b55f10ed453394479a39548b532996884206241fa1e225c52072c369079c42",
-      "sha256": "eea14e65baf76dc1a5f1fa9df0d4ba1af98aae3d20452d99fade1cc63cf12daa",
+      "sourceSha256": "f353850dfc535943878bd775f7e2bafcd39204657b48a7975de9f100d2601261",
+      "sha256": "f353850dfc535943878bd775f7e2bafcd39204657b48a7975de9f100d2601261",
       "destinations": [
         "apps/offline-verifier.html",
         "site/offline-verifier.html",
         "site/index.html"
       ],
-      "adjustments": [
-        "Service-worker release epoch advanced from 97.2.0 to 126.0.0; verifier logic unchanged."
-      ]
+      "adjustments": []
     },
     {
       "source": "public/offline-record-seal.html",
-      "sourceSha256": "51003369c3e2ff70bc35013b55443c04f878563b05e4509b489cceea89e6f956",
-      "sha256": "51003369c3e2ff70bc35013b55443c04f878563b05e4509b489cceea89e6f956",
+      "sourceSha256": "2f39214a9ba7ef5b8127ad26bab08e9eb3747e69401b724bbc3a3efbe5965dad",
+      "sha256": "2f39214a9ba7ef5b8127ad26bab08e9eb3747e69401b724bbc3a3efbe5965dad",
       "destinations": [
         "apps/offline-record-seal.html",
         "site/offline-record-seal.html"
@@ -29,19 +27,19 @@
     {
       "source": "public/offline-sports-card-verifier.html",
       "sourceSha256": "7fdf0f66786460f382512c700210a345dc67e28a6fa536f10525d424367f1629",
-      "sha256": "703a3a2d8b2c296d0806e0d75ce9ddc59cf21c70f0002aca18396ec37cc2936f",
+      "sha256": "4a80c40595d499da0a56e9057775b4ad779da2d12c555622840febca93c1e8e9",
       "destinations": [
         "apps/offline-sports-card-verifier.html",
         "site/offline-sports-card-verifier.html"
       ],
       "adjustments": [
-        "Footer release label and service-worker release epoch advanced from 95.0.0 to 126.0.0; verifier logic unchanged."
+        "Footer release label and service-worker release epoch advanced from 126.0.0 to 127.0.0; verifier logic unchanged."
       ]
     },
     {
       "source": "public/offline-settlement.html",
       "sourceSha256": "5fb75d1e8364b8d9197bc1a78f0f9eb8d6ced0e1d69cd16c4c91db37ea742ca6",
-      "sha256": "a5ba22cef6ac873eee9742e414cf0b4fa5980fa1729144b42a094e65ad4b50c0",
+      "sha256": "2d9a2d5fac95cb86bea47397cad0e660ef6081e4f3f34727b7e549e37bdaf1ec",
       "destinations": [
         "apps/offline-settlement.html",
         "site/offline-settlement.html"

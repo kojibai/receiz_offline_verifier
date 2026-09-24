@@ -1,0 +1,6 @@
+{
+  "productionPinnedRoots": true,
+  "identityBoundOfflineSealing": true,
+  "exactSnapshotRoundTrip": true,
+  "networkCalls": 0
+}

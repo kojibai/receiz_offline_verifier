@@ -1,0 +1,8 @@
+{
+  "productionPinnedRoots": true,
+  "identityBoundOfflineSealing": true,
+  "exactSnapshotRoundTrip": true,
+  "fullKaiSigilProofPreserved": true,
+  "temporalMutationRoundTrip": true,
+  "networkCalls": 0
+}

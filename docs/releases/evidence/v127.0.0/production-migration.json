@@ -1,0 +1,32 @@
+{
+  "schema": "receiz.production_migration_evidence.v1",
+  "releaseVersion": "127.0.0",
+  "projectId": "yggkbnvikufnncormsrm",
+  "migrationFile": "supabase/migrations/20260923234022_v127_lawful_action_registry_successor.sql",
+  "sha256": "2f9830bc2fa5f51be32ba96d86bdcbd7e6d6dbf9be274d11f0be1a3439d5d794",
+  "remoteMigrationVersion": "20260924025706",
+  "remoteMigrationName": "v127_lawful_action_registry_successor",
+  "registryDigest": "8d0b5b839d02d9efbd4306cc99410595a183705c2670b76d2567eaaaade99065",
+  "applied": true,
+  "verification": {
+    "bothFunctionsAdmitV127": true,
+    "onlyRegistryDigestAdded": true,
+    "securityDefinerPreserved": true,
+    "acl": [
+      "postgres=X/postgres",
+      "service_role=X/postgres"
+    ]
+  },
+  "functions": [
+    {
+      "name": "receiz_lawful_action_admit_v125(jsonb)",
+      "beforeMD5": "6258f758d0e9f9a445f134a6f62f0e55",
+      "afterMD5": "4ddfc2f6b05ed4d794d87238d5761236"
+    },
+    {
+      "name": "receiz_lawful_action_law_register_v125(jsonb)",
+      "beforeMD5": "641a7cf03f5cbc679978b696af576d0f",
+      "afterMD5": "53327b1b9f1ae123798487835a3bae14"
+    }
+  ]
+}

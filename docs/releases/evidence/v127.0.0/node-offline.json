@@ -1,0 +1,75 @@
+{
+  "qualifiedAt": "2026-09-23T23:32:12.052Z",
+  "networkCalls": 0,
+  "priorEnrollmentRequired": true,
+  "productionPinnedRoots": true,
+  "corruptWasmAndZkeyRejected": true,
+  "syntheticHeicContainer": true,
+  "physicalPhotosQualification": false,
+  "results": [
+    {
+      "filename": "proof.txt",
+      "artifact": "proof.receized.txt",
+      "bytes": 2813,
+      "sha256": "78ab06ceb4ca2dbad54e8e731427dacec34f32e54155b098ceafce088394ae58",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.json",
+      "artifact": "proof.receized.json",
+      "bytes": 18106,
+      "sha256": "be0852c5a7a7ea73d4e77d7b1dccd535c4cd57be7f85069c9f0a2d3b161c7350",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.svg",
+      "artifact": "proof.receized.svg",
+      "bytes": 2487,
+      "sha256": "cdff03d4f173aed4268b3c13872d28112133a19e01bb23cb25f0d3d422225cc6",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.png",
+      "artifact": "proof.receized.png",
+      "bytes": 5467,
+      "sha256": "a382cbe6d953ccec7b3c0cfc58b27beb0baedd32857826d6610885bdd8cdf2f0",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.jpg",
+      "artifact": "proof.receized.jpg",
+      "bytes": 4645,
+      "sha256": "0c3be81399de09a27f81599edcae88403aa12a03b499253db16e5ccfad85291f",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.webp",
+      "artifact": "proof.receized.webp",
+      "bytes": 3877,
+      "sha256": "c58f9ebdafe4002596cb5704636f035f0ba646010e91fb211939288e78292257",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.pdf",
+      "artifact": "proof.receized.pdf",
+      "bytes": 2656,
+      "sha256": "0fddf9f2cb76e01fa723147835590a51fac2bd3b3485b2a4026b9c8692facb59",
+      "verified": true,
+      "tamperRejected": true
+    },
+    {
+      "filename": "proof.heic",
+      "artifact": "proof.receized.heic",
+      "bytes": 2821,
+      "sha256": "ddc26bcd09c100e5f68204bda0b0bf7b7642206e53b4825a36cae8249e6ceca3",
+      "verified": true,
+      "tamperRejected": true
+    }
+  ]
+}

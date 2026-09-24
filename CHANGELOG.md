@@ -9,6 +9,27 @@ All notable changes to this project will be documented in this file.
 - Place CI and Pages workflows in the executable workflow directory; gate Pages on source and release checks.
 - Record current proof-native governance separately from historical release and signing records.
 
+## [v127.0.0] - 2026-09-23
+
+### Added
+
+- Added the complete ten-record v127 archive and its 20-file public evidence bundle, including the deterministic 133-law successor registry, verified package publication, isolated-database qualification, production registry-successor evidence, and exact remaining boundaries.
+- Added the exact committed v127 canonical verifier and Record and Seal Studio from the read-only application source.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, documentation, Sports and Studio epochs, and site service-worker identity to `127.0.0`.
+- Rebuilt the release lock around the v127 registry chain, release-book and evidence mirror parity, exact source digests, and committed local application-source boundary.
+
+### Preserved
+
+- Exact enclosing artifact bytes, canonical Signature V4 verification, Receiz ID identity, ownership, Settlement, temporal authority, and append-only proof history.
+- First admission only, then append forever: known proof paints immediately and hidden work may append only verified additions.
+
+### Boundary
+
+- The main `/receiz` repository was read only. npm publication, database migration, deployment, production smoke, signed attestation, application-repository push, and standalone remote push remain unperformed by this release.
+
 ## [v126.0.0] - 2026-09-07
 
 ### Added

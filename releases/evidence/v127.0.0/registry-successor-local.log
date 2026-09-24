@@ -1,0 +1,23 @@
+Original source-length guards: receiz_lawful_action_laws_v125_exact_artifact_byte_length_check|CHECK (((exact_artifact_byte_length >= 1) AND (exact_artifact_byte_length <= 33554432)))
+receiz_lawful_action_admission_exact_artifact_byte_length_check|CHECK (((exact_artifact_byte_length >= 1) AND (exact_artifact_byte_length <= 33554432)))
+Two independent SQL transactions observed waiting inside controlled barrier.
+Two independent SQL transactions observed waiting inside controlled barrier.
+Different candidates under one scoped key retain both exact sources and one accepted SQL row, with truthful conflict.
+Canonical retry/custody, retained source/RPC rejection, key collision, concurrent identical registration, and ambiguous value delivery assertions passed.
+Canonical invalid enclosing bytes with correct block hash and corrupted stored law reject before domain writes.
+Actual MCP trusted source resolution and confirmation recover the original canonical law through HTTP/SQL.
+Canonical segmented reverse/duplicate/interrupted/missing/corrupt delivery and execution-capacity classification passed.
+Swapped enclosing artifact, tampered receipt, broken predecessor and invalid causal completion reject without source/domain writes.
+Large canonical law exact bytes: 34959728 maximum request bytes: 1398306
+Large canonical action via MCP exact bytes: 35034740 bounded requests: 128
+✔ canonical HTTP law retry recovers original Kai and receipt after response loss (44682.476208ms)
+✔ lawful response serialization failure after operation preserves uncertain writes (32.930042ms)
+✔ actual contiguous allocation exception remains operational before source admission (10.711083ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45475.395916

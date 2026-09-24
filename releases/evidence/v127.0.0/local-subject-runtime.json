@@ -1,0 +1,7 @@
+{
+  "verified": true,
+  "productionPinnedRoots": true,
+  "subjectIdentityPreserved": true,
+  "coldRuntimeRestart": true,
+  "networkCalls": 0
+}

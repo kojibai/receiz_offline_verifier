@@ -1,14 +1,14 @@
 # Current standalone source alignment
 
-Upstream committed source: `b6bab4d8b2098676820b118b5497dcb2cdb70cfb`. Release family: `126.0.0`.
+Upstream committed source: `8dec07dafa0803b1209b6b4cedde3bca37abaaf4`. Release family: `127.0.0`.
 
-The canonical verifier is copied from `public/offline-verifier.html` to both the downloadable app and the deployed index. The Studio remains byte-identical to upstream. Sports includes the upstream enclosing-ZIP proof boundary and explicit reader capability disclosure. Only the canonical verifier worker epoch, Sports release label/worker epoch and settlement release label differ from upstream, as enumerated in [the source manifest](../source-alignment.json).
+The canonical verifier is copied byte-for-byte from `public/offline-verifier.html` to both the downloadable app and the deployed index. The Studio is also byte-identical to committed upstream source. Sports retains its existing enclosing-ZIP proof boundary and explicit reader capability disclosure; only its standalone release label/worker epoch and the settlement release label advance, as enumerated in [the source manifest](../source-alignment.json).
 
 `npm test` checks every deployed mirror and source digest, ownership/provenance surface presence, and executable workflow placement. `npm run release:lock` checks the original release archive. GitHub Pages runs the same source checks before upload. Downloadable app paths are included in the Pages artifact.
 
 ## Release history
 
-The original v126 records and their original source hashes remain unchanged. This source update appends to that history; it does not move a published tag or imply an attestation was issued. A digest inventory establishes exact bytes; it is not an authenticated release signature or a substitute for conformance.
+The original v126 records and their original source hashes remain unchanged. The v127 archive appends to that history; it does not move an older tag or imply an attestation was issued. A digest inventory establishes exact bytes; it is not an authenticated release signature or a substitute for conformance.
 
 ## Current governance authority
 

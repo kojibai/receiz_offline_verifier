@@ -1,6 +1,6 @@
 # Receiz Reasoning Kernel
 
-Status: Primitive-first reasoning law carried forward for `v126.0.0`.
+Status: Primitive-first reasoning law carried forward for `v127.0.0`.
 
 This file compresses existing Receiz law into the default reasoning loop.
 It does not add a new authority above Receiz doctrine, implemented primitives, sealed artifacts, verified appends, durable local truth, contracts, or user-stated law.
