@@ -634,7 +634,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v127.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v128.0.0</a>
     </p>
   </main>
 
@@ -2517,8 +2517,8 @@ var ReceizVerifierIdentityDisplay = (() => {
         offset = end;
       }
       if (
-        app2Index < 0
-        || photoshopIndex <= app2Index
+        photoshopIndex < 0
+        || (app2Index >= 0 && photoshopIndex <= app2Index)
         || exifIndex < 0
         || offset + 1 >= bytes.byteLength
         || bytes[offset] !== 255
@@ -2672,8 +2672,10 @@ var ReceizVerifierIdentityDisplay = (() => {
       canonicalExif[2] = (declaredLength >>> 8) & 255;
       canonicalExif[3] = declaredLength & 255;
       parts[exifIndex] = canonicalExif;
-      const photoshop = parts.splice(photoshopIndex, 1)[0];
-      parts.splice(app2Index, 0, photoshop);
+      if (app2Index >= 0) {
+        const photoshop = parts.splice(photoshopIndex, 1)[0];
+        parts.splice(app2Index, 0, photoshop);
+      }
       return join([...parts, bytes.slice(offset)]);
     }
     function normalizeJpegIosPhotosCarrierV6Basis(bytes) {
@@ -6244,7 +6246,7 @@ var ReceizVerifierIdentityDisplay = (() => {
     if (isLocalHost) return;
     if (!window.isSecureContext) return;
 
-    const OFFLINE_STANDALONE_SW_VERSION = "97.2.0-official-release-v1";
+    const OFFLINE_STANDALONE_SW_VERSION = "127.0.0-jpeg-no-app2-v1";
     const warmUrls = [
       "/offline-verifier.html",
       "/verify",

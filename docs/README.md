@@ -1,9 +1,18 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v127.0.0`.
+This directory is the public documentation set for Receiz `v128.0.0`.
 
 ## Start Here
 
+- [releases/v128.0.0.md](releases/v128.0.0.md): official Reality-Grade Infrastructure v128 record and standalone boundary.
+- [releases/v128.0.0-product-truth.md](releases/v128.0.0-product-truth.md): source authority across AssetSeal, Mind, AI, institutions, continuity, and discovery.
+- [releases/v128.0.0-checklist.md](releases/v128.0.0-checklist.md): complete qualification, operator acceptance, and exact residual evidence boundaries.
+- [releases/v128.0.0-process.md](releases/v128.0.0-process.md): preparation, publication closeout, and standalone qualification sequence.
+- [releases/v128.0.0-regression-lessons.md](releases/v128.0.0-regression-lessons.md): release-scoped continuity and regression law.
+- [releases/v128.0.0-commit-history.md](releases/v128.0.0-commit-history.md): v127-to-v128 implementation ledger and standalone archive boundary.
+- [releases/v128.0.0-compatibility.md](releases/v128.0.0-compatibility.md), [conformance](releases/v128.0.0-conformance.md), and [production diagnosis](releases/v128.0.0-production-diagnosis.md): exact compatibility, qualification, and observed production boundaries.
+- [releases/v128.0.0-package-publication-evidence.json](releases/v128.0.0-package-publication-evidence.json): verified public package coordinates.
+- [releases/v128.0.0-registry-binding.json](releases/v128.0.0-registry-binding.json): byte-identical inheritance of the admitted v127 registry.
 - [releases/v127.0.0.md](releases/v127.0.0.md): canonical Reality-Grade Infrastructure v127 record and standalone boundary.
 - [releases/v127.0.0-product-truth.md](releases/v127.0.0-product-truth.md): local proof creation, signer custody, temporal execution, Mind, continuity, and authority invariants.
 - [releases/v127.0.0-checklist.md](releases/v127.0.0-checklist.md): exact passed gates, unavailable database integration, and incomplete external actions.
@@ -48,7 +57,7 @@ This directory is the public documentation set for Receiz `v127.0.0`.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v127.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v128.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

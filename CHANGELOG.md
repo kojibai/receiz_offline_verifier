@@ -9,6 +9,27 @@ All notable changes to this project will be documented in this file.
 - Place CI and Pages workflows in the executable workflow directory; gate Pages on source and release checks.
 - Record current proof-native governance separately from historical release and signing records.
 
+## [v128.0.0] - 2026-10-03
+
+### Added
+
+- Added the complete twelve-record v128 public archive, including compatibility, conformance, production diagnosis, package-publication evidence, and byte-identical inherited-registry binding.
+- Added the exact committed v128 canonical verifier and Record and Seal Studio from the read-only main release source.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, documentation, Sports and Studio epochs, and site service-worker identity to `128.0.0`.
+- Rebuilt the release lock around exact source digests, twelve-record mirror parity, verified package coordinates, and the inherited v127 constitutional registry without relabeling it.
+
+### Preserved
+
+- The source-carried authority order across AssetSeal, Mind, AI tools, institutional readers, Showcase continuity, and offline verification.
+- Exact sealed artifact bytes, identity, ownership, Settlement, temporal continuity, and first admission only then append forever proof memory.
+
+### Boundary
+
+- The main `/receiz` repository was read only. Its existing private GitHub release remains external evidence. No remote push, new attestation, or additional physical-PWA qualification was performed here.
+
 ## [v127.0.0] - 2026-09-23
 
 ### Added

@@ -1,5 +1,33 @@
 # Release Notes
 
+## v128.0.0
+Release date: 2026-10-03
+
+`v128.0.0` is the Reality-Grade Infrastructure release in which the source
+carries authority and every experience carries it forward. The standalone
+distribution carries the exact committed canonical verifier and Record and
+Seal Studio, all twelve public release records, verified package-publication
+coordinates, and byte-identical inheritance of the admitted v127 registry.
+
+- Canonical release note: [docs/releases/v128.0.0.md](docs/releases/v128.0.0.md)
+- Product truth: [docs/releases/v128.0.0-product-truth.md](docs/releases/v128.0.0-product-truth.md)
+- Evidence checklist: [docs/releases/v128.0.0-checklist.md](docs/releases/v128.0.0-checklist.md)
+- Process: [docs/releases/v128.0.0-process.md](docs/releases/v128.0.0-process.md)
+- Regression lessons: [docs/releases/v128.0.0-regression-lessons.md](docs/releases/v128.0.0-regression-lessons.md)
+- Compatibility: [docs/releases/v128.0.0-compatibility.md](docs/releases/v128.0.0-compatibility.md)
+- Conformance: [docs/releases/v128.0.0-conformance.md](docs/releases/v128.0.0-conformance.md)
+- Production diagnosis: [docs/releases/v128.0.0-production-diagnosis.md](docs/releases/v128.0.0-production-diagnosis.md)
+- Registry binding: [docs/releases/v128.0.0-registry-binding.json](docs/releases/v128.0.0-registry-binding.json)
+- Package publication: [docs/releases/v128.0.0-package-publication-evidence.json](docs/releases/v128.0.0-package-publication-evidence.json)
+- Migration boundary: [docs/releases/v128.0.0-migration.md](docs/releases/v128.0.0-migration.md)
+- Commit history: [docs/releases/v128.0.0-commit-history.md](docs/releases/v128.0.0-commit-history.md)
+
+The main `/receiz` repository was read only at committed release
+`3090835f1e5a7de57b3b7c526d90b03512c2da70`. The operator supplied the
+existing private GitHub v128 release; this standalone work does not create,
+move, or push that tag. No new signed attestation or physical-PWA matrix is
+inferred beyond the committed release evidence.
+
 ## v127.0.0
 Release date: 2026-09-23
 
