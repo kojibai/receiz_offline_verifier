@@ -36,8 +36,12 @@ Root key entries may include lifecycle policy metadata (`activeFromPulse`, `reti
 Set overrides before verifier initialization.
 If `status` is `retired`, include `retiredAtPulse` to avoid `unavailable` policy states that fail verification.
 
-## GitHub Pages
-Serve repository `site/` output over HTTPS.
+## GitHub repository boundary
+
+This repository does not deploy to GitHub Pages. Its GitHub workflow runs the
+release verification checks only, producing the repository's CI status check.
+The static `site/` directory remains available for an explicitly chosen host or
+for local use, but no push from this repository triggers a Pages deployment.
 
 ## Local smoke test
 ```bash

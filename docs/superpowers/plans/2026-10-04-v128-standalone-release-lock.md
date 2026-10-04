@@ -13,6 +13,7 @@
 ## Global Constraints
 
 - Do not modify main-repository files; only read committed source and verify the existing private GitHub release/tag supplied by the operator.
+- Keep this standalone repository verification-only on GitHub: retain the CI check and remove GitHub Pages deployment.
 - Release identity is `128.0.0`; constitutional registry identity remains byte-identical v127 digest `8d0b5b839d02d9efbd4306cc99410595a183705c2670b76d2567eaaaade99065`.
 - Preserve exact sealed source, identity, ownership, Settlement, temporal authority, and append-only history above application, package, transport, cache, and display state.
 - Keep package publication, deployment, physical-PWA confirmation, signed attestation, GitHub release, and remote push claims at their recorded evidence boundaries.
@@ -89,3 +90,19 @@
 - [ ] Create an annotated standalone `v128.0.0` tag and verify the existing private `v128.0.0` release/tag without modifying `/receiz`.
 - [ ] Re-run release lock and tests from the committed state; verify clean standalone status and both tag targets.
 - [ ] Do not push or create a GitHub release.
+
+### Task 5: Remove GitHub Pages deployment
+
+**Files:**
+- Delete: `.github/workflows/pages.yml`
+- Modify: `scripts/check-source-alignment.mjs`
+- Modify: `docs/DEPLOYMENT.md`, `docs/source-alignment.md`, `CHANGELOG.md`
+
+**Interfaces:**
+- Consumes: the qualified v128 standalone release
+- Produces: one GitHub CI verification check with no Pages deployment path
+
+- [x] Add a release check that fails while the Pages workflow exists.
+- [x] Remove the Pages workflow while retaining `.github/workflows/ci.yml`.
+- [x] Update deployment and source-alignment documentation to state the verification-only boundary.
+- [x] Re-run the complete v128 release checks, commit the correction, and move only this repository's local annotated `v128.0.0` tag to the final commit.

@@ -4,7 +4,7 @@ Upstream committed source: `3090835f1e5a7de57b3b7c526d90b03512c2da70`. Release f
 
 The canonical verifier is copied byte-for-byte from `public/offline-verifier.html` to both the downloadable app and the deployed index. The Studio is also byte-identical to committed upstream source. Sports retains its existing enclosing-ZIP proof boundary and explicit reader capability disclosure; only its standalone release label/worker epoch and the settlement release label advance, as enumerated in [the source manifest](../source-alignment.json).
 
-`npm test` checks every deployed mirror and source digest, ownership/provenance surface presence, and executable workflow placement. `npm run release:lock` checks the original release archive. GitHub Pages runs the same source checks before upload. Downloadable app paths are included in the Pages artifact.
+`npm test` checks every static mirror and source digest, ownership/provenance surface presence, CI workflow placement, and the absence of a GitHub Pages deployment workflow. `npm run release:lock` checks the original release archive. GitHub runs verification only, producing the repository's CI status check; it does not upload or deploy a Pages artifact. Downloadable application paths remain committed in this repository for local use or an explicitly selected external host.
 
 ## Release history
 

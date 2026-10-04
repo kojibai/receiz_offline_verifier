@@ -5,8 +5,8 @@ All notable changes to this project will be documented in this file.
 ## Unreleased — standalone source alignment
 
 - Synchronize the deployed index with the canonical verifier, including verified ownership and ordered provenance.
-- Include downloadable applications in the Pages artifact and verify their exact source hashes.
-- Place CI and Pages workflows in the executable workflow directory; gate Pages on source and release checks.
+- Keep downloadable applications committed and verify their exact source hashes.
+- Retain the CI verification workflow as the repository's status check and remove the GitHub Pages deployment path.
 - Record current proof-native governance separately from historical release and signing records.
 
 ## [v128.0.0] - 2026-10-03

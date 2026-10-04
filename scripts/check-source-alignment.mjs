@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 const manifest = JSON.parse(readFileSync("source-alignment.json", "utf8"));
 assert.match(manifest.upstreamCommit, /^[a-f0-9]{40}$/);
@@ -17,8 +17,13 @@ for (const marker of ["factCurrentOwner", "ownershipHistoryPanel", "pbiAuthorshi
   assert.ok(canonical.includes(marker), `Missing provenance surface: ${marker}`);
 }
 assert.ok(existsSync(".github/workflows/ci.yml"));
-assert.ok(existsSync(".github/workflows/pages.yml"));
-console.log("Committed source hashes, deployed mirrors, provenance surfaces and workflow placement pass.");
+assert.ok(!existsSync(".github/workflows/pages.yml"), "GitHub Pages deployment workflow must remain absent");
+assert.deepEqual(
+  readdirSync(".github/workflows").filter((name) => /\.ya?ml$/.test(name)).sort(),
+  ["ci.yml"],
+  "GitHub must expose only the single CI verification workflow",
+);
+console.log("Committed source hashes, static mirrors, provenance surfaces, CI placement and Pages absence pass.");
 
 for (const entry of manifest.assets) {
   assert.equal(createHash("sha256").update(readFileSync(entry.destination)).digest("hex"), entry.sha256, `Asset drift: ${entry.destination}`);
