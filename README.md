@@ -2,22 +2,23 @@
 
 Verify a file offline. Proof is in the file.
 
-Current release: `v128.0.0`
+Current release: `v129.0.0`
 
 ## Current source alignment
 
-The deployed verifier and downloadable applications track the committed main implementation recorded in [source-alignment.json](source-alignment.json). [Source alignment notes](docs/source-alignment.md) distinguish this update from immutable historical release records.
+The committed standalone verifier and downloadable applications track the main implementation recorded in [source-alignment.json](source-alignment.json). [Source alignment notes](docs/source-alignment.md) distinguish this update from immutable historical release records.
 
 Receiz is a proof-native artifact system. Its proof objects carry verifiable source, identity, Kai coordinates and ordered provenance across applications. The canonical verifier displays verified ownership and authorship carried by the source; hosted discovery does not authorize that truth. Explore the [capability directory](https://receiz.com/capabilities), [ontology](https://receiz.com/capabilities/ontology) and [developer documentation](https://docs.receiz.com).
 
-## What changed in v128.0.0
+## What changed in v129.0.0
 
-- The standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, public documentation, and service-worker surfaces carry coordinated release identity `128.0.0`.
-- The actual canonical verifier and Offline Studio are imported from committed application source. V128 carries source authority into AssetSeal, retained Mind knowledge, consented AI tooling, institutional entrances, and recovered-account Showcase actions without creating a new authority layer.
-- The twelve-record release book begins at [docs/releases/v128.0.0.md](docs/releases/v128.0.0.md). See the [product truth](docs/releases/v128.0.0-product-truth.md), [checklist](docs/releases/v128.0.0-checklist.md), [process](docs/releases/v128.0.0-process.md), [regression lessons](docs/releases/v128.0.0-regression-lessons.md), [compatibility](docs/releases/v128.0.0-compatibility.md), [conformance](docs/releases/v128.0.0-conformance.md), [migration](docs/releases/v128.0.0-migration.md), [package-publication evidence](docs/releases/v128.0.0-package-publication-evidence.json), and [commit history](docs/releases/v128.0.0-commit-history.md).
-- V128 inherits the byte-identical admitted v127 133-law registry digest `8d0b5b839d02d9efbd4306cc99410595a183705c2670b76d2567eaaaade99065`; release identity does not relabel the ruleset.
-- The main `/receiz` repository was inspected without modification at committed release `3090835f1e5a7de57b3b7c526d90b03512c2da70`. Exact committed inputs are SHA-256 bound: verifier `7db8cfc339096c80ef4f7b5dc536a0004bba1a514829e6d7d24868be8ece1b60`, Studio `a1da98058c6517275ee574cd52c45631d867300c31e339ca6c9832ad2bc7456e`, and twelve-record source-book manifest `f74677ac8a38266eb30a83b1112d11ac8789cae2d10afbc62ac1af528d6b13b2`.
-- The operator supplied the existing private GitHub release at [kojibai/receiz v128.0.0](https://github.com/kojibai/receiz/releases/tag/v128.0.0). This standalone update neither changes `/receiz` nor creates or moves its tag.
+- The standalone verifier, Sports verifier, Record and Seal Studio, settlement evidence assembler, public documentation, and service-worker surfaces carry coordinated release identity `129.0.0`.
+- The exact canonical verifier and Offline Studio are imported from clean committed application source. V129 preserves source-first proof authority while adding registered-application compatibility, the full coordinated developer package surface, and read-only offline proof valuation and replay.
+- The twelve-record release book begins at [docs/releases/v129.0.0.md](docs/releases/v129.0.0.md). See the [product truth](docs/releases/v129.0.0-product-truth.md), [checklist](docs/releases/v129.0.0-checklist.md), [process](docs/releases/v129.0.0-process.md), [regression lessons](docs/releases/v129.0.0-regression-lessons.md), [integration guide](docs/releases/v129.0.0-integration.md), [conformance](docs/releases/v129.0.0-conformance.md), [package candidates](docs/releases/v129.0.0-package-candidates.json), [package-publication evidence](docs/releases/v129.0.0-package-publication-evidence.json), [production SQL evidence](docs/releases/v129.0.0-production-sql.json), and [commit history](docs/releases/v129.0.0-commit-history.md).
+- V129 retains the admitted v127 133-law registry digest `8d0b5b839d02d9efbd4306cc99410595a183705c2670b76d2567eaaaade99065`; release identity does not relabel the ruleset.
+- The main `/receiz` source was inspected without modification at clean commit `e6479d26ce904e894b2456b178373efb7fdf99c7`. Exact committed inputs are SHA-256 bound: verifier `4b0731e56fed8804abb194cba98bfc80c8cf23d18063c24ce038923f44b63d14`, Studio `9f61ab692fda283307d5d9b2a6f66a44dffa9b28d9ba9879db46852b23e9e5d7`, and twelve-record source-book manifest `4ae6e7442a1ad2c88ad08ab18703d8d65cf61050f0084ebc38aefbfd97ce16ef` listed in [source-alignment.json](source-alignment.json).
+- The operator supplied the existing private GitHub release at [kojibai/receiz v129.0.0](https://github.com/kojibai/receiz/releases/tag/v129.0.0). This standalone archive neither creates nor moves that main-repository tag.
+- GitHub remains verification-only with one CI workflow and no Pages deployment. This standalone update does not change `/receiz`, repeat package publication or SQL application, deploy, attest, push, or create a remote release.
 - The `v94.0.0` Official SDK And Durable Proof Operating Model release remains in force.
 - The `v93.2.0` SDK Proof Developer Experience release remains in force.
 - The `v93.1.0` Durable Proof Memory release remains in force.
@@ -25,7 +26,7 @@ Receiz is a proof-native artifact system. Its proof objects carry verifiable sou
 - The `v89.0.0` foreground anchor publication, profile projection, Sports Vault sealed-manifest proof, wallet/runtime, lease/market, DB pressure, regression-lessons, and commit-history boundary remains in force.
 - The `v87.0.0` offline proof baseline remains in force.
 - The `v64.0.0` value-loop invariants remain in force.
-- Broader platform target environments require the checks and evidence boundaries named in [docs/releases/v128.0.0-checklist.md](docs/releases/v128.0.0-checklist.md).
+- Broader platform target environments require the checks and evidence boundaries named in [docs/releases/v129.0.0-checklist.md](docs/releases/v129.0.0-checklist.md).
 - The original source records preserve their preparation-time evidence boundary. They are historical records, not a statement that production remains unpublished. Current standalone synchronization and its checks are recorded separately in [source alignment notes](docs/source-alignment.md).
 - Core Signature V4, Groth16, KKS, artifact binding, ownership continuity, and fail-closed verification law remains unchanged. Historical wire identifiers and sealed artifacts retain their original identities.
 - Core verifier outcomes remain file-authoritative, deterministic, and fail-closed.
@@ -48,7 +49,7 @@ Receiz is a proof-native artifact system. Its proof objects carry verifiable sou
   </tr>
 </table>
 
-The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs; the `v128.0.0` identity and exact evidence boundary are documented in the release record.
+The repo-local conformance hub at [docs/conformance/README.md](docs/conformance/README.md) tracks the latest vendored conformance snapshot in this repository. It includes live badge surfaces, current imported results, and suite-by-suite requirement coverage docs; the `v129.0.0` identity and exact evidence boundary are documented in the release record.
 
 ## Release train highlights (v14 -> v98.0)
 - `v14.0.0`: UI release marker advanced to `v14.0.0`; app entrypoint rename started (`receiz-offline-verifier.html` -> `offline-verifier.html`).
@@ -212,7 +213,7 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v111.0.0-commit-history.md](docs/releases/v111.0.0-commit-history.md): coordinated upstream and standalone-verifier history boundary.
 - [docs/releases/v111.0.0-constitution-registry.digest](docs/releases/v111.0.0-constitution-registry.digest): canonical v111 registry digest.
 - [docs/releases/v111.0.0-constitution-registry.json](docs/releases/v111.0.0-constitution-registry.json): pinned machine-readable v111 registry.
-- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v128.0.0`.
+- [docs/receiz-reasoning-kernel.md](docs/receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v129.0.0`.
 - [docs/releases/v97.2.0.md](docs/releases/v97.2.0.md): canonical Enterprise App Runtime SDK Release note for `v97.2.0`.
 - [docs/releases/v97.2.0-product-truth.md](docs/releases/v97.2.0-product-truth.md): `v97.2.0` product-truth freeze document.
 - [docs/releases/v97.2.0-checklist.md](docs/releases/v97.2.0-checklist.md): release-prep checklist and additional gates for `v97.2.0`.
@@ -386,11 +387,11 @@ Machine-readable schemas are provided in [docs/schemas](docs/schemas):
 - [docs/releases/v72.0.0-product-truth.md](docs/releases/v72.0.0-product-truth.md): `v72.0.0` product-truth freeze document.
 - [docs/releases/v72.0.0-checklist.md](docs/releases/v72.0.0-checklist.md): release-prep checklist and additional gates for `v72.0.0`.
 - [docs/releases/v72.0.0-process.md](docs/releases/v72.0.0-process.md): release-prep process for `v72.0.0`.
-- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v128.0.0`.
-- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v128.0.0`.
+- [docs/releases/v70.0.0-invariant-register.md](docs/releases/v70.0.0-invariant-register.md): public alpha invariant register carried forward by `v129.0.0`.
+- [docs/literal-product-law.md](docs/literal-product-law.md): literal product law carried forward for `v129.0.0`.
 - [docs/experience-first-engineering.md](docs/experience-first-engineering.md): experience-first rules for local proof and deterministic state.
-- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v128.0.0`.
-- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v128.0.0`.
+- [docs/truthful-speed-invariants.md](docs/truthful-speed-invariants.md): truthful speed and first-paint invariants carried forward for `v129.0.0`.
+- [docs/scale-reasoning-invariants.md](docs/scale-reasoning-invariants.md): scale, deterministic chart, closeout, and primitive-preservation law carried forward for `v129.0.0`.
 - [docs/verified-history-first-principles.md](docs/verified-history-first-principles.md): append-only history and stronger-known-truth principles.
 - [docs/offline-verified-register.md](docs/offline-verified-register.md): local register semantics for verified offline truth.
 - [docs/pbi-recovery-receiz-id-binding.md](docs/pbi-recovery-receiz-id-binding.md): PBI/keyfile recovery and Receiz ID binding rules.

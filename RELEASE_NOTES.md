@@ -1,5 +1,35 @@
 # Release Notes
 
+## v129.0.0
+Release date: 2026-10-11
+
+`v129.0.0` is the Reality-Grade Infrastructure release for exact registered
+application coordinates, the coordinated public developer libraries, and
+read-only offline proof valuation and replay. The standalone distribution
+carries the exact committed canonical verifier and Record and Seal Studio,
+all twelve public release records, verified package-publication coordinates,
+production SQL evidence, and unchanged inheritance of the admitted v127
+constitutional registry.
+
+- Canonical release note: [docs/releases/v129.0.0.md](docs/releases/v129.0.0.md)
+- Product truth: [docs/releases/v129.0.0-product-truth.md](docs/releases/v129.0.0-product-truth.md)
+- Evidence checklist: [docs/releases/v129.0.0-checklist.md](docs/releases/v129.0.0-checklist.md)
+- Process: [docs/releases/v129.0.0-process.md](docs/releases/v129.0.0-process.md)
+- Regression lessons: [docs/releases/v129.0.0-regression-lessons.md](docs/releases/v129.0.0-regression-lessons.md)
+- Integration: [docs/releases/v129.0.0-integration.md](docs/releases/v129.0.0-integration.md)
+- Conformance: [docs/releases/v129.0.0-conformance.md](docs/releases/v129.0.0-conformance.md)
+- Package candidates: [docs/releases/v129.0.0-package-candidates.json](docs/releases/v129.0.0-package-candidates.json)
+- Package publication: [docs/releases/v129.0.0-package-publication-evidence.json](docs/releases/v129.0.0-package-publication-evidence.json)
+- Production SQL evidence: [docs/releases/v129.0.0-production-sql.json](docs/releases/v129.0.0-production-sql.json)
+- Commit history: [docs/releases/v129.0.0-commit-history.md](docs/releases/v129.0.0-commit-history.md)
+
+The main `/receiz` source was read only at clean commit
+`e6479d26ce904e894b2456b178373efb7fdf99c7`. This standalone release does
+not create or move the operator-supplied private
+[v129.0.0 GitHub release](https://github.com/kojibai/receiz/releases/tag/v129.0.0),
+repeat npm publication or SQL application, deploy, issue a signed attestation,
+or establish pending live financial acceptance.
+
 ## v128.0.0
 Release date: 2026-10-03
 

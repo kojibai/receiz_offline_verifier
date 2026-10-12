@@ -1,79 +1,57 @@
 {
-  "schema": "receiz.standalone-source-alignment.v1",
-  "upstreamCommit": "3090835f1e5a7de57b3b7c526d90b03512c2da70",
-  "release": "128.0.0",
+  "schema": "receiz.standalone-source-alignment.v2",
+  "upstreamCommit": "e6479d26ce904e894b2456b178373efb7fdf99c7",
+  "upstreamState": "clean",
+  "release": "129.0.0",
   "files": [
     {
       "source": "public/offline-verifier.html",
-      "sourceSha256": "7db8cfc339096c80ef4f7b5dc536a0004bba1a514829e6d7d24868be8ece1b60",
-      "sha256": "7db8cfc339096c80ef4f7b5dc536a0004bba1a514829e6d7d24868be8ece1b60",
-      "destinations": [
-        "apps/offline-verifier.html",
-        "site/offline-verifier.html",
-        "site/index.html"
-      ],
+      "sourceSha256": "4b0731e56fed8804abb194cba98bfc80c8cf23d18063c24ce038923f44b63d14",
+      "sha256": "4b0731e56fed8804abb194cba98bfc80c8cf23d18063c24ce038923f44b63d14",
+      "destinations": ["apps/offline-verifier.html", "site/offline-verifier.html", "site/index.html"],
       "adjustments": []
     },
     {
       "source": "public/offline-record-seal.html",
-      "sourceSha256": "a1da98058c6517275ee574cd52c45631d867300c31e339ca6c9832ad2bc7456e",
-      "sha256": "a1da98058c6517275ee574cd52c45631d867300c31e339ca6c9832ad2bc7456e",
-      "destinations": [
-        "apps/offline-record-seal.html",
-        "site/offline-record-seal.html"
-      ],
+      "sourceSha256": "9f61ab692fda283307d5d9b2a6f66a44dffa9b28d9ba9879db46852b23e9e5d7",
+      "sha256": "9f61ab692fda283307d5d9b2a6f66a44dffa9b28d9ba9879db46852b23e9e5d7",
+      "destinations": ["apps/offline-record-seal.html", "site/offline-record-seal.html"],
       "adjustments": []
     },
     {
       "source": "public/offline-sports-card-verifier.html",
       "sourceSha256": "7fdf0f66786460f382512c700210a345dc67e28a6fa536f10525d424367f1629",
-      "sha256": "fd51e86fe9d688459cd5ab9cb4d2aaf44fa968f8f79a5f2fc1787e1655f2ead8",
-      "destinations": [
-        "apps/offline-sports-card-verifier.html",
-        "site/offline-sports-card-verifier.html"
-      ],
-      "adjustments": [
-        "Footer release label and service-worker release epoch advanced from 127.0.0 to 128.0.0; verifier logic unchanged."
-      ]
+      "sha256": "91e341ea4c0a727892274dbf4eeaf187345f850164b58fbf62de325a01e94fa2",
+      "destinations": ["apps/offline-sports-card-verifier.html", "site/offline-sports-card-verifier.html"],
+      "adjustments": ["Footer release label and service-worker release epoch advanced from 128.0.0 to 129.0.0; verifier logic unchanged."]
     },
     {
       "source": "public/offline-settlement.html",
       "sourceSha256": "5fb75d1e8364b8d9197bc1a78f0f9eb8d6ced0e1d69cd16c4c91db37ea742ca6",
-      "sha256": "042909be407c3f37893b4fc23294713231eb5e8e97bb0b19eef628b8e174c970",
-      "destinations": [
-        "apps/offline-settlement.html",
-        "site/offline-settlement.html"
-      ],
-      "adjustments": [
-        "Standalone release label retained; settlement logic unchanged."
-      ]
+      "sha256": "d17173ae411464dd7046877f62503f5de08d602de00bf55586fe736963549204",
+      "destinations": ["apps/offline-settlement.html", "site/offline-settlement.html"],
+      "adjustments": ["Standalone release label advanced from 128.0.0 to 129.0.0; settlement logic unchanged."]
     }
   ],
+  "releaseRecords": [
+    {"source":"docs/releases/v129.0.0-checklist.md","sourceSha256":"aba73f95c76dbd756516d389c30092a8a28f25da6ed72d6b6f487d619fb62deb","sha256":"18ef16e23a249bfc477c68a3e9fbdadccd80c6f26f31b08e586b700f6263c26d","destinations":["docs/releases/v129.0.0-checklist.md","releases/v129.0.0-checklist.md"]},
+    {"source":"docs/releases/v129.0.0-commit-history.json","sourceSha256":"3ce10aae40a0d74410f939cbda6b815c4c2064ebcf47ca2b3d496289f2808f20","sha256":"3ce10aae40a0d74410f939cbda6b815c4c2064ebcf47ca2b3d496289f2808f20","destinations":["docs/releases/v129.0.0-commit-history.json","releases/v129.0.0-commit-history.json"]},
+    {"source":"docs/releases/v129.0.0-commit-history.md","sourceSha256":"312f40764d745677c62b2cbe2ba6a3e2e11593a9de729ed7f1617c086d34b33a","sha256":"0ffaa37f313b4674ebc2ea69c79659384caca1d2c38efcc3d699f4595d6458ba","destinations":["docs/releases/v129.0.0-commit-history.md","releases/v129.0.0-commit-history.md"]},
+    {"source":"docs/releases/v129.0.0-conformance.md","sourceSha256":"b99fe4792ad4d2bba073d522b980a14812adecd88dac98860a98aaeab4004094","sha256":"b99fe4792ad4d2bba073d522b980a14812adecd88dac98860a98aaeab4004094","destinations":["docs/releases/v129.0.0-conformance.md","releases/v129.0.0-conformance.md"]},
+    {"source":"docs/releases/v129.0.0-integration.md","sourceSha256":"446e2110e816b3080cf1fbf12f597b5c8664d4739693a8cdf219ade8a9698414","sha256":"446e2110e816b3080cf1fbf12f597b5c8664d4739693a8cdf219ade8a9698414","destinations":["docs/releases/v129.0.0-integration.md","releases/v129.0.0-integration.md"]},
+    {"source":"docs/releases/v129.0.0-package-candidates.json","sourceSha256":"9791882f16d99a2f368601db71d7f5cb86bb2080c2cb06fee33d42615cb5da93","sha256":"9791882f16d99a2f368601db71d7f5cb86bb2080c2cb06fee33d42615cb5da93","destinations":["docs/releases/v129.0.0-package-candidates.json","releases/v129.0.0-package-candidates.json"]},
+    {"source":"docs/releases/v129.0.0-package-publication-evidence.json","sourceSha256":"b1501540643accd5457bdf610810dff78ccb40a68a05d621baab9324e3c1d808","sha256":"b1501540643accd5457bdf610810dff78ccb40a68a05d621baab9324e3c1d808","destinations":["docs/releases/v129.0.0-package-publication-evidence.json","releases/v129.0.0-package-publication-evidence.json"]},
+    {"source":"docs/releases/v129.0.0-process.md","sourceSha256":"5bc45ad19428385820d1cb13da172dbd259f5421a1ebedddaadd58543552aadd","sha256":"6a4eb2d0ad23b7be1475398ada6a2bd9b72c62b20be89cf7b112a92af60700d2","destinations":["docs/releases/v129.0.0-process.md","releases/v129.0.0-process.md"]},
+    {"source":"docs/releases/v129.0.0-product-truth.md","sourceSha256":"b98689f5b39e13773ade608e88735feff4f13cf5410757ca38322da628870fbc","sha256":"6bc8dcc318d41005080e0e0f2d1a3f3099c3f7de1f5b4073bd00090df93fa0da","destinations":["docs/releases/v129.0.0-product-truth.md","releases/v129.0.0-product-truth.md"]},
+    {"source":"docs/releases/v129.0.0-production-sql.json","sourceSha256":"2543b4c308f0de5577956f2563e544e71750ba83a882bcedbe3e7576fce58a03","sha256":"2543b4c308f0de5577956f2563e544e71750ba83a882bcedbe3e7576fce58a03","destinations":["docs/releases/v129.0.0-production-sql.json","releases/v129.0.0-production-sql.json"]},
+    {"source":"docs/releases/v129.0.0-regression-lessons.md","sourceSha256":"1cac80c7e2d17340e1397e8c40b851120db0059298878dfb5a645af148c0b4d2","sha256":"1cac80c7e2d17340e1397e8c40b851120db0059298878dfb5a645af148c0b4d2","destinations":["docs/releases/v129.0.0-regression-lessons.md","releases/v129.0.0-regression-lessons.md"]},
+    {"source":"docs/releases/v129.0.0.md","sourceSha256":"d6bb0fc4fe71b0767f1eb993247716d207b2ea4c8089a5b9f9efa1ad7a6ed5c8","sha256":"8b43955097f547fea331dc0ca8ffb69b1a3fd98dfcd7443a0031973ee8f207dc","destinations":["docs/releases/v129.0.0.md","releases/v129.0.0.md"]}
+  ],
   "assets": [
-    {
-      "source": "public/offline-studio.webmanifest",
-      "destination": "site/offline-studio.webmanifest",
-      "sha256": "4ebd8e2d9f395d8883c4ba70d1821366e2d281926d33458c824c31b8abd1ef5f"
-    },
-    {
-      "source": "public/icon.png",
-      "destination": "site/icon.png",
-      "sha256": "5315a17b12b72b3e5e94d21bc598f293ecb163c30d3bd5190f5154f65b8076e2"
-    },
-    {
-      "source": "public/apple-touch-icon.png",
-      "destination": "site/apple-touch-icon.png",
-      "sha256": "aec6e50c291f35e7bd978103f67e8f2c5b6d2a66874d03d9b3bbe4651a222649"
-    },
-    {
-      "source": "public/receiz.svg",
-      "destination": "site/receiz.svg",
-      "sha256": "7d941189f013409cafa3b622552c626e7f089b18285f2ee4f7db068bafd114e0"
-    },
-    {
-      "source": "public/powered-by-receiz.svg",
-      "destination": "site/powered-by-receiz.svg",
-      "sha256": "efa0937e580fba6d52a47e1a91d32f00b384e0c03a9bd2dfd5316ebf84f3407c"
-    }
+    {"source":"public/offline-studio.webmanifest","destination":"site/offline-studio.webmanifest","sha256":"4ebd8e2d9f395d8883c4ba70d1821366e2d281926d33458c824c31b8abd1ef5f"},
+    {"source":"public/icon.png","destination":"site/icon.png","sha256":"5315a17b12b72b3e5e94d21bc598f293ecb163c30d3bd5190f5154f65b8076e2"},
+    {"source":"public/apple-touch-icon.png","destination":"site/apple-touch-icon.png","sha256":"aec6e50c291f35e7bd978103f67e8f2c5b6d2a66874d03d9b3bbe4651a222649"},
+    {"source":"public/receiz.svg","destination":"site/receiz.svg","sha256":"7d941189f013409cafa3b622552c626e7f089b18285f2ee4f7db068bafd114e0"},
+    {"source":"public/powered-by-receiz.svg","destination":"site/powered-by-receiz.svg","sha256":"efa0937e580fba6d52a47e1a91d32f00b384e0c03a9bd2dfd5316ebf84f3407c"}
   ]
 }

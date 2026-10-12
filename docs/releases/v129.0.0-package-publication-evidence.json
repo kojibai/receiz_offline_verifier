@@ -1,0 +1,63 @@
+{
+  "schema": "receiz.release_package_publication_evidence.v1",
+  "releaseVersion": "129.0.0",
+  "observedAt": "2026-10-12T01:17:58.076226+00:00",
+  "registry": "https://registry.npmjs.org",
+  "candidateRecord": "docs/releases/v129.0.0-package-candidates.json",
+  "packages": [
+    {
+      "name": "@receiz/ai-skills",
+      "version": "129.0.0",
+      "publishedAt": "2026-10-12T01:00:36.460Z",
+      "distTagLatest": "129.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/ai-skills/-/ai-skills-129.0.0.tgz",
+      "integrity": "sha512-EMWSpxTTZCMIoGeXHaMj4Lw0XQIcQIhekRYZkpNOEG5T6gavtrm920zqmmxwI7dLNNbap6p75hlYV8iqtXRDOQ==",
+      "shasum": "e9b98a0e6eb2e7c57acac9f60b6b66ccb564db8d",
+      "sha256": "1788f5489f90a2b08a54e95fa096b92774704c8a308e7004b6963d4a27d0e836",
+      "archiveBytes": 616327,
+      "unpackedSize": 4362101,
+      "fileCount": 279,
+      "dependencies": {},
+      "candidateBytesMatch": true
+    },
+    {
+      "name": "@receiz/sdk",
+      "version": "129.0.0",
+      "publishedAt": "2026-10-12T01:09:59.264Z",
+      "distTagLatest": "129.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/sdk/-/sdk-129.0.0.tgz",
+      "integrity": "sha512-Y8WMYMVim5LrMpsCP85kxYdR6yQpBmIgt0DIWqXy320BqCECxg8du+AOUwzWJsAOQeJSorIPkysdoTnQPsWsrQ==",
+      "shasum": "ced146ab955eb03eb8873b520e40c10d7125a694",
+      "sha256": "a77de3f4127547972ab83b27cfcfecc9b17094b1248d31f53d48055ea98ee080",
+      "archiveBytes": 1469437,
+      "unpackedSize": 8838997,
+      "fileCount": 736,
+      "dependencies": {
+        "@noble/hashes": "^2.3.0",
+        "hash-wasm": "^4.12.0",
+        "@receiz/ai-skills": "129.0.0",
+        "fflate": "^0.8.3",
+        "snarkjs": "^0.7.6"
+      },
+      "candidateBytesMatch": true
+    },
+    {
+      "name": "@receiz/mcp-server",
+      "version": "129.0.0",
+      "publishedAt": "2026-10-12T01:14:08.716Z",
+      "distTagLatest": "129.0.0",
+      "tarball": "https://registry.npmjs.org/@receiz/mcp-server/-/mcp-server-129.0.0.tgz",
+      "integrity": "sha512-BN+x3ETZ8DeaEi4ARWOEpw8uUWI88m3BFSOrzPyy06DPbCfT2DdP4rdaWgixVYtVh4OPlPOurEapxm0thxDGEg==",
+      "shasum": "b182fe5da96b780c87161a446fa2d3cf51cdd161",
+      "sha256": "ac31f54b730bd86200d18774ede62d0b61ae767adb77a54355d1d3192d9a1d4e",
+      "archiveBytes": 298764,
+      "unpackedSize": 1575997,
+      "fileCount": 162,
+      "dependencies": {
+        "@receiz/ai-skills": "129.0.0",
+        "@receiz/sdk": "129.0.0"
+      },
+      "candidateBytesMatch": true
+    }
+  ]
+}

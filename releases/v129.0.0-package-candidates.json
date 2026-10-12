@@ -1,0 +1,33 @@
+{
+  "schema": "receiz.release-package-candidates.v1",
+  "release": "129.0.0",
+  "published": false,
+  "source": "Locally built and qualified canonical tarballs; not registry publication evidence.",
+  "publicationRequirement": "Publish these exact tarball bytes to preserve the candidate Academy frozen lock integrity. Verify registry integrity after publication.",
+  "packages": [
+    {
+      "name": "@receiz/ai-skills",
+      "version": "129.0.0",
+      "file": "receiz-ai-skills-129.0.0.tgz",
+      "bytes": 616327,
+      "integrity": "sha512-EMWSpxTTZCMIoGeXHaMj4Lw0XQIcQIhekRYZkpNOEG5T6gavtrm920zqmmxwI7dLNNbap6p75hlYV8iqtXRDOQ==",
+      "sha256": "1788f5489f90a2b08a54e95fa096b92774704c8a308e7004b6963d4a27d0e836"
+    },
+    {
+      "name": "@receiz/sdk",
+      "version": "129.0.0",
+      "file": "receiz-sdk-129.0.0.tgz",
+      "bytes": 1469437,
+      "integrity": "sha512-Y8WMYMVim5LrMpsCP85kxYdR6yQpBmIgt0DIWqXy320BqCECxg8du+AOUwzWJsAOQeJSorIPkysdoTnQPsWsrQ==",
+      "sha256": "a77de3f4127547972ab83b27cfcfecc9b17094b1248d31f53d48055ea98ee080"
+    },
+    {
+      "name": "@receiz/mcp-server",
+      "version": "129.0.0",
+      "file": "receiz-mcp-server-129.0.0.tgz",
+      "bytes": 298764,
+      "integrity": "sha512-BN+x3ETZ8DeaEi4ARWOEpw8uUWI88m3BFSOrzPyy06DPbCfT2DdP4rdaWgixVYtVh4OPlPOurEapxm0thxDGEg==",
+      "sha256": "ac31f54b730bd86200d18774ede62d0b61ae767adb77a54355d1d3192d9a1d4e"
+    }
+  ]
+}

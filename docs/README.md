@@ -1,9 +1,17 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v128.0.0`.
+This directory is the public documentation set for Receiz `v129.0.0`.
 
 ## Start Here
 
+- [releases/v129.0.0.md](releases/v129.0.0.md): official Reality-Grade Infrastructure v129 record and standalone boundary.
+- [releases/v129.0.0-product-truth.md](releases/v129.0.0-product-truth.md): source authority, registered application, developer library, and offline valuation truth.
+- [releases/v129.0.0-checklist.md](releases/v129.0.0-checklist.md): complete qualification and exact residual evidence boundaries.
+- [releases/v129.0.0-process.md](releases/v129.0.0-process.md): preparation, publication evidence, and standalone qualification sequence.
+- [releases/v129.0.0-regression-lessons.md](releases/v129.0.0-regression-lessons.md): release-scoped authority and regression law.
+- [releases/v129.0.0-integration.md](releases/v129.0.0-integration.md) and [conformance](releases/v129.0.0-conformance.md): exact developer integration and executed evidence boundaries.
+- [releases/v129.0.0-package-candidates.json](releases/v129.0.0-package-candidates.json), [publication evidence](releases/v129.0.0-package-publication-evidence.json), and [production SQL evidence](releases/v129.0.0-production-sql.json): machine-readable release evidence.
+- [releases/v129.0.0-commit-history.md](releases/v129.0.0-commit-history.md) and [machine-readable history](releases/v129.0.0-commit-history.json): v128-to-v129 implementation ledger and standalone archive boundary.
 - [releases/v128.0.0.md](releases/v128.0.0.md): official Reality-Grade Infrastructure v128 record and standalone boundary.
 - [releases/v128.0.0-product-truth.md](releases/v128.0.0-product-truth.md): source authority across AssetSeal, Mind, AI, institutions, continuity, and discovery.
 - [releases/v128.0.0-checklist.md](releases/v128.0.0-checklist.md): complete qualification, operator acceptance, and exact residual evidence boundaries.
@@ -57,7 +65,7 @@ This directory is the public documentation set for Receiz `v128.0.0`.
 - [releases/v115.0.0.md](releases/v115.0.0.md): prior Native Capture and offline PBI release.
 - [releases/v113.0.0-constitution-registry.digest](releases/v113.0.0-constitution-registry.digest): canonical v113 unsigned registry digest.
 - [releases/v113.0.0-constitution-registry.json](releases/v113.0.0-constitution-registry.json): pinned machine-readable 57-law v113 registry and protocol limits.
-- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v128.0.0`.
+- [receiz-reasoning-kernel.md](receiz-reasoning-kernel.md): primitive-first reasoning kernel carried forward for `v129.0.0`.
 - [releases/v112.0.0.md](releases/v112.0.0.md): prior executable artifact-authority release history.
 - [releases/v97.6.0.md](releases/v97.6.0.md): canonical Signed Merchant Public-Store, Live Proof Graph, MCP, SDK, and Service Worker Law Release note for `v97.6.0`.
 - [releases/v97.6.0-product-truth.md](releases/v97.6.0-product-truth.md): release-scoped product-truth freeze for `v97.6.0`.

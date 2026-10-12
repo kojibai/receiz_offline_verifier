@@ -1,0 +1,42 @@
+{
+  "release": "129.0.0",
+  "projectId": "yggkbnvikufnncormsrm",
+  "migrationVersion": "20261011204630",
+  "migrationName": "receiz_v129_registered_application_ids",
+  "migrationSha256": "3ab835b5157195bb31e91c8c5e016f50810d6e8c7d2a94dde435ee2ed34723c0",
+  "applied": true,
+  "verificationDate": "2026-10-11",
+  "applicationChecks": {
+    "new_application_checks": 9,
+    "old_application_checks": 0
+  },
+  "rpcDefinitions": [
+    {
+      "proname": "receiz_authority_session_request_reserve_v124",
+      "definition_md5": "094773abd7576f9917b3b9de69cdc979",
+      "security_metadata_md5": "4f7936c7d62bc4e13a9bc92ac57b73fb"
+    },
+    {
+      "proname": "receiz_domain_append_v124",
+      "definition_md5": "7cad237171979ca81fd9ee37adb07fe2",
+      "security_metadata_md5": "4f7936c7d62bc4e13a9bc92ac57b73fb"
+    },
+    {
+      "proname": "receiz_domain_checkpoint_source_publish_v124",
+      "definition_md5": "418e7117ac62650145b4903ef3225920",
+      "security_metadata_md5": "4f7936c7d62bc4e13a9bc92ac57b73fb"
+    },
+    {
+      "proname": "receiz_domain_replay_source_publish_v124",
+      "definition_md5": "b5c7f021b72027a9b85cf87a258a1fd8",
+      "security_metadata_md5": "4f7936c7d62bc4e13a9bc92ac57b73fb"
+    },
+    {
+      "proname": "receiz_subject_source_publish_v124",
+      "definition_md5": "df569900dd2d4c59a9bb88be6f3f3014",
+      "security_metadata_md5": "4f7936c7d62bc4e13a9bc92ac57b73fb"
+    }
+  ],
+  "verification": "Post-application RPC definition digests equal the pre-application expected exact predicate replacements. Owner, ACL, function configuration and SECURITY DEFINER metadata digests remain equal. No stored proof or application coordinates were rewritten.",
+  "moneyMoved": 0
+}

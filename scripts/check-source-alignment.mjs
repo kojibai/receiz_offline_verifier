@@ -4,11 +4,21 @@ import { createHash } from "node:crypto";
 const manifest = JSON.parse(readFileSync("source-alignment.json", "utf8"));
 assert.match(manifest.upstreamCommit, /^[a-f0-9]{40}$/);
 assert.equal(manifest.release, JSON.parse(readFileSync("package.json", "utf8")).version);
+assert.equal(manifest.schema, "receiz.standalone-source-alignment.v2");
+assert.equal(manifest.upstreamState, "clean");
 assert.equal(manifest.files.length, 4);
 for (const entry of manifest.files) {
   for (const path of entry.destinations) {
     assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"), entry.sha256, `Source drift: ${path}`);
   }
+}
+assert.equal(manifest.releaseRecords.length, 12);
+for (const entry of manifest.releaseRecords) {
+  assert.match(entry.sourceSha256, /^[a-f0-9]{64}$/, `Invalid source digest: ${entry.source}`);
+  for (const path of entry.destinations) {
+    assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"), entry.sha256, `Release record drift: ${path}`);
+  }
+  assert.deepEqual(readFileSync(entry.destinations[0]), readFileSync(entry.destinations[1]), `Release mirror drift: ${entry.source}`);
 }
 const canonical = readFileSync("apps/offline-verifier.html");
 assert.deepEqual(readFileSync("site/index.html"), canonical);
@@ -23,7 +33,7 @@ assert.deepEqual(
   ["ci.yml"],
   "GitHub must expose only the single CI verification workflow",
 );
-console.log("Committed source hashes, static mirrors, provenance surfaces, CI placement and Pages absence pass.");
+console.log("Committed source hashes, 12 release-record mirrors, provenance surfaces, CI placement and Pages absence pass.");
 
 for (const entry of manifest.assets) {
   assert.equal(createHash("sha256").update(readFileSync(entry.destination)).digest("hex"), entry.sha256, `Asset drift: ${entry.destination}`);

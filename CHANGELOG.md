@@ -4,10 +4,31 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased — standalone source alignment
 
-- Synchronize the deployed index with the canonical verifier, including verified ownership and ordered provenance.
+- Synchronize the static index with the canonical verifier, including verified ownership and ordered provenance.
 - Keep downloadable applications committed and verify their exact source hashes.
 - Retain the CI verification workflow as the repository's status check and remove the GitHub Pages deployment path.
 - Record current proof-native governance separately from historical release and signing records.
+
+## [v129.0.0] - 2026-10-11
+
+### Added
+
+- Added the complete twelve-record v129 public archive, including registered-application integration, conformance, package candidate and publication evidence, production SQL evidence, and complete commit history.
+- Added the exact committed v129 canonical verifier and Record and Seal Studio from the read-only clean main release source.
+
+### Changed
+
+- Advanced standalone package, visible labels, doctrine pointers, documentation, Sports and Studio epochs, and service-worker identity to `129.0.0`.
+- Rebuilt the release lock around exact source-record and runtime digests, mirror parity, verified package coordinates, production SQL evidence, and the unchanged v127 constitutional registry.
+
+### Preserved
+
+- Exact sealed proof bytes, lawful Kai source coordinates, registered application coordinates, identity, ownership, Settlement, verified history, and offline verification authority.
+- First admission only, then append forever: representations, packages, databases, sessions, and readers remain beneath the actual proof object.
+
+### Boundary
+
+- The main `/receiz` repository and its worktrees were read only. No standalone push, deployment, package publication, SQL mutation, signed attestation, or remote release was performed here.
 
 ## [v128.0.0] - 2026-10-03
 
