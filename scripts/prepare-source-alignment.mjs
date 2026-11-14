@@ -59,6 +59,33 @@ export function buildInputPlan(repository,commit,{allowDistributionLabels=false}
 }
 const json=value=>JSON.stringify(value,null,2)+'\n';
 const put=(root,relative,bytes)=>{safe(relative);const target=path.join(root,relative);let cursor=path.resolve(root);assert(!lstatSync(cursor).isSymbolicLink(),'destination root symlink forbidden');for(const part of relative.split('/')){cursor=path.join(cursor,part);if(existsSync(cursor))assert(!lstatSync(cursor).isSymbolicLink(),'destination symlink forbidden');}mkdirSync(path.dirname(target),{recursive:true});writeFileSync(target,bytes);};
+export function projectDocumentationIndex(previous,previousRelease){
+ const marker='## Start Here';assert(previous.includes(marker),'existing documentation entrance is missing');
+ const header=previous.slice(0,previous.indexOf(marker)).replace('`v'+previousRelease+'`','`v'+TARGET_RELEASE+'`');
+ return header+`## Start Here
+
+- [Release v${TARGET_RELEASE}](releases/v${TARGET_RELEASE}.md): complete release framing, outcomes and practical use.
+- [Product truth](releases/v${TARGET_RELEASE}-product-truth.md) and [compatibility](releases/v${TARGET_RELEASE}-compatibility.md): implemented primitives and retained proof formats.
+- [Integration](releases/v${TARGET_RELEASE}-integration.md) and [conformance](releases/v${TARGET_RELEASE}-conformance.md): developer use and exact qualification boundaries.
+- [Source alignment and standalone qualification](source-alignment.md), [preparation record](prepare-v${TARGET_RELEASE}.md) and [offline runtime evidence](../releases/evidence/v${TARGET_RELEASE}-offline-runtime.json).
+- [Checklist](releases/v${TARGET_RELEASE}-checklist.md), [process](releases/v${TARGET_RELEASE}-process.md), [regression lessons](releases/v${TARGET_RELEASE}-regression-lessons.md) and [commit history](releases/v${TARGET_RELEASE}-commit-history.md).
+
+## Historical releases
+
+`+previous.slice(previous.indexOf(marker)+marker.length).trimStart();
+}
+export function projectSourceAlignment(heldPlan,previous){
+ const heading='## Current governance authority';assert(previous.includes(heading),'existing governance authority section is missing');
+ return `# Current standalone source alignment
+
+Committed source: \`${heldPlan.upstreamCommit}\`; release \`${TARGET_RELEASE}\`; complete release book: ${heldPlan.releaseRecords.length} files; aggregate \`${heldPlan.sourceBookSha256}\`.
+
+All source inputs are retained under source-inputs/v${TARGET_RELEASE}/ and validated against current application, asset and record mirrors. Canonical verifier and Studio are byte-identical. Any explicitly selected Sports release-footer/worker epoch or settlement distribution-meta adjustment is enumerated and reproducible; it does not change verification or Settlement JavaScript. Historical records, source-alignment receipt and inherited v127 law remain intact.
+
+No new proof authority, signing service, deployment, Pages workflow, tag, attestation or publication is created. The existing single CI workflow remains verification-only. Run npm test, npm run lint, npm run build and npm run release:lock, then retain browser first-paint/file/provenance evidence before release qualification.
+
+`+previous.slice(previous.indexOf(heading));
+}
 export function applyInputPlan(root,repository,heldPlan){
  assert.equal(heldPlan.release,TARGET_RELEASE);
  const actual=buildInputPlan(repository,heldPlan.upstreamCommit,{allowDistributionLabels:heldPlan.allowDistributionLabels});
@@ -78,11 +105,12 @@ export function applyInputPlan(root,repository,heldPlan){
  const replaceFirst=(file,from,to)=>{const old=readFileSync(path.join(root,file),'utf8');assert(old.includes(from),'missing current release slot: '+file);put(root,file,old.replace(from,to));};
  replaceFirst('AGENTS.md',`Release law: \`v${previous.release}\``,`Release law: \`v${TARGET_RELEASE}\``);
  replaceFirst('site/sw.js',`const RECEIZ_RELEASE_VERSION = "${previous.release}";`,`const RECEIZ_RELEASE_VERSION = "${TARGET_RELEASE}";`);
- for(const file of ['docs/README.md','docs/FORMAT.md','docs/governance/README.md','docs/literal-product-law.md','docs/experience-first-engineering.md','docs/truthful-speed-invariants.md','docs/deterministic-surfaces.md','docs/verified-history-first-principles.md','docs/offline-verified-register.md','docs/pbi-recovery-receiz-id-binding.md','docs/value-loop-invariants.md','docs/receiz-reasoning-kernel.md','docs/scale-reasoning-invariants.md'])replaceFirst(file,'`v'+previous.release+'`','`v'+TARGET_RELEASE+'`');
- const readme=readFileSync(path.join(root,'README.md'),'utf8');put(root,'README.md',`# Receiz Offline Verifier\n\nCurrent release: \`v${TARGET_RELEASE}\`\n\nCanonical applications and the complete ${heldPlan.releaseRecords.length}-record release family are imported from clean committed Receiz source \`${heldPlan.upstreamCommit}\`. Source hashes identify bytes; they do not confer proof authority or claim browser/release qualification. The inherited v127 registry remains exact. See [source alignment](docs/source-alignment.md).\n\n## Previous release description\n\n${readme.replace(/^# Receiz Offline Verifier\n/,'')}`);
+ for(const file of ['docs/FORMAT.md','docs/governance/README.md','docs/literal-product-law.md','docs/experience-first-engineering.md','docs/truthful-speed-invariants.md','docs/deterministic-surfaces.md','docs/verified-history-first-principles.md','docs/offline-verified-register.md','docs/pbi-recovery-receiz-id-binding.md','docs/value-loop-invariants.md','docs/receiz-reasoning-kernel.md','docs/scale-reasoning-invariants.md'])replaceFirst(file,'`v'+previous.release+'`','`v'+TARGET_RELEASE+'`');
+ put(root,'docs/README.md',projectDocumentationIndex(readFileSync(path.join(root,'docs/README.md'),'utf8'),previous.release));
+ const readme=readFileSync(path.join(root,'README.md'),'utf8');put(root,'README.md',`# Receiz Offline Verifier\n\nCurrent release: \`v${TARGET_RELEASE}\`\n\nRead the [complete release book](docs/releases/v${TARGET_RELEASE}.md) and [current documentation](docs/README.md).\n\nCanonical applications and the complete ${heldPlan.releaseRecords.length}-record release family are imported from clean committed Receiz source \`${heldPlan.upstreamCommit}\`. Source hashes identify bytes; they do not confer proof authority or claim browser/release qualification. The inherited v127 registry remains exact. See [source alignment](docs/source-alignment.md).\n\n## Previous release description\n\n${readme.replace(/^# Receiz Offline Verifier\n/,'').replace('Current release: `v'+previous.release+'`','Historical release: `v'+previous.release+'`')}`);
  const notes=readFileSync(path.join(root,'RELEASE_NOTES.md'),'utf8');put(root,'RELEASE_NOTES.md',`## v${TARGET_RELEASE}\n\nImported exact qualified-source boundary ${heldPlan.upstreamCommit}; ${heldPlan.releaseRecords.length} complete release records, preserved historical archives and inherited v127 registry. Distribution-label adjustments, if explicitly selected, are individually enumerated; canonical verifier/Studio bytes remain exact. Browser/release qualification is separate.\n\n${notes}`);
  const changelog=readFileSync(path.join(root,'CHANGELOG.md'),'utf8');put(root,'CHANGELOG.md',`## [v${TARGET_RELEASE}] - ${heldPlan.sourceDate}\n\nCanonical committed source and complete enumerated release book imported; prior release records and attestations remain immutable.\n\n${changelog}`);
- put(root,'docs/source-alignment.md',`# Current standalone source alignment\n\nCommitted source: \`${heldPlan.upstreamCommit}\`; release \`${TARGET_RELEASE}\`; complete release book: ${heldPlan.releaseRecords.length} files; aggregate \`${heldPlan.sourceBookSha256}\`.\n\nAll source inputs are retained under source-inputs/v${TARGET_RELEASE}/ and validated against current application, asset and record mirrors. Canonical verifier and Studio are byte-identical. Any explicitly selected Sports release-footer/worker epoch or settlement distribution-meta adjustment is enumerated and reproducible; it does not change verification or Settlement JavaScript. Historical records, source-alignment receipt and inherited v127 law remain intact.\n\nNo new proof authority, signing service, deployment, Pages workflow, tag, attestation or publication is created. The existing single CI workflow remains verification-only. Run npm test, npm run lint, npm run build and npm run release:lock, then retain browser first-paint/file/provenance evidence before release qualification.\n`);
+ put(root,'docs/source-alignment.md',projectSourceAlignment(heldPlan,readFileSync(path.join(root,'docs/source-alignment.md'),'utf8')));
  const lockPath='scripts/check-source-alignment-v1295.mjs';const lock=readFileSync(path.join(root,lockPath),'utf8');const marker='const EXPECTED_CURRENT_SOURCE = null;';assert(lock.includes(marker),'qualified source code lock is already set or its slot changed');put(root,lockPath,lock.replace(marker,'const EXPECTED_CURRENT_SOURCE = '+JSON.stringify({upstreamCommit:heldPlan.upstreamCommit,recordCount:heldPlan.releaseRecords.length,inventorySha256:sha256(JSON.stringify(heldPlan))})+';'));
  put(root,'source-alignment.json',json({...heldPlan,previousAlignment:{path:history,sha256:sha256(previousBytes)}}));put(root,'source-alignment.pending.json',json({release:TARGET_RELEASE,status:'source-imported-pending-qualification',upstreamCommit:heldPlan.upstreamCommit,browserQualification:'not-run',releaseQualification:'not-run'}));
  return {release:TARGET_RELEASE,upstreamCommit:heldPlan.upstreamCommit,releaseRecords:heldPlan.releaseRecords.length,qualified:false};

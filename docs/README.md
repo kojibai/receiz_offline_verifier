@@ -4,6 +4,14 @@ This directory is the public documentation set for Receiz `v129.5.0`.
 
 ## Start Here
 
+- [Release v129.5.0](releases/v129.5.0.md): complete release framing, outcomes and practical use.
+- [Product truth](releases/v129.5.0-product-truth.md) and [compatibility](releases/v129.5.0-compatibility.md): implemented primitives and retained proof formats.
+- [Integration](releases/v129.5.0-integration.md) and [conformance](releases/v129.5.0-conformance.md): developer use and exact qualification boundaries.
+- [Source alignment and standalone qualification](source-alignment.md), [preparation record](prepare-v129.5.0.md) and [offline runtime evidence](../releases/evidence/v129.5.0-offline-runtime.json).
+- [Checklist](releases/v129.5.0-checklist.md), [process](releases/v129.5.0-process.md), [regression lessons](releases/v129.5.0-regression-lessons.md) and [commit history](releases/v129.5.0-commit-history.md).
+
+## Historical releases
+
 - [releases/v129.0.0.md](releases/v129.0.0.md): official Reality-Grade Infrastructure v129 record and standalone boundary.
 - [releases/v129.0.0-product-truth.md](releases/v129.0.0-product-truth.md): source authority, registered application, developer library, and offline valuation truth.
 - [releases/v129.0.0-checklist.md](releases/v129.0.0-checklist.md): complete qualification and exact residual evidence boundaries.

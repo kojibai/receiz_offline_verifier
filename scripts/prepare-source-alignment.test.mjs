@@ -8,3 +8,17 @@ test('Sports changes only exact footer and worker epoch while preserving carried
 test('distribution labels require explicit opt-in and unknown Sports slots refuse',()=>{const bytes=Buffer.from('source');assert.equal(projectApplication('public/offline-sports-card-verifier.html',bytes).bytes,bytes);assert.throws(()=>projectApplication('public/offline-sports-card-verifier.html',bytes,'129.5.0',true),/slot is unknown/);});
 test('Settlement adds distribution metadata without changing body or verification JavaScript',()=>{const source='<head><title>Settlement</title></head><body><script>const version="wire-v95";</script></body>';const out=projectApplication('public/offline-settlement.html',Buffer.from(source),'129.5.0',true);assert.equal(out.adjustments.length,1);assert.equal(out.bytes.toString().replace(out.adjustments[0].after,out.adjustments[0].before),source);});
 test('null or symbolic source coordinates refuse before accessing any repository',()=>{for(const commit of [null,'HEAD','PENDING_QUALIFIED_SOURCE'])assert.throws(()=>buildInputPlan('/no-repository',commit),/qualified source commit/);});
+
+test('documentation projection preserves current release navigation and held governance authority',async()=>{
+ const {projectDocumentationIndex,projectSourceAlignment}=await import('./prepare-source-alignment.mjs');
+ const previous='# Receiz Docs\n\nThis directory is for `v129.0.0`.\n\n## Start Here\n\n- [old](releases/v129.0.0.md)\n';
+ const index=projectDocumentationIndex(previous,'129.0.0');
+ assert(index.includes('(releases/v129.5.0.md)'));
+ assert(index.includes('(source-alignment.md)'));
+ assert(index.indexOf('(releases/v129.5.0.md)')<index.indexOf('## Historical releases'));
+ assert(index.includes('(releases/v129.0.0.md)'));
+ const governance='## Current governance authority\n\nDesignated owner, local custody and offline Kai succession.\n';
+ const projected=projectSourceAlignment({upstreamCommit:'a'.repeat(40),releaseRecords:Array(16),sourceBookSha256:'b'.repeat(64)},'# Old\n\n'+governance);
+ assert(projected.endsWith(governance));
+ assert.throws(()=>projectSourceAlignment({upstreamCommit:'a'.repeat(40),releaseRecords:[],sourceBookSha256:'b'.repeat(64)},'# Missing'),/governance/);
+});

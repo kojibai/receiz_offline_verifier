@@ -36,3 +36,12 @@ for(const file of ['README.md','AGENTS.md','RELEASE_NOTES.md','CHANGELOG.md','do
 for(const file of ['docs/README.md','docs/FORMAT.md','docs/governance/README.md','docs/receiz-reasoning-kernel.md','docs/scale-reasoning-invariants.md','docs/truthful-speed-invariants.md','docs/literal-product-law.md','docs/experience-first-engineering.md','docs/deterministic-surfaces.md','docs/verified-history-first-principles.md','docs/offline-verified-register.md','docs/pbi-recovery-receiz-id-binding.md','docs/value-loop-invariants.md'])assert(read(file).includes('`v'+TARGET_RELEASE+'`'),'current doctrine pointer missing: '+file);
 for(const file of ['README.md','docs/conformance/README.md'])for(const suite of ['temporal','market','identity','issuance','signal-circuit','game/sports','verification','economy','interoperability','world'])assert(read(file).includes('/api/'+suite+'/conformance/badge'),'existing conformance badge missing: '+suite);
 assert(read('RELEASE_NOTES.md').includes('## v'+TARGET_RELEASE));assert(read('CHANGELOG.md').includes('## [v'+TARGET_RELEASE+']'));
+
+const startHere=read('docs/README.md').toString().split('## Historical releases')[0];
+assert(startHere.includes('(releases/v129.5.0.md)'), 'current documentation entrance must link the v129.5 release book');
+assert(startHere.includes('(source-alignment.md)'), 'current documentation entrance must link standalone qualification');
+assert(!read('README.md').includes('Current release: `v129.0.0`'), 'historical release must not be labelled current');
+const alignmentText=read('docs/source-alignment.md').toString();
+const governanceHeading='## Current governance authority';
+assert(alignmentText.includes(governanceHeading), 'existing governance navigation must resolve');
+assert.equal(sha256(alignmentText.slice(alignmentText.indexOf(governanceHeading))), 'cb863a543c04b349abc508d966e94728af6882b1eaa8a720467bd9df0bfe257d', 'designated-owner offline governance contract must be preserved');
