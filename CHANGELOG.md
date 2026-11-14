@@ -1,3 +1,7 @@
+## [v129.5.0] - 2026-11-14
+
+Canonical committed source and complete enumerated release book imported; prior release records and attestations remain immutable.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

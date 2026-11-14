@@ -1,6 +1,6 @@
 # Receiz Docs
 
-This directory is the public documentation set for Receiz `v129.0.0`.
+This directory is the public documentation set for Receiz `v129.5.0`.
 
 ## Start Here
 

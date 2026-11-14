@@ -1,0 +1,7 @@
+{
+  "release": "129.5.0",
+  "status": "source-imported-pending-qualification",
+  "upstreamCommit": "3267b36b88060987b509b27fec6763683ee10e98",
+  "browserQualification": "not-run",
+  "releaseQualification": "not-run"
+}

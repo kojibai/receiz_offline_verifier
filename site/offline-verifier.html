@@ -634,7 +634,7 @@
     </section>
 
     <p class="foot" style="text-align:center;">
-      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v129.0.0</a>
+      <a href="https://github.com/kojibai/receiz_offline_verifier" target="_blank" rel="noopener noreferrer">v129.5.0</a>
     </p>
   </main>
 
@@ -650,6 +650,9 @@ var snarkjs=function(t){"use strict";const a=[0,1,2,2,3,3,3,3,4,4,4,4,4,4,4,4];f
   (() => {
     "use strict";
 
+    // BEGIN GENERATED STANDALONE RESOURCE MECHANICS
+"use strict";var ReceizVerifierResources=(()=>{var k=Object.defineProperty;var de=Object.getOwnPropertyDescriptor;var Re=Object.getOwnPropertyNames;var we=Object.prototype.hasOwnProperty;var Ce=(e,r)=>{for(var t in r)k(e,t,{get:r[t],enumerable:!0})},ze=(e,r,t,i)=>{if(r&&typeof r=="object"||typeof r=="function")for(let n of Re(r))!we.call(e,n)&&n!==t&&k(e,n,{get:()=>r[n],enumerable:!(i=de(r,n))||i.enumerable});return e};var Te=e=>ze(k({},"__esModule",{value:!0}),e);var je={};Ce(je,{TEXT_BYTES:()=>W,TEXT_ENTRIES:()=>He,TOTAL_TEXT_BYTES:()=>Pe,assertBytes:()=>Ze,assertEncodedWire:()=>Xe,capacity:()=>M,inflateReceizBounded:()=>ye,isResourceRefusal:()=>Ge,operationalDenial:()=>Ye,readBoundedStream:()=>ke,textBudget:()=>Ee});var c=Uint8Array,C=Uint16Array,De=Int32Array,se=new c([0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0,0,0,0]),fe=new c([0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13,0,0]),Be=new c([16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15]),ue=function(e,r){for(var t=new C(31),i=0;i<31;++i)t[i]=r+=1<<e[i-1];for(var n=new De(t[30]),i=1;i<30;++i)for(var h=t[i];h<t[i+1];++h)n[h]=h-t[i]<<5|i;return{b:t,r:n}},he=ue(se,2),le=he.b,Oe=he.r;le[28]=258,Oe[258]=28;var ce=ue(fe,0),Le=ce.b,We=ce.r,q=new C(32768);for(o=0;o<32768;++o)m=(o&43690)>>1|(o&21845)<<1,m=(m&52428)>>2|(m&13107)<<2,m=(m&61680)>>4|(m&3855)<<4,q[o]=((m&65280)>>8|(m&255)<<8)>>1;var m,o,O=(function(e,r,t){for(var i=e.length,n=0,h=new C(r);n<i;++n)e[n]&&++h[e[n]-1];var l=new C(r);for(n=1;n<r;++n)l[n]=l[n-1]+h[n-1]<<1;var f;if(t){f=new C(1<<r);var g=15-r;for(n=0;n<i;++n)if(e[n])for(var u=n<<4|e[n],I=r-e[n],a=l[e[n]-1]++<<I,s=a|(1<<I)-1;a<=s;++a)f[q[a]>>g]=u}else for(f=new C(i),n=0;n<i;++n)e[n]&&(f[n]=q[l[e[n]-1]++]>>15-e[n]);return f}),L=new c(288);for(o=0;o<144;++o)L[o]=8;var o;for(o=144;o<256;++o)L[o]=9;var o;for(o=256;o<280;++o)L[o]=7;var o;for(o=280;o<288;++o)L[o]=8;var o,ve=new c(32);for(o=0;o<32;++o)ve[o]=5;var o;var Me=O(L,9,1);var Se=O(ve,5,1),Y=function(e){for(var r=e[0],t=1;t<e.length;++t)e[t]>r&&(r=e[t]);return r},p=function(e,r,t){var i=r/8|0;return(e[i]|e[i+1]<<8)>>(r&7)&t},j=function(e,r){var t=r/8|0;return(e[t]|e[t+1]<<8|e[t+2]<<16)>>(r&7)},Ne=function(e){return(e+7)/8|0},U=function(e,r,t){return(r==null||r<0)&&(r=0),(t==null||t>e.length)&&(t=e.length),new c(e.subarray(r,t))};var Ue=["unexpected EOF","invalid block type","invalid length/literal","invalid distance","stream finished","no stream handler",,"no callback","invalid UTF-8 data","extra field too long","date not in range 1980-2099","filename too long","stream finishing","invalid zip data"],y=function(e,r,t){var i=new Error(r||Ue[e]);if(i.code=e,Error.captureStackTrace&&Error.captureStackTrace(i,y),!t)throw i;return i},Ve=function(e,r,t,i){var n=e.length,h=i?i.length:0;if(!n||r.f&&!r.l)return t||new c(0);var l=!t,f=l||r.i!=2,g=r.i;l&&(t=new c(n*3));var u=function(ie){var ae=t.length;if(ie>ae){var oe=new c(Math.max(ae*2,ie));oe.set(t),t=oe}},I=r.f||0,a=r.p||0,s=r.b||0,d=r.l,S=r.d,z=r.m,T=r.n,V=n*8;do{if(!d){I=p(e,a,1);var _=p(e,a+1,3);if(a+=3,_)if(_==1)d=Me,S=Se,z=9,T=5;else if(_==2){var P=p(e,a,31)+257,$=p(e,a+10,15)+4,K=P+p(e,a+5,31)+1;a+=14;for(var D=new c(K),H=new c(19),v=0;v<$;++v)H[Be[v]]=p(e,a+v*3,7);a+=$*3;for(var J=Y(H),ge=(1<<J)-1,me=O(H,J,1),v=0;v<K;){var Q=me[p(e,a,ge)];a+=Q&15;var E=Q>>4;if(E<16)D[v++]=E;else{var R=0,N=0;for(E==16?(N=3+p(e,a,3),a+=2,R=D[v-1]):E==17?(N=3+p(e,a,7),a+=3):E==18&&(N=11+p(e,a,127),a+=7);N--;)D[v++]=R}}var ee=D.subarray(0,P),x=D.subarray(P);z=Y(ee),T=Y(x),d=O(ee,z,1),S=O(x,T,1)}else y(1);else{var E=Ne(a)+4,F=e[E-4]|e[E-3]<<8,b=E+F;if(b>n){g&&y(0);break}f&&u(s+F),t.set(e.subarray(E,b),s),r.b=s+=F,r.p=a=b*8,r.f=I;continue}if(a>V){g&&y(0);break}}f&&u(s+131072);for(var Ie=(1<<z)-1,xe=(1<<T)-1,Z=a;;Z=a){var R=d[j(e,a)&Ie],w=R>>4;if(a+=R&15,a>V){g&&y(0);break}if(R||y(2),w<256)t[s++]=w;else if(w==256){Z=a,d=null;break}else{var re=w-254;if(w>264){var v=w-257,B=se[v];re=p(e,a,(1<<B)-1)+le[v],a+=B}var X=S[j(e,a)&xe],G=X>>4;X||y(3),a+=X&15;var x=Le[G];if(G>3){var B=fe[G];x+=j(e,a)&(1<<B)-1,a+=B}if(a>V){g&&y(0);break}f&&u(s+131072);var te=s+re;if(s<x){var ne=h-x,Ae=Math.min(x,te);for(ne+s<0&&y(3);s<Ae;++s)t[s]=i[ne+s]}for(;s<te;++s)t[s]=t[s-x]}}r.l=d,r.p=Z,r.b=s,r.f=I,d&&(I=1,r.m=z,r.d=S,r.n=T)}while(!I);return s!=t.length&&l?U(t,0,s):t.subarray(0,s)};var _e=new c(0);var pe=(function(){function e(r,t){typeof r=="function"&&(t=r,r={}),this.ondata=t;var i=r&&r.dictionary&&r.dictionary.subarray(-32768);this.s={i:0,b:i?i.length:0},this.o=new c(32768),this.p=new c(0),i&&this.o.set(i)}return e.prototype.e=function(r){if(this.ondata||y(5),this.d&&y(4),!this.p.length)this.p=r;else if(r.length){var t=new c(this.p.length+r.length);t.set(this.p),t.set(r,this.p.length),this.p=t}},e.prototype.c=function(r){this.s.i=+(this.d=r||!1);var t=this.s.b,i=Ve(this.p,this.s,this.o);this.ondata(U(i,t,this.s.b),this.d),this.o=U(i,this.s.b-32768),this.s.b=this.o.length,this.p=U(this.p,this.s.p/8|0),this.s.p&=7},e.prototype.push=function(r,t){this.e(r),this.c(t)},e})();var Fe=typeof TextDecoder<"u"&&new TextDecoder,be=0;try{Fe.decode(_e,{stream:!0}),be=1}catch{}var Ke=Object.freeze({exactArtifactBytes:524288e3,archiveEntries:5e3,singleDecompressedEntryBytes:1073741824,totalDecompressedBytes:2147483648,rootArchiveContainerDepth:1,embeddedArchiveNesting:0,perEntryCompressionRatio:200,aggregateCompressionRatio:100,canonicalArchivePathBytes:1024,archiveEntryNameBytes:255,manifestBytes:16777216,verifiedHistoryNodes:4096,reconciliationAdditions:64,remotePredecessorFetches:256,artifactNamespaces:256,reducerOperations:4096,lawExpressionOperations:4096});var Je=Object.freeze({exactArtifactBytes:16*1048576,decompressedArchiveBytes:16*1048576,transportedHistoryNodes:16384});var Qe=Object.freeze({exactArtifactBytes:"ARTIFACT_TOO_LARGE",archiveEntries:"ARCHIVE_LIMIT_EXCEEDED",singleDecompressedEntryBytes:"ARCHIVE_LIMIT_EXCEEDED",totalDecompressedBytes:"ARCHIVE_LIMIT_EXCEEDED",rootArchiveContainerDepth:"ARCHIVE_RECURSION_FORBIDDEN",embeddedArchiveNesting:"ARCHIVE_RECURSION_FORBIDDEN",perEntryCompressionRatio:"ARCHIVE_COMPRESSION_LIMIT_EXCEEDED",aggregateCompressionRatio:"ARCHIVE_COMPRESSION_LIMIT_EXCEEDED",canonicalArchivePathBytes:"ARCHIVE_PATH_INVALID",archiveEntryNameBytes:"ARCHIVE_PATH_INVALID",manifestBytes:"ARCHIVE_LIMIT_EXCEEDED",verifiedHistoryNodes:"HISTORY_TOO_DEEP",reconciliationAdditions:"RECONCILIATION_BATCH_TOO_LARGE",remotePredecessorFetches:"PREDECESSOR_FETCH_LIMIT_EXCEEDED",artifactNamespaces:"NAMESPACE_LIMIT_EXCEEDED",reducerOperations:"VERIFICATION_BUDGET_EXCEEDED",lawExpressionOperations:"VERIFICATION_BUDGET_EXCEEDED"}),A=class extends Error{constructor(t,i,n,h){super(t);this.code=t;this.resource=i;this.observed=n;this.maximum=h;this.name="ReceizProtocolLimitError"}code;resource;observed;maximum;artifactValidity="not-evaluated"};var er=new TextEncoder;function ye(e,r,t){if(!Number.isSafeInteger(r)||r<0||!Number.isSafeInteger(t)||t<0||e.byteLength>t)throw new A("VERIFICATION_RESOURCE_UNAVAILABLE","verification-runtime");let i=[],n=0,h=new pe(u=>{if(u.byteLength>r-n)throw new A("VERIFICATION_RESOURCE_UNAVAILABLE","verification-runtime");u.byteLength&&(i.push(u),n+=u.byteLength)}),l=256;e.byteLength||h.push(e,!0);for(let u=0;u<e.byteLength;u+=l)h.push(e.subarray(u,u+l),u+l>=e.byteLength);let f=new Uint8Array(n),g=0;for(let u of i)f.set(u,g),g+=u.byteLength;return f}var W=128*1024*1024,Pe=256*1024*1024,He=4096;function M(){throw new A("VERIFICATION_RESOURCE_UNAVAILABLE","verification-runtime")}function Ee(e=W){return(!Number.isSafeInteger(e)||e<0)&&M(),Math.min(e,W)}function Ze(e,r){return e.byteLength>Ee(r)&&M(),e}function Xe(e,r){e.length>Math.ceil(r/3)*4&&M()}function Ge(e){return e instanceof A&&e.artifactValidity==="not-evaluated"}async function ke(e,r){let t=e.getReader(),i=[],n=0;try{for(;;){let f=await t.read();if(f.done)break;f.value.byteLength>r-n&&M(),n+=f.value.byteLength,i.push(f.value)}}finally{await t.cancel().catch(()=>{}),t.releaseLock()}let h=new Uint8Array(n),l=0;for(let f of i)h.set(f,l),l+=f.byteLength;return h}function Ye(){return{ok:!1,denial:{status:"operational-denial",code:"VERIFICATION_RESOURCE_UNAVAILABLE",artifactValidity:"not-evaluated"},errors:[],warnings:[],checks:[],bundle:null,anchor:null,fileHash:"",chunkSummary:[],nativeCapture:null,pbiAuthorshipHistory:[]}}return Te(je);})();
+    // END GENERATED STANDALONE RESOURCE MECHANICS
     const PROOF_KEY = "receiz.proof_bundle";
     const ANCHOR_KEY = "receiz_anchor_bundle";
     const G16_NOTICE_KEY = "receiz.groth16";
@@ -840,6 +843,7 @@ var ReceizVerifierIdentityDisplay = (() => {
     classifyPortableIdentityCarrier: () => classifyPortableIdentityCarrier,
     formatVerifierIdentity: () => formatVerifierIdentity,
     formatVerifierPbiSigners: () => formatVerifierPbiSigners,
+    projectVerifiedCreatorUsername: () => projectVerifiedCreatorUsername,
     projectVerifierIdentityDisplay: () => projectVerifierIdentityDisplay,
     retainVerifierPbiAssertionResult: () => retainVerifierPbiAssertionResult,
     verifierIdentity: () => verifierIdentity
@@ -879,7 +883,7 @@ var ReceizVerifierIdentityDisplay = (() => {
   function decodeProfileOriginalRouteProjectionAppend(append, renderedArtifactSha256) {
     if (!record(append) || append.type !== PROFILE_ORIGINAL_RENDER_APPEND_TYPE || append.renderedArtifactSha256 !== renderedArtifactSha256) return null;
     const bindSealedRecordMediaHash = (projection) => {
-      if (projection.media === null && typeof projection.recordMediaSha256Hex !== "string") {
+      if (projection.media === null && !record(projection.importedSource) && typeof projection.recordMediaSha256Hex !== "string") {
         return {
           ...projection,
           recordMediaSha256Hex: renderedArtifactSha256
@@ -901,6 +905,12 @@ var ReceizVerifierIdentityDisplay = (() => {
     } catch {
       return null;
     }
+  }
+
+  // app/lib/profile/receivingUsername.ts
+  function parseReceivingUsername(raw) {
+    const value = raw.trim().replace(/^@+/, "").replace(/\.receiz\.id$/i, "").toLowerCase();
+    return /^[a-z0-9_]{3,24}$/.test(value) || /^receiz_[a-z0-9_]{3,24}$/.test(value) ? value : null;
   }
 
   // packages/receiz-sdk/src/errors.ts
@@ -1242,6 +1252,20 @@ var ReceizVerifierIdentityDisplay = (() => {
     return { receizId, username: component && USERNAME.test(component) ? component : null, displayName: text(displayName) };
   }
   var absent = () => verifierIdentity(null);
+  function projectVerifiedCreatorUsername(value, payloadBytes) {
+    const result = record2(value), continuity = record2(result?.assetContinuity);
+    const native = record2(record2(result?.bundle)?.nativeRecordSeal), nativeContinuity = record2(native?.ownershipContinuity);
+    const nativeSource = continuity?.state === "verified" && continuity.carrier === "native_record_seal" ? continuity : continuity?.state === "not_applicable" && typeof nativeContinuity?.namespace === "string" && nativeContinuity.namespace.startsWith("receiz.native-proof:") ? nativeContinuity : null;
+    if (result?.ok !== true || record2(result.integrity)?.ok === false || !nativeSource || payloadBytes.length > 10 * 1024 * 1024 || payloadBytes[0] !== 123) return null;
+    let source;
+    try {
+      source = record2(JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(payloadBytes)));
+    } catch {
+      return null;
+    }
+    const owner = source?.schema === "receiz.bank.asset-content.v2" ? source.ownerReceizId : source?.schema === "receiz.bank.asset-definition.v1" ? source.issuerReceizId : null;
+    return source && owner === nativeSource.genesisOwnerReceizId && typeof source.creatorUsername === "string" && parseReceivingUsername(source.creatorUsername) === source.creatorUsername ? source.creatorUsername : null;
+  }
   function carriedVerifierOriginal(value) {
     const result = record2(value);
     if (result?.ok !== true || record2(result.integrity)?.ok === false) return null;
@@ -1266,8 +1290,10 @@ var ReceizVerifierIdentityDisplay = (() => {
     const creator = record2(original?.originalCreator);
     const creatorUsername = text(creator?.username);
     let originalCreator = creatorUsername && USERNAME.test(creatorUsername) ? verifierIdentity(`${creatorUsername}.receiz.id`, creator?.displayName) : verifierIdentity(creator?.receizId, creator?.displayName);
-    if (!creator && (original?.ownershipKind === "creator" || !original && canonicalContinuity?.state === "verified" && canonicalContinuity.carrier === "native_record_seal")) {
+    if (!creator && (original?.ownershipKind === "creator" || !original && canonicalContinuity?.state === "verified" && canonicalContinuity.carrier === "native_record_seal" || !original && canonicalContinuity?.state === "not_applicable" && typeof continuity?.namespace === "string" && continuity.namespace.startsWith("receiz.native-proof:"))) {
       originalCreator = verifierIdentity(continuity?.genesisOwnerReceizId ?? record2(native?.ownershipContinuity)?.genesisOwnerReceizId);
+      const chosen = text(result.sourceCreatorUsername);
+      if (chosen && parseReceivingUsername(chosen) === chosen) originalCreator = { ...originalCreator, username: chosen };
     }
     const nested = record2(result.identitySource);
     const nestedDisplay = nested?.state === "verified" ? projectVerifierIdentityDisplay(nested.result) : null;
@@ -2739,97 +2765,121 @@ var ReceizVerifierIdentityDisplay = (() => {
       return -1;
     }
 
-    function parseITXtData(data) {
-      const keywordEnd = indexOfNull(data, 0);
-      if (keywordEnd <= 0) return null;
-
-      const keyword = textDecoder.decode(data.slice(0, keywordEnd));
-      let cursor = keywordEnd + 1;
-      if (cursor + 2 > data.length) return null;
-
-      const compressionFlag = data[cursor] || 0;
-      const compressionMethod = data[cursor + 1] || 0;
-      cursor += 2;
-
-      if (compressionMethod !== 0) return null;
-
-      const langEnd = indexOfNull(data, cursor);
-      if (langEnd < 0) return null;
-      cursor = langEnd + 1;
-
-      const translatedEnd = indexOfNull(data, cursor);
-      if (translatedEnd < 0) return null;
-      cursor = translatedEnd + 1;
-
-      if (cursor > data.length) return null;
-      const payload = data.slice(cursor);
-      let textBytes = payload;
-      if (compressionFlag === 1) {
+    // BEGIN GENERATED BOUNDED FUNCTION parseITXtData
+function parseITXtData(data, maxTextBytes = ReceizVerifierResources.TEXT_BYTES) {
+    const keywordEnd = indexOfNull(data, 0);
+    if (keywordEnd <= 0)
+        return null;
+    const keyword = textDecoder.decode(data.slice(0, keywordEnd));
+    let cursor = keywordEnd + 1;
+    if (cursor + 2 > data.length)
+        return null;
+    const compressionFlag = data[cursor] || 0;
+    const compressionMethod = data[cursor + 1] || 0;
+    cursor += 2;
+    if (compressionMethod !== 0)
+        return null;
+    const langEnd = indexOfNull(data, cursor);
+    if (langEnd < 0)
+        return null;
+    cursor = langEnd + 1;
+    const translatedEnd = indexOfNull(data, cursor);
+    if (translatedEnd < 0)
+        return null;
+    cursor = translatedEnd + 1;
+    if (cursor > data.length)
+        return null;
+    const payload = data.slice(cursor);
+    let textBytes = payload;
+    if (compressionFlag === 1) {
         try {
-          textBytes = (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function")
-            ? fflate.inflateSync(payload)
-            : null;
-        } catch {
-          return null;
+            textBytes = (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function")
+                ? ReceizVerifierResources.inflateReceizBounded(payload, ReceizVerifierResources.textBudget(maxTextBytes), ReceizVerifierResources.TEXT_BYTES)
+                : null;
         }
-        if (!textBytes) return null;
-      } else if (compressionFlag !== 0) {
+        catch (__receizResourceFailure) {
+            if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+                throw __receizResourceFailure;
+            return null;
+        }
+        if (!textBytes)
+            return null;
+    }
+    else if (compressionFlag !== 0) {
         return null;
-      }
-      const text = textDecoder.decode(textBytes);
-      return { keyword, text };
     }
+    const text = textDecoder.decode(ReceizVerifierResources.assertBytes(textBytes, maxTextBytes));
+    return { keyword, text, textBytes: textBytes.byteLength };
+}
+// END GENERATED BOUNDED FUNCTION parseITXtData
 
-    function parseTextData(data) {
-      const keywordEnd = indexOfNull(data, 0);
-      if (keywordEnd <= 0) return null;
-      const keyword = textDecoder.decode(data.slice(0, keywordEnd));
-      const text = textDecoder.decode(data.slice(keywordEnd + 1));
-      return { keyword, text };
-    }
+    // BEGIN GENERATED BOUNDED FUNCTION parseTextData
+function parseTextData(data, maxTextBytes = ReceizVerifierResources.TEXT_BYTES) {
+    const keywordEnd = indexOfNull(data, 0);
+    if (keywordEnd <= 0)
+        return null;
+    const keyword = textDecoder.decode(data.slice(0, keywordEnd));
+    const text = textDecoder.decode(ReceizVerifierResources.assertBytes(data.slice(keywordEnd + 1), maxTextBytes));
+    return { keyword, text, textBytes: data.byteLength - keywordEnd - 1 };
+}
+// END GENERATED BOUNDED FUNCTION parseTextData
 
-    function parseZTxtData(data) {
-      const keywordEnd = indexOfNull(data, 0);
-      if (keywordEnd <= 0) return null;
-      const keyword = textDecoder.decode(data.slice(0, keywordEnd));
-      const compressionMethod = data[keywordEnd + 1] ?? 255;
-      if (compressionMethod !== 0) return null;
-      const compressed = data.slice(keywordEnd + 2);
-      let inflated;
-      try {
+    // BEGIN GENERATED BOUNDED FUNCTION parseZTxtData
+function parseZTxtData(data, maxTextBytes = ReceizVerifierResources.TEXT_BYTES) {
+    const keywordEnd = indexOfNull(data, 0);
+    if (keywordEnd <= 0)
+        return null;
+    const keyword = textDecoder.decode(data.slice(0, keywordEnd));
+    const compressionMethod = data[keywordEnd + 1] ?? 255;
+    if (compressionMethod !== 0)
+        return null;
+    const compressed = data.slice(keywordEnd + 2);
+    let inflated;
+    try {
         inflated = (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function")
-          ? fflate.inflateSync(compressed)
-          : null;
-      } catch {
-        return null;
-      }
-      if (!inflated) return null;
-      const text = textDecoder.decode(inflated);
-      return { keyword, text };
+            ? ReceizVerifierResources.inflateReceizBounded(compressed, ReceizVerifierResources.textBudget(maxTextBytes), ReceizVerifierResources.TEXT_BYTES)
+            : null;
     }
+    catch (__receizResourceFailure) {
+        if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+            throw __receizResourceFailure;
+        return null;
+    }
+    if (!inflated)
+        return null;
+    const text = textDecoder.decode(ReceizVerifierResources.assertBytes(inflated, maxTextBytes));
+    return { keyword, text, textBytes: inflated.byteLength };
+}
+// END GENERATED BOUNDED FUNCTION parseZTxtData
 
-    function readPngTextChunks(pngBytes) {
-      assertPngSignature(pngBytes);
-      const chunks = [];
-      let offset = 8;
-
-      while (offset + 8 <= pngBytes.length) {
+    // BEGIN GENERATED BOUNDED FUNCTION readPngTextChunks
+function readPngTextChunks(pngBytes) {
+    assertPngSignature(pngBytes);
+    const chunks = [];
+    let remaining = ReceizVerifierResources.TOTAL_TEXT_BYTES;
+    let offset = 8;
+    while (offset + 8 <= pngBytes.length) {
         const length = readUint32BE(pngBytes, offset);
         const type = chunkType(pngBytes, offset + 4);
         const dataStart = offset + 8;
         const dataEnd = dataStart + length;
-        if (dataEnd + 4 > pngBytes.length) break;
-
+        if (dataEnd + 4 > pngBytes.length)
+            break;
         const data = pngBytes.slice(dataStart, dataEnd);
-        const parsed = type === "iTXt" ? parseITXtData(data) : type === "tEXt" ? parseTextData(data) : type === "zTXt" ? parseZTxtData(data) : null;
-        if (parsed) chunks.push(parsed);
-
+        const parsed = type === "iTXt" ? parseITXtData(data, remaining) : type === "tEXt" ? parseTextData(data, remaining) : type === "zTXt" ? parseZTxtData(data, remaining) : null;
+        if (parsed) {
+            if (chunks.length >= ReceizVerifierResources.TEXT_ENTRIES)
+                ReceizVerifierResources.capacity();
+            remaining -= parsed.textBytes;
+            chunks.push({ keyword: parsed.keyword, text: parsed.text });
+        }
         offset = dataEnd + 4;
-        if (type === "IEND") break;
-      }
-
-      return chunks;
+        if (type === "IEND")
+            break;
     }
+    return chunks;
+}
+// END GENERATED BOUNDED FUNCTION readPngTextChunks
 
 
     function countTextChunksByKeyword(chunks, keyword) {
@@ -2911,53 +2961,59 @@ var ReceizVerifierIdentityDisplay = (() => {
       return bytes;
     }
 
-    async function inflateDeflate(bytes) {
-      // Receiz bundles are encoded with fflate.deflateSync (raw deflate).
-      // Prefer the same decoder for deterministic cross-browser behavior.
-      if (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function") {
+    // BEGIN GENERATED BOUNDED FUNCTION inflateDeflate
+async function inflateDeflate(bytes) {
+    // Receiz bundles are encoded with fflate.deflateSync (raw deflate).
+    // Prefer the same decoder for deterministic cross-browser behavior.
+    if (typeof fflate !== "undefined" && fflate && typeof fflate.inflateSync === "function") {
         try {
-          return fflate.inflateSync(bytes);
-        } catch (err) {
-          // Fall through to stream-based fallback below.
+            return ReceizVerifierResources.inflateReceizBounded(bytes, MAX_BUNDLE_DECODE_BYTES, MAX_BUNDLE_DECODE_BYTES + 1024);
         }
-      }
-
-      if (typeof DecompressionStream === "function") {
-        const tryStream = async (format) => {
-          const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream(format));
-          const arr = await new Response(stream).arrayBuffer();
-          return new Uint8Array(arr);
-        };
-
-        try {
-          return await tryStream("deflate-raw");
-        } catch {
-          try {
-            return await tryStream("deflate");
-          } catch {
-            // continue to hard error below
-          }
+        catch (err) {
+            if (ReceizVerifierResources.isResourceRefusal(err))
+                throw err;
         }
-      }
-
-      throw new Error("This browser cannot decode compressed proof bundles offline.");
     }
+    if (typeof DecompressionStream === "function") {
+        const tryStream = async (format) => {
+            const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream(format));
+            return ReceizVerifierResources.readBoundedStream(stream, MAX_BUNDLE_DECODE_BYTES);
+        };
+        try {
+            return await tryStream("deflate-raw");
+        }
+        catch (__receizResourceFailure) {
+            if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+                throw __receizResourceFailure;
+            try {
+                return await tryStream("deflate");
+            }
+            catch (__receizResourceFailure) {
+                if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+                    throw __receizResourceFailure;
+            }
+        }
+    }
+    throw new Error("This browser cannot decode compressed proof bundles offline.");
+}
+// END GENERATED BOUNDED FUNCTION inflateDeflate
 
-    async function decodeReceizProofBundle(encoded) {
-      const [codec, payload] = String(encoded || "").split(":", 2);
-
-      if (codec === "c1" && payload) {
+    // BEGIN GENERATED BOUNDED FUNCTION decodeReceizProofBundle
+async function decodeReceizProofBundle(encoded) {
+    ReceizVerifierResources.assertEncodedWire(String(encoded || ""), MAX_BUNDLE_DECODE_BYTES + 1024);
+    const [codec, payload] = String(encoded || "").split(":", 2);
+    if (codec === "c1" && payload) {
         const compressed = base64UrlDecode(payload);
         const inflated = await inflateDeflate(compressed);
         if (inflated.byteLength > MAX_BUNDLE_DECODE_BYTES) {
-          throw new Error("Proof bundle payload too large.");
+            throw new Error("Proof bundle payload too large.");
         }
         return JSON.parse(new TextDecoder().decode(inflated));
-      }
-
-      const legacyBytes = base64UrlDecode(String(encoded || ""));
-      return JSON.parse(new TextDecoder().decode(legacyBytes));
     }
+    const legacyBytes = ReceizVerifierResources.assertBytes(base64UrlDecode(String(encoded || "")), MAX_BUNDLE_DECODE_BYTES);
+    return JSON.parse(new TextDecoder().decode(legacyBytes));
+}
+// END GENERATED BOUNDED FUNCTION decodeReceizProofBundle
 
     function isRecord(v) {
       return typeof v === "object" && v !== null;
@@ -4385,37 +4441,49 @@ var ReceizVerifierIdentityDisplay = (() => {
       return ReceizVerifierIdentityDisplay.classifyPortableIdentityCarrier(originalBytes, bundle);
     }
 
-    function classifyOwnershipProvenanceContinuity(bytes, bundle) {
-      if (!bundle || !isRecord(bundle)) return { state: "not_applicable" };
-      const chunks = readPngTextChunks(bytes);
-      const matches = chunks.filter((entry) => entry.keyword === "receiz.ownership_provenance");
-      if (matches.length === 0) return { state: "not_applicable" };
-      if (matches.length !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
-      const raw = matches[0].text || "";
-      const dot = raw.indexOf(".");
-      if (dot <= 0 || raw.slice(0, dot) !== "c1") return { state: "invalid", error: "continuity_round_trip_failed" };
-      let provenance = null;
-      try {
-        const compressed = base64UrlDecode(raw.slice(dot + 1));
-        const inflated = fflate.inflateSync(compressed);
-        provenance = JSON.parse(new TextDecoder().decode(inflated));
-      } catch {
+    // BEGIN GENERATED BOUNDED FUNCTION classifyOwnershipProvenanceContinuity
+function classifyOwnershipProvenanceContinuity(bytes, bundle) {
+    if (!bundle || !isRecord(bundle))
+        return { state: "not_applicable" };
+    const chunks = readPngTextChunks(bytes);
+    const matches = chunks.filter((entry) => entry.keyword === "receiz.ownership_provenance");
+    if (matches.length === 0)
+        return { state: "not_applicable" };
+    if (matches.length !== 1)
         return { state: "invalid", error: "continuity_round_trip_failed" };
-      }
-      if (!isRecord(provenance) || provenance.kind !== "receiz.ownership_provenance" || provenance.version !== 1) return { state: "invalid", error: "continuity_round_trip_failed" };
-      const slug = asString(bundle.slug);
-      const code = asString(bundle.code);
-      const pulse = asString(bundle.kaiPulseEternal);
-      const verifyPath = asString(bundle.verifyPath);
-      if (!slug || !code || !pulse || !verifyPath || provenance.slug !== slug || provenance.code !== code || provenance.pulse !== pulse || provenance.verifyPath !== verifyPath || verifyPath !== `/v/${slug}/${code}/${pulse}`) {
-        return { state: "invalid", error: "continuity_coordinate_mismatch" };
-      }
-      const owner = isRecord(provenance.currentOwner) ? provenance.currentOwner : (isRecord(provenance.originalCreator) ? provenance.originalCreator : null);
-      const username = owner && typeof owner.username === "string" ? owner.username.trim().toLowerCase() : "";
-      if (!owner || !asString(owner.userId) || !/^[a-z0-9_]{3,24}$/.test(username)) return { state: "invalid", error: "continuity_ownership_missing" };
-      const latestTransfer = Array.isArray(provenance.transfers) ? provenance.transfers[provenance.transfers.length - 1] : null;
-      return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
+    const raw = matches[0].text || "";
+    const dot = raw.indexOf(".");
+    if (dot <= 0 || raw.slice(0, dot) !== "c1")
+        return { state: "invalid", error: "continuity_round_trip_failed" };
+    let provenance = null;
+    try {
+        ReceizVerifierResources.assertEncodedWire(raw.slice(dot + 1), 16 * 1024 * 1024 + 1024);
+        const compressed = base64UrlDecode(raw.slice(dot + 1));
+        const inflated = ReceizVerifierResources.inflateReceizBounded(compressed, 16 * 1024 * 1024, 16 * 1024 * 1024 + 1024);
+        provenance = JSON.parse(new TextDecoder().decode(inflated));
     }
+    catch (__receizResourceFailure) {
+        if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+            throw __receizResourceFailure;
+        return { state: "invalid", error: "continuity_round_trip_failed" };
+    }
+    if (!isRecord(provenance) || provenance.kind !== "receiz.ownership_provenance" || provenance.version !== 1)
+        return { state: "invalid", error: "continuity_round_trip_failed" };
+    const slug = asString(bundle.slug);
+    const code = asString(bundle.code);
+    const pulse = asString(bundle.kaiPulseEternal);
+    const verifyPath = asString(bundle.verifyPath);
+    if (!slug || !code || !pulse || !verifyPath || provenance.slug !== slug || provenance.code !== code || provenance.pulse !== pulse || provenance.verifyPath !== verifyPath || verifyPath !== `/v/${slug}/${code}/${pulse}`) {
+        return { state: "invalid", error: "continuity_coordinate_mismatch" };
+    }
+    const owner = isRecord(provenance.currentOwner) ? provenance.currentOwner : (isRecord(provenance.originalCreator) ? provenance.originalCreator : null);
+    const username = owner && typeof owner.username === "string" ? owner.username.trim().toLowerCase() : "";
+    if (!owner || !asString(owner.userId) || !/^[a-z0-9_]{3,24}$/.test(username))
+        return { state: "invalid", error: "continuity_ownership_missing" };
+    const latestTransfer = Array.isArray(provenance.transfers) ? provenance.transfers[provenance.transfers.length - 1] : null;
+    return { state: "verified", carrier: "ownership_provenance", artifactId: `${slug}:${code}:${pulse}`, ownerReceizId: `${username}.receiz.id`, namespace: `${slug}:${code}:${pulse}`, priorHeadReference: isRecord(latestTransfer) ? (asString(latestTransfer.ledgerKey) || asString(latestTransfer.messageId) || "origin") : "origin", provenance };
+}
+// END GENERATED BOUNDED FUNCTION classifyOwnershipProvenanceContinuity
 
     async function verifyNativeOwnershipContinuity(bundle, basisSha256) {
       if (!bundle || !isRecord(bundle.nativeRecordSeal)) return true;
@@ -5012,261 +5080,272 @@ var ReceizVerifierIdentityDisplay = (() => {
       }
     }
 
-    async function verifyReceizBytes(fileName, bytes, optionalLink) {
-      const errors = [];
-      const warnings = [];
-      const checks = [];
-
-      const fileHash = await sha256Hex(bytes);
-      const format = detectDocumentFormat(bytes, { filename: fileName });
-
-      let bundle = null;
-      let anchor = null;
-      let basisBytes = null;
-      let chunkSummary = [];
-      let packageSummary = null;
-      let assetContinuity = { state: "not_applicable" };
-      const bundleParsed = decodeReceizBundleEnvelope(bytes);
-      if (bundleParsed) {
+    // BEGIN GENERATED BOUNDED FUNCTION verifyReceizBytes
+async function verifyReceizBytes(fileName, bytes, optionalLink) {
+try { return await verifyReceizBytesIssued(fileName, bytes, optionalLink); } catch (error) {
+if (ReceizVerifierResources.isResourceRefusal(error)) return ReceizVerifierResources.operationalDenial();
+throw error;
+}
+}
+async function verifyReceizBytesIssued(fileName, bytes, optionalLink) {
+    const errors = [];
+    const warnings = [];
+    const checks = [];
+    const fileHash = await sha256Hex(bytes);
+    const format = detectDocumentFormat(bytes, { filename: fileName });
+    let bundle = null;
+    let anchor = null;
+    let basisBytes = null;
+    let chunkSummary = [];
+    let packageSummary = null;
+    let assetContinuity = { state: "not_applicable" };
+    const bundleParsed = decodeReceizBundleEnvelope(bytes);
+    if (bundleParsed) {
         checks.push({ state: "ok", message: "Container envelope parse" });
         basisBytes = bundleParsed.originalBytes;
         bundle = bundleParsed.envelope.proofbundle;
         chunkSummary = [{ keyword: "receiz.bundle.v1", bytes: bytes.length }];
-
         const manifestBasis = (await sha256Hex(bundleParsed.originalBytes)).toLowerCase();
         if (manifestBasis !== bundleParsed.envelope.manifest.basisSha256.toLowerCase()) {
-          errors.push("Bundle manifest basis hash mismatch.");
+            errors.push("Bundle manifest basis hash mismatch.");
         }
         const bundleBasis = typeof bundle.artifactSha256Basis === "string" ? bundle.artifactSha256Basis.toLowerCase() : "";
         if (bundleBasis !== manifestBasis) {
-          errors.push("Proof bundle artifact binding does not match container file bytes.");
+            errors.push("Proof bundle artifact binding does not match container file bytes.");
         }
         assetContinuity = await classifyPortableAssetContinuity(bundleParsed.originalBytes, bundle);
-        if (assetContinuity.state === "invalid") errors.push(assetContinuity.error || "continuity_round_trip_failed");
-      } else if (format === "png") {
+        if (assetContinuity.state === "invalid")
+            errors.push(assetContinuity.error || "continuity_round_trip_failed");
+    }
+    else if (format === "png") {
         const chunks = readPngTextChunks(bytes);
         chunkSummary = summarizeChunks(chunks);
         const chunkMap = new Map(chunks.map((x) => [x.keyword, x.text]));
-
         const proofChunkCount = countTextChunksByKeyword(chunks, PROOF_KEY);
         if (proofChunkCount !== 1) {
-          errors.push(
-            proofChunkCount > 1
-              ? "Duplicate proof bundles detected (proof bundle chunk count > 1)."
-              : "Missing proof bundle chunk (likely not the sealed file)."
-          );
-          checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-        } else {
-          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+            errors.push(proofChunkCount > 1
+                ? "Duplicate proof bundles detected (proof bundle chunk count > 1)."
+                : "Missing proof bundle chunk (likely not the sealed file).");
+            checks.push({ state: "bad", message: "Proof bundle uniqueness" });
         }
-
+        else {
+            checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+        }
         const proofEncoded = chunkMap.get(PROOF_KEY) || null;
         if (!proofEncoded) {
-          checks.push({ state: "bad", message: "Proof bundle chunk present" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            checks.push({ state: "bad", message: "Proof bundle chunk present" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle chunk present" });
-
         try {
-          bundle = await decodeReceizProofBundle(proofEncoded);
-          if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
-        } catch (err) {
-          const message = err instanceof Error ? err.message : String(err);
-          errors.push(`Proof bundle decode failed: ${message}`);
-          checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            bundle = await decodeReceizProofBundle(proofEncoded);
+            if (!isRecord(bundle))
+                throw new Error("decoded payload is not an object");
+        }
+        catch (err) {
+            if (ReceizVerifierResources.isResourceRefusal(err))
+                throw err;
+            const message = err instanceof Error ? err.message : String(err);
+            errors.push(`Proof bundle decode failed: ${message}`);
+            checks.push({ state: "bad", message: "Proof bundle decode" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
-
         basisBytes = stripProofBundleChunks(bytes);
-
         const anchorRaw = chunkMap.get(ANCHOR_KEY) || null;
         anchor = anchorRaw ? parseAnchorBundle(anchorRaw) : null;
         if (anchorRaw && !anchor) {
-          errors.push("Anchor bundle chunk exists but is invalid JSON/shape.");
-          checks.push({ state: "bad", message: "Anchor bundle parse" });
-        } else if (anchor) {
-          checks.push({ state: "ok", message: "Anchor bundle parse" });
-        } else {
-          checks.push({ state: "ok", message: "Anchor bundle optional (not present)." });
+            errors.push("Anchor bundle chunk exists but is invalid JSON/shape.");
+            checks.push({ state: "bad", message: "Anchor bundle parse" });
         }
-
+        else if (anchor) {
+            checks.push({ state: "ok", message: "Anchor bundle parse" });
+        }
+        else {
+            checks.push({ state: "ok", message: "Anchor bundle optional (not present)." });
+        }
         const g16Notice = chunkMap.get(G16_NOTICE_KEY) || null;
-        const hasBundleGroth16 = Boolean(
-          bundle &&
-          isRecord(bundle) &&
-          asString(bundle.groth16ProofDigest) &&
-          asString(bundle.groth16Proof)
-        );
+        const hasBundleGroth16 = Boolean(bundle &&
+            isRecord(bundle) &&
+            asString(bundle.groth16ProofDigest) &&
+            asString(bundle.groth16Proof));
         if (g16Notice || hasBundleGroth16) {
-          checks.push({ state: "ok", message: "Groth16 notice chunk present" });
-        } else {
-          warnings.push("Groth16 notice/proof metadata is missing.");
+            checks.push({ state: "ok", message: "Groth16 notice chunk present" });
         }
-      } else if (format === "pdf") {
+        else {
+            warnings.push("Groth16 notice/proof metadata is missing.");
+        }
+    }
+    else if (format === "pdf") {
         const proofBundles = extractReceizProofBundlesFromPdf(bytes);
         if (proofBundles.length !== 1) {
-          errors.push(
-            proofBundles.length > 1
-              ? "Duplicate proof bundles detected in PDF metadata."
-              : "Missing embedded PDF proof bundle."
-          );
-          checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            errors.push(proofBundles.length > 1
+                ? "Duplicate proof bundles detected in PDF metadata."
+                : "Missing embedded PDF proof bundle.");
+            checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-
         const encoded = proofBundles[0] || "";
         chunkSummary = [{ keyword: "pdf.receiz.proof_bundle", bytes: new TextEncoder().encode(encoded).byteLength }];
         try {
-          bundle = await decodeReceizProofBundle(encoded);
-          if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
-        } catch (err) {
-          const message = err instanceof Error ? err.message : String(err);
-          errors.push(`Proof bundle decode failed: ${message}`);
-          checks.push({ state: "bad", message: "Proof bundle decode" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            bundle = await decodeReceizProofBundle(encoded);
+            if (!isRecord(bundle))
+                throw new Error("decoded payload is not an object");
+        }
+        catch (err) {
+            if (ReceizVerifierResources.isResourceRefusal(err))
+                throw err;
+            const message = err instanceof Error ? err.message : String(err);
+            errors.push(`Proof bundle decode failed: ${message}`);
+            checks.push({ state: "bad", message: "Proof bundle decode" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         checks.push({ state: "ok", message: "Proof bundle decode" });
         basisBytes = stripReceizSealUpdatesFromPdf(bytes).pdfBytes;
-      } else if (format === "heic") {
+    }
+    else if (format === "heic") {
         const parsed = parseReceizHeicProof(bytes);
         if (parsed.proofCount !== 1 || parsed.parseError || !parsed.bundle || !isRecord(parsed.bundle)) {
-          errors.push(
-            parsed.proofCount > 1
-              ? "Duplicate HEIC proof bundles detected."
-              : parsed.parseError
-                ? "HEIC proof bundle is malformed."
-                : "Missing embedded HEIC proof bundle."
-          );
-          checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            errors.push(parsed.proofCount > 1
+                ? "Duplicate HEIC proof bundles detected."
+                : parsed.parseError
+                    ? "HEIC proof bundle is malformed."
+                    : "Missing embedded HEIC proof bundle.");
+            checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
         bundle = parsed.bundle;
         basisBytes = parsed.basisBytes;
         chunkSummary = [{ keyword: "receiz.heic.proof.v1", bytes: bytes.length - basisBytes.length }];
         checks.push({ state: "ok", message: "Proof bundle uniqueness" });
         checks.push({ state: "ok", message: "Proof bundle decode" });
-      } else if (format === "svg") {
+    }
+    else if (format === "svg") {
         const parsed = parseReceizSvgProof(bytes);
         if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
-          const trailerParsed = parseReceizTrailer(bytes);
-          if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
-            warnings.push("Used trailer proof fallback for SVG artifact.");
-            checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
-            bundle = trailerParsed.bundle;
-            basisBytes = trailerParsed.basisBytes;
-            chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
-          } else {
-            if (parsed.proofCount !== 1) {
-              errors.push(
-                parsed.proofCount > 1
-                  ? "Duplicate proof bundles detected in SVG metadata."
-                  : "Missing embedded SVG proof bundle."
-              );
-              checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-            } else {
-              checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-              errors.push("SVG proof bundle is malformed.");
-              checks.push({ state: "bad", message: "Proof bundle decode" });
+            const trailerParsed = parseReceizTrailer(bytes);
+            if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
+                warnings.push("Used trailer proof fallback for SVG artifact.");
+                checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
+                bundle = trailerParsed.bundle;
+                basisBytes = trailerParsed.basisBytes;
+                chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
             }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-        } else {
-          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-          chunkSummary = [{ keyword: "svg.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
-          try {
-            bundle = await decodeReceizProofBundle(parsed.encodedBundle);
-            if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
-          } catch (err) {
-            const message = err instanceof Error ? err.message : String(err);
-            errors.push(`Proof bundle decode failed: ${message}`);
-            checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-          checks.push({ state: "ok", message: "Proof bundle decode" });
-          basisBytes = parsed.basisBytes;
+            else {
+                if (parsed.proofCount !== 1) {
+                    errors.push(parsed.proofCount > 1
+                        ? "Duplicate proof bundles detected in SVG metadata."
+                        : "Missing embedded SVG proof bundle.");
+                    checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+                }
+                else {
+                    checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+                    errors.push("SVG proof bundle is malformed.");
+                    checks.push({ state: "bad", message: "Proof bundle decode" });
+                }
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
         }
-      } else if (format === "json") {
+        else {
+            checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+            chunkSummary = [{ keyword: "svg.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
+            try {
+                bundle = await decodeReceizProofBundle(parsed.encodedBundle);
+                if (!isRecord(bundle))
+                    throw new Error("decoded payload is not an object");
+            }
+            catch (err) {
+                if (ReceizVerifierResources.isResourceRefusal(err))
+                    throw err;
+                const message = err instanceof Error ? err.message : String(err);
+                errors.push(`Proof bundle decode failed: ${message}`);
+                checks.push({ state: "bad", message: "Proof bundle decode" });
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
+            checks.push({ state: "ok", message: "Proof bundle decode" });
+            basisBytes = parsed.basisBytes;
+        }
+    }
+    else if (format === "json") {
         const parsed = parseReceizJsonProof(bytes);
         if (parsed.proofCount !== 1 || parsed.parseError || !parsed.encodedBundle) {
-          const trailerParsed = parseReceizTrailer(bytes);
-          if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
-            warnings.push("Used trailer proof fallback for JSON artifact.");
-            checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
+            const trailerParsed = parseReceizTrailer(bytes);
+            if (trailerParsed.trailerCount > 0 && !trailerParsed.parseError && trailerParsed.bundle && isRecord(trailerParsed.bundle)) {
+                warnings.push("Used trailer proof fallback for JSON artifact.");
+                checks.push({ state: "ok", message: "Proof bundle fallback (trailer proof)" });
+                bundle = trailerParsed.bundle;
+                basisBytes = trailerParsed.basisBytes;
+                chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
+            }
+            else {
+                if (parsed.proofCount !== 1) {
+                    errors.push(parsed.proofCount > 1
+                        ? "Duplicate proof bundles detected in JSON whitespace channel."
+                        : "Missing embedded JSON proof bundle.");
+                    checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+                }
+                else {
+                    checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+                    errors.push("JSON proof bundle is malformed.");
+                    checks.push({ state: "bad", message: "Proof bundle decode" });
+                }
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
+        }
+        else {
+            checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+            chunkSummary = [{ keyword: "json.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
+            try {
+                bundle = await decodeReceizProofBundle(parsed.encodedBundle);
+                if (!isRecord(bundle))
+                    throw new Error("decoded payload is not an object");
+            }
+            catch (err) {
+                if (ReceizVerifierResources.isResourceRefusal(err))
+                    throw err;
+                const message = err instanceof Error ? err.message : String(err);
+                errors.push(`Proof bundle decode failed: ${message}`);
+                checks.push({ state: "bad", message: "Proof bundle decode" });
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
+            checks.push({ state: "ok", message: "Proof bundle decode" });
+            basisBytes = parsed.basisBytes;
+        }
+    }
+    else {
+        const trailerParsed = parseReceizTrailer(bytes);
+        if (trailerParsed.trailerCount > 0) {
+            if (trailerParsed.trailerCount !== 1) {
+                errors.push(trailerParsed.trailerCount > 1
+                    ? "Duplicate trailer proof bundles detected."
+                    : "Missing trailer proof bundle.");
+                checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
+            checks.push({ state: "ok", message: "Proof bundle uniqueness" });
+            if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
+                errors.push("Trailer proof bundle is malformed.");
+                checks.push({ state: "bad", message: "Proof bundle decode" });
+                return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
+            }
             bundle = trailerParsed.bundle;
             basisBytes = trailerParsed.basisBytes;
             chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
-          } else {
-            if (parsed.proofCount !== 1) {
-              errors.push(
-                parsed.proofCount > 1
-                  ? "Duplicate proof bundles detected in JSON whitespace channel."
-                  : "Missing embedded JSON proof bundle."
-              );
-              checks.push({ state: "bad", message: "Proof bundle uniqueness" });
-            } else {
-              checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-              errors.push("JSON proof bundle is malformed.");
-              checks.push({ state: "bad", message: "Proof bundle decode" });
-            }
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-        } else {
-          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-          chunkSummary = [{ keyword: "json.receiz.proof_bundle", bytes: new TextEncoder().encode(parsed.encodedBundle).byteLength }];
-          try {
-            bundle = await decodeReceizProofBundle(parsed.encodedBundle);
-            if (!isRecord(bundle)) throw new Error("decoded payload is not an object");
-          } catch (err) {
-            const message = err instanceof Error ? err.message : String(err);
-            errors.push(`Proof bundle decode failed: ${message}`);
-            checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-          checks.push({ state: "ok", message: "Proof bundle decode" });
-          basisBytes = parsed.basisBytes;
+            checks.push({ state: "ok", message: "Proof bundle decode" });
         }
-      } else {
-        const trailerParsed = parseReceizTrailer(bytes);
-        if (trailerParsed.trailerCount > 0) {
-          if (trailerParsed.trailerCount !== 1) {
-            errors.push(
-              trailerParsed.trailerCount > 1
-                ? "Duplicate trailer proof bundles detected."
-                : "Missing trailer proof bundle."
-            );
-            checks.push({ state: "bad", message: "Proof bundle uniqueness" });
+        else {
+            errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
             return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-          checks.push({ state: "ok", message: "Proof bundle uniqueness" });
-
-          if (trailerParsed.parseError || !trailerParsed.bundle || !isRecord(trailerParsed.bundle)) {
-            errors.push("Trailer proof bundle is malformed.");
-            checks.push({ state: "bad", message: "Proof bundle decode" });
-            return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-          }
-
-          bundle = trailerParsed.bundle;
-          basisBytes = trailerParsed.basisBytes;
-          chunkSummary = [{ keyword: "receiz.trailer.v1", bytes: bytes.length - basisBytes.length }];
-          checks.push({ state: "ok", message: "Proof bundle decode" });
-        } else {
-          errors.push("Unsupported artifact format. Upload PNG/PDF/SVG/JSON/trailer/.receizbundle, or a package ZIP/folder.");
-          return { ok: false, errors, warnings, checks, bundle: null, anchor: null, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
         }
-      }
-
-      if (!bundle || !basisBytes || !isRecord(bundle)) {
+    }
+    if (!bundle || !basisBytes || !isRecord(bundle)) {
         return { ok: false, errors, warnings, checks, bundle: null, anchor, fileHash, chunkSummary, nativeCapture: null, pbiAuthorshipHistory: [] };
-      }
-
-      if (!anchor) {
+    }
+    if (!anchor) {
         anchor = deriveAnchorBundleFromProofBundle(bundle);
-      }
-
-
-      await validateBundleAgainstBasis({
+    }
+    await validateBundleAgainstBasis({
         bundle,
         basisBytes,
         anchor,
@@ -5274,82 +5353,82 @@ var ReceizVerifierIdentityDisplay = (() => {
         checks,
         errors,
         warnings
-      });
-      if (!await verifyNativeOwnershipContinuity(bundle, String(bundle.artifactSha256Basis || "").toLowerCase())) {
+    });
+    if (!await verifyNativeOwnershipContinuity(bundle, String(bundle.artifactSha256Basis || "").toLowerCase())) {
         errors.push("continuity_ownership_attestation_mismatch");
-      }
-
-      let nativeCapture = null;
-      let pbiAuthorshipHistory = [];
-      if (errors.length === 0) {
+    }
+    let nativeCapture = null;
+    let pbiAuthorshipHistory = [];
+    if (errors.length === 0) {
         const captureCarrier = isRecord(bundle.nativeRecordSeal) && bundle.nativeRecordSeal.nativeCapture
-          ? bundle.nativeRecordSeal
-          : bundle;
+            ? bundle.nativeRecordSeal
+            : bundle;
         const rawNativeCapture = captureCarrier.nativeCapture;
         try {
-          if (rawNativeCapture) {
-            const cameraRollProjection = transformReceizIosPwaCameraRollV6(basisBytes);
-            let sourceBytes = cameraRollProjection || basisBytes;
-            if (captureCarrier.nativeCaptureSource) {
-              const sourceDescriptor = captureCarrier.nativeCaptureSource;
-              const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
-              if (
-                sourceDescriptorKeys.length !== 3
-                || !sourceDescriptorKeys.includes("schema")
-                || !sourceDescriptorKeys.includes("carrier")
-                || !sourceDescriptorKeys.includes("sourceBytesSha256")
-                || sourceDescriptor.schema !== "receiz.native_capture_source.v1"
-                || sourceDescriptor.carrier !== "png.iTXt"
-                || typeof sourceDescriptor.sourceBytesSha256 !== "string"
-              ) throw new Error("native_capture_source_descriptor_invalid");
-              const sourceChunks = readPngTextChunks(basisBytes)
-                .filter((entry) => entry.keyword === "receiz.native_capture.source.v1");
-              if (sourceChunks.length !== 1) throw new Error("native_capture_source_chunk_invalid");
-              sourceBytes = base64UrlDecode(sourceChunks[0].text);
+            if (rawNativeCapture) {
+                const cameraRollProjection = transformReceizIosPwaCameraRollV6(basisBytes);
+                let sourceBytes = cameraRollProjection || basisBytes;
+                if (captureCarrier.nativeCaptureSource) {
+                    const sourceDescriptor = captureCarrier.nativeCaptureSource;
+                    const sourceDescriptorKeys = isRecord(sourceDescriptor) ? Object.keys(sourceDescriptor) : [];
+                    if (sourceDescriptorKeys.length !== 3
+                        || !sourceDescriptorKeys.includes("schema")
+                        || !sourceDescriptorKeys.includes("carrier")
+                        || !sourceDescriptorKeys.includes("sourceBytesSha256")
+                        || sourceDescriptor.schema !== "receiz.native_capture_source.v1"
+                        || sourceDescriptor.carrier !== "png.iTXt"
+                        || typeof sourceDescriptor.sourceBytesSha256 !== "string")
+                        throw new Error("native_capture_source_descriptor_invalid");
+                    const sourceChunks = readPngTextChunks(basisBytes)
+                        .filter((entry) => entry.keyword === "receiz.native_capture.source.v1");
+                    if (sourceChunks.length !== 1)
+                        throw new Error("native_capture_source_chunk_invalid");
+                    sourceBytes = base64UrlDecode(sourceChunks[0].text);
+                }
+                nativeCapture = await verifyReceizNativeCaptureV1(rawNativeCapture, {
+                    sourceBytes,
+                    coordinates: {
+                        slug: bundle.slug,
+                        code: bundle.code,
+                        pulse: bundle.kaiPulseEternal,
+                        verifyPath: bundle.verifyPath
+                    },
+                    verifiedIosCameraRollProjection: Boolean(cameraRollProjection)
+                });
+                if (!nativeCapture)
+                    throw new Error("native_capture_append_verification_failed");
+                if (captureCarrier.nativeCaptureSource
+                    && captureCarrier.nativeCaptureSource.sourceBytesSha256 !== nativeCapture.sourceSha256)
+                    throw new Error("native_capture_source_binding_failed");
+                checks.push({ state: "ok", message: "Native Capture Verified" });
             }
-            nativeCapture = await verifyReceizNativeCaptureV1(rawNativeCapture, {
-              sourceBytes,
-              coordinates: {
-                slug: bundle.slug,
-                code: bundle.code,
-                pulse: bundle.kaiPulseEternal,
-                verifyPath: bundle.verifyPath
-              },
-              verifiedIosCameraRollProjection: Boolean(cameraRollProjection)
-            });
-            if (!nativeCapture) throw new Error("native_capture_append_verification_failed");
-            if (
-              captureCarrier.nativeCaptureSource
-              && captureCarrier.nativeCaptureSource.sourceBytesSha256 !== nativeCapture.sourceSha256
-            ) throw new Error("native_capture_source_binding_failed");
-            checks.push({ state: "ok", message: "Native Capture Verified" });
-          } else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
-            throw new Error("native_capture_append_missing");
-          }
-        } catch (error) {
-          nativeCapture = null;
-          errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
-          checks.push({ state: "bad", message: "Native Capture verification" });
+            else if (captureCarrier.nativeCaptureSource || captureCarrier.nativeCaptureClaim) {
+                throw new Error("native_capture_append_missing");
+            }
         }
-
+        catch (error) {
+            if (ReceizVerifierResources.isResourceRefusal(error))
+                throw error;
+            nativeCapture = null;
+            errors.push(error instanceof Error ? error.message : "native_capture_append_verification_failed");
+            checks.push({ state: "bad", message: "Native Capture verification" });
+        }
         const rawHistory = bundle.pbiAuthorshipHistory;
-        if (
-          typeof rawHistory !== "undefined"
-          && (!Array.isArray(rawHistory)
-            || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))
-        ) {
-          errors.push("pbi_authorship_history_verification_failed");
-          checks.push({ state: "bad", message: "PBI authorship history verification" });
-        } else {
-          pbiAuthorshipHistory = rawHistory || [];
-          if (pbiAuthorshipHistory.length > 0) {
-            checks.push({ state: "ok", message: "PBI authorship history verified" });
-          }
+        if (typeof rawHistory !== "undefined"
+            && (!Array.isArray(rawHistory)
+                || !await verifyReceizPbiProofObjectAuthorshipChainV1(rawHistory))) {
+            errors.push("pbi_authorship_history_verification_failed");
+            checks.push({ state: "bad", message: "PBI authorship history verification" });
         }
-      }
-
-      const ok = errors.length === 0;
-      const result = {
+        else {
+            pbiAuthorshipHistory = rawHistory || [];
+            if (pbiAuthorshipHistory.length > 0) {
+                checks.push({ state: "ok", message: "PBI authorship history verified" });
+            }
+        }
+    }
+    const ok = errors.length === 0;
+    const result = {
         ok,
         errors,
         warnings,
@@ -5362,19 +5441,27 @@ var ReceizVerifierIdentityDisplay = (() => {
         assetContinuity,
         nativeCapture: ok ? nativeCapture : null,
         pbiAuthorshipHistory: ok ? pbiAuthorshipHistory : []
-      };
-      if (ReceizVerifierIdentityDisplay.carriedVerifierOriginal(result)) {
+    };
+    const sourceCreatorUsername = ReceizVerifierIdentityDisplay.projectVerifiedCreatorUsername(result, basisBytes);
+    if (sourceCreatorUsername)
+        result.sourceCreatorUsername = sourceCreatorUsername;
+    if (ReceizVerifierIdentityDisplay.carriedVerifierOriginal(result)) {
         try {
-          const nestedBytes = base64UrlDecode(assetContinuity.document.payload.bytesBase64Url);
-          if (nestedBytes.byteLength >= basisBytes.byteLength) throw new Error("nested_source_resource_unavailable");
-          const nested = await verifyReceizBytes("carried-original-source", nestedBytes, "");
-          result.identitySource = { state: nested.denial ? "unavailable" : nested.ok ? "verified" : "invalid", result: nested };
-        } catch {
-          result.identitySource = { state: "unavailable" };
+            const nestedBytes = base64UrlDecode(assetContinuity.document.payload.bytesBase64Url);
+            if (nestedBytes.byteLength >= basisBytes.byteLength)
+                throw new Error("nested_source_resource_unavailable");
+            const nested = await verifyReceizBytes("carried-original-source", nestedBytes, "");
+            result.identitySource = { state: nested.denial ? "unavailable" : nested.ok ? "verified" : "invalid", result: nested };
         }
-      }
-      return result;
+        catch (__receizResourceFailure) {
+            if (ReceizVerifierResources.isResourceRefusal(__receizResourceFailure))
+                throw __receizResourceFailure;
+            result.identitySource = { state: "unavailable" };
+        }
     }
+    return result;
+}
+// END GENERATED BOUNDED FUNCTION verifyReceizBytes
 
     class ReceizStreamingSha256 {
       constructor() {

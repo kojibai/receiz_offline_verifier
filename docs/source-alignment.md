@@ -1,19 +1,7 @@
 # Current standalone source alignment
 
-Upstream committed source: `e6479d26ce904e894b2456b178373efb7fdf99c7`. Release family: `129.0.0`.
+Committed source: `3267b36b88060987b509b27fec6763683ee10e98`; release `129.5.0`; complete release book: 16 files; aggregate `f58428b1f34515e7404063071fdc11d23305c88efc3bf3e3eaa0716bd822d564`.
 
-The canonical verifier is copied byte-for-byte from `public/offline-verifier.html` to both the downloadable app and the static index. The Studio is also byte-identical to committed upstream source. Sports retains its existing enclosing-ZIP proof boundary and explicit reader capability disclosure; only its standalone release label/worker epoch and the settlement release label advance, as enumerated in [the source manifest](../source-alignment.json).
+All source inputs are retained under source-inputs/v129.5.0/ and validated against current application, asset and record mirrors. Canonical verifier and Studio are byte-identical. Any explicitly selected Sports release-footer/worker epoch or settlement distribution-meta adjustment is enumerated and reproducible; it does not change verification or Settlement JavaScript. Historical records, source-alignment receipt and inherited v127 law remain intact.
 
-`npm test` checks every static mirror and source digest, ownership/provenance surface presence, CI workflow placement, and the absence of a GitHub Pages deployment workflow. `npm run release:lock` checks the original release archive. GitHub runs verification only, producing the repository's CI status check; it does not upload or deploy a Pages artifact. Downloadable application paths remain committed in this repository for local use or an explicitly selected external host.
-
-## Release history
-
-The historical release records and their original source hashes remain unchanged. The v129 archive appends to that history; it does not move a main-repository tag or imply a new attestation was issued. The twelve imported v129 records are individually source-digest bound before standalone boundary admission. A digest inventory establishes exact bytes; it is not an authenticated release signature or a substitute for conformance.
-
-## Current governance authority
-
-The main implementation uses the designated Receiz identity to seal governance and release attestations locally. Carried source, exact membership, predecessor and Kai succession are verified offline. GitHub and a public keyring cannot replace that source or independently rotate authority. Historical Ed25519/HMAC records remain historical evidence.
-
-The implemented main-repository commands are `governance:sign-artifacts`, `governance:verify-artifact-signature`, `release:attest` and `release:verify-attestation`. They are not commands implemented by this static repository. The main implementation requires build, conformance and approval evidence before release attestation; this synchronization does not claim those gates ran. Private identity files and signer secrets are excluded.
-
-The versioned governance standards preserved here describe their archived boundary. For current operation, follow this source-aligned description and the current [governance documentation](https://docs.receiz.com). Public audit disclosure belongs in [reality-grade-infrastructure](https://github.com/kojibai/reality-grade-infrastructure); this repository retains the offline applications and product release history.
+No new proof authority, signing service, deployment, Pages workflow, tag, attestation or publication is created. The existing single CI workflow remains verification-only. Run npm test, npm run lint, npm run build and npm run release:lock, then retain browser first-paint/file/provenance evidence before release qualification.

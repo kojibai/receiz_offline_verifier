@@ -1,0 +1,19 @@
+{
+  "schema": "receiz.standalone.offline-runtime-qualification.v1",
+  "release": "129.5.0",
+  "sourceCommit": "3267b36b88060987b509b27fec6763683ee10e98",
+  "verifierSha256": "21d0544910a02baf715381386dbc40c83953ca79e27ff0c24ad542eb5218ced8",
+  "scope": "Actual four embedded standalone scripts, canonical verifyBytes, file selection and Verify-button handler in Node24 with a DOM implementation; not a graphical-browser or native file-picker run",
+  "historicalOriginal": {
+    "bytes": 94275,
+    "sha256": "9c57e81bbb7071996f737af3d6ac23d382cfe34324da301796454530d8e6475c",
+    "verified": true,
+    "tamperedAccepted": false
+  },
+  "networkCalls": 0,
+  "browserQualification": "not-run",
+  "domFileSelectionAndVerifyButton": {
+    "status": "Verified",
+    "className": "status ok"
+  }
+}

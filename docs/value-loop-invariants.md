@@ -1,6 +1,6 @@
 # Receiz Value Loop Invariants
 
-Status: Canonical from `v64.0.0`; carried forward for `v129.0.0`
+Status: Canonical from `v64.0.0`; carried forward for `v129.5.0`
 Release date: April 21, 2026
 
 ## Purpose

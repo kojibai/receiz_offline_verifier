@@ -1,57 +1,283 @@
 {
   "schema": "receiz.standalone-source-alignment.v2",
-  "upstreamCommit": "e6479d26ce904e894b2456b178373efb7fdf99c7",
+  "release": "129.5.0",
+  "upstreamCommit": "3267b36b88060987b509b27fec6763683ee10e98",
   "upstreamState": "clean",
-  "release": "129.0.0",
+  "sourceDate": "2026-11-14",
+  "allowDistributionLabels": true,
   "files": [
     {
       "source": "public/offline-verifier.html",
-      "sourceSha256": "4b0731e56fed8804abb194cba98bfc80c8cf23d18063c24ce038923f44b63d14",
-      "sha256": "4b0731e56fed8804abb194cba98bfc80c8cf23d18063c24ce038923f44b63d14",
-      "destinations": ["apps/offline-verifier.html", "site/offline-verifier.html", "site/index.html"],
-      "adjustments": []
+      "destinations": [
+        "apps/offline-verifier.html",
+        "site/offline-verifier.html",
+        "site/index.html"
+      ],
+      "sourceSha256": "21d0544910a02baf715381386dbc40c83953ca79e27ff0c24ad542eb5218ced8",
+      "sha256": "21d0544910a02baf715381386dbc40c83953ca79e27ff0c24ad542eb5218ced8",
+      "bytes": 1003910,
+      "adjustments": [],
+      "releaseLabelPending": false
     },
     {
       "source": "public/offline-record-seal.html",
-      "sourceSha256": "9f61ab692fda283307d5d9b2a6f66a44dffa9b28d9ba9879db46852b23e9e5d7",
-      "sha256": "9f61ab692fda283307d5d9b2a6f66a44dffa9b28d9ba9879db46852b23e9e5d7",
-      "destinations": ["apps/offline-record-seal.html", "site/offline-record-seal.html"],
-      "adjustments": []
+      "destinations": [
+        "apps/offline-record-seal.html",
+        "site/offline-record-seal.html"
+      ],
+      "sourceSha256": "19bb2142549f46d2fc93a62a0f2a5b6bae75892ad0bbabe54e5aba33b28f521c",
+      "sha256": "19bb2142549f46d2fc93a62a0f2a5b6bae75892ad0bbabe54e5aba33b28f521c",
+      "bytes": 1376908,
+      "adjustments": [],
+      "releaseLabelPending": false
     },
     {
       "source": "public/offline-sports-card-verifier.html",
+      "destinations": [
+        "apps/offline-sports-card-verifier.html",
+        "site/offline-sports-card-verifier.html"
+      ],
       "sourceSha256": "7fdf0f66786460f382512c700210a345dc67e28a6fa536f10525d424367f1629",
-      "sha256": "91e341ea4c0a727892274dbf4eeaf187345f850164b58fbf62de325a01e94fa2",
-      "destinations": ["apps/offline-sports-card-verifier.html", "site/offline-sports-card-verifier.html"],
-      "adjustments": ["Footer release label and service-worker release epoch advanced from 128.0.0 to 129.0.0; verifier logic unchanged."]
+      "sha256": "960a5c0386683d6d91afb4b38f16d599d45f6eb82d5547ee9a798da6e7eaaa8b",
+      "bytes": 939913,
+      "adjustments": [
+        {
+          "slot": "footer",
+          "before": "<a href=\"https://github.com/kojibai/receiz_offline_verifier\" target=\"_blank\" rel=\"noopener noreferrer\">v95.0.0</a>",
+          "after": "<a href=\"https://github.com/kojibai/receiz_offline_verifier\" target=\"_blank\" rel=\"noopener noreferrer\">v129.5.0</a>"
+        },
+        {
+          "slot": "worker epoch",
+          "before": "const OFFLINE_STANDALONE_SW_VERSION = \"95.0.0-official-release-v1\";",
+          "after": "const OFFLINE_STANDALONE_SW_VERSION = \"129.5.0-official-release-v1\";"
+        }
+      ],
+      "releaseLabelPending": false
     },
     {
       "source": "public/offline-settlement.html",
+      "destinations": [
+        "apps/offline-settlement.html",
+        "site/offline-settlement.html"
+      ],
       "sourceSha256": "5fb75d1e8364b8d9197bc1a78f0f9eb8d6ced0e1d69cd16c4c91db37ea742ca6",
-      "sha256": "d17173ae411464dd7046877f62503f5de08d602de00bf55586fe736963549204",
-      "destinations": ["apps/offline-settlement.html", "site/offline-settlement.html"],
-      "adjustments": ["Standalone release label advanced from 128.0.0 to 129.0.0; settlement logic unchanged."]
+      "sha256": "836b95258184bb087275c336974434b90a601fef3ff52b4577a6e045a243e977",
+      "bytes": 53929,
+      "adjustments": [
+        {
+          "slot": "distribution metadata only",
+          "before": "<head>",
+          "after": "<head>\n<meta name=\"receiz-standalone-release\" content=\"v129.5.0\">"
+        }
+      ],
+      "releaseLabelPending": false
     }
   ],
   "releaseRecords": [
-    {"source":"docs/releases/v129.0.0-checklist.md","sourceSha256":"aba73f95c76dbd756516d389c30092a8a28f25da6ed72d6b6f487d619fb62deb","sha256":"18ef16e23a249bfc477c68a3e9fbdadccd80c6f26f31b08e586b700f6263c26d","destinations":["docs/releases/v129.0.0-checklist.md","releases/v129.0.0-checklist.md"]},
-    {"source":"docs/releases/v129.0.0-commit-history.json","sourceSha256":"3ce10aae40a0d74410f939cbda6b815c4c2064ebcf47ca2b3d496289f2808f20","sha256":"3ce10aae40a0d74410f939cbda6b815c4c2064ebcf47ca2b3d496289f2808f20","destinations":["docs/releases/v129.0.0-commit-history.json","releases/v129.0.0-commit-history.json"]},
-    {"source":"docs/releases/v129.0.0-commit-history.md","sourceSha256":"312f40764d745677c62b2cbe2ba6a3e2e11593a9de729ed7f1617c086d34b33a","sha256":"0ffaa37f313b4674ebc2ea69c79659384caca1d2c38efcc3d699f4595d6458ba","destinations":["docs/releases/v129.0.0-commit-history.md","releases/v129.0.0-commit-history.md"]},
-    {"source":"docs/releases/v129.0.0-conformance.md","sourceSha256":"b99fe4792ad4d2bba073d522b980a14812adecd88dac98860a98aaeab4004094","sha256":"b99fe4792ad4d2bba073d522b980a14812adecd88dac98860a98aaeab4004094","destinations":["docs/releases/v129.0.0-conformance.md","releases/v129.0.0-conformance.md"]},
-    {"source":"docs/releases/v129.0.0-integration.md","sourceSha256":"446e2110e816b3080cf1fbf12f597b5c8664d4739693a8cdf219ade8a9698414","sha256":"446e2110e816b3080cf1fbf12f597b5c8664d4739693a8cdf219ade8a9698414","destinations":["docs/releases/v129.0.0-integration.md","releases/v129.0.0-integration.md"]},
-    {"source":"docs/releases/v129.0.0-package-candidates.json","sourceSha256":"9791882f16d99a2f368601db71d7f5cb86bb2080c2cb06fee33d42615cb5da93","sha256":"9791882f16d99a2f368601db71d7f5cb86bb2080c2cb06fee33d42615cb5da93","destinations":["docs/releases/v129.0.0-package-candidates.json","releases/v129.0.0-package-candidates.json"]},
-    {"source":"docs/releases/v129.0.0-package-publication-evidence.json","sourceSha256":"b1501540643accd5457bdf610810dff78ccb40a68a05d621baab9324e3c1d808","sha256":"b1501540643accd5457bdf610810dff78ccb40a68a05d621baab9324e3c1d808","destinations":["docs/releases/v129.0.0-package-publication-evidence.json","releases/v129.0.0-package-publication-evidence.json"]},
-    {"source":"docs/releases/v129.0.0-process.md","sourceSha256":"5bc45ad19428385820d1cb13da172dbd259f5421a1ebedddaadd58543552aadd","sha256":"6a4eb2d0ad23b7be1475398ada6a2bd9b72c62b20be89cf7b112a92af60700d2","destinations":["docs/releases/v129.0.0-process.md","releases/v129.0.0-process.md"]},
-    {"source":"docs/releases/v129.0.0-product-truth.md","sourceSha256":"b98689f5b39e13773ade608e88735feff4f13cf5410757ca38322da628870fbc","sha256":"6bc8dcc318d41005080e0e0f2d1a3f3099c3f7de1f5b4073bd00090df93fa0da","destinations":["docs/releases/v129.0.0-product-truth.md","releases/v129.0.0-product-truth.md"]},
-    {"source":"docs/releases/v129.0.0-production-sql.json","sourceSha256":"2543b4c308f0de5577956f2563e544e71750ba83a882bcedbe3e7576fce58a03","sha256":"2543b4c308f0de5577956f2563e544e71750ba83a882bcedbe3e7576fce58a03","destinations":["docs/releases/v129.0.0-production-sql.json","releases/v129.0.0-production-sql.json"]},
-    {"source":"docs/releases/v129.0.0-regression-lessons.md","sourceSha256":"1cac80c7e2d17340e1397e8c40b851120db0059298878dfb5a645af148c0b4d2","sha256":"1cac80c7e2d17340e1397e8c40b851120db0059298878dfb5a645af148c0b4d2","destinations":["docs/releases/v129.0.0-regression-lessons.md","releases/v129.0.0-regression-lessons.md"]},
-    {"source":"docs/releases/v129.0.0.md","sourceSha256":"d6bb0fc4fe71b0767f1eb993247716d207b2ea4c8089a5b9f9efa1ad7a6ed5c8","sha256":"8b43955097f547fea331dc0ca8ffb69b1a3fd98dfcd7443a0031973ee8f207dc","destinations":["docs/releases/v129.0.0.md","releases/v129.0.0.md"]}
+    {
+      "source": "docs/releases/v129.5.0-checklist.md",
+      "sourceSha256": "bfe3b440fd7da275ec463f3d79ec3b092b7757aedd85c51cd2b178e9f899f2d5",
+      "sha256": "bfe3b440fd7da275ec463f3d79ec3b092b7757aedd85c51cd2b178e9f899f2d5",
+      "bytes": 9674,
+      "destinations": [
+        "docs/releases/v129.5.0-checklist.md",
+        "releases/v129.5.0-checklist.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-commit-history.md",
+      "sourceSha256": "1986664790937e26c045e0f1c52a3151494d69975416950214aa31a26134d26f",
+      "sha256": "1986664790937e26c045e0f1c52a3151494d69975416950214aa31a26134d26f",
+      "bytes": 94599,
+      "destinations": [
+        "docs/releases/v129.5.0-commit-history.md",
+        "releases/v129.5.0-commit-history.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-compatibility.md",
+      "sourceSha256": "2b4d78dcbd2040d2ff97bce8bdb729ae032f311ce46204d5bc75a38ee3583379",
+      "sha256": "2b4d78dcbd2040d2ff97bce8bdb729ae032f311ce46204d5bc75a38ee3583379",
+      "bytes": 6163,
+      "destinations": [
+        "docs/releases/v129.5.0-compatibility.md",
+        "releases/v129.5.0-compatibility.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-conformance.md",
+      "sourceSha256": "1337293c0267b31343bc42c5593daa15706886ba212bfd76557a6e0d314a7fc9",
+      "sha256": "1337293c0267b31343bc42c5593daa15706886ba212bfd76557a6e0d314a7fc9",
+      "bytes": 28458,
+      "destinations": [
+        "docs/releases/v129.5.0-conformance.md",
+        "releases/v129.5.0-conformance.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-forward-source-inventory.json",
+      "sourceSha256": "a1bc7c5730ccb0f8b02cd99db2893cd16e7db18d0af1c92a2bee158ac842a7d4",
+      "sha256": "a1bc7c5730ccb0f8b02cd99db2893cd16e7db18d0af1c92a2bee158ac842a7d4",
+      "bytes": 32674,
+      "destinations": [
+        "docs/releases/v129.5.0-forward-source-inventory.json",
+        "releases/v129.5.0-forward-source-inventory.json"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-governance.md",
+      "sourceSha256": "daf26edd2d0de75c7cb2ece3e65628aeb7cf613d1c4f7ea50ec0a6e0aac285b8",
+      "sha256": "daf26edd2d0de75c7cb2ece3e65628aeb7cf613d1c4f7ea50ec0a6e0aac285b8",
+      "bytes": 4325,
+      "destinations": [
+        "docs/releases/v129.5.0-governance.md",
+        "releases/v129.5.0-governance.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-integration.md",
+      "sourceSha256": "7a10282d4e649012345a1e100e9ad16d72ebcd79b9abc404b8e980027ab3758d",
+      "sha256": "7a10282d4e649012345a1e100e9ad16d72ebcd79b9abc404b8e980027ab3758d",
+      "bytes": 5830,
+      "destinations": [
+        "docs/releases/v129.5.0-integration.md",
+        "releases/v129.5.0-integration.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-migration.md",
+      "sourceSha256": "c16287c03d4d41bf4bd5e12fabf6e73fe11699b86003d104416be7424e7d9ba1",
+      "sha256": "c16287c03d4d41bf4bd5e12fabf6e73fe11699b86003d104416be7424e7d9ba1",
+      "bytes": 15052,
+      "destinations": [
+        "docs/releases/v129.5.0-migration.md",
+        "releases/v129.5.0-migration.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-package-candidates.json",
+      "sourceSha256": "189624d0094adc581490ff723b91865f8a97bece3cae40ce6853264850f5c0f0",
+      "sha256": "189624d0094adc581490ff723b91865f8a97bece3cae40ce6853264850f5c0f0",
+      "bytes": 1552,
+      "destinations": [
+        "docs/releases/v129.5.0-package-candidates.json",
+        "releases/v129.5.0-package-candidates.json"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-package-publication-evidence.json",
+      "sourceSha256": "108c2c60ef0e4af12ad140708e073e3a8429ef2a449fc505e1e8afba288781bb",
+      "sha256": "108c2c60ef0e4af12ad140708e073e3a8429ef2a449fc505e1e8afba288781bb",
+      "bytes": 2832,
+      "destinations": [
+        "docs/releases/v129.5.0-package-publication-evidence.json",
+        "releases/v129.5.0-package-publication-evidence.json"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-process.md",
+      "sourceSha256": "22396e8b723371ae084d0781661197031205d8fd297783a5a3248d31fa76bdeb",
+      "sha256": "22396e8b723371ae084d0781661197031205d8fd297783a5a3248d31fa76bdeb",
+      "bytes": 16496,
+      "destinations": [
+        "docs/releases/v129.5.0-process.md",
+        "releases/v129.5.0-process.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-product-truth.md",
+      "sourceSha256": "e0b2eaf669e5f443a131badafd601d657c8004b40fabd14b31e4aa024ee36553",
+      "sha256": "e0b2eaf669e5f443a131badafd601d657c8004b40fabd14b31e4aa024ee36553",
+      "bytes": 11650,
+      "destinations": [
+        "docs/releases/v129.5.0-product-truth.md",
+        "releases/v129.5.0-product-truth.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-registry-binding.json",
+      "sourceSha256": "6fee39202a5cf7bfcca92d050de5380a1e59268371980c0f9eec0887ea0cec51",
+      "sha256": "6fee39202a5cf7bfcca92d050de5380a1e59268371980c0f9eec0887ea0cec51",
+      "bytes": 430,
+      "destinations": [
+        "docs/releases/v129.5.0-registry-binding.json",
+        "releases/v129.5.0-registry-binding.json"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-regression-lessons.md",
+      "sourceSha256": "be96fc14faf6dc406c1c62b4f2f3d0efef4bd2c2b8c38c8e0a03940c3ae3c0de",
+      "sha256": "be96fc14faf6dc406c1c62b4f2f3d0efef4bd2c2b8c38c8e0a03940c3ae3c0de",
+      "bytes": 8871,
+      "destinations": [
+        "docs/releases/v129.5.0-regression-lessons.md",
+        "releases/v129.5.0-regression-lessons.md"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0-source-history.json",
+      "sourceSha256": "aa9f4bc6a39df6cb6ab8b7dfbff8054b8cc5007efbe21af2427915e46563d9fc",
+      "sha256": "aa9f4bc6a39df6cb6ab8b7dfbff8054b8cc5007efbe21af2427915e46563d9fc",
+      "bytes": 522564,
+      "destinations": [
+        "docs/releases/v129.5.0-source-history.json",
+        "releases/v129.5.0-source-history.json"
+      ]
+    },
+    {
+      "source": "docs/releases/v129.5.0.md",
+      "sourceSha256": "7f9b600a53e59c8e834f94933ac78a3fd59c685c9b38ca5b3fcf7229970a07c8",
+      "sha256": "7f9b600a53e59c8e834f94933ac78a3fd59c685c9b38ca5b3fcf7229970a07c8",
+      "bytes": 21876,
+      "destinations": [
+        "docs/releases/v129.5.0.md",
+        "releases/v129.5.0.md"
+      ]
+    }
   ],
   "assets": [
-    {"source":"public/offline-studio.webmanifest","destination":"site/offline-studio.webmanifest","sha256":"4ebd8e2d9f395d8883c4ba70d1821366e2d281926d33458c824c31b8abd1ef5f"},
-    {"source":"public/icon.png","destination":"site/icon.png","sha256":"5315a17b12b72b3e5e94d21bc598f293ecb163c30d3bd5190f5154f65b8076e2"},
-    {"source":"public/apple-touch-icon.png","destination":"site/apple-touch-icon.png","sha256":"aec6e50c291f35e7bd978103f67e8f2c5b6d2a66874d03d9b3bbe4651a222649"},
-    {"source":"public/receiz.svg","destination":"site/receiz.svg","sha256":"7d941189f013409cafa3b622552c626e7f089b18285f2ee4f7db068bafd114e0"},
-    {"source":"public/powered-by-receiz.svg","destination":"site/powered-by-receiz.svg","sha256":"efa0937e580fba6d52a47e1a91d32f00b384e0c03a9bd2dfd5316ebf84f3407c"}
-  ]
+    {
+      "source": "public/offline-studio.webmanifest",
+      "destination": "site/offline-studio.webmanifest",
+      "sha256": "4ebd8e2d9f395d8883c4ba70d1821366e2d281926d33458c824c31b8abd1ef5f",
+      "bytes": 526
+    },
+    {
+      "source": "public/icon.png",
+      "destination": "site/icon.png",
+      "sha256": "5315a17b12b72b3e5e94d21bc598f293ecb163c30d3bd5190f5154f65b8076e2",
+      "bytes": 2019
+    },
+    {
+      "source": "public/apple-touch-icon.png",
+      "destination": "site/apple-touch-icon.png",
+      "sha256": "aec6e50c291f35e7bd978103f67e8f2c5b6d2a66874d03d9b3bbe4651a222649",
+      "bytes": 6268
+    },
+    {
+      "source": "public/receiz.svg",
+      "destination": "site/receiz.svg",
+      "sha256": "7d941189f013409cafa3b622552c626e7f089b18285f2ee4f7db068bafd114e0",
+      "bytes": 1026
+    },
+    {
+      "source": "public/powered-by-receiz.svg",
+      "destination": "site/powered-by-receiz.svg",
+      "sha256": "efa0937e580fba6d52a47e1a91d32f00b384e0c03a9bd2dfd5316ebf84f3407c",
+      "bytes": 776
+    }
+  ],
+  "sourceBookSha256": "f58428b1f34515e7404063071fdc11d23305c88efc3bf3e3eaa0716bd822d564",
+  "registry": {
+    "source": "docs/releases/v127.0.0-constitution-registry.json",
+    "digestSource": "docs/releases/v127.0.0-constitution-registry.digest",
+    "version": "127.0.0",
+    "digest": "8d0b5b839d02d9efbd4306cc99410595a183705c2670b76d2567eaaaade99065",
+    "sourceSha256": "f9f713c7a4d75ab4ffccc4551cdaeaa6e9268978222d7f8cbbc13e3683155c8a",
+    "digestFileSha256": "a8766e68d55394499fd7a92bb9b418c89730f375c84bc678757bdbd8a977db2e"
+  },
+  "previousAlignment": {
+    "path": "releases/evidence/source-alignments/v129.0.0/source-alignment.json",
+    "sha256": "16d6bff64f2a502ea89a173382989bfd1b600bfd7b0c3df21889630960af8764"
+  }
 }

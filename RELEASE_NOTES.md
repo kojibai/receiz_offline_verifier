@@ -1,3 +1,7 @@
+## v129.5.0
+
+Imported exact qualified-source boundary 3267b36b88060987b509b27fec6763683ee10e98; 16 complete release records, preserved historical archives and inherited v127 registry. Distribution-label adjustments, if explicitly selected, are individually enumerated; canonical verifier/Studio bytes remain exact. Browser/release qualification is separate.
+
 # Release Notes
 
 ## v129.0.0

@@ -1,5 +1,14 @@
 # Receiz Offline Verifier
 
+Current release: `v129.5.0`
+
+Canonical applications and the complete 16-record release family are imported from clean committed Receiz source `3267b36b88060987b509b27fec6763683ee10e98`. Source hashes identify bytes; they do not confer proof authority or claim browser/release qualification. The inherited v127 registry remains exact. See [source alignment](docs/source-alignment.md).
+
+Offline runtime evidence: [exact embedded runtime and historical/tamper checks](releases/evidence/v129.5.0-offline-runtime.json). Browser acceptance remains a separate boundary.
+
+## Previous release description
+
+
 Verify a file offline. Proof is in the file.
 
 Current release: `v129.0.0`
